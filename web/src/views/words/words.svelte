@@ -7,6 +7,8 @@
   let keys = Object.keys($data);
   let result = [];
   let checked = [];
+  let wordsCount = keys.filter(key => $data[key].type === 'word').length;
+  let phrasesCount = keys.filter(key => $data[key].type === 'phrase').length;
 
   $: {
     if (!result.length) {
@@ -29,6 +31,10 @@
       }
     });
   };
+
+  const getLength = (arr) => {
+    return `${arr.length}/${arr.filter(key => !$data[key].active).length}`;
+  };
 </script>
 
 <div class="words">
@@ -41,6 +47,15 @@
         <span class="item" class:active={$data[item].active}>{item}</span>
       </label>
     {/each}
+
+    <div class="stat">
+      <p>Всего - {getLength(Object.keys($data))}</p>
+      <p>Слов - {getLength(keys.filter(key => $data[key].type === 'word'))}</p>
+      <p>Существительных - {getLength(keys.filter(key => $data[key].wordType === 'noun'))}</p>
+      <p>Глаголов - {getLength(keys.filter(key => $data[key].wordType === 'verb'))}</p>
+      <p>Других - {getLength(keys.filter(key => $data[key].wordType === 'other'))}</p>
+      <p>Фраз - {getLength(keys.filter(key => $data[key].type === 'phrase'))}</p>
+    </div>
   </div>
 
   {#if checked.length}
@@ -113,5 +128,9 @@
   .buttons :global(.button) {
     flex: 1 0 calc(50% - 10px);
     margin: 0 0 0 10px;
+  }
+
+  .stat {
+    margin-top: 20px;
   }
 </style>
