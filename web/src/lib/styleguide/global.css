@@ -18,7 +18,7 @@ html, body {
 body {
   background: #fff;
   color: #333;
-  font: 14px/18px 'ubuntu', Arial, sans-serif;
+  font: 14px/18px ubuntu, Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
   min-width: 320px;
@@ -26,7 +26,7 @@ body {
 
 input, textarea, select, button {
   font-size: 100%;
-  font-family: inherit;
+  font-family: ubuntu, Arial, sans-serif;;
   outline: none;
   vertical-align: middle;
 }
@@ -34,4 +34,10 @@ input, textarea, select, button {
 img {
   max-width: 100%;
   vertical-align: top;
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 25px;
+  margin-bottom: 10px;
 }

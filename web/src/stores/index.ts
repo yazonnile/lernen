@@ -1,3 +1,2 @@
-export { default as router } from './router/router';
-export { default as menu } from './menu/menu';
-
+export { default as view } from './view/view';
+export { default as data } from './data/data';

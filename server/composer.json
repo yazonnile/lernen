@@ -1,0 +1,11 @@
+{
+  "config": {
+    "vendor-dir": "./lib/vendor",
+    "optimize-autoloader": true
+  },
+  "require": {
+    "altorouter/altorouter": "2.0.1",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  }
+}

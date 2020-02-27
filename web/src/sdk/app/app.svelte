@@ -1,21 +1,20 @@
 <script>
-  import { menu } from 'stores';
-  import Main from 'sdk/main/main.svelte';
   import Header from 'sdk/header/header.svelte';
-  import MenuPanel from 'sdk/menu-panel/menu-panel.svelte';
+  import { view } from 'stores';
+
+  /* global require */
+  $: activeView = require(`views/${$view}/${$view}.svelte`).default;
 </script>
 
 <Header />
-<Main />
 
-{#if $menu.right}
-  <MenuPanel direction="right">
-    RIGHT
-  </MenuPanel>
-{/if}
+<main class="main">
+  <svelte:component this={activeView} />
+</main>
 
-{#if $menu.left}
-  <MenuPanel>
-    LEFT
-  </MenuPanel>
-{/if}
+<style>
+  .main {
+    padding: 10px;
+  }
+</style>
+

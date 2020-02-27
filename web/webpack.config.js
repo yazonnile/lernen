@@ -68,7 +68,7 @@ module.exports = ({ isProduction }) => {
         stores: path.resolve(__dirname, './src/stores'),
         lib: path.resolve(__dirname, './src/lib'),
         // api: path.resolve(__dirname, './src/api'),
-        // routes: path.resolve(__dirname, './src/routes'),
+        views: path.resolve(__dirname, './src/views'),
         // src: path.resolve(__dirname, './src'),
       },
       extensions: ['.ts', '.mjs', '.js', '.svelte'],
