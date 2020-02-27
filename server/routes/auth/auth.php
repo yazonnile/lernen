@@ -25,7 +25,7 @@
       );
 
       $response->data(
-        (new \api\Data())->getData($login)
+        (new \api\Data())->getDataByUser($login)
       );
       echo $response->getResult();
     }

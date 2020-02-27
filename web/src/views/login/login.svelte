@@ -2,7 +2,7 @@
   import FormElement from 'sdk/form-element/form-element.svelte';
   import Button from 'sdk/button/button.svelte';
   import request from 'lib/request/request';
-  import { data, view } from 'stores';
+  import { data, setup, view } from 'stores';
 
   let login = '';
   let password = '';
@@ -10,7 +10,8 @@
   const onSubmit = () => {
     request('/login', { login, password }).then(responseData => {
       if (responseData && responseData.data) {
-        $data = responseData.data;
+        $data = responseData.data.data;
+        $setup = responseData.data.setup;
         view.home();
       }
     });
@@ -28,6 +29,10 @@
 </form>
 
 <style>
+  .login {
+    width: 100%;
+  }
+
   .login :global(.button) {
     width: 100%;
   }

@@ -6,14 +6,24 @@
   $: activeView = require(`views/${$view}/${$view}.svelte`).default;
 </script>
 
-<Header />
+<div class="app">
+  <Header />
 
-<main class="main">
-  <svelte:component this={activeView} />
-</main>
+  <main class="main">
+    <svelte:component this={activeView} />
+  </main>
+</div>
 
 <style>
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
   .main {
+    display: flex;
+    flex: 1;
     padding: 10px;
   }
 </style>

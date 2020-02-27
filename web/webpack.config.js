@@ -16,7 +16,7 @@ module.exports = ({ isProduction }) => {
     },
 
     output: {
-      path: __dirname + '/public',
+      path: path.resolve(__dirname, '../server/public'),
       filename: '[name].js',
       chunkFilename: '[name].js?id=[chunkhash]'
     },

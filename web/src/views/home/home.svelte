@@ -11,6 +11,10 @@
 </div>
 
 <style>
+  .home {
+    width: 100%;
+  }
+
   .home :global(.button) {
     margin-top: 10px;
   }

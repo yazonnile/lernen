@@ -70,7 +70,7 @@
   .words {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 60px);
+    width: 100%;
   }
 
   .body {

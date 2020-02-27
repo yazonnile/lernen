@@ -45,7 +45,7 @@
       return array_diff(scandir(HOME . $path), ['..', '.']);
     }
 
-    static public function getJSON(string $url) : array {
+    static public function getJSON(string $url) {
       return json_decode(self::getFile($url), true);
     }
 
@@ -103,13 +103,8 @@
       return $string;
     }
 
-    static public function getUserId($forceExit = false) {
+    static public function getUserId() {
       $userId = $_COOKIE['deu'] ?? null;
-
-      if ($forceExit && is_null($userId)) {
-        exit();
-      }
-
       return is_null($userId) ? null : base64_decode($userId);
     }
   }

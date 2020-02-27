@@ -100,6 +100,7 @@
 <style>
   .setup {
     padding-top: 30px;
+    width: 100%;
   }
 
   .row {

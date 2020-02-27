@@ -9,12 +9,19 @@
     private $userId;
 
     public function __construct() {
-      $this->userId = Utils::getUserId(true);
-      $this->data = \lib\Utils::getJSON('/api/data/' . $this->userId . '.json');
+      $this->userId = Utils::getUserId();
+
+      if ($this->userId) {
+        $this->data = $this->getDataByUser($this->userId);
+      }
     }
 
     public function getData() {
       return $this->data;
+    }
+
+    public function getDataByUser($userId) {
+      return Utils::getJSON('/api/data/' . $userId . '.json');
     }
 
     public function setData() {

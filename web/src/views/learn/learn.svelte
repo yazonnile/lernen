@@ -123,7 +123,8 @@
     }
 
     utterThis = new SpeechSynthesisUtterance(text);
-    utterThis.lang = 'de';
+    utterThis.voice = speechSynthesis.getVoices().find(i => i.lang === 'de-DE');
+    utterThis.lang = 'de-DE';
     utterThis.rate = .75;
     speechSynthesis.speak(utterThis);
   };
@@ -190,7 +191,7 @@
   .learn {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 60px);
+    width: 100%;
   }
 
   .wrap {

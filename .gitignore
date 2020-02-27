@@ -1,6 +1,6 @@
 .idea
 node_modules
-public
+server/public
 vendor
 server/api/users/users.json
 server/api/data/*.json

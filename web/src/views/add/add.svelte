@@ -77,7 +77,7 @@
   ]);
 </script>
 
-<form class="game" use:createForm={{ onSuccess }} on:submit|preventDefault>
+<form class="add" use:createForm={{ onSuccess }} on:submit|preventDefault>
   <h1>Добавить</h1>
 
   <FormElement label="Выберите тип">
@@ -162,5 +162,7 @@
 </form>
 
 <style>
-
+  .add {
+    width: 100%;
+  }
 </style>
