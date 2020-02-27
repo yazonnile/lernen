@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --env",
-    "build": "webpack --env.isProduction"
+    "build": "webpack --env.isProduction",
+    "eslint": "eslint --ext .ts,.svelte src/ -c .eslintrc.js"
   },
   "author": "slava z",
   "license": "ISC",

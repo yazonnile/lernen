@@ -34,7 +34,7 @@
   const onSuccess = (values) => {
     request('/add', {
       ...Object.fromEntries(values.entries()),
-      type, wordType, article, strongVerb, pluralOnly
+      type, wordType, article, strongVerb, pluralOnly, plural
     }).then(responseData => {
       if (responseData && responseData.data) {
         data.add(responseData.data.key, responseData.data.data);

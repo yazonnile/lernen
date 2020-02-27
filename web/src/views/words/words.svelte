@@ -1,14 +1,12 @@
 <script>
   import Button from 'sdk/button/button.svelte';
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
-  import { view, data } from 'stores';
+  import { data } from 'stores';
   import request from 'lib/request/request';
 
   let keys = Object.keys($data);
   let result = [];
   let checked = [];
-  let wordsCount = keys.filter(key => $data[key].type === 'word').length;
-  let phrasesCount = keys.filter(key => $data[key].type === 'phrase').length;
 
   $: {
     if (!result.length) {
