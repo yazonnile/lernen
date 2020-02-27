@@ -23,9 +23,9 @@
 
     public function addData($model) {
       $text = $model['text'];
-      $this->data = array_merge_recursive($this->data, [
-        'data' => [$text => $model]
-      ]);
+      $this->data = [
+        'data' => array_merge($this->data['data'], [$text => $model])
+      ];
 
       Utils::createFile('/api/data/' . $this->userId . '.json', json_encode($this->data, JSON_UNESCAPED_UNICODE));
     }

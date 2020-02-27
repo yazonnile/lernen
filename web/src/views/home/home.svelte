@@ -4,7 +4,7 @@
 </script>
 
 <div class="home">
-  <Button text="Учить" />
+  <Button text="Учить" on:click={view.learn} />
   <Button text="Добавить слово" on:click={view.add} />
 </div>
 

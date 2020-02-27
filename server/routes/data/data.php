@@ -29,7 +29,7 @@
       $type = $this->validateString($data['type']);
       $wordType = $this->validateString($data['wordType']);
       $article = $this->validateString($data['article']);
-      $strongVerb = $this->validateString($data['strongVerb']);
+      $strongVerb = $data['strongVerb'] ?? null;
 
       $response = new \lib\Response();
 
