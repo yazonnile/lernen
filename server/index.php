@@ -3,6 +3,7 @@
 use routes\Auth;
 use routes\Data;
 use routes\Home;
+use routes\Setup;
 use function lib\autoload;
 
 date_default_timezone_set('UTC');
@@ -27,9 +28,19 @@ $router->map( 'POST', '/add', function() {
   $instance->add();
 });
 
-$router->map( 'POST', '/remove', function() {
+$router->map( 'POST', '/on', function() {
   $instance = new Data();
-  $instance->add();
+  $instance->on();
+});
+
+$router->map( 'POST', '/off', function() {
+  $instance = new Data();
+  $instance->off();
+});
+
+$router->map( 'POST', '/setup', function() {
+  $instance = new Setup();
+  $instance->save();
 });
 
 $router->map( 'GET', '*', function() {

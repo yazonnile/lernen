@@ -53,6 +53,6 @@
 
   .form-input :global(input):focus,
   .form-input :global(select):focus {
-    border-color: var(--mainColor);
+    border-color: var(--mainColorLight);
   }
 </style>

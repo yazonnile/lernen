@@ -11,7 +11,10 @@
   let type = 'word';
   let wordType = 'noun';
   let article = 'das';
+  let plural = '';
+  let pluralOnly = false;
   let strongVerb = false;
+  let irregularVerb = false;
 
   const {
     createEntries,
@@ -31,10 +34,11 @@
   const onSuccess = (values) => {
     request('/add', {
       ...Object.fromEntries(values.entries()),
-      type, wordType, article, strongVerb
+      type, wordType, article, strongVerb, pluralOnly
     }).then(responseData => {
       if (responseData && responseData.data) {
         data.add(responseData.data.key, responseData.data.data);
+        location.reload();
       }
     });
   };
@@ -49,23 +53,27 @@
   const [
     [textErrors, textValue, textInput],
     [translationErrors, translationValue, translationInput],
-    [pluralErrors, pluralValue, pluralInput],
     [strong1Errors, strong1Value, strong1Input],
     [strong2Errors, strong2Value, strong2Input],
     [strong3Errors, strong3Value, strong3Input],
     [strong4Errors, strong4Value, strong4Input],
     [strong5Errors, strong5Value, strong5Input],
     [strong6Errors, strong6Value, strong6Input],
+    [irregular1Errors, irregular1Value, irregular1Input],
+    [irregular2Errors, irregular2Value, irregular2Input],
+    [irregular3Errors, irregular3Value, irregular3Input],
   ] = createEntries([
     getFieldParams('text'),
     getFieldParams('translation'),
-    getFieldParams('plural'),
     getFieldParams('strong1'),
     getFieldParams('strong2'),
     getFieldParams('strong3'),
     getFieldParams('strong4'),
     getFieldParams('strong5'),
-    getFieldParams('strong6')
+    getFieldParams('strong6'),
+    getFieldParams('irregular1'),
+    getFieldParams('irregular2'),
+    getFieldParams('irregular3')
   ]);
 </script>
 
@@ -101,11 +109,13 @@
         </select>
       </FormElement>
 
-      <FormElement errors={pluralErrors} label="Plural">
-        <input type="text" bind:value={$pluralValue} use:pluralInput />
+      <FormElement label="Plural">
+        <input type="text" bind:value={plural} />
       </FormElement>
+
+      <FormSwitcher type="checkbox" bind:checked={pluralOnly}>Plural only</FormSwitcher>
     {:else if wordType === 'verb'}
-      <FormSwitcher type="checkbox" bind:checked={strongVerb}>Сильный глагол</FormSwitcher>
+      <FormSwitcher type="toggle" bind:checked={strongVerb}>Сильный глагол</FormSwitcher>
 
       {#if strongVerb}
         <FormElement errors={strong1Errors} label="Ich">
@@ -127,6 +137,20 @@
           <input type="text" bind:value={$strong6Value} use:strong6Input />
         </FormElement>
       {/if}
+
+      <FormSwitcher type="toggle" bind:checked={irregularVerb}>Неправильный глагол</FormSwitcher>
+
+      {#if irregularVerb}
+        <FormElement errors={irregular1Errors} label="Präsens">
+          <input type="text" bind:value={$irregular1Value} use:irregular1Input />
+        </FormElement>
+        <FormElement errors={irregular2Errors} label="Präteritum">
+          <input type="text" bind:value={$irregular2Value} use:irregular2Input />
+        </FormElement>
+        <FormElement errors={irregular3Errors} label="Partizip II">
+          <input type="text" bind:value={$irregular3Value} use:irregular3Input />
+        </FormElement>
+      {/if}
     {/if}
   {/if}
 
@@ -134,7 +158,7 @@
     <input type="text" bind:value={$translationValue} use:translationInput />
   </FormElement>
 
-  <Button type="submit" text="Готово" color="primary" />
+  <Button type="submit" text="Готово" />
 </form>
 
 <style>

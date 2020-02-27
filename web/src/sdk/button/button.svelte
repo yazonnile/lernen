@@ -49,45 +49,17 @@
     padding: 3px 12px;
     position: relative;
     vertical-align: top;
+    width: 100%;
   }
 
   .button--color-default {
-    background: #fff;
-    color: #000;
-    border-color: #000;
-  }
-
-  .button--color-primary {
-    background: #fff;
-    color: var(--mainColor);
-    border-color: var(--mainColor);
+    background: var(--mainColorLight);
+    color: inherit;
   }
 
   .button--color-red {
-    background: #fff;
-    color: var(--redColor);
-    border-color: var(--redColor);
-  }
-
-  .button--active {
-    border-color: transparent;
-    color: #fff;
-  }
-
-  .button--active.button--color-default {
-    background: #000;
-  }
-
-  .button--active.button--color-primary {
-    background: var(--mainColor);
-  }
-
-  .button--active.button--color-red {
-    background: var(--redColor);
-  }
-
-  .button--empty {
-    border-color: transparent;
+    background: var(--redColorLight);
+    color: inherit;
   }
 
   .button:focus {

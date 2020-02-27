@@ -4,6 +4,7 @@ type DefaultType = {
   type: 'word' | 'phrase';
   text: string;
   translation: string;
+  active: boolean;
 };
 
 type PhraseType = { } & DefaultType;
@@ -15,6 +16,7 @@ type WordType = {
 type NounWordType = {
   article: 'der' | 'die' | 'das';
   plural: string;
+  pluralOnly: boolean;
 } & WordType;
 
 type VerbWordType = {
@@ -32,7 +34,8 @@ interface DataValue {
 
 interface DataStore {
   add(key: string, data: DataType);
-  remove(key: string);
+  on(keys: string[]);
+  off(keys: string[]);
 }
 
 const initialWords = window.__initialState && window.__initialState.data;
@@ -42,8 +45,22 @@ const store = createStore<DataStore, DataValue>(initialWords, $words => ({
     $words[key] = data;
   },
 
-  remove(key: string) {
-    delete $words[key];
+  on(keys: string[]) {
+    for (let i = 0; i < keys.length; i++) {
+      const word = $words[keys[i]];
+      if (word) {
+        word.active = true;
+      }
+    }
+  },
+
+  off(keys: string[]) {
+    for (let i = 0; i < keys.length; i++) {
+      const word = $words[keys[i]];
+      if (word) {
+        word.active = false;
+      }
+    }
   }
 }));
 

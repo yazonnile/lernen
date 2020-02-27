@@ -1,8 +1,6 @@
 <script>
   export let type;
   export let name = null;
-  export let value = null;
-  export let group = null;
   export let checked = false;
 
   import Icon from 'sdk/icon/icon.svelte';
@@ -10,7 +8,7 @@
 
 <label class="form-switcher">
   {#if name}
-    <input {name} type="hidden" value="{type === 'radio' ? value === group : checked}" />
+    <input {name} type="hidden" value={checked} />
   {/if}
 
   <input
@@ -25,7 +23,7 @@
     </i>
   </i>
 
-  <span class="form-switcher--label"><slot></slot></span>
+  <span class="form-switcher--label"><slot /></span>
 </label>
 
 <style global>
@@ -34,7 +32,7 @@
     display: flex;
     align-items: center;
     justify-items: flex-start;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     position: relative;
   }
 
@@ -50,39 +48,39 @@
 
   .form-switcher--toggle {
     background: #ccc;
-    border-radius: 7px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    border-radius: 13px;
     display: inline-block;
-    height: 14px;
-    min-width: 36px;
+    height: 20px;
+    min-width: 42px;
     position: relative;
     transition: background 0.25s cubic-bezier(0.77, 0, 0.175, 1);
     vertical-align: top;
-    width: 36px;
+    width: 42px;
   }
 
   .form-switcher--toggle .form-switcher--icon {
-    background: #ccc;
-    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    background: #fff;
     border-radius: 10px;
     display: block;
-    height: 20px;
-    left: 0;
+    height: 14px;
+    left: 5px;
     position: absolute;
     transform: translateX(-1px);
-    top: -3px;
-    width: 20px;
+    top: 3px;
+    width: 14px;
     transition-duration: 0.25s;
     transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
     transition-property: transform, background;
   }
 
-  .form-switcher--real-element:checked ~ .form-switcher--toggle .form-switcher--icon {
+  .form-switcher--real-element:checked ~ .form-switcher--toggle {
     background: var(--mainColor);
-    transform: translateX(17px);
   }
 
-  .form-switcher--real-element:checked ~ .form-switcher--toggle {
-    background: #fc0;
+  .form-switcher--real-element:checked ~ .form-switcher--toggle .form-switcher--icon {
+    background: #fff;
+    transform: translateX(18px);
   }
 
   .form-switcher--checkbox {
@@ -98,7 +96,7 @@
   }
 
   .form-switcher--real-element:checked ~ .form-switcher--checkbox {
-    border-color: #fc0;
+    border-color: var(--mainColorLight);
   }
 
   .form-switcher--checkbox .form-switcher--icon {

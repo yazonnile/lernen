@@ -17,16 +17,29 @@
       return $this->data;
     }
 
-    public function removeData($keys) {
-
+    public function setData() {
+      Utils::createFile('/api/data/' . $this->userId . '.json', json_encode($this->data, JSON_UNESCAPED_UNICODE));
     }
 
     public function addData($model) {
       $text = $model['text'];
-      $this->data = [
-        'data' => array_merge($this->data['data'], [$text => $model])
-      ];
+      $this->data['data'] = array_merge($this->data['data'], [$text => $model]);
+      $this->setData();
+    }
 
-      Utils::createFile('/api/data/' . $this->userId . '.json', json_encode($this->data, JSON_UNESCAPED_UNICODE));
+    public function updateSetup($model) {
+      $this->data['setup'] = $model;
+      $this->setData();
+    }
+
+    public function toggleWords($keys, $state) {
+      foreach ($keys as $key) {
+        $word = &$this->data['data'][$key] ?? null;
+        if (!is_null($word)) {
+          $word['active'] = $state;
+        }
+      }
+
+      $this->setData();
     }
   }

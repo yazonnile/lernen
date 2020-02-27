@@ -2,6 +2,8 @@
 
   namespace routes;
 
+  use lib\Response;
+
   class Data {
     public function __construct() {
 
@@ -17,21 +19,26 @@
 
     public function add() {
       $data = json_decode($_POST['payload'], true);
-      $text = $this->validateString($data['text']);
-      $translation = $this->validateString($data['translation']);
-      $plural = $this->validateString($data['plural']);
-      $strong1 = $this->validateString($data['strong1']);
-      $strong2 = $this->validateString($data['strong2']);
-      $strong3 = $this->validateString($data['strong3']);
-      $strong4 = $this->validateString($data['strong4']);
-      $strong5 = $this->validateString($data['strong5']);
-      $strong6 = $this->validateString($data['strong6']);
-      $type = $this->validateString($data['type']);
-      $wordType = $this->validateString($data['wordType']);
-      $article = $this->validateString($data['article']);
-      $strongVerb = $data['strongVerb'] ?? null;
+      $text = $this->validateString($data['text'] ?? null);
+      $translation = $this->validateString($data['translation'] ?? null);
+      $plural = $this->validateString($data['plural'] ?? null);
+      $strong1 = $this->validateString($data['strong1'] ?? null);
+      $strong2 = $this->validateString($data['strong2'] ?? null);
+      $strong3 = $this->validateString($data['strong3'] ?? null);
+      $strong4 = $this->validateString($data['strong4'] ?? null);
+      $strong5 = $this->validateString($data['strong5'] ?? null);
+      $strong6 = $this->validateString($data['strong6'] ?? null);
+      $irregular1 = $this->validateString($data['irregular1'] ?? null);
+      $irregular2 = $this->validateString($data['irregular2'] ?? null);
+      $irregular3 = $this->validateString($data['irregular3'] ?? null);
+      $type = $this->validateString($data['type'] ?? null);
+      $wordType = $this->validateString($data['wordType'] ?? null);
+      $article = $this->validateString($data['article'] ?? null);
+      $pluralOnly = !!($data['pluralOnly'] ?? null);
+      $strongVerb = !!($data['strongVerb'] ?? null);
+      $irregularVerb = !!($data['irregularVerb'] ?? null);
 
-      $response = new \lib\Response();
+      $response = new Response();
 
       if (is_null($text) || is_null($type) || is_null($translation)) {
         return $response->error();
@@ -40,28 +47,29 @@
       $model = [
         'text' => $text,
         'type' => $type,
-        'translation' => $translation
+        'translation' => $translation,
+        'active' => true
       ];
 
       if (is_null($wordType)) {
         return $response->error();
       }
 
-      $model['wordType'] = $wordType;
-
       if ($type === 'word') {
+        $model['wordType'] = $wordType;
         if ($wordType === 'noun') {
-          if (is_null($article) || is_null($plural)) {
+          if (is_null($article) || (is_null($plural) && !$pluralOnly)) {
             return $response->error();
           }
 
           $model['article'] = $article;
           $model['plural'] = $plural;
+          $model['pluralOnly'] = $pluralOnly;
         }
 
         if ($wordType === 'verb') {
           if ($strongVerb) {
-            if ((is_null($strong1) || is_null($strong2) || is_null($strong3) || is_null($strong4) || is_null($strong5) || is_null($strong6))) {
+            if (is_null($strong1) || is_null($strong2) || is_null($strong3) || is_null($strong4) || is_null($strong5) || is_null($strong6)) {
               return $response->error();
             }
 
@@ -71,6 +79,16 @@
             $model['strong4'] = $strong4;
             $model['strong5'] = $strong5;
             $model['strong6'] = $strong6;
+          }
+
+          if ($irregularVerb) {
+            if (is_null($irregular1) || is_null($irregular2) || is_null($irregular3)) {
+              return $response->error();
+            }
+
+            $model['irregular1'] = $irregular1;
+            $model['irregular2'] = $irregular2;
+            $model['irregular3'] = $irregular3;
           }
         }
       }
@@ -83,7 +101,23 @@
       echo $response->getResult();
     }
 
-    public function remove() {
+    public function on() {
+      $this->toggle(true);
+    }
 
+    public function off() {
+      $this->toggle(false);
+    }
+
+    private function toggle($state) {
+      $keys = json_decode($_POST['payload'], true);
+      $response = new Response();
+
+      if (is_array($keys) && count($keys)) {
+        (new \api\Data())->toggleWords($keys, $state);
+        echo $response->getResult();
+      } else {
+        return $response->error();
+      }
     }
   }

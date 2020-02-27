@@ -8,7 +8,7 @@
 
 <style>
   .header {
-    background: #ccc;
+    background: var(--mainColorLight);
     box-shadow: 0 -10px 10px 10px #000;
     font-size: 28px;
     font-weight: bold;

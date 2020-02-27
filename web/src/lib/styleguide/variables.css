@@ -1,5 +1,7 @@
 :root {
-  --mainColor: #0a78db;
+  --mainColor: #104b8a;
+  --mainColorLight: #b7d8f4;
   --redColor: #db2123;
+  --redColorLight: #f4c1c6;
   --greenColor: #5cc64a;
 }

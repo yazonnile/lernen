@@ -1,5 +1,6 @@
 declare interface Window {
   __initialState: {
-    data: object
+    data: object,
+    setup: object
   };
 }

@@ -5,12 +5,13 @@
 
 <div class="home">
   <Button text="Учить" on:click={view.learn} />
+  <Button text="Настроить" on:click={view.setup} />
+  <Button text="Словарь" on:click={view.words} />
   <Button text="Добавить слово" on:click={view.add} />
 </div>
 
 <style>
   .home :global(.button) {
-    margin-top: 50px;
-    width: 100%;
+    margin-top: 10px;
   }
 </style>
