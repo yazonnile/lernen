@@ -25,33 +25,11 @@ CREATE TABLE IF NOT EXISTS words (
   COLLATE = utf8_bin
   AUTO_INCREMENT = 1;
 
--- types
-CREATE TABLE IF NOT EXISTS types (
-  typeId   TINYINT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  typeName CHAR(10) NOT NULL,
-  CONSTRAINT typeId UNIQUE KEY (typeId),
-  CONSTRAINT typeName UNIQUE KEY (typeName)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_bin
-  AUTO_INCREMENT = 1;
-
 -- plural
 CREATE TABLE IF NOT EXISTS plural (
   wordId MEDIUMINT    NOT NULL PRIMARY KEY,
   plural VARCHAR(100) NOT NULL,
   CONSTRAINT id UNIQUE KEY (wordId)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_bin
-  AUTO_INCREMENT = 1;
-
--- articles
-CREATE TABLE IF NOT EXISTS articles (
-  articleId   TINYINT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  articleName CHAR(10) NOT NULL,
-  CONSTRAINT articleId UNIQUE KEY (articleId),
-  CONSTRAINT articleName UNIQUE KEY (articleName)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin
@@ -94,11 +72,7 @@ CREATE TABLE IF NOT EXISTS categories (
   COLLATE = utf8_bin
   AUTO_INCREMENT = 1;
 
--- words to categories
--- categories to user
--- words to users
--- plural to word
--- article to word
+-- joins
 CREATE TABLE IF NOT EXISTS joins (
   whatId   MEDIUMINT NOT NULL,
   whatType CHAR(10)  NOT NULL,
