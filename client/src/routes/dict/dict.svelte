@@ -2,9 +2,10 @@
   import DocumentTitle from 'sdk/document-title/document-title.svelte';
 </script>
 
-<DocumentTitle title="Home page" />
+<DocumentTitle title="dict" />
 
-список игр!
+<!-- - edit/delete/toggle WORDS, crud categories-->
+dict
 
 <style>
 

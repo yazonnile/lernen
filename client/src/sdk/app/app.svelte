@@ -45,4 +45,8 @@
     order: 2;
     padding: 10px;
   }
+
+  #bottom-buttons:empty {
+    padding: 0;
+  }
 </style>

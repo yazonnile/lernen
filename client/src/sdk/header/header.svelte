@@ -1,6 +1,7 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
   import Menu from 'sdk/menu/menu.svelte';
+  import { useRoute } from 'lib/router/router';
 
   let menuActive = false;
   const closeMenu = () => {
@@ -12,7 +13,7 @@
   };
 
   const logoClick = () => {
-    menuActive = true;
+    useRoute({ componentId: 'home' });
   };
 </script>
 
