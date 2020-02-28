@@ -106,10 +106,10 @@
         $jwtKey => $this->getConfigState('jwt.value')
       ], $this->getConfigState('jwt.salt'));
 
-//      setcookie(
-//        $this->getConfigState('jwt.name'), $jwtToken,
-//        time() + 60 * 60 * 24 * 30, '/', null, null, true
-//      );
+      setcookie(
+        $this->getConfigState('jwt.name'), $jwtToken,
+        time() + 60 * 60 * 24 * 30, '/', null, null, true
+      );
     }
 
     private function removeUserCookie() {
