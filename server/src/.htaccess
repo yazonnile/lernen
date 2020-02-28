@@ -1,0 +1,13 @@
+AddDefaultCharset UTF-8
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{DOCUMENT_ROOT}/public/$1 -f
+RewriteRule ^(.*)$ public/$1 [L]
+
+RewriteCond %{THE_REQUEST} \s/public/ [NC,OR]
+RewriteCond $1 !^public/
+RewriteRule ^(.*)$ index.php [L]
+RewriteRule ^.*(json|html|twig)$ - [F,L,NC]

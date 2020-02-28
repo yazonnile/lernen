@@ -1,0 +1,12 @@
+{
+  "name": "yes",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "slava z",
+  "license": "ISC",
+  "devDependencies": {
+    "copy": "^0.3.2"
+  }
+}

@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'ubuntu';
+  src: url('./fonts/ubuntu-regular-webfont.woff2') format('woff2'),
+  url('./fonts/ubuntu-regular-webfont.woff') format('woff');
+  font-style: normal;
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #fff;
+  color: #333;
+  font: 14px/18px ubuntu, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+input, textarea, select, button {
+  font-size: 100%;
+  font-family: ubuntu, Arial, sans-serif;;
+  outline: none;
+  vertical-align: middle;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 25px;
+  margin-bottom: 10px;
+}

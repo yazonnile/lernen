@@ -1,11 +1,15 @@
 {
   "config": {
-    "vendor-dir": "./lib/vendor",
+    "vendor-dir": "./src/lib/vendor",
     "optimize-autoloader": true
   },
   "require": {
-    "altorouter/altorouter": "2.0.1",
+    "lcobucci/jwt": "3.3.1",
+    "altorouter/altorouter": "1.1.0",
     "ext-json": "*",
-    "ext-mbstring": "*"
+    "ext-pdo": "*",
+    "ext-gd": "*",
+    "ext-mbstring": "*",
+    "twig/twig": "v2.12.1"
   }
 }
