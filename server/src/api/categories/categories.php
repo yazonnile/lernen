@@ -3,10 +3,6 @@
 namespace api;
 
 class Categories extends \lib\Db {
-  public function createCategories($categories) {
-    return $this->insertOnDuplicateKeyUpdate('categories', $categories);
-  }
-
   public function existByIds($catsIds) {
     $in = str_repeat('?,', count($catsIds) - 1) . '?';
     return $this->setSql(

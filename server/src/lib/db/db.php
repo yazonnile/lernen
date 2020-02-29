@@ -37,6 +37,10 @@
       return $sth->execute($data);
     }
 
+    public function update($table, $data) {
+      return $this->insertOnDuplicateKeyUpdate($table, $data);
+    }
+
     public function insertOnDuplicateKeyUpdate(string $table, array $data, bool $justBuildQuery = false) {
       $columns = '';
       $values = '';

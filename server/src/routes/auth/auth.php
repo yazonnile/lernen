@@ -27,7 +27,7 @@
         $this->addMessage('registration.success');
 
         $userId = $this->api->getLastInsertId();
-        $this->setupApi->update([ 'userId' => $userId ]);
+        $this->setupApi->update('setup', [ 'userId' => $userId ]);
       }
     }
 

@@ -31,7 +31,7 @@
         return [];
       }
 
-      $this->api->createCategories(array_map(function($cat) use($userId) {
+      $this->api->update('categories', array_map(function($cat) use($userId) {
         return [
           'categoryName' => $cat['categoryName'],
           'userId' => $userId,

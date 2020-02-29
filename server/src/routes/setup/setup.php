@@ -15,7 +15,7 @@
     }
 
     public function updateSetup() {
-      $this->api->update([
+      $this->api->update('setup', [
         'userId' => $this->user->getId(),
         'voice' => intval($this->getPayload('voice')),
         'voiceSpeed' => $this->getPayload('voiceSpeed'),
