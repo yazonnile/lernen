@@ -6,8 +6,12 @@
     /** @var \api\Auth */
     private $api;
 
+    /** @var \api\Setup */
+    private $setupApi;
+
     public function __construct() {
       $this->api = new \api\Auth();
+      $this->setupApi = new \api\Setup();
     }
 
     public function registerUser() {
@@ -21,6 +25,9 @@
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $this->api->register($login, $email, $passwordHash);
         $this->addMessage('registration.success');
+
+        $userId = $this->api->getLastInsertId();
+        $this->setupApi->update([ 'userId' => $userId ]);
       }
     }
 

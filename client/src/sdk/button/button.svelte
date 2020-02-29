@@ -44,7 +44,6 @@
     letter-spacing: 1px;
     line-height: 40px;
     margin-right: 10px;
-    min-width: 100px;
     overflow: hidden;
     padding: 3px 12px;
     position: relative;
@@ -60,6 +59,11 @@
   .button--color-red {
     background: var(--redColorLight);
     color: inherit;
+  }
+
+  .button--active {
+    background: var(--mainColor);
+    color: #fff;
   }
 
   .button:focus {
@@ -90,10 +94,6 @@
     padding: 1px 0 0;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .button--icon-only {
-    min-width: 0;
   }
 
   .button--icon-only .button--icon {

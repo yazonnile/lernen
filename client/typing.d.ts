@@ -44,7 +44,25 @@ type PageData = {
   categories?: {
     categoryId: number;
     categoryName: string;
-  }[]
+  }[];
+  setup: {
+    voice: boolean;
+    voiceSpeed: 1 | 2 | 3;
+    phrases: boolean;
+    soundPhrases: boolean;
+    nouns: boolean;
+    soundNouns: boolean;
+    articles: boolean;
+    soundArticles: boolean;
+    plural: boolean;
+    soundPlural: boolean;
+    verbs: boolean;
+    soundVerbs: boolean;
+    strongVerbs: boolean;
+    soundStrongVerbs: boolean;
+    irregularVerbs: boolean;
+    soundIrregularVerbs: boolean;
+  }
 };
 
 type ClientDataType = {

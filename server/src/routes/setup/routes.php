@@ -8,6 +8,12 @@ class SetupRoutes {
       'setup' => [
         'url' => '/setup',
         'access' => [\api\Access::user]
+      ],
+      'updateSetup' => [
+        'url' => '/update-setup',
+        'access' => [\api\Access::user],
+        'methods' => ['POST'],
+        'payloadScheme' => ['voiceSpeed'],
       ]
     ];
   }

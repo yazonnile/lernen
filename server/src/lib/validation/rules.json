@@ -36,10 +36,6 @@
     "type": "string",
     "max": 100
   },
-  "active": {
-    "type": "boolean",
-    "optional": true
-  },
   "translation": {
     "type": "string",
     "max": 100
@@ -56,10 +52,6 @@
   "article": {
     "type": "string",
     "match": "^(der|die|das)$"
-  },
-  "strongVerb": {
-    "type": "boolean",
-    "optional": true
   },
   "strong1": {
     "type": "string",
@@ -91,10 +83,6 @@
     "max": 100,
     "optional": true
   },
-  "irregularVerb": {
-    "type": "boolean",
-    "optional": true
-  },
   "irregular1": {
     "type": "string",
     "max": 100,
@@ -110,13 +98,6 @@
     "max": 100,
     "optional": true
   },
-  "categoriesActive": {
-    "type": "boolean",
-    "optional": true
-  },
-
-
-
   "categoryId": {
     "type": "number",
     "max": 32676
@@ -125,12 +106,8 @@
     "type": "string",
     "max": 100
   },
-  "whatId": {
-    "type": "number",
-    "max": 16777215
-  },
-  "toId": {
-    "type": "number",
-    "max": 16777215
+  "voiceSpeed": {
+    "type": "string",
+    "match": "^(1|2|3)$"
   }
 }
