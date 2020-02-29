@@ -1,46 +1,40 @@
 {
   "login": {
     "type": "string",
-    "between": [2, 25],
-    "value": "qq"
+    "between": [2, 25]
   },
   "email": {
-    "type": "email",
-    "value": "qq@qq.qq"
+    "type": "email"
   },
   "password": {
     "type": "string",
-    "between": [1, 25],
-    "trim": false,
-    "value": "qq"
+    "max": 25,
+    "trim": false
   },
   "newPassword": {
     "type": "string",
-    "between": [1, 25],
-    "trim": false,
-    "value": ""
+    "max": 25,
+    "trim": false
   },
   "mcnulty": {
     "type": "number",
-    "equal": 5,
-    "value": 5
+    "equal": 5
   },
   "loginOrEmail": {
-    "type": "string",
-    "value": "qq"
+    "type": "string"
   },
 
   "userId": {
     "type": "number",
-    "between": [1, 16777215]
+    "max": 16777215
   },
   "wordId": {
     "type": "number",
-    "between": [1, 16777215]
+    "max": 16777215
   },
   "original": {
     "type": "string",
-    "between": [1, 100]
+    "max": 100
   },
   "active": {
     "type": "boolean",
@@ -48,34 +42,95 @@
   },
   "translation": {
     "type": "string",
-    "between": [1, 100]
+    "max": 100
   },
   "type": {
-    "type": "number",
-    "between": [1, 4]
+    "type": "string",
+    "match": "^(noun|verb|other|phrase)$"
   },
   "plural": {
     "type": "string",
-    "between": [1, 100]
+    "max": 100,
+    "optional": true
   },
-  "articleId": {
-    "type": "number",
-    "between": [1, 3]
+  "article": {
+    "type": "string",
+    "match": "^(der|die|das)$"
   },
+  "strongVerb": {
+    "type": "boolean",
+    "optional": true
+  },
+  "strong1": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "strong2": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "strong3": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "strong4": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "strong5": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "strong6": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "irregularVerb": {
+    "type": "boolean",
+    "optional": true
+  },
+  "irregular1": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "irregular2": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "irregular3": {
+    "type": "string",
+    "max": 100,
+    "optional": true
+  },
+  "categoriesActive": {
+    "type": "boolean",
+    "optional": true
+  },
+
+
+
   "categoryId": {
     "type": "number",
-    "between": [1, 32676]
+    "max": 32676
   },
   "categoryName": {
     "type": "string",
-    "between": [1, 100]
+    "max": 100
   },
   "whatId": {
     "type": "number",
-    "between": [1, 16777215]
+    "max": 16777215
   },
   "toId": {
     "type": "number",
-    "between": [1, 16777215]
+    "max": 16777215
   }
 }

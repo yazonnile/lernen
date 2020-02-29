@@ -54,6 +54,7 @@ const request: Request = (options) => {
     }
   }).catch((e) => {
     console.error('unhandled in promise', e);
+    busy = false;
   });
 };
 

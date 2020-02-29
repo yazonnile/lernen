@@ -37,7 +37,7 @@
   .button {
     border-width: 1px;
     border-style: solid;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
     display: inline-block;
     font-size: 13px;

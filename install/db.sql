@@ -15,11 +15,13 @@ CREATE TABLE IF NOT EXISTS users (
 -- words
 CREATE TABLE IF NOT EXISTS words (
   wordId      MEDIUMINT    NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  userId        MEDIUMINT    NOT NULL,
   original    VARCHAR(100) NOT NULL DEFAULT '',
   active      BOOLEAN               DEFAULT NULL,
   translation VARCHAR(100) NOT NULL DEFAULT '',
   type        TINYINT      NOT NULL DEFAULT 1,
-  CONSTRAINT id UNIQUE KEY (wordId)
+  CONSTRAINT id UNIQUE KEY (wordId),
+  CONSTRAINT id2 UNIQUE KEY (wordId, userId)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin
@@ -27,9 +29,19 @@ CREATE TABLE IF NOT EXISTS words (
 
 -- plural
 CREATE TABLE IF NOT EXISTS plural (
-  wordId MEDIUMINT    NOT NULL PRIMARY KEY,
+  wordId MEDIUMINT    NOT NULL,
   plural VARCHAR(100) NOT NULL,
   CONSTRAINT id UNIQUE KEY (wordId)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_bin
+  AUTO_INCREMENT = 1;
+
+-- article
+CREATE TABLE IF NOT EXISTS articles (
+  wordId MEDIUMINT    NOT NULL,
+  article char(10) NOT NULL,
+  CONSTRAINT id UNIQUE KEY (wordId, article)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin
@@ -66,19 +78,19 @@ CREATE TABLE IF NOT EXISTS irregular (
 CREATE TABLE IF NOT EXISTS categories (
   categoryId   SMALLINT     NOT NULL AUTO_INCREMENT PRIMARY KEY,
   categoryName VARCHAR(100) NOT NULL,
-  CONSTRAINT id UNIQUE KEY (categoryId)
+  userId        MEDIUMINT    NOT NULL,
+  CONSTRAINT id UNIQUE KEY (categoryId),
+  CONSTRAINT id2 UNIQUE KEY (categoryName, userId)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin
   AUTO_INCREMENT = 1;
 
--- joins
-CREATE TABLE IF NOT EXISTS joins (
-  whatId   MEDIUMINT NOT NULL,
-  whatType CHAR(10)  NOT NULL,
-  toId     MEDIUMINT NOT NULL,
-  toType   CHAR(10)  NOT NULL,
-  CONSTRAINT id UNIQUE KEY (whatId, toId, whatType, toType)
+-- words_to_categories
+CREATE TABLE IF NOT EXISTS words_to_categories (
+  wordId MEDIUMINT    NOT NULL,
+  categoryId SMALLINT NOT NULL,
+  CONSTRAINT id UNIQUE KEY (wordId, categoryId)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin

@@ -41,6 +41,10 @@ type PageData = {
   } & RouteId;
   url?: string;
   [key: string]: any;
+  categories?: {
+    categoryId: number;
+    categoryName: string;
+  }[]
 };
 
 type ClientDataType = {

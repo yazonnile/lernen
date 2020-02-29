@@ -2,7 +2,6 @@
   import FormElement from 'sdk/form-element/form-element.svelte';
   import Button from 'sdk/button/button.svelte';
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
-  import Buttons from 'sdk/bottom-buttons/bottom-buttons.svelte';
   import createValidation from 'lib/validation/validation';
 
   const {
@@ -10,16 +9,10 @@
       loginOrEmail: [ lErrors, lValue, lInput ],
       password: [ pErrors, pValue, pInput ],
     },
-    form, validate, getValues
+    form
   } = createValidation({ componentId: 'home' }, {
     scheme: ['loginOrEmail', 'password']
   });
-
-  const onClick = () => {
-    if (!validate().length) {
-      form.onSuccess(getValues());
-    }
-  }
 </script>
 
 <FormValidation {form}>
@@ -30,7 +23,5 @@
   <FormElement errors={pErrors} label="Пароль">
     <input type="password" bind:value={$pValue} use:pInput />
   </FormElement>
-  <Buttons>
-    <Button text="Войти" on:click={onClick} />
-  </Buttons>
+  <Button text="Войти" type="submit" />
 </FormValidation>

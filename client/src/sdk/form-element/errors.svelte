@@ -26,6 +26,10 @@
       result.push(['equal', `Не угадали`]);
     }
 
+    if (errors.match) {
+      result.push(['match', `Выберите что-то`]);
+    }
+
     return result;
   };
 

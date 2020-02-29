@@ -43,7 +43,7 @@
 
   #bottom-buttons {
     order: 2;
-    padding: 10px;
+    padding: 10px 10px 0;
   }
 
   #bottom-buttons:empty {

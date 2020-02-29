@@ -4,7 +4,6 @@
   import FormElement from 'sdk/form-element/form-element.svelte';
   import Button from 'sdk/button/button.svelte';
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
-  import Buttons from 'sdk/bottom-buttons/bottom-buttons.svelte';
   import createValidation from 'lib/validation/validation'
 
   let {
@@ -14,16 +13,10 @@
       password: [ pErrors, pValue, pInput ],
       mcnulty: [ mErrors, mValue, mInput ],
     },
-    form, validate, getValues
+    form
   } = createValidation({ componentId: 'auth', routeId: 'registerUser' }, () => {
     authMode = 'login';
   });
-
-  const onClick = () => {
-    if (!validate().length) {
-      form.onSuccess(getValues());
-    }
-  }
 </script>
 
 <FormValidation {form}>
@@ -40,7 +33,5 @@
   <FormElement errors={mErrors} label="Сложите eins и четыре">
     <input type="number" bind:value={$mValue} use:mInput />
   </FormElement>
-  <Buttons>
-    <Button text="Готово" on:click={onClick} />
-  </Buttons>
+  <Button text="Готово" type="submit" />
 </FormValidation>

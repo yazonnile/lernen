@@ -32,7 +32,7 @@
     display: flex;
     align-items: center;
     justify-items: flex-start;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     position: relative;
   }
 

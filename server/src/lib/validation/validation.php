@@ -97,7 +97,7 @@
     }
 
     public function match() {
-      return preg_match($this->rule['match'], strval($this->value));
+      return preg_match('/'.$this->rule['match'].'/', strval($this->value));
     }
 
     public function required() {

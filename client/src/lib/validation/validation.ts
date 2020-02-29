@@ -27,15 +27,13 @@ interface CreateValidationResult {
       UseFunction
     ];
   };
-  validate(): any[];
-  getValues(): any[]
 }
 
 export const defaultValidationOptions = {
   presence: 'required',
   trim: true,
-  validateOnEvents: { input: true },
   clearErrorsOnEvents: { focus: true },
+  includeAllEntries: true,
   useCustomErrorsStore: (errors, params) => {
     return errors.reduce((result, ruleName) => {
       result[ruleName] = params[ruleName];
@@ -69,8 +67,6 @@ export default (validationParams: {params?: Params} & RouteId, options: Validati
   };
 
   return {
-    getValues,
-    validate,
     form: { use: createForm, onSuccess },
     entries: createEntries(scheme.reduce((result, entryId) => {
       result[entryId] = {
