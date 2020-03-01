@@ -62,6 +62,12 @@ type PageData = {
     soundStrongVerbs: boolean;
     irregularVerbs: boolean;
     soundIrregularVerbs: boolean;
+  },
+  words: {
+    [key: string]: {
+      original: string,
+      active: boolean;
+    }
   }
 };
 

@@ -69,7 +69,6 @@
           'wordId' => $wordId,
           'irregular1' => $this->getPayload('irregular1'),
           'irregular2' => $this->getPayload('irregular2'),
-          'irregular3' => $this->getPayload('irregular3'),
         ]);
       }
 
@@ -85,7 +84,7 @@
     }
 
     private function saveWord($type) {
-      $wordId = $this->getPayload('wordId') ?? 1;
+      $wordId = $this->getPayload('wordId');
       $word = [
         'type' => $type,
         'original' => $this->getPayload('original'),

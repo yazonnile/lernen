@@ -11,9 +11,12 @@
   import Errors from 'sdk/form-element/errors.svelte';
   import Categories from './categories.svelte';
   import { useRoute } from 'lib/router/router';
+  import { page } from 'stores';
 
   let { wordId = null } = word;
   $: type = word.type || '';
+  let isVerbStrong = 'strong1' in word;
+  let isVerbIrregular = 'irregular1' in word;
 
   let linkedCategories = [];
   let createdCategories = [];
@@ -22,12 +25,17 @@
   const params = {
     initialValues: word,
     assignPayload: (payload) => ({ ...payload, type, linkedCategories, createdCategories, categoriesActive, wordId }),
-    cb: () => {
+    cb: ({ categories }) => {
+      $page.categories = categories;
       if (wordId) {
         useRoute({ componentId: 'home' });
       } else {
         word = {};
-
+        categoriesActive = false;
+        linkedCategories = [];
+        createdCategories = [];
+        isVerbStrong = false;
+        isVerbIrregular = false;
         if (type === 'noun') {
           $nounOrigValue = '';
           $nounTrValue = '';
@@ -36,8 +44,6 @@
         } else if (type === 'verb') {
           $verbOrigValue = '';
           $verbTrValue = '';
-          $strongValue = '';
-          $irregularValue = '';
           $strong1Value = '';
           $strong2Value = '';
           $strong3Value = '';
@@ -46,7 +52,6 @@
           $strong6Value = '';
           $irregular1Value = '';
           $irregular2Value = '';
-          $irregular3Value = '';
         } else {
           $otherOrigValue = '';
           $otherTrValue = '';
@@ -85,8 +90,6 @@
     entries: {
       original: [ verbOrigErrors, verbOrigValue, verbOrigInput ],
       translation: [ verbTrErrors, verbTrValue, verbTrInput ],
-      strongVerb: [ strongErrors, strongValue, strongInput ],
-      irregularVerb: [ irregularErrors, irregularValue, irregularInput ],
       strong1: [ strong1Errors, strong1Value, strong1Input ],
       strong2: [ strong2Errors, strong2Value, strong2Input ],
       strong3: [ strong3Errors, strong3Value, strong3Input ],
@@ -95,7 +98,6 @@
       strong6: [ strong6Errors, strong6Value, strong6Input ],
       irregular1: [ irregular1Errors, irregular1Value, irregular1Input ],
       irregular2: [ irregular2Errors, irregular2Value, irregular2Input ],
-      irregular3: [ irregular3Errors, irregular3Value, irregular3Input ],
     },
     form: verbForm
   } = createValidation({ componentId: 'addWord', routeId: 'saveVerb' }, params);
@@ -166,9 +168,9 @@
         <input type="text" bind:value={$verbTrValue} use:verbTrInput />
       </FormElement>
 
-      <FormSwitcher type="toggle" bind:checked={$strongValue}>Сильный глагол</FormSwitcher>
+      <FormSwitcher type="toggle" bind:checked={isVerbStrong}>Сильный глагол</FormSwitcher>
 
-      {#if $strongValue}
+      {#if isVerbStrong}
         <FormElement errors={strong1Errors} label="Ich">
           <input type="text" bind:value={$strong1Value} use:strong1Input />
         </FormElement>
@@ -189,17 +191,14 @@
         </FormElement>
       {/if}
 
-      <FormSwitcher type="toggle" bind:checked={$irregularValue}>Неправильный глагол</FormSwitcher>
+      <FormSwitcher type="toggle" bind:checked={isVerbIrregular}>Неправильный глагол</FormSwitcher>
 
-      {#if $irregularValue}
-        <FormElement errors={irregular1Errors} label="Präsens">
+      {#if isVerbIrregular}
+        <FormElement errors={irregular1Errors} label="Präteritum">
           <input type="text" bind:value={$irregular1Value} use:irregular1Input />
         </FormElement>
-        <FormElement errors={irregular2Errors} label="Präteritum">
+        <FormElement errors={irregular2Errors} label="Partizip II">
           <input type="text" bind:value={$irregular2Value} use:irregular2Input />
-        </FormElement>
-        <FormElement errors={irregular3Errors} label="Partizip II">
-          <input type="text" bind:value={$irregular3Value} use:irregular3Input />
         </FormElement>
       {/if}
 

@@ -1,5 +1,5 @@
 <script>
-  export let keys;
+  export let words;
   export let result;
   export let value = '';
   export let label = null;
@@ -7,7 +7,7 @@
   import FormElement from 'sdk/form-element/form-element.svelte';
 
   $: {
-    result = value && value.length > 1 ? keys.filter(key => {
+    result = value && value.length ? words.filter(key => {
       return key.toString().toLowerCase().indexOf(value.toLowerCase()) > -1;
     }).sort((a, b) => {
       a = a.toLowerCase();

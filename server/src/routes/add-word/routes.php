@@ -25,7 +25,7 @@ class AddWordRoutes {
         'url' => '/save-verb',
         'access' => [\api\Access::user],
         'methods' => ['POST'],
-        'payloadScheme' => ['original', 'translation', 'strongVerb', 'irregularVerb', 'strong1', 'strong2', 'strong3', 'strong4', 'strong5', 'strong6', 'irregular1', 'irregular2', 'irregular3'],
+        'payloadScheme' => ['original', 'translation', 'strong1', 'strong2', 'strong3', 'strong4', 'strong5', 'strong6', 'irregular1', 'irregular2'],
       ]
     ];
   }

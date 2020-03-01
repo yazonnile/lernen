@@ -41,12 +41,6 @@
   <FormSwitcher type="toggle" bind:checked={active}>Добавить слово в категорию</FormSwitcher>
 
   {#if active}
-    {#each result as { categoryName, categoryId } (categoryId)}
-      <Category {categoryName}>
-        <input type="checkbox" bind:group={linked} value={categoryId} />
-      </Category>
-    {/each}
-
     {#if formView}
       <FormElement label="Имя категории">
         <input type="text" bind:value={newCategoryName} />
@@ -58,6 +52,12 @@
     {:else}
       <Button text="создать категорию" icon="plus" on:click={() => (formView = true)} />
     {/if}
+
+    {#each result as { categoryName, categoryId } (categoryId)}
+      <Category {categoryName}>
+        <input type="checkbox" bind:group={linked} value={categoryId} />
+      </Category>
+    {/each}
   {/if}
 </div>
 

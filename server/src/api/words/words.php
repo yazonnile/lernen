@@ -11,4 +11,14 @@
         ':wordId' => $wordId
       ]);
     }
+
+    public function getWords($userId) {
+      return $this->setSql(
+        "SELECT original, active
+        FROM words
+        WHERE userId = :userId;"
+      )->getAll([
+        ':userId' => $userId
+      ]);
+    }
   }

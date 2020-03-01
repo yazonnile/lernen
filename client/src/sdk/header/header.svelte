@@ -18,7 +18,11 @@
 </script>
 
 <header class="header">
-  <a class="logo" href="/" on:click|preventDefault={logoClick}>Lernen</a>
+  <a class="logo" href="/" on:click|preventDefault={logoClick}>
+    <span class="black">le</span>
+    <span class="red">rn</span>
+    <span class="yellow">en</span>
+  </a>
   <button
     class="header--button header--menu"
     on:click="{openMenu}"
@@ -46,11 +50,16 @@
 
   .header .logo {
     color: inherit;
+    display: inline-flex;
     font-size: 28px;
     font-weight: bold;
+    height: 40px;
+    overflow: hidden;
+    padding: 0 10px;
     line-height: 40px;
     text-transform: uppercase;
     text-decoration: none;
+    vertical-align: top;
   }
 
   .header--button {
@@ -69,5 +78,22 @@
 
   .header--nav {
     left: 0;
+  }
+
+  .logo span {
+    display: block;
+    text-shadow: 1px 1px 1px rgba(0,0,0,1), -1px -1px 1px rgba(0,0,0,1);
+  }
+
+  .black {
+    color: #424242;
+  }
+
+  .red {
+    color: #de0000;
+  }
+
+  .yellow {
+    color: #f7b800;
   }
 </style>

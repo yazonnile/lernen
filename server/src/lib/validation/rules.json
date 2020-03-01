@@ -93,11 +93,6 @@
     "max": 100,
     "optional": true
   },
-  "irregular3": {
-    "type": "string",
-    "max": 100,
-    "optional": true
-  },
   "categoryId": {
     "type": "number",
     "max": 32676
