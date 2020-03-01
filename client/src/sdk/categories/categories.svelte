@@ -3,7 +3,7 @@
   export let created;
   export let active;
 
-  import Category from 'sdk/category/category.svelte';
+  import CategoriesList from './categories-list.svelte';
   import FormElement from 'sdk/form-element/form-element.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import Button from 'sdk/button/button.svelte';
@@ -53,11 +53,7 @@
       <Button text="создать категорию" icon="plus" on:click={() => (formView = true)} />
     {/if}
 
-    {#each result as { categoryName, categoryId } (categoryId)}
-      <Category {categoryName}>
-        <input type="checkbox" bind:group={linked} value={categoryId} />
-      </Category>
-    {/each}
+    <CategoriesList bind:linked bind:list={result} />
   {/if}
 </div>
 

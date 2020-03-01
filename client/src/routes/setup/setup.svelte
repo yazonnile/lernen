@@ -82,6 +82,10 @@
     {/if}
   </SetupBox>
 
+  <SetupBox title="другое">
+    <FormSwitcher type="toggle" bind:checked={setup.other}>учить</FormSwitcher>
+  </SetupBox>
+
   <Button text="Сохранить" on:click={onSave} />
 </div>
 

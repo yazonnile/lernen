@@ -12,7 +12,7 @@
 <div class="app">
   <Header />
 
-  <div id="bottom-buttons"></div>
+  <div id="bottom-buttons" class="bottom-buttons"></div>
   <main class="main">
     <svelte:component this={activeRoute} />
   </main>
@@ -47,6 +47,7 @@
   }
 
   #bottom-buttons:empty {
+    margin: 0;
     padding: 0;
   }
 </style>

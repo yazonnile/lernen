@@ -47,4 +47,8 @@
         ':userId' => $userId
       ]);
     }
+
+    public function getWordsByCategoriesAndSetup($query) {
+      return $this->setSql($query)->getAll();
+    }
   }

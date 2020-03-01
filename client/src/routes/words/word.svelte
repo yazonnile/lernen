@@ -10,7 +10,7 @@
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
   import createValidation from 'lib/validation/validation';
   import Errors from 'sdk/form-element/errors.svelte';
-  import Categories from './categories.svelte';
+  import Categories from 'sdk/categories/categories.svelte';
   import { useRoute } from 'lib/router/router';
   import { page } from 'stores';
 
@@ -105,7 +105,7 @@
 
 <DocumentTitle title="add word" />
 <div>
-  <h1>Добавить слово</h1>
+  <h1>{wordId ? 'Редактировать' : 'Добавить'} слово</h1>
 
   <ButtonsRow twoInARow>
     <button on:click|preventDefault={() => (type = 'noun')} class:active={type === 'noun'}>Существ.</button>
@@ -138,7 +138,7 @@
 
       <Categories bind:linked={linkedCategories} bind:created={createdCategories} bind:active={categoriesActive} />
 
-      <Button type="submit" text="Создать" />
+      <Button type="submit" text={wordId ? 'редактировать' : 'создать'} />
     </FormValidation>
   {/if}
 
@@ -154,7 +154,7 @@
 
       <Categories bind:linked={linkedCategories} bind:created={createdCategories} bind:active={categoriesActive} />
 
-      <Button type="submit" text="Создать" />
+      <Button type="submit" text={wordId ? 'редактировать' : 'создать'} />
     </FormValidation>
   {/if}
 
@@ -204,7 +204,7 @@
 
       <Categories bind:linked={linkedCategories} bind:created={createdCategories} bind:active={categoriesActive} />
 
-      <Button type="submit" text="Создать слово" />
+      <Button type="submit" text={wordId ? 'редактировать' : 'создать'} />
     </FormValidation>
   {/if}
 </div>

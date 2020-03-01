@@ -104,5 +104,9 @@
   "voiceSpeed": {
     "type": "string",
     "match": "^(1|2|3)$"
+  },
+  "gameId": {
+    "type": "string",
+    "match": "^(learn|second)$"
   }
 }

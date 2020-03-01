@@ -39,6 +39,29 @@ type Category = {
   categoryName: string;
 };
 
+type WordType = 'noun' | 'verb' | 'phrase' | 'other';
+type WordArticles = 'der' | 'die' | 'das';
+type SetupVoiceSpeed = 1 | 2 | 3;
+
+type Word = {
+  wordId: number;
+  original: string;
+  active: boolean;
+  translation: string;
+  type: WordType;
+  userId: number;
+  article?: WordArticles;
+  plural?: string;
+  strong1?: string;
+  strong2?: string;
+  strong3?: string;
+  strong4?: string;
+  strong5?: string;
+  strong6?: string;
+  irregular1?: string;
+  irregular6?: string;
+};
+
 type PageData = {
   activeRoute: {
     route: Route;
@@ -48,9 +71,10 @@ type PageData = {
   [key: string]: any;
   categories?: Category[];
   linkedCategories?: number[];
+  preGame?: boolean;
   setup?: {
     voice: boolean;
-    voiceSpeed: 1 | 2 | 3;
+    voiceSpeed: SetupVoiceSpeed;
     phrases: boolean;
     soundPhrases: boolean;
     nouns: boolean;
@@ -65,31 +89,13 @@ type PageData = {
     soundStrongVerbs: boolean;
     irregularVerbs: boolean;
     soundIrregularVerbs: boolean;
+    other: boolean;
   };
   words?: {
-    [key: string]: {
-      original: string;
-      active: boolean;
-      wordId: number;
-    }
+    [key: string]: Word;
   };
-  word?: {
-    wordId: number;
-    original: string;
-    active: boolean;
-    translation: string;
-    type: 'noun' | 'verb' | 'phrase' | 'other';
-    article?: 'der' | 'die' | 'das';
-    plural?: string;
-    irregular1?: string;
-    irregular2?: string;
-    strong1?: string;
-    strong2?: string;
-    strong3?: string;
-    strong4?: string;
-    strong5?: string;
-    strong6?: string;
-  }
+  word?: Word;
+  learn?: Word[];
 };
 
 type ClientDataType = {

@@ -21,6 +21,7 @@
         'voiceSpeed' => $this->getPayload('voiceSpeed'),
         'phrases' => intval($this->getPayload('phrases')),
         'soundPhrases' => intval($this->getPayload('soundPhrases')),
+        'other' => intval($this->getPayload('other')),
         'nouns' => intval($this->getPayload('nouns')),
         'soundNouns' => intval($this->getPayload('soundNouns')),
         'articles' => intval($this->getPayload('articles')),

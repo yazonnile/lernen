@@ -17,6 +17,7 @@ class Router extends StateManager {
     $this->addRoutes('stat', \routes\StatRoutes::getRoutes());
     $this->addRoutes('setup', \routes\SetupRoutes::getRoutes());
     $this->addRoutes('categories', \routes\CategoriesRoutes::getRoutes());
+    $this->addRoutes('games', \routes\GamesRoutes::getRoutes());
     $this->addRoutes('notFound', \routes\NotFoundRoutes::getRoutes());
 
     $match = $this->router->match();

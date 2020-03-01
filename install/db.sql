@@ -101,6 +101,7 @@ CREATE TABLE IF NOT EXISTS setup (
   voice               BOOLEAN DEFAULT 1 NOT NULL,
   voiceSpeed          TINYINT DEFAULT 1 NOT NULL,
   phrases             BOOLEAN DEFAULT 1 NOT NULL,
+  other               BOOLEAN DEFAULT 1 NOT NULL,
   soundPhrases        BOOLEAN DEFAULT 1 NOT NULL,
   nouns               BOOLEAN DEFAULT 1 NOT NULL,
   soundNouns          BOOLEAN DEFAULT 1 NOT NULL,
