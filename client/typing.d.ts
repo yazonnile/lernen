@@ -34,6 +34,11 @@ type InitialData = {
   };
 };
 
+type Category = {
+  categoryId: number;
+  categoryName: string;
+};
+
 type PageData = {
   activeRoute: {
     route: Route;
@@ -41,11 +46,9 @@ type PageData = {
   } & RouteId;
   url?: string;
   [key: string]: any;
-  categories?: {
-    categoryId: number;
-    categoryName: string;
-  }[];
-  setup: {
+  categories?: Category[];
+  linkedCategories?: number[];
+  setup?: {
     voice: boolean;
     voiceSpeed: 1 | 2 | 3;
     phrases: boolean;
@@ -62,12 +65,30 @@ type PageData = {
     soundStrongVerbs: boolean;
     irregularVerbs: boolean;
     soundIrregularVerbs: boolean;
-  },
-  words: {
+  };
+  words?: {
     [key: string]: {
-      original: string,
+      original: string;
       active: boolean;
+      wordId: number;
     }
+  };
+  word?: {
+    wordId: number;
+    original: string;
+    active: boolean;
+    translation: string;
+    type: 'noun' | 'verb' | 'phrase' | 'other';
+    article?: 'der' | 'die' | 'das';
+    plural?: string;
+    irregular1?: string;
+    irregular2?: string;
+    strong1?: string;
+    strong2?: string;
+    strong3?: string;
+    strong4?: string;
+    strong5?: string;
+    strong6?: string;
   }
 };
 
@@ -95,7 +116,7 @@ type PayloadSchemeType = 'login' | 'email' | 'password' | 'newPassword' | 'mcnul
 
 interface Params {
   userId?: number;
-  postId?: number;
+  wordId?: number;
 }
 
 type RouteMethodsType = 'POST' | 'GET';

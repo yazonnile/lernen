@@ -3,6 +3,7 @@
   import Button from 'sdk/button/button.svelte';
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
   import Icon from 'sdk/icon/icon.svelte';
+  import { useRoute } from 'lib/router/router';
   import { page } from 'stores';
 
   let words = Object.keys($page.words);
@@ -16,7 +17,7 @@
   }
 
   const onEdit = (item) => {
-    console.log('onEdit', item);
+    useRoute({ componentId: 'words', routeId: 'editWord', params: { wordId: $page.words[item].wordId } });
   };
 
   const onRemove = () => {
@@ -35,7 +36,7 @@
 <DocumentTitle title="dict" />
 
 <div class="dict">
-  <Autocomplete {words} bind:result label="Начните вводить слово/фразу" value="t" />
+  <Autocomplete {words} bind:result label="Начните вводить слово/фразу" />
 
   {#each result as item (item)}
     <input type="checkbox" bind:group={checked} value={item} id={`cat${item}`} />

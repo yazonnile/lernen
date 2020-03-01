@@ -12,10 +12,11 @@ class Router extends StateManager {
 
     $this->addRoutes('auth', \routes\AuthRoutes::getRoutes());
     $this->addRoutes('home', \routes\HomeRoutes::getRoutes());
-    $this->addRoutes('addWord', \routes\AddWordRoutes::getRoutes());
+    $this->addRoutes('words', \routes\WordsRoutes::getRoutes());
     $this->addRoutes('dict', \routes\DictRoutes::getRoutes());
     $this->addRoutes('stat', \routes\StatRoutes::getRoutes());
     $this->addRoutes('setup', \routes\SetupRoutes::getRoutes());
+    $this->addRoutes('categories', \routes\CategoriesRoutes::getRoutes());
     $this->addRoutes('notFound', \routes\NotFoundRoutes::getRoutes());
 
     $match = $this->router->match();

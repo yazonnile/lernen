@@ -2,11 +2,15 @@
 
 namespace routes;
 
-class AddWordRoutes {
+class WordsRoutes {
   static public function getRoutes() {
     return [
       'addWord' => [
-        'url' => '/add-word',
+        'url' => '/words/add',
+        'access' => [\api\Access::user]
+      ],
+      'editWord' => [
+        'url' => '/words/edit/[i:wordId]',
         'access' => [\api\Access::user]
       ],
       'saveNoun' => [

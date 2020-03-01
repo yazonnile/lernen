@@ -11,7 +11,7 @@
     }
 
     public function getCategories($userId) {
-      return $this->api->getCategories($userId);
+      return $this->api->getCategoriesByUserId($userId);
     }
 
     public function createCategories($categories, $joinedCats, $userId) {
@@ -57,5 +57,11 @@
       return array_map(function($cat) {
         return $cat['categoryId'];
       }, $this->api->existByIds($categoriesIds));
+    }
+
+    public function getLinkedCategories($wordId) {
+      return array_map(function($cat) {
+        return $cat['categoryId'];
+      }, $this->api->getCategoriesByWordId($wordId));
     }
   }

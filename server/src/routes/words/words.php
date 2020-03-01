@@ -4,7 +4,7 @@
 
   use api\Types;
 
-  class AddWord extends \lib\RouteComponent {
+  class Words extends \lib\RouteComponent {
     /** @var \api\Words */
     private $api;
 
@@ -16,8 +16,21 @@
       $this->categoriesService = new \service\Categories();
     }
 
-    public function addWord() {
+    private function getCategories() {
       $this->updateState('categories', $this->categoriesService->getCategories($this->user->getId()));
+    }
+
+    public function addWord() {
+      $this->getCategories();
+    }
+
+    public function editWord() {
+      $this->getCategories();
+
+      $wordId = $this->getParam('wordId');
+
+      $this->updateState('word', $this->api->getWord($wordId, $this->user->getId()));
+      $this->updateState('linkedCategories', $this->categoriesService->getLinkedCategories($wordId));
     }
 
     public function saveNoun() {
@@ -39,7 +52,7 @@
         ]);
       }
 
-      $this->addWord();
+      $this->getCategories();
       $this->addMessage('saveNoun.success');
     }
 
@@ -72,14 +85,14 @@
         ]);
       }
 
-      $this->addWord();
+      $this->getCategories();
       $this->addMessage('saveVerb.success');
     }
 
     public function saveOther() {
       $type = $this->getPayload('type');
       $this->saveWord($type);
-      $this->addWord();
+      $this->getCategories();
       $this->addMessage('saveOther.success');
     }
 

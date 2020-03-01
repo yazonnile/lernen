@@ -1,5 +1,6 @@
 <script>
   export let word = {};
+  export let linkedCategories = [];
 
   import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import FormElement from 'sdk/form-element/form-element.svelte';
@@ -15,16 +16,15 @@
 
   let { wordId = null } = word;
   $: type = word.type || '';
-  let isVerbStrong = 'strong1' in word;
-  let isVerbIrregular = 'irregular1' in word;
+  let strongVerb = word.strong1 || word.strong2 || word.strong3 || word.strong4 || word.strong5 || word.strong6;
+  let irregularVerb = word.irregular1 || word.irregular2;
 
-  let linkedCategories = [];
   let createdCategories = [];
-  let categoriesActive = false;
+  let categoriesActive = !!linkedCategories.length;
 
   const params = {
     initialValues: word,
-    assignPayload: (payload) => ({ ...payload, type, linkedCategories, createdCategories, categoriesActive, wordId }),
+    assignPayload: (payload) => ({ ...payload, type, linkedCategories, createdCategories, categoriesActive, wordId, strongVerb, irregularVerb }),
     cb: ({ categories }) => {
       $page.categories = categories;
       if (wordId) {
@@ -34,8 +34,8 @@
         categoriesActive = false;
         linkedCategories = [];
         createdCategories = [];
-        isVerbStrong = false;
-        isVerbIrregular = false;
+        strongVerb = false;
+        irregularVerb = false;
         if (type === 'noun') {
           $nounOrigValue = '';
           $nounTrValue = '';
@@ -69,7 +69,7 @@
       article: [ articleErrors, articleValue ]
     },
     form: nounForm
-  } = createValidation({ componentId: 'addWord', routeId: 'saveNoun' }, params);
+  } = createValidation({ componentId: 'words', routeId: 'saveNoun' }, params);
 
   const articleChange = (article) => {
     $articleValue = article;
@@ -83,7 +83,7 @@
       type: [ otherTypeErrors, otherTypeValue ],
     },
     form: otherForm
-  } = createValidation({ componentId: 'addWord', routeId: 'saveOther' }, params);
+  } = createValidation({ componentId: 'words', routeId: 'saveOther' }, params);
   $: $otherTypeValue = type; // workaround to skip validation
 
   let {
@@ -100,7 +100,7 @@
       irregular2: [ irregular2Errors, irregular2Value, irregular2Input ],
     },
     form: verbForm
-  } = createValidation({ componentId: 'addWord', routeId: 'saveVerb' }, params);
+  } = createValidation({ componentId: 'words', routeId: 'saveVerb' }, params);
 </script>
 
 <DocumentTitle title="add word" />
@@ -168,9 +168,9 @@
         <input type="text" bind:value={$verbTrValue} use:verbTrInput />
       </FormElement>
 
-      <FormSwitcher type="toggle" bind:checked={isVerbStrong}>Сильный глагол</FormSwitcher>
+      <FormSwitcher type="toggle" bind:checked={strongVerb}>Сильный глагол</FormSwitcher>
 
-      {#if isVerbStrong}
+      {#if strongVerb}
         <FormElement errors={strong1Errors} label="Ich">
           <input type="text" bind:value={$strong1Value} use:strong1Input />
         </FormElement>
@@ -191,9 +191,9 @@
         </FormElement>
       {/if}
 
-      <FormSwitcher type="toggle" bind:checked={isVerbIrregular}>Неправильный глагол</FormSwitcher>
+      <FormSwitcher type="toggle" bind:checked={irregularVerb}>Неправильный глагол</FormSwitcher>
 
-      {#if isVerbIrregular}
+      {#if irregularVerb}
         <FormElement errors={irregular1Errors} label="Präteritum">
           <input type="text" bind:value={$irregular1Value} use:irregular1Input />
         </FormElement>

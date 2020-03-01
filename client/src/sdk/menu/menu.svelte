@@ -15,18 +15,24 @@
   };
 
   const onMenu = (componentId) => {
+    let opts = { componentId };
+    if (componentId === 'words') {
+      opts.routeId = 'addWord';
+    }
+
     hideMenu();
-    useRoute({ componentId });
+    useRoute(opts);
   };
 </script>
 
 <div class="menu">
   <div class="menu--wrap" transition:fly="{{ x: 200, opacity: 0, duration: 300 }}">
     <div>
-      <button on:click={() => onMenu('addWord')}>Добавить слово</button>
+      <button on:click={() => onMenu('words')}>Добавить слово</button>
       <button on:click={() => onMenu('setup')}>Настройки</button>
-      <button on:click={() => onMenu('dict')}>Мой словарь</button>
-      <button on:click={() => onMenu('stat')}>Моя статистика</button>
+      <button on:click={() => onMenu('dict')}>словарь</button>
+      <button disabled on:click={() => onMenu('categories')}>категории</button>
+      <button disabled on:click={() => onMenu('stat')}>статистика</button>
     </div>
 
     <button on:click={onLogout}>выйти</button>

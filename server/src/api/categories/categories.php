@@ -12,7 +12,7 @@ class Categories extends \lib\Db {
     )->getAll($catsIds);
   }
 
-  public function getCategories($userId) {
+  public function getCategoriesByUserId($userId) {
     return $this->setSql(
       "SELECT categoryId, categoryName
         FROM categories
@@ -20,6 +20,21 @@ class Categories extends \lib\Db {
         ORDER BY categoryId;"
     )->getAll([
       ':userId' => $userId
+    ]);
+  }
+
+  public function getCategoriesByWordId($wordId) {
+    return $this->setSql(
+      "SELECT categoryId
+        FROM words_to_categories
+
+        LEFT JOIN categories
+        USING (categoryId)
+
+        WHERE wordId = :wordId
+        ORDER BY categoryId;"
+    )->getAll([
+      ':wordId' => $wordId
     ]);
   }
 
