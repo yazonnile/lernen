@@ -13,7 +13,7 @@
 
 {#if setup.plural}
   <p>
-    {#if word.plural === ''}
+    {#if !word.plural}
       plural
     {:else}
 
