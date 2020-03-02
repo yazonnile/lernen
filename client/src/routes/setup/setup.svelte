@@ -21,9 +21,9 @@
   <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить голос</FormSwitcher>
   {#if setup.voice}
     <SetupBox title="скорость" flex>
-      <Button text="50%" active={setup.voiceSpeed === 1} on:click={() => (setup.voiceSpeed = 1)} />
-      <Button text="75%" active={setup.voiceSpeed === 2} on:click={() => (setup.voiceSpeed = 2)} />
-      <Button text="100%" active={setup.voiceSpeed === 3} on:click={() => (setup.voiceSpeed = 3)} />
+      <Button text="1" active={setup.voiceSpeed === 1} on:click={() => (setup.voiceSpeed = 1)} />
+      <Button text="2" active={setup.voiceSpeed === 2} on:click={() => (setup.voiceSpeed = 2)} />
+      <Button text="3" active={setup.voiceSpeed === 3} on:click={() => (setup.voiceSpeed = 3)} />
     </SetupBox>
   {/if}
 
