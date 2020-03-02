@@ -16,23 +16,13 @@ module.exports = ({ isProduction }) => {
     },
 
     output: {
-      path: __dirname + '/public',
+      path: path.join(__dirname + './../server/src/public'),
       filename: '[name].js',
       chunkFilename: '[name].js?id=[chunkhash]'
     },
 
     module: {
-      rules: [isProduction ? {
-        test: /\.(ts|svelte)$/,
-        enforce: 'pre',
-        use: [{
-          options: {
-            eslintPath: require.resolve('eslint'),
-          },
-          loader: 'eslint-loader',
-        }],
-        exclude: /node_modules/,
-      } : {}, {
+      rules: [{
         test: /\.svelte$/,
         use: {
           loader: 'svelte-loader',

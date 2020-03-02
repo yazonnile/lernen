@@ -39,14 +39,16 @@
 <DocumentTitle title="Выбор категорий" />
 
 <div class="pre-game">
-  <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
-  <List bind:linked={selectedCategories} list={$page.categories} />
-  <Fly active={selectedCategories.length}>
-    <Category categoryName="без категории">
-      <input type="checkbox" bind:checked={nullCategory} />
-    </Category>
-  </Fly>
-  <Button text="готово" on:click={onReady} />
+  {#if $page.categories.length}
+    <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
+    <List bind:linked={selectedCategories} list={$page.categories} />
+    <Fly active={selectedCategories.length}>
+      <Category categoryName="без категории">
+        <input type="checkbox" bind:checked={nullCategory} />
+      </Category>
+    </Fly>
+  {/if}
+  <Button text="играть" on:click={onReady} />
 </div>
 
 <style>
