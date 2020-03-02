@@ -15,33 +15,42 @@
     }
   }
 
+  const editWords = (routeId) => {
+    useRoute({
+      componentId: 'dict',
+      routeId,
+      payload: {
+        wordsIds: checked.map(id => $page.words[id].wordId)
+      }
+    }, ({ words }) => {
+      $page.words = words;
+      checked = [];
+    });
+  };
+
   const onEdit = (item) => {
     useRoute({ componentId: 'words', routeId: 'editWord', params: { wordId: $page.words[item].wordId } });
   };
 
-  const onRemove = () => {
-    console.log('onRemove', checked);
-  };
-
-  const onTurnOn = () => {
-    console.log('onTurnOn', checked);
-  };
-
-  const onTurnOff = () => {
-    console.log('onTurnOff', checked);
-  };
+  const onRemove = () => editWords('deleteWords');
+  const onTurnOn = () => editWords('enableWords');
+  const onTurnOff = () => editWords('disableWords');
 </script>
 
 <DocumentTitle title="dict" />
 
 <div class="dict">
-  <Autocomplete {words} bind:result label="Начните вводить слово/фразу" />
+  <Autocomplete {words} bind:result label="Начните вводить слово/фразу" value="t" />
 
   {#each result as item (item)}
     <input type="checkbox" bind:group={checked} value={item} id={`cat${item}`} />
 
     <div class="item" class:disabled={!$page.words[item].active}>
       <label class="text" for={`cat${item}`}>{item}</label>
+
+      {#if !$page.words[item].active && !checked.includes(item)}
+        <Icon name="turn-off" />
+      {/if}
 
       {#if checked.includes(item)}
         <button class="edit" on:click={() => onEdit(item)}><Icon name="edit" /></button>
@@ -73,7 +82,16 @@
   }
 
   .disabled {
-    background: #e0e0e0;
+    background: linear-gradient(to right, #ececec, #fff);
+  }
+
+  .item :global(.icon-turn-off) {
+    color: #ccc;
+    height: 21px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 21px;
   }
 
   .item:first-of-type {

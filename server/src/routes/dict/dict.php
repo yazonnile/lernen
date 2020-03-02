@@ -23,4 +23,38 @@
         }, [])
       );
     }
+
+    private function getIds() {
+      return array_map(function($wordId) {
+        return intval($wordId);
+      }, $this->getPayload('wordsIds') ?? []);
+    }
+
+    public function disableWords() {
+      $this->toggleWords(false);
+    }
+
+    public function enableWords() {
+      $this->toggleWords(true);
+    }
+
+    private function toggleWords($state) {
+      $ids = $this->getIds();
+
+      if (count($ids)) {
+        $this->api->updateWords($ids, $state, $this->user->getId());
+      }
+
+      $this->dict();
+    }
+
+    public function deleteWords() {
+      $ids = $this->getIds();
+
+      if (count($ids)) {
+        $this->api->deleteWords($ids, $this->user->getId());
+      }
+
+      $this->dict();
+    }
   }

@@ -83,6 +83,7 @@
 
       $query[] = 'WHERE type IN ('. implode(',', $wordsTypes) .')';
       $query[] = 'AND wordId IN ('. implode(' ', $subQuery) .')';
+      $query[] = 'AND active = 1';
 
       return $this->api->getWordsByCategoriesAndSetup(implode(' ', $query));
     }

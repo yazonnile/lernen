@@ -42,6 +42,10 @@
     }
 
     public function insertOnDuplicateKeyUpdate(string $table, array $data, bool $justBuildQuery = false) {
+      if (is_array($data) && !count($data)) {
+        return null;
+      }
+
       $columns = '';
       $values = '';
       $update = '';
