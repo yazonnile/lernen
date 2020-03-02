@@ -53,9 +53,11 @@ const getTextArray = (word: Word, setup: Setup): string[]|void => {
   }
 };
 
+let canceled = false;
 const pronouncing = {
   stop() {
     if (speechSynthesis.speaking) {
+      canceled = true;
       speechSynthesis.cancel();
     }
   },
@@ -71,17 +73,29 @@ const pronouncing = {
   }
 };
 
-const playNext = (textArray: string[], setup: Setup) => {
+export const play = (textArray: string[], voiceSpeed: SetupVoiceSpeed) => {
   const text = textArray.shift();
 
   if (text === null) {
-    playNext(textArray, setup);
+    play(textArray, voiceSpeed);
     return;
   }
 
-  pronouncing.start(text, setup.voiceSpeed, () => {
-    playNext(textArray, setup);
+  pronouncing.start(text, voiceSpeed, () => {
+    if (canceled) {
+      canceled = false;
+    } else {
+      play(textArray, voiceSpeed);
+    }
   });
+};
+
+const getVoiceSpeed = (wordType, voiceSpeed) => {
+  if (wordType === 'verb') {
+    return voiceSpeed / 1.5;
+  }
+
+  return voiceSpeed;
 };
 
 export default {
@@ -92,7 +106,7 @@ export default {
       return;
     }
 
-    playNext(textArray, setup);
+    play(textArray, getVoiceSpeed(word.type, setup.voiceSpeed));
   },
   stop() {
     pronouncing.stop();

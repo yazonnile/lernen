@@ -17,12 +17,19 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* fix speech lib/make sound check on setup voice speed options change
+* update client stores
+ - words
+ - categories
+ - games
+ - setup
 
 # TODO
+* simplify state
+* service worker
+* manifest.json + icon
+* pwa
 * categories page
 * stat page
-* pwa
 * fancy ui
 
 ## far-far away

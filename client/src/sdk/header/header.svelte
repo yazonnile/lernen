@@ -24,12 +24,10 @@
     on:click="{openMenu}"
   ><Icon name="menu" /></button>
 
-  {#if 0}
-    <button
-      class="header--button header--nav"
-      on:click="{openMenu}"
-    ><Icon name="menu" /></button>
-  {/if}
+<!--  <button-->
+<!--    class="header&#45;&#45;button header&#45;&#45;nav"-->
+<!--    on:click="{openMenu}"-->
+<!--  ><Icon name="menu" /></button>-->
 
   {#if menuActive}
     <Menu bind:menuActive />
@@ -72,9 +70,9 @@
     right: 0;
   }
 
-  .header--nav {
-    left: 0;
-  }
+  /*.header--nav {*/
+  /*  left: 0;*/
+  /*}*/
 
   .logo span {
     display: block;

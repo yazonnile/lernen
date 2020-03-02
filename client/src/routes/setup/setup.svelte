@@ -6,12 +6,21 @@
   import { useRoute } from 'lib/router/router';
   import Slide from 'sdk/transition/slide.svelte'
   import { page } from 'stores';
+  import { play } from 'lib/speech/speech';
 
   let setup = $page.setup;
 
   const onSave = () => {
     useRoute({ componentId: 'setup', routeId: 'updateSetup', payload: { ...setup }});
   };
+
+  const onVoiceSpeedChange = (s) => {
+    setup.voiceSpeed = s;
+  };
+
+  const onVoiceTest = () => {
+    play(['Wie heißen Sie?'], setup.voiceSpeed);
+  }
 </script>
 
 <DocumentTitle title="Настройки" />
@@ -21,10 +30,11 @@
 
   <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить голос</FormSwitcher>
   <Slide active={setup.voice}>
+    <Button text="проверить звук" on:click={() => onVoiceTest()} />
     <SetupBox title="скорость" flex>
-      <Button text="1" active={setup.voiceSpeed === 1} on:click={() => (setup.voiceSpeed = 1)} />
-      <Button text="2" active={setup.voiceSpeed === 2} on:click={() => (setup.voiceSpeed = 2)} />
-      <Button text="3" active={setup.voiceSpeed === 3} on:click={() => (setup.voiceSpeed = 3)} />
+      <Button text="1" active={setup.voiceSpeed === 1} on:click={() => onVoiceSpeedChange(1)} />
+      <Button text="2" active={setup.voiceSpeed === 2} on:click={() => onVoiceSpeedChange(2)} />
+      <Button text="3" active={setup.voiceSpeed === 3} on:click={() => onVoiceSpeedChange(3)} />
     </SetupBox>
   </Slide>
 

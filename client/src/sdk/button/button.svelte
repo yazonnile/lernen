@@ -67,7 +67,7 @@
   }
 
   .button:focus {
-    box-shadow: 0 0 3px 1px #000;
+    border-color: var(--mainColor);
   }
 
   .button--inner {
