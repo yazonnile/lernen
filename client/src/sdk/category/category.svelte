@@ -25,6 +25,7 @@
     line-height: 15px;
     padding: 7px 10px 7px 33px;
     text-transform: uppercase;
+    transition: background-color .3s ease, color .3s ease;
   }
 
   label :global(.icon) {

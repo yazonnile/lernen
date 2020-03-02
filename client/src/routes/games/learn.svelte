@@ -31,7 +31,7 @@
   });
 </script>
 
-<DocumentTitle title="Learn" />
+<DocumentTitle title="Обучение" />
 
 {#if !words.length}
   нет слов
@@ -73,5 +73,6 @@
 
   .item-extra.visible {
     opacity: 1;
+    transition: opacity .5s ease;
   }
 </style>

@@ -1,7 +1,9 @@
 <script>
+  import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import List from 'sdk/categories/categories-list.svelte';
   import Category from 'sdk/category/category.svelte';
   import Button from 'sdk/button/button.svelte';
+  import Fly from 'sdk/transition/fly.svelte';
   import { useRoute } from 'lib/router/router';
   import { page } from 'stores';
 
@@ -34,14 +36,16 @@
   };
 </script>
 
+<DocumentTitle title="Выбор категорий" />
+
 <div class="pre-game">
   <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
   <List bind:linked={selectedCategories} list={$page.categories} />
-  {#if selectedCategories.length}
+  <Fly active={selectedCategories.length}>
     <Category categoryName="без категории">
       <input type="checkbox" bind:checked={nullCategory} />
     </Category>
-  {/if}
+  </Fly>
   <Button text="готово" on:click={onReady} />
 </div>
 

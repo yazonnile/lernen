@@ -7,6 +7,7 @@
   import FormElement from 'sdk/form-element/form-element.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import Button from 'sdk/button/button.svelte';
+  import Slide from 'sdk/transition/slide.svelte'
   import { page } from 'stores';
 
   let categories = $page.categories;
@@ -40,7 +41,7 @@
 
   <FormSwitcher type="toggle" bind:checked={active}>Добавить слово в категорию</FormSwitcher>
 
-  {#if active}
+  <Slide active={active}>
     {#if formView}
       <FormElement label="Имя категории">
         <input type="text" bind:value={newCategoryName} />
@@ -54,7 +55,7 @@
     {/if}
 
     <CategoriesList bind:linked bind:list={result} />
-  {/if}
+  </Slide>
 </div>
 
 <style>

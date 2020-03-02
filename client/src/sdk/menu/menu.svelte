@@ -28,6 +28,7 @@
 <div class="menu">
   <div class="menu--wrap" transition:fly="{{ x: 200, opacity: 0, duration: 300 }}">
     <div>
+      <button on:click={() => onMenu('home')}>Домой</button>
       <button on:click={() => onMenu('words')}>Добавить слово</button>
       <button on:click={() => onMenu('setup')}>Настройки</button>
       <button on:click={() => onMenu('dict')}>словарь</button>

@@ -48,7 +48,6 @@
 
   .form-switcher--toggle {
     background: #ccc;
-    box-shadow: 0 0 3px rgba(0,0,0,0.5);
     border-radius: 13px;
     display: inline-block;
     height: 20px;
@@ -87,7 +86,6 @@
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 2px;
-    box-shadow: 0 0 2px rgba(0,0,0,0.5);
     color: var(--mainColor);
     display: block;
     height: 16px;

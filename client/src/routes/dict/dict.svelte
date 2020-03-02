@@ -37,7 +37,7 @@
   const onTurnOff = () => editWords('disableWords');
 </script>
 
-<DocumentTitle title="dict" />
+<DocumentTitle title="Словарь" />
 
 <div class="dict">
   <Autocomplete {words} bind:result label="Начните вводить слово/фразу" />
@@ -59,19 +59,18 @@
 
   {/each}
 
-  {#if checked.length}
-    <div class="buttons">
-      <button on:click={onTurnOff} class="grey"><Icon name="turn-off" />выкл</button>
-      <button on:click={onTurnOn} class="green"><Icon name="turn-on" />вкл</button>
-      <button on:click={onRemove} class="red"><Icon name="delete" />удалить</button>
-    </div>
-  {/if}
+  <div class="buttons" class:buttons--active={checked.length}>
+    <button on:click={onTurnOff} class="grey"><Icon name="turn-off" />выкл</button>
+    <button on:click={onTurnOn} class="green"><Icon name="turn-on" />вкл</button>
+    <button on:click={onRemove} class="red"><Icon name="delete" />удалить</button>
+  </div>
 </div>
 
 <style>
   .dict {
     position: relative;
-    padding-bottom: 66px;
+    overflow: hidden;
+    padding-bottom: 76px;
   }
 
   .item {
@@ -79,6 +78,7 @@
     font-size: 16px;
     line-height: 21px;
     position: relative;
+    transition: background-color .3s ease;
   }
 
   .disabled {
@@ -130,12 +130,19 @@
   .buttons {
     background: #fff;
     box-shadow: 0 0 5px #000;
-    bottom: 0;
+    bottom: -100px;
     display: flex;
     left: 0;
+    opacity: 0;
     padding: 10px;
     position: fixed;
+    transition: all .3s ease;
     width: 100%;
+  }
+
+  .buttons--active {
+    bottom: 0;
+    opacity: 1;
   }
 
   .buttons button {

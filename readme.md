@@ -17,16 +17,13 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* add fancy animations
+* fix speech lib/make sound check on setup voice speed options change
 
 # TODO
-* fancy ui
-* fix document titles
-* fix speech lib
-* make sound check on setup voice speed options change
-* stat page
 * categories page
+* stat page
 * pwa
+* fancy ui
 
 ## far-far away
 * reverse game

@@ -7,7 +7,7 @@
   }
 </script>
 
-<DocumentTitle title="Home page" />
+<DocumentTitle title="Список игр" />
 
 <div class="home">
   <button class="game" on:click={() => onGame('learn')}>

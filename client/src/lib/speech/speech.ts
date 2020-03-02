@@ -81,7 +81,6 @@ const sayText = (text: string, speed: SetupVoiceSpeed) => {
   utterThis.lang = 'de-DE';
   utterThis.rate = Math.min(1, .45 + .15 * speed);
   speechSynthesis.speak(utterThis);
-  console.log(text);
 };
 
 const sayWord = (word: Word, setup: Setup) => {
