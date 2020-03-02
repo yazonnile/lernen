@@ -16,9 +16,10 @@
 # client build
 `node ./client/build --mode=production`
 
+# IN PROGRESS
+* learn game layout
 
 # TODO
-* replace validation text errors with error state in text fields
 * adapt messages for mobile
 * add fancy animations
 * fix speech lib

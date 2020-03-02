@@ -1,9 +1,14 @@
 <script>
   export let className = '';
   export let twoInARow = false;
+  export let error = false;
 </script>
 
-<div class="buttons-row {className || ''}" class:two-in-a-row={twoInARow}>
+<div
+  class="buttons-row {className || ''}"
+  class:two-in-a-row={twoInARow}
+  class:error
+>
   <slot />
 </div>
 
@@ -14,6 +19,10 @@
     display: flex;
     margin-bottom: 10px;
     overflow: hidden;
+  }
+
+  .error {
+    border-color: var(--redColor);
   }
 
   .buttons-row :global(button) {

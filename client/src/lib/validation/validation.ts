@@ -27,6 +27,7 @@ interface CreateValidationResult {
       UseFunction
     ];
   };
+  clearErrors(a?: boolean);
 }
 
 export const defaultValidationOptions = {
@@ -34,12 +35,6 @@ export const defaultValidationOptions = {
   trim: true,
   clearErrorsOnEvents: { focus: true },
   includeAllEntries: true,
-  useCustomErrorsStore: (errors, params) => {
-    return errors.reduce((result, ruleName) => {
-      result[ruleName] = params[ruleName];
-      return result;
-    }, {});
-  },
   getValues: entries => {
     return entries.reduce((result, { value, params }) => {
       result[params.id] = value;
@@ -49,7 +44,7 @@ export const defaultValidationOptions = {
 };
 
 export default (validationParams: {params?: Params} & RouteId, options: ValidationOptions = {}): CreateValidationResult => {
-  const { createForm, createEntries, validate, getValues } = createValidation(defaultValidationOptions);
+  const { createForm, createEntries, clearErrors } = createValidation(defaultValidationOptions);
 
   const scheme: PayloadSchemeType[] = options.scheme || getRouteValidationScheme(validationParams);
   const cb = typeof options === 'function' ? options : options.cb;
@@ -67,6 +62,7 @@ export default (validationParams: {params?: Params} & RouteId, options: Validati
   };
 
   return {
+    clearErrors,
     form: { use: createForm, onSuccess },
     entries: createEntries(scheme.reduce((result, entryId) => {
       result[entryId] = {

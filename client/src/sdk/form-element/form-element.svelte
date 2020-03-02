@@ -1,20 +1,15 @@
 <script>
   export let label = '';
   export let errors = null;
-
-  import Errors from './errors.svelte';
 </script>
 
-<span class="form-input">
+<span class="form-input" class:form-input--error={errors && $errors.length}>
   <label>
     {#if label}
       <span class="form-input--label">{label}</span>
     {/if}
     <slot />
   </label>
-  {#if errors}
-    <Errors {errors} />
-  {/if}
 </span>
 
 <style>
@@ -54,5 +49,10 @@
   .form-input :global(input):focus,
   .form-input :global(select):focus {
     border-color: var(--mainColorLight);
+  }
+
+  .form-input--error :global(input),
+  .form-input--error :global(select) {
+    border-color: var(--redColor);
   }
 </style>
