@@ -2,8 +2,8 @@
   import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import { useRoute } from 'lib/router/router';
 
-  const onGame = (gameId) => {
-    useRoute({ componentId: 'games', routeId: 'preGame', payload: { gameId } });
+  const onGame = (gameName) => {
+    useRoute({ componentId: 'games', routeId: 'preGame', params: { gameName } });
   }
 </script>
 

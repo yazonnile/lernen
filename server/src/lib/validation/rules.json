@@ -105,7 +105,7 @@
     "type": "string",
     "match": "^(1|2|3)$"
   },
-  "gameId": {
+  "gameName": {
     "type": "string",
     "match": "^(learn|second)$"
   }

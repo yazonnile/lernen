@@ -17,10 +17,10 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* learn game layout
+* adapt messages for mobile
 
 # TODO
-* adapt messages for mobile
+* fix document titles
 * add fancy animations
 * fix speech lib
 * make sound check on setup voice speed options change

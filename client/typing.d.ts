@@ -59,7 +59,27 @@ type Word = {
   strong5?: string;
   strong6?: string;
   irregular1?: string;
-  irregular6?: string;
+  irregular2?: string;
+};
+
+type Setup = {
+  voice: boolean;
+  voiceSpeed: SetupVoiceSpeed;
+  phrases: boolean;
+  soundPhrases: boolean;
+  nouns: boolean;
+  soundNouns: boolean;
+  articles: boolean;
+  soundArticles: boolean;
+  plural: boolean;
+  soundPlural: boolean;
+  verbs: boolean;
+  soundVerbs: boolean;
+  strongVerbs: boolean;
+  soundStrongVerbs: boolean;
+  irregularVerbs: boolean;
+  soundIrregularVerbs: boolean;
+  other: boolean;
 };
 
 type PageData = {
@@ -72,25 +92,7 @@ type PageData = {
   categories?: Category[];
   linkedCategories?: number[];
   preGame?: boolean;
-  setup?: {
-    voice: boolean;
-    voiceSpeed: SetupVoiceSpeed;
-    phrases: boolean;
-    soundPhrases: boolean;
-    nouns: boolean;
-    soundNouns: boolean;
-    articles: boolean;
-    soundArticles: boolean;
-    plural: boolean;
-    soundPlural: boolean;
-    verbs: boolean;
-    soundVerbs: boolean;
-    strongVerbs: boolean;
-    soundStrongVerbs: boolean;
-    irregularVerbs: boolean;
-    soundIrregularVerbs: boolean;
-    other: boolean;
-  };
+  setup?: Setup;
   words?: {
     [key: string]: Word;
   };
@@ -123,6 +125,7 @@ type PayloadSchemeType = 'login' | 'email' | 'password' | 'newPassword' | 'mcnul
 interface Params {
   userId?: number;
   wordId?: number;
+  gameName?: 'learn' | 'second';
 }
 
 type RouteMethodsType = 'POST' | 'GET';

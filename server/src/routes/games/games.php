@@ -20,14 +20,14 @@
 
     public function preGame() {
       $this->updateState('categories', $this->categoriesService->getCategories($this->user->getId()));
-      $this->updateState('gameId', $this->getPayload('gameId'));
     }
 
     public function learn() {
       $userId = $this->user->getId();
       $words = $this->wordsService->getWordsByCategories(
         $userId,
-        $this->getPayload('selectedCategories') ?? []
+        $this->getPayload('selectedCategories') ?? [],
+        boolval($this->getPayload('nullCategory'))
       );
 
       shuffle($words);

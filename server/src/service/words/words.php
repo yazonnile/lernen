@@ -14,7 +14,7 @@
       $this->setupApi = new \api\Setup();
     }
 
-    public function getWordsByCategories($userId, $categoriesIds) {
+    public function getWordsByCategories($userId, $categoriesIds, $nullCategory) {
       $setup = $this->setupApi->getSetup($userId);
 
       $wordsTypes = [];
@@ -67,6 +67,9 @@
         $subQuery[] = 'WHERE categoryId IS NULL';
       } else {
         $subQuery[] = 'WHERE categoryId IN ('. implode(',', $categoriesIds) .')';
+        if ($nullCategory) {
+          $subQuery[] = 'OR categoryId IS NULL';
+        }
       }
 
       // build query

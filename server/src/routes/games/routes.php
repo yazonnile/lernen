@@ -6,9 +6,8 @@ class GamesRoutes {
   static public function getRoutes() {
     return [
       'preGame' => [
-        'url' => '/games/pre-game',
-        'access' => [\api\Access::user],
-        'payloadScheme' => ['gameId'],
+        'url' => '/games/pre-game/[a:gameName]',
+        'access' => [\api\Access::user]
       ],
       'learn' => [
         'url' => '/games/learn',

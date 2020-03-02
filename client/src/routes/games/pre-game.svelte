@@ -1,29 +1,47 @@
 <script>
   import List from 'sdk/categories/categories-list.svelte';
+  import Category from 'sdk/category/category.svelte';
   import Button from 'sdk/button/button.svelte';
   import { useRoute } from 'lib/router/router';
   import { page } from 'stores';
 
   let selectedCategories = [];
+  let nullCategory = false;
+  let selectedState = false;
+  $: selectedState = nullCategory && selectedCategories.length === $page.categories.length;
 
   const onReady = () => {
     useRoute({
       componentId: 'games',
-      routeId: $page.gameId,
+      routeId: $page.activeRoute.params.gameName,
       payload: {
-        selectedCategories
+        selectedCategories,
+        nullCategory
       }
     });
   };
 
-  const onSelectAll = () => {
-    selectedCategories = $page.categories.map(cat => cat.categoryId);
+  const onToggleAll = () => {
+    if (selectedState) {
+      selectedCategories = [];
+      nullCategory = false;
+    } else {
+      selectedCategories = $page.categories.map(cat => cat.categoryId);
+      nullCategory = true;
+    }
+
+    selectedState = !selectedState;
   };
 </script>
 
 <div class="pre-game">
-  <Button text="выбрать все" on:click={onSelectAll} />
+  <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
   <List bind:linked={selectedCategories} list={$page.categories} />
+  {#if selectedCategories.length}
+    <Category categoryName="без категории">
+      <input type="checkbox" bind:checked={nullCategory} />
+    </Category>
+  {/if}
   <Button text="готово" on:click={onReady} />
 </div>
 
