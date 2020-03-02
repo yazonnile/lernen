@@ -1,5 +1,4 @@
 <script>
-  import Button from 'sdk/button/button.svelte';
   import Message from './message.svelte';
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';

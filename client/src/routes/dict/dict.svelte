@@ -1,6 +1,5 @@
 <script>
   import DocumentTitle from 'sdk/document-title/document-title.svelte';
-  import Button from 'sdk/button/button.svelte';
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
   import Icon from 'sdk/icon/icon.svelte';
   import { useRoute } from 'lib/router/router';

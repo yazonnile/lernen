@@ -4,10 +4,6 @@
   import { useRoute } from 'lib/router/router';
 
   let menuActive = false;
-  const closeMenu = () => {
-    menuActive = false;
-  };
-
   const openMenu = () => {
     menuActive = true;
   };

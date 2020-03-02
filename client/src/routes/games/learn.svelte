@@ -5,7 +5,7 @@
   import speech from 'lib/speech/speech';
   import { page } from 'stores';
 
-  let translationVisible = false;
+  let visible = false;
   let activeIndex = 0;
   let words = $page.learn;
   let setup = $page.setup;
@@ -13,7 +13,7 @@
   $: activeItem = words[activeIndex];
 
   const showTranslation = () => {
-    translationVisible = true;
+    visible = true;
     speech(getTextToSpeech(), setup.voiceSpeed);
   };
 
@@ -83,7 +83,7 @@
 
   const nextWord =  () => {
     speech.stop();
-    translationVisible = false;
+    visible = false;
     activeIndex = activeIndex === words.length - 1 ? 0 : (activeIndex + 1);
   };
 </script>
@@ -96,7 +96,7 @@
   <div class="learn" on:click={showTranslation}>
     <div class="item initial-item">{activeItem.translation}</div>
 
-    <div class="item">
+    <div class="item" class:visible>
       {activeItem.original}
     </div>
 
