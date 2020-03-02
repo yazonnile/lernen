@@ -90,17 +90,21 @@
 
 <DocumentTitle title="Learn" />
 
-<div class="learn" on:click={showTranslation}>
-  <div class="item initial-item">{activeItem.translation}</div>
+{#if !words.length}
+  нет слов
+{:else}
+  <div class="learn" on:click={showTranslation}>
+    <div class="item initial-item">{activeItem.translation}</div>
 
-  <div class="item">
-    {activeItem.original}
+    <div class="item">
+      {activeItem.original}
+    </div>
+
+    <BottomButtons>
+      <Button text="Следующий" on:click={nextWord} />
+    </BottomButtons>
   </div>
-
-  <BottomButtons>
-    <Button text="Следующий" on:click={nextWord} />
-  </BottomButtons>
-</div>
+{/if}
 
 <style>
 
