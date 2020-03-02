@@ -32,10 +32,12 @@
 
     public function disableWords() {
       $this->toggleWords(false);
+      $this->addMessage('disableWords.success');
     }
 
     public function enableWords() {
       $this->toggleWords(true);
+      $this->addMessage('enableWords.success');
     }
 
     private function toggleWords($state) {
@@ -55,6 +57,7 @@
         $this->api->deleteWords($ids, $this->user->getId());
       }
 
+      $this->addMessage('deleteWords.success');
       $this->dict();
     }
   }

@@ -2,7 +2,6 @@ import createStore from 'lib/create-store/create-store';
 import { getInitialState } from 'api/initial-state/initial-state';
 
 interface MessagesStoreInterface {
-  clearAll();
   clearById(id: string);
   addMessage(options: MessageOptions);
   addMessages(messages: MessageOptions[]);
@@ -14,10 +13,6 @@ const createMessage = (options: MessageOptions): Message => ({
 });
 
 const store = createStore<MessagesStoreInterface, Message[]>(getInitialState('persistentData').messages, (messages) => ({
-  clearAll() {
-    return [];
-  },
-
   clearById(id: string) {
     return messages.filter(message => {
       return message.id !== id;

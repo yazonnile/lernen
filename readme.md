@@ -17,11 +17,11 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* adapt messages for mobile
+* add fancy animations
 
 # TODO
+* fancy ui
 * fix document titles
-* add fancy animations
 * fix speech lib
 * make sound check on setup voice speed options change
 * stat page

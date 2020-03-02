@@ -15,10 +15,6 @@
     class="messages-holder"
     transition:fly|local="{{ duration: 300, easing: quintOut, x: 30, opacity: 0 }}"
   >
-    {#if $messages.length > 1}
-      <button on:click={messages.clearAll}>закрыть все</button>
-    {/if}
-
     {#each $messages as message (message.id)}
       <Message {...message} />
     {/each}
@@ -27,12 +23,13 @@
 
 <style>
   .messages-holder {
-    background: rgba(0,0,0,.5);
+    background: var(--mainColorLight);
+    box-shadow: 0 0 5px #000;
     bottom: 0;
     padding: 10px;
     position: fixed;
     right: 0;
-    width: 250px;
+    width: 100%;
     z-index: 2000;
   }
 </style>

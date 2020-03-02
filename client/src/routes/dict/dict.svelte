@@ -40,7 +40,7 @@
 <DocumentTitle title="dict" />
 
 <div class="dict">
-  <Autocomplete {words} bind:result label="Начните вводить слово/фразу" value="t" />
+  <Autocomplete {words} bind:result label="Начните вводить слово/фразу" />
 
   {#each result as item (item)}
     <input type="checkbox" bind:group={checked} value={item} id={`cat${item}`} />
