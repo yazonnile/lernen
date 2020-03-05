@@ -14,8 +14,12 @@ class Categories extends \lib\Db {
 
   public function getCategoriesByUserId($userId) {
     return $this->setSql(
-      "SELECT categoryId, categoryName
+      "SELECT categoryId, categoryName, wordId
         FROM categories
+
+        LEFT JOIN words_to_categories
+        USING (categoryId)
+
         WHERE userId = :userId
         ORDER BY categoryId;"
     )->getAll([

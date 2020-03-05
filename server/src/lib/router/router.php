@@ -65,16 +65,16 @@ class Router extends StateManager {
     });
 
     try {
-      $this->router->map(implode('|', $route['methods']), $route['url'], $componentId, $routeId);
+      $this->router->map($route['method'], $route['url'], $componentId, $routeId);
     } catch (\Exception $e) {}
   }
 
   private function mergeRouteWithDefaults($componentId, $routeId, $route) {
-    if (!isset($route['methods'])) {
-      $route['methods'] = ['POST', 'GET'];
+    if (!isset($route['method'])) {
+      $route['method'] = 'GET';
     }
 
-    if (implode('', $route['methods'] ?? []) !== 'POST') {
+    if ($route['method'] !== 'POST') {
       $route['shouldUpdateRouter'] = true;
     }
 

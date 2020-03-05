@@ -95,6 +95,7 @@
 
       $userId = $userByLoginOrEmail['userId'];
       $this->setUserCookie($userId);
+      $this->updateState('login', true);
       return $userId;
     }
 

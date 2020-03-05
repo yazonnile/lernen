@@ -40,7 +40,7 @@ const request: Request = (options) => {
   }).then(status).then(json).then((responseData: ResponseData) => {
     busy = false;
 
-    const { error, privateData, ...rest } = responseData;
+    const { error, ...rest } = responseData;
     const { persistentData: { messages } } = rest;
 
     if (Array.isArray(messages)) {

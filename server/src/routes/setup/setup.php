@@ -10,10 +10,6 @@
       $this->api = new \api\Setup();
     }
 
-    public function setup() {
-      $this->updateState('setup', $this->api->getSetup($this->user->getId()));
-    }
-
     public function updateSetup() {
       $this->api->update('setup', [
         'userId' => $this->user->getId(),
@@ -37,6 +33,6 @@
       ]);
 
       $this->addMessage('updateSetup.success');
-      $this->setup();
+      $this->updateState('setupSaved', true);
     }
   }

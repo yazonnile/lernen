@@ -3,14 +3,14 @@
   export let created;
   export let active;
 
-  import CategoriesList from './categories-list.svelte';
+  import Category from 'sdk/category/category.svelte';
   import FormElement from 'sdk/form-element/form-element.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import Button from 'sdk/button/button.svelte';
   import Slide from 'sdk/transition/slide.svelte'
-  import { page } from 'stores';
+  import { categories as categoriesStore } from 'stores';
 
-  let categories = $page.categories;
+  let categories = Object.values($categoriesStore);
   let formView = false;
   let newCategoryName = '';
   let tmpId = -999;
@@ -20,6 +20,7 @@
     if (!newCategoryName) {
       return;
     }
+    // TODO
 
     newCategoryName = newCategoryName.toLowerCase();
     const existedCatyName = categories.find(c => c.categoryName === newCategoryName);
@@ -54,7 +55,11 @@
       <Button text="создать категорию" icon="plus" on:click={() => (formView = true)} />
     {/if}
 
-    <CategoriesList bind:linked bind:list={result} />
+    {#each result as { categoryName, categoryId } (categoryId)}
+      <Category {categoryName}>
+        <input type="checkbox" bind:group={linked} value={categoryId} />
+      </Category>
+    {/each}
   </Slide>
 </div>
 

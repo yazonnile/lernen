@@ -12,22 +12,24 @@ const createMessage = (options: MessageOptions): Message => ({
   id: (Date.now() + Math.random()).toString()
 });
 
-const store = createStore<MessagesStoreInterface, Message[]>(getInitialState('persistentData').messages, (messages) => ({
-  clearById(id: string) {
-    return messages.filter(message => {
-      return message.id !== id;
-    });
-  },
+const store = createStore<MessagesStoreInterface, Message[]>(
+  getInitialState().persistentData.messages, $messages => ({
+    clearById(id: string) {
+      return $messages.filter(message => {
+        return message.id !== id;
+      });
+    },
 
-  addMessage(options: MessageOptions) {
-    messages.push(createMessage(options));
-  },
+    addMessage(options: MessageOptions) {
+      $messages.push(createMessage(options));
+    },
 
-  addMessages(data: MessageOptions[]) {
-    messages.push(
-      ...data.map(createMessage)
-    );
-  }
-}));
+    addMessages(data: MessageOptions[]) {
+      $messages.push(
+        ...data.map(createMessage)
+      );
+    }
+  })
+);
 
 export default store;

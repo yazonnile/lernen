@@ -6,18 +6,17 @@ class AuthRoutes {
   static public function getRoutes() {
     return [
       'registerUser' => [
-        'methods' => ['POST'],
+        'method' => 'POST',
         'payloadScheme' => ['login', 'password', 'email', 'mcnulty'],
         'access' => [\api\Access::guest]
       ],
 
       'auth' => [
-        'methods' => ['GET'],
         'access' => [\api\Access::guest]
       ],
 
       'askForPasswordRecovery' => [
-        'methods' => ['POST'],
+        'method' => 'POST',
         'payloadScheme' => ['loginOrEmail'],
         'access' => [\api\Access::guest]
       ]

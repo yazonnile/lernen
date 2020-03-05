@@ -12,7 +12,7 @@ class SetupRoutes {
       'updateSetup' => [
         'url' => '/update-setup',
         'access' => [\api\Access::user],
-        'methods' => ['POST'],
+        'method' => 'POST',
         'payloadScheme' => ['voiceSpeed'],
       ]
     ];

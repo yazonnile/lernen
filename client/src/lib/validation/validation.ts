@@ -4,7 +4,7 @@ import createValidation from 'svelidation';
 import { useRoute } from 'lib/router/router';
 import { Writable } from 'svelte/store';
 
-export const { validationRules: rules }: InitialData = getInitialState('initialData');
+export const { validationRules: rules } = getInitialState().initialData;
 
 type ValidationOptions = {
   cb?();

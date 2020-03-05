@@ -24,19 +24,28 @@ interface Message extends MessageOptions {
 }
 
 type InitialData = {
-  validationRules: {
-    [key: string]: object;
-  };
+  validationRules: { [key: string]: object; };
   routes: {
     [componentId: string]: {
       [routeId: string]: Route;
     };
+  };
+  games: {
+    [key: string]: {
+      buttonText: string;
+    };
+  };
+  categories: { [key: number]: Category };
+  setup: Setup;
+  words?: {
+    [key: number]: Word;
   };
 };
 
 type Category = {
   categoryId: number;
   categoryName: string;
+  words: number[];
 };
 
 type WordType = 'noun' | 'verb' | 'phrase' | 'other';
@@ -88,16 +97,13 @@ type PageData = {
     params?: Params;
   } & RouteId;
   url?: string;
-  [key: string]: any;
-  categories?: Category[];
-  linkedCategories?: number[];
-  preGame?: boolean;
-  setup?: Setup;
-  words?: {
-    [key: string]: Word;
-  };
-  word?: Word;
-  learn?: Word[];
+
+  enabledIds?: number[];
+  disabledIds?: number[];
+  deletedIds?: number[];
+  setupSaved?: boolean;
+  newCategoriesIds?: number[];
+  newWordId?: number;
 };
 
 type ClientDataType = {
@@ -114,9 +120,6 @@ type ResponseStore = {
 };
 
 type ResponseData = {
-  privateData?: {
-    DEBUG?: true;
-  };
   error?: [];
 } & ResponseStore;
 
@@ -138,7 +141,7 @@ interface RouteId {
 }
 
 interface Route {
-  methods?: RouteMethodsType[];
+  method?: RouteMethodsType;
   access?: RouteAccessType[];
   payloadScheme?: PayloadSchemeType[];
   shouldUpdateRouter?: true;
@@ -148,8 +151,5 @@ interface Route {
 
 interface Payload {
   [key: string]: any;
-  avatar?: string;
   logout?: true;
-  tagId?: number;
-  tagParentId?: number;
 }

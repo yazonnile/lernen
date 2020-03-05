@@ -13,6 +13,17 @@ const scriptNode = document.getElementById('initial-state');
 scriptNode && scriptNode.parentNode.removeChild(scriptNode);
 
 console.log('initialState => ', initialState);
-export const getInitialState = (key?: string): any => {
-  return typeof key !== 'undefined' ? initialState[key] : initialState;
+
+interface InitialStateInterface {
+  persistentData: {
+    messages: Message[];
+    user: User;
+  };
+  pageData: PageData;
+  initialData: InitialData;
+  error?: object;
+}
+
+export const getInitialState = (): InitialStateInterface => {
+  return initialState;
 };

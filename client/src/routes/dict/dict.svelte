@@ -3,9 +3,8 @@
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
   import Icon from 'sdk/icon/icon.svelte';
   import { useRoute } from 'lib/router/router';
-  import { page } from 'stores';
+  import { words } from 'stores';
 
-  let words = Object.keys($page.words);
   let result = [];
   let checked = [];
 
@@ -20,16 +19,29 @@
       componentId: 'dict',
       routeId,
       payload: {
-        wordsIds: checked.map(id => $page.words[id].wordId)
+        wordsIds: checked.map(id => $words[id].wordId)
       }
-    }, ({ words }) => {
-      $page.words = words;
+    }, ({ enabledIds, disabledIds, deletedIds }) => {
+      switch (routeId) {
+        case 'deleteWords':
+          words.deleteWords(deletedIds);
+          break;
+
+        case 'enableWords':
+          words.enableWords(enabledIds);
+          break;
+
+        case 'disableWords':
+          words.disableWords(disabledIds);
+          break;
+      }
+
       checked = [];
     });
   };
 
-  const onEdit = (item) => {
-    useRoute({ componentId: 'words', routeId: 'editWord', params: { wordId: $page.words[item].wordId } });
+  const onEdit = (wordId) => {
+    useRoute({ componentId: 'words', routeId: 'editWord', params: { wordId } });
   };
 
   const onRemove = () => editWords('deleteWords');
@@ -40,20 +52,20 @@
 <DocumentTitle title="Словарь" />
 
 <div class="dict">
-  <Autocomplete {words} bind:result label="Начните вводить слово/фразу" />
+  <Autocomplete data={words.getWordsArray()} bind:result label="Начните вводить слово/фразу" />
 
-  {#each result as item (item)}
-    <input type="checkbox" bind:group={checked} value={item} id={`cat${item}`} />
+  {#each result as wordId (wordId)}
+    <input type="checkbox" bind:group={checked} value={wordId} id={`cat${wordId}`} />
 
-    <div class="item" class:disabled={!$page.words[item].active}>
-      <label class="text" for={`cat${item}`}>{item}</label>
+    <div class="item" class:disabled={!$words[wordId].active}>
+      <label class="text" for={`cat${wordId}`}>{$words[wordId].original}</label>
 
-      {#if !$page.words[item].active && !checked.includes(item)}
+      {#if !$words[wordId].active && !checked.includes(wordId)}
         <Icon name="turn-off" />
       {/if}
 
-      {#if checked.includes(item)}
-        <button class="edit" on:click={() => onEdit(item)}><Icon name="edit" /></button>
+      {#if checked.includes(wordId)}
+        <button class="edit" on:click={() => onEdit(wordId)}><Icon name="edit" /></button>
       {/if}
     </div>
 

@@ -1,6 +1,6 @@
 import { Writable, writable, get } from 'svelte/store';
 
-export default <StoreInterface, StoreValue>(initialValue, methods): Writable<StoreValue> & StoreInterface => {
+export default <StoreInterface, StoreValue>(initialValue, methods?, views?): Writable<StoreValue> & StoreInterface => {
   const store: Writable<StoreValue> = writable(initialValue);
 
   const publicApi = {
@@ -19,13 +19,24 @@ export default <StoreInterface, StoreValue>(initialValue, methods): Writable<Sto
     }
   };
 
-  Object.keys(methods()).forEach(method => {
-    publicApi[method] = (...args) => {
-      const storeValue = get(store);
-      const result = methods(storeValue)[method].apply(null, args);
-      setValue(typeof result === 'undefined' ? storeValue : result);
-    }
-  });
+  if (methods) {
+    Object.keys(methods()).forEach(method => {
+      publicApi[method] = (...args) => {
+        const storeValue = get(store);
+        const result = methods(storeValue)[method].apply(null, args);
+        setValue(typeof result === 'undefined' ? storeValue : result);
+      }
+    });
+  }
+
+  if (views) {
+    Object.keys(views()).forEach(view => {
+      publicApi[view] = (...args) => {
+        const storeValue = get(store);
+        return views(storeValue)[view].apply(null, args);
+      }
+    });
+  }
 
   return publicApi as any;
 }

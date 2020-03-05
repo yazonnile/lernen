@@ -4,7 +4,7 @@ import history from 'lib/history/history';
 import request from 'lib/request/request';
 
 const getRoute = ({ componentId, routeId }: RouteId): Route => {
-  const { routes }: InitialData = getInitialState('initialData');
+  const { routes } = getInitialState().initialData;
   return routes[componentId] && routes[componentId][routeId];
 };
 
@@ -49,9 +49,9 @@ export const useRoute: UseRoute = ({
   }
 
   const url = getUrl(route.url, params);
-  const { methods = ['POST', 'GET'] } = route;
+  const { method = 'GET' } = route;
 
-  if (methods.length === 1 && methods.includes('GET') && !payload.logout) {
+  if (method === 'GET' && !payload.logout) {
     // no request here
     responseDataStore.update(value => {
       return {
@@ -81,16 +81,12 @@ export const useRoute: UseRoute = ({
 };
 
 // sync history with router
-let historyTimer;
 history.listen((location, action) => {
   if (action === 'POP') {
-    clearTimeout(historyTimer);
-    historyTimer = setTimeout(() => {
-      useRoute({
-        ...location.state,
-        clientData: { fromHistoryPop: true }
-      });
-    }, 1000);
+    useRoute({
+      ...location.state,
+      clientData: { fromHistoryPop: true }
+    });
   }
 });
 

@@ -11,7 +11,19 @@
     }
 
     public function getCategories($userId) {
-      return $this->api->getCategoriesByUserId($userId);
+      return array_reduce($this->api->getCategoriesByUserId($userId), function($carry, $row) {
+        $catId = $row['categoryId'];
+        if (!isset($carry[$catId])) {
+          $carry[$catId] = [
+            'categoryName' => $row['categoryName'],
+            'categoryId' => $catId,
+            'words' => []
+          ];
+        }
+
+        $carry[$catId]['words'][] = $row['wordId'];
+        return $carry;
+      }, []);
     }
 
     public function createCategories($categories, $joinedCats, $userId) {

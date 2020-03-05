@@ -16,23 +16,6 @@
       $this->categoriesService = new \service\Categories();
     }
 
-    private function getCategories() {
-      $this->updateState('categories', $this->categoriesService->getCategories($this->user->getId()));
-    }
-
-    public function addWord() {
-      $this->getCategories();
-    }
-
-    public function editWord() {
-      $this->getCategories();
-
-      $wordId = $this->getParam('wordId');
-
-      $this->updateState('word', $this->api->getWord($wordId, $this->user->getId()));
-      $this->updateState('linkedCategories', $this->categoriesService->getLinkedCategories($wordId));
-    }
-
     public function saveNoun() {
       $wordId = $this->saveWord(Types::noun);
 
@@ -52,7 +35,6 @@
         ]);
       }
 
-      $this->getCategories();
       $this->addMessage('saveNoun.success');
     }
 
@@ -85,14 +67,12 @@
         ]);
       }
 
-      $this->getCategories();
       $this->addMessage('saveVerb.success');
     }
 
     public function saveOther() {
       $type = $this->getPayload('type');
       $this->saveWord($type);
-      $this->getCategories();
       $this->addMessage('saveOther.success');
     }
 
@@ -128,6 +108,8 @@
           $this->user->getId()
         );
 
+        $this->updateState('newCategoriesIds', $createdAndLinked);
+
         $linkedCategories = $this->categoriesService->categoriesExist($this->getPayload('linkedCategories'));
         $rows = array_map(function($catId) use($wordId) {
           return [
@@ -142,6 +124,7 @@
         }
       }
 
+      $this->updateState('wordId', $wordId);
       return $wordId;
     }
   }

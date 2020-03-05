@@ -5,13 +5,17 @@
   import Button from 'sdk/button/button.svelte';
   import { useRoute } from 'lib/router/router';
   import Slide from 'sdk/transition/slide.svelte'
-  import { page } from 'stores';
+  import { setup as setupStore } from 'stores';
   import { play } from 'lib/speech/speech';
 
-  let setup = $page.setup;
+  let setup = $setupStore;
 
   const onSave = () => {
-    useRoute({ componentId: 'setup', routeId: 'updateSetup', payload: { ...setup }});
+    useRoute({ componentId: 'setup', routeId: 'updateSetup', payload: { ...setup }}, ({ setupSaved }) => {
+      if (setupSaved) {
+        $setupStore = setup;
+      }
+    });
   };
 
   const onVoiceSpeedChange = (s) => {
@@ -26,6 +30,8 @@
 <DocumentTitle title="Настройки" />
 
 <div class="setup">
+  <Button text="Сохранить" on:click={onSave} />
+
   <h1>Настройка голоса</h1>
 
   <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить голос</FormSwitcher>
@@ -103,5 +109,9 @@
 <style>
   .setup {
     width: 100%;
+  }
+
+  .setup :global(.button) {
+    margin-bottom: 20px;
   }
 </style>

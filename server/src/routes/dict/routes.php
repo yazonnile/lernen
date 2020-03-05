@@ -11,17 +11,17 @@ class DictRoutes {
       ],
       'disableWords' => [
         'url' => '/dict/disable-words',
-        'methods' => ['POST'],
+        'method' => 'POST',
         'access' => [\api\Access::user]
       ],
       'enableWords' => [
         'url' => '/dict/enable-words',
-        'methods' => ['POST'],
+        'method' => 'POST',
         'access' => [\api\Access::user]
       ],
       'deleteWords' => [
         'url' => '/dict/delete-words',
-        'methods' => ['POST'],
+        'method' => 'POST',
         'access' => [\api\Access::user],
         'confirm' => true
       ]

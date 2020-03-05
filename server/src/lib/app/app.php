@@ -61,7 +61,7 @@
       $routeId = $this->router->getState('match.routeId');
 
       // go to the route just in case of POST route
-      if (implode(',', $route['methods']) !== 'GET') {
+      if ($route['method'] !== 'GET') {
         if (method_exists($instance, $routeId)) {
           $instance->$routeId();
         } else {
@@ -99,10 +99,22 @@
       exit();
     }
 
+    private function setInitialState() {
+      if (!$this->user->getId()) {
+        return;
+      }
+
+      if ($this->isPost() && $this->user->getState('login')) {
+        return;
+      }
+
+      $this->updateState('initialData', (new \lib\InitialState())->init($this->user->getId()));
+    }
+
     private function result() {
-      $this->updateState('privateData.DEBUG', Utils::isDebug());
       $this->updateState('pageData.url', $this->router->getState('url'));
       $this->updateState('pageData.activeRoute', $this->router->getState('match'));
+      $this->setInitialState();
 
       if ($this->isGet()) {
         $this->updateState('initialData.routes', $this->router->getState('routes'));

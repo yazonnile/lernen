@@ -11,7 +11,10 @@
     },
     form
   } = createValidation({ componentId: 'home' }, {
-    scheme: ['loginOrEmail', 'password']
+    scheme: ['loginOrEmail', 'password'],
+    cb({ initialData }) {
+      // toDo
+    }
   });
 </script>
 

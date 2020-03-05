@@ -14,16 +14,6 @@
       $this->categoriesService = new \service\Categories();
     }
 
-    public function dict() {
-      $this->updateState(
-        'words',
-        array_reduce($this->api->getWords($this->user->getId()), function($carry, $word) {
-          $carry[$word['original']] = $word;
-          return $carry;
-        }, [])
-      );
-    }
-
     private function getIds() {
       return array_map(function($wordId) {
         return intval($wordId);
@@ -31,12 +21,14 @@
     }
 
     public function disableWords() {
-      $this->toggleWords(false);
+      $ids = $this->toggleWords(false);
+      $this->updateState('disabledIds', $ids);
       $this->addMessage('disableWords.success');
     }
 
     public function enableWords() {
-      $this->toggleWords(true);
+      $ids = $this->toggleWords(true);
+      $this->updateState('enabledIds', $ids);
       $this->addMessage('enableWords.success');
     }
 
@@ -47,7 +39,7 @@
         $this->api->updateWords($ids, $state, $this->user->getId());
       }
 
-      $this->dict();
+      return $ids;
     }
 
     public function deleteWords() {
@@ -58,6 +50,5 @@
       }
 
       $this->addMessage('deleteWords.success');
-      $this->dict();
     }
   }
