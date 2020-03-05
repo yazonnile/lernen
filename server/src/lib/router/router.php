@@ -34,8 +34,7 @@ class Router extends StateManager {
       'routeId' => 'notFound',
       'componentId' => 'notFound',
       'params' => [],
-      'route' => $this->getState('routes.notFound.notFound'),
-      'shouldUpdateRouter' => true
+      'route' => $this->getState('routes.notFound.notFound')
     ]);
   }
 
@@ -45,8 +44,7 @@ class Router extends StateManager {
       'routeId' => 'auth',
       'componentId' => 'auth',
       'params' => [],
-      'route' => $authRoute,
-      'shouldUpdateRouter' => true
+      'route' => $authRoute
     ]);
     $this->updateState('url', $authRoute['url']);
   }
@@ -72,10 +70,6 @@ class Router extends StateManager {
   private function mergeRouteWithDefaults($componentId, $routeId, $route) {
     if (!isset($route['method'])) {
       $route['method'] = 'GET';
-    }
-
-    if ($route['method'] !== 'POST') {
-      $route['shouldUpdateRouter'] = true;
     }
 
     if (!isset($route['url'])) {

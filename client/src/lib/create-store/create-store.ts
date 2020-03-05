@@ -1,6 +1,6 @@
 import { Writable, writable, get } from 'svelte/store';
 
-export default <StoreInterface, StoreValue>(initialValue, methods?, views?): Writable<StoreValue> & StoreInterface => {
+export default <StoreInterface, StoreValue>(initialValue, methods?, views?): Writable<StoreValue> & StoreInterface & StoreValue => {
   const store: Writable<StoreValue> = writable(initialValue);
 
   const publicApi = {

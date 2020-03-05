@@ -4,14 +4,11 @@ interface UseFunction<Params = { [key: string]: any }> {
   };
 }
 
-type User = {} | {
-  avatar: string | null;
-  isAdmin: 1 | null;
-  login: string;
-  timezone: string | null;
-  userId: number;
-  regDate: number;
-  lastVisitDate: number;
+type User = {
+  login?: string;
+  userId?: number;
+  regDate?: number;
+  lastVisitDate?: number;
 };
 
 interface MessageOptions {
@@ -22,6 +19,12 @@ interface MessageOptions {
 interface Message extends MessageOptions {
   id: string;
 }
+
+type View = {
+  url?: string;
+  params?: Params;
+  route: Route;
+} & RouteId;
 
 type InitialData = {
   validationRules: { [key: string]: object; };
@@ -40,6 +43,7 @@ type InitialData = {
   words?: {
     [key: number]: Word;
   };
+  view: View;
 };
 
 type Category = {
@@ -92,12 +96,6 @@ type Setup = {
 };
 
 type PageData = {
-  activeRoute: {
-    route: Route;
-    params?: Params;
-  } & RouteId;
-  url?: string;
-
   enabledIds?: number[];
   disabledIds?: number[];
   deletedIds?: number[];
@@ -105,10 +103,7 @@ type PageData = {
   newCategories?: Category[];
   newAndLinkedCategories?: number[];
   newWordId?: number;
-};
-
-type ClientDataType = {
-  fromHistoryPop?: boolean;
+  initialData?: InitialData;
 };
 
 type ResponseStore = {
@@ -117,7 +112,6 @@ type ResponseStore = {
     messages?: Message[];
   };
   pageData: PageData;
-  clientData?: ClientDataType;
 };
 
 type ResponseData = {
@@ -145,12 +139,10 @@ interface Route {
   method?: RouteMethodsType;
   access?: RouteAccessType[];
   payloadScheme?: PayloadSchemeType[];
-  shouldUpdateRouter?: true;
   url: string;
   confirm?: true;
 }
 
 interface Payload {
   [key: string]: any;
-  logout?: true;
 }

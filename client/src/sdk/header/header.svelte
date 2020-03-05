@@ -2,6 +2,7 @@
   import Icon from 'sdk/icon/icon.svelte';
   import Menu from 'sdk/menu/menu.svelte';
   import { useRoute } from 'lib/router/router';
+  import { user } from 'stores';
 
   let menuActive = false;
   const openMenu = () => {
@@ -19,10 +20,12 @@
     <span class="red">rn</span>
     <span class="yellow">en</span>
   </a>
-  <button
-    class="header--button header--menu"
-    on:click="{openMenu}"
-  ><Icon name="menu" /></button>
+  {#if $user.userId}
+    <button
+      class="header--button header--menu"
+      on:click="{openMenu}"
+    ><Icon name="menu" /></button>
+  {/if}
 
 <!--  <button-->
 <!--    class="header&#45;&#45;button header&#45;&#45;nav"-->

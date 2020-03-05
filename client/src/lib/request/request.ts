@@ -1,4 +1,4 @@
-import messagesStore from 'stores/messages/messages';
+import { messages as messagesStore, user as userStore} from 'stores';
 
 const status = response => new Promise((resolve, reject) => {
   if (response.status >= 200 && response.status < 300) {
@@ -41,11 +41,13 @@ const request: Request = (options) => {
     busy = false;
 
     const { error, ...rest } = responseData;
-    const { persistentData: { messages } } = rest;
+    const { persistentData: { messages, user } } = rest;
 
     if (Array.isArray(messages)) {
       messagesStore.addMessages(messages);
     }
+
+    userStore.set(user);
 
     if (error) {
       return null;

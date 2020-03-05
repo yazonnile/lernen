@@ -5,8 +5,6 @@ interface WordsStoreInterface {
   deleteWords(ids: number[]);
   disableWords(ids: number[]);
   enableWords(ids: number[]);
-
-  getWordsArray(): Word[];
 }
 
 const store = createStore<WordsStoreInterface, { [key: number]: Word }>(
@@ -26,10 +24,6 @@ const store = createStore<WordsStoreInterface, { [key: number]: Word }>(
       for (let i = 0; i < ids.length; i++) {
         $words[ids[i]].active = true;
       }
-    }
-  }),$words => ({
-    getWordsArray(): Word[] {
-      return Object.values($words);
     }
   })
 );

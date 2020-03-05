@@ -104,19 +104,19 @@
         return;
       }
 
-      if ($this->isPost() && $this->user->getState('login')) {
-        return;
+      if ($this->isGet()) {
+        $this->updateState('initialData', (new \lib\InitialState())->init($this->user->getId()));
+      } else if ($this->isPost() && $this->user->getState('loggedIn')) {
+        $this->updateState('pageData.initialData', (new \lib\InitialState())->init($this->user->getId()));
       }
-
-      $this->updateState('initialData', (new \lib\InitialState())->init($this->user->getId()));
     }
 
     private function result() {
-      $this->updateState('pageData.url', $this->router->getState('url'));
-      $this->updateState('pageData.activeRoute', $this->router->getState('match'));
       $this->setInitialState();
 
       if ($this->isGet()) {
+        $this->updateState('initialData.view', $this->router->getState('match'));
+        $this->updateState('initialData.view.url', $this->router->getState('url'));
         $this->updateState('initialData.routes', $this->router->getState('routes'));
         $this->updateState('initialData.validationRules', Validation::collectRules());
 

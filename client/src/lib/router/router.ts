@@ -1,5 +1,5 @@
 import { getInitialState } from 'api/initial-state/initial-state';
-import responseDataStore from 'stores/response-data/response-data';
+import { user, view } from 'stores';
 import history from 'lib/history/history';
 import request from 'lib/request/request';
 
@@ -26,7 +26,6 @@ interface UseRoute {
     options: {
       payload?: Payload;
       params?: Params;
-      clientData?: ClientDataType;
     } & RouteId,
     cb?: (data?: PageData) => any
   );
@@ -37,7 +36,6 @@ export const useRoute: UseRoute = ({
   routeId = componentId,
   payload = {},
   params = {},
-  clientData = {}
 }, cb = null): void => {
   const route = getRoute({ componentId, routeId });
   if (!route) {
@@ -51,30 +49,21 @@ export const useRoute: UseRoute = ({
   const url = getUrl(route.url, params);
   const { method = 'GET' } = route;
 
-  if (method === 'GET' && !payload.logout) {
-    // no request here
-    responseDataStore.update(value => {
-      return {
-        ...value,
-        pageData: {
-          ...value.pageData,
-          activeRoute: { componentId, routeId, params, route },
-          url,
-        },
-        clientData,
-      };
-    });
+  if (method === 'GET') {
+    if (!user.getId() && componentId !== 'auth') {
+      return;
+    }
 
+    // no request here
+    const newView = { url, componentId, routeId, params, route };
+    view.set(newView);
+    history.push(url, newView);
     return processCallback(cb);
   }
 
-  // send request and switch router
+  // send request
   request({ url, payload }).then(responseData => {
     if (responseData) {
-      responseDataStore.set({
-        ...responseData,
-        clientData
-      });
       processCallback(cb, responseData.pageData);
     }
   });
@@ -83,10 +72,7 @@ export const useRoute: UseRoute = ({
 // sync history with router
 history.listen((location, action) => {
   if (action === 'POP') {
-    useRoute({
-      ...location.state,
-      clientData: { fromHistoryPop: true }
-    });
+    view.set({ ...location.state });
   }
 });
 

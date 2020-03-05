@@ -1,6 +1,6 @@
 <script>
   import Word from './word.svelte';
-  import { page, words } from 'stores';
+  import { view, words } from 'stores';
 </script>
 
-<Word word={$words[$page.activeRoute.params.wordId]} />
+<Word word={$words[$view.params.wordId]} />

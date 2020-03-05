@@ -11,6 +11,17 @@ class AuthRoutes {
         'access' => [\api\Access::guest]
       ],
 
+      'logout' => [
+        'method' => 'POST',
+        'access' => [\api\Access::user]
+      ],
+
+      'login' => [
+        'method' => 'POST',
+        'payloadScheme' => ['loginOrEmail', 'password'],
+        'access' => [\api\Access::guest]
+      ],
+
       'auth' => [
         'access' => [\api\Access::guest]
       ],

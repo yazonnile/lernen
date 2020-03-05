@@ -13,21 +13,13 @@
       $this->updateState(null, []);
 
       $userId = $this->getUserIdFromCookies();
-      if ($userId) {
-        if ($this->getPayload('logout')) {
-          $this->logoutUser();
-          $userId = null;
-        }
-      } else {
-        $userId = $this->getUserIdByLogin();
-      }
 
       if ($userId) {
         $this->setupById($userId);
       }
     }
 
-    private function logoutUser() {
+    public function logout() {
       session_destroy();
       $_SESSION = [];
       $this->updateState(null, []);
@@ -57,7 +49,7 @@
       return null;
     }
 
-    private function getUserIdByLogin() {
+    public function getUserIdByLogin() {
       // there is no login attempt - so do nothing
       if (!$this->getPayload('loginOrEmail') || !$this->getPayload('password')) {
         return null;
@@ -95,7 +87,6 @@
 
       $userId = $userByLoginOrEmail['userId'];
       $this->setUserCookie($userId);
-      $this->updateState('login', true);
       return $userId;
     }
 
@@ -117,7 +108,7 @@
       setcookie($this->getConfigState('jwt.name'), '', 0, '/', null, null, true);
     }
 
-    private function setupById($userId) {
+    public function setupById($userId) {
       $userObj = $this->api->getById($userId);
       if ($userObj) {
         // update last visit time in DB and client

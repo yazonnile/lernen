@@ -46,7 +46,7 @@ export const defaultValidationOptions = {
 export default (validationParams: {params?: Params} & RouteId, options: ValidationOptions = {}): CreateValidationResult => {
   const { createForm, createEntries, clearErrors } = createValidation(defaultValidationOptions);
 
-  const scheme: PayloadSchemeType[] = options.scheme || getRouteValidationScheme(validationParams);
+  const scheme: PayloadSchemeType[] = options.scheme || getRouteValidationScheme(validationParams) || [];
   const cb = typeof options === 'function' ? options : options.cb;
   const initialValues = options.initialValues || [];
 

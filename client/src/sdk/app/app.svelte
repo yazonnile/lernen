@@ -4,9 +4,9 @@
   import Messages from 'sdk/messages/messages.svelte';
   import Header from 'sdk/header/header.svelte';
   import getActiveRoute from './get-active-route';
-  import { page } from 'stores';
+  import { view } from 'stores';
 
-  $: activeRoute = getActiveRoute($page.activeRoute);
+  $: activeRoute = getActiveRoute($view);
 </script>
 
 <div class="app">

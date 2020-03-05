@@ -49,4 +49,16 @@
       $this->addMessage('passwordRecovery.success');
       // TODO: create real recovery :)
     }
+
+    public function logout() {
+      $this->user->logout();
+    }
+
+    public function login() {
+      $userId = $this->user->getUserIdByLogin();
+      if ($userId) {
+        $this->user->setupById($userId);
+        $this->user->updateState('loggedIn', true);
+      }
+    }
   }

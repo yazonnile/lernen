@@ -4,9 +4,9 @@
   import Button from 'sdk/button/button.svelte';
   import Fly from 'sdk/transition/fly.svelte';
   import { useRoute } from 'lib/router/router';
-  import { page, categories as categoriesStore, games } from 'stores';
+  import { view, categories as categoriesStore, games } from 'stores';
 
-  let { gameName } = $page.activeRoute.params;
+  let { gameName } = $view.params;
   let categories = Object.values($categoriesStore);
   let selectedCategories = [];
   let nullCategory = false;

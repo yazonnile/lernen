@@ -22,8 +22,10 @@
         wordsIds: checked.map(id => $words[id].wordId)
       }
     }, ({ enabledIds, disabledIds, deletedIds }) => {
+      checked = [];
       switch (routeId) {
         case 'deleteWords':
+          result = result.filter(id => !deletedIds.includes(id));
           words.deleteWords(deletedIds);
           break;
 
@@ -35,8 +37,6 @@
           words.disableWords(disabledIds);
           break;
       }
-
-      checked = [];
     });
   };
 
@@ -52,7 +52,7 @@
 <DocumentTitle title="Словарь" />
 
 <div class="dict">
-  <Autocomplete data={words.getWordsArray()} bind:result label="Начните вводить слово/фразу" />
+  <Autocomplete data={Object.values($words)} bind:result label="Начните вводить слово/фразу" />
 
   {#each result as wordId (wordId)}
     <input type="checkbox" bind:group={checked} value={wordId} id={`cat${wordId}`} />

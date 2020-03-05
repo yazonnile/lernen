@@ -2,7 +2,7 @@
   export let menuActive;
 
   import { useRoute } from 'lib/router/router';
-  import { page } from 'stores';
+  import { user } from 'stores';
   import { fly, fade } from 'svelte/transition';
 
   const hideMenu = () => {
@@ -11,7 +11,11 @@
 
   const onLogout = () => {
     hideMenu();
-    useRoute({ ...$page.activeRoute, payload: { logout: true } });
+    useRoute({ componentId: 'auth', routeId: 'logout' }, () => {
+      if (!$user.userId) {
+        useRoute({ componentId: 'auth' });
+      }
+    });
   };
 
   const onMenu = (componentId) => {

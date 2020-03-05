@@ -47,6 +47,7 @@
 
       if (count($ids)) {
         $this->api->deleteWords($ids, $this->user->getId());
+        $this->updateState('deletedIds', $ids);
       }
 
       $this->addMessage('deleteWords.success');
