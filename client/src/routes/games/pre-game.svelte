@@ -8,8 +8,8 @@
 
   let { gameName } = $view.params;
   let categories = Object.values($categoriesStore);
-  let selectedCategories = [];
-  let nullCategory = false;
+  let selectedCategories = $games[gameName].categories.selected || [];
+  let nullCategory = $games[gameName].categories.nullCategory || false;
   let selectedState = false;
   $: selectedState = nullCategory && selectedCategories.length === categories.length;
 

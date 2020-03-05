@@ -5,13 +5,14 @@
   import Verb from './learn/verb.svelte';
   import Noun from './learn/noun.svelte';
   import speech from 'lib/speech/speech';
+  import shuffle from 'lib/shuffle/shuffle';
   import { words as wordsStore, setup } from 'stores';
   import { onDestroy } from 'svelte';
 
   let visible = false;
   let activeIndex = 0;
-  let wordsIds = wordsStore.getWordsByCategoriesAndSetup('learn');
-  let activeWord = $wordsStore[wordsIds[0]];
+  let wordsIds = shuffle(wordsStore.getWordsByCategoriesAndSetup('learn'));
+  let activeWord;
   $: activeWord = $wordsStore[wordsIds[activeIndex]];
 
   const showTranslation = () => {

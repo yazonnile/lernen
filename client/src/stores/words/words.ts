@@ -7,7 +7,7 @@ interface WordsStoreInterface {
   disableWords(ids: number[]);
   enableWords(ids: number[]);
 
-  getWordsByCategoriesAndSetup(): Word[];
+  getWordsByCategoriesAndSetup(gameName: string): Word[];
 }
 
 const store = createStore<WordsStoreInterface, { [key: number]: Word }>(
@@ -30,7 +30,7 @@ const store = createStore<WordsStoreInterface, { [key: number]: Word }>(
     }
   }),
   $words => ({
-    getWordsByCategoriesAndSetup(gameName): Word[] {
+    getWordsByCategoriesAndSetup(gameName: string): Word[] {
       const { categoriesIds, nullCategory } = games.getGamesCategories(gameName);
       const setup = setupStore.getSetup();
       const wordsInCategory = categoriesStore.getWordsWithCategory();
