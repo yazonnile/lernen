@@ -100,15 +100,20 @@
 
       if ($this->getPayload('categoriesActive')) {
         $linkedCategories = $this->getPayload('linkedCategories');
-        $createdAndLinked = $this->categoriesService->createCategories(
+        $createdCategories = $this->categoriesService->createCategories(
           array_map(function($cat) {
             return [ 'categoryName' => mb_strtolower($cat['categoryName']), 'categoryId' => $cat['categoryId'] ];
           }, $this->getPayload('createdCategories')),
-          $linkedCategories,
           $this->user->getId()
         );
 
-        $this->updateState('newCategoriesIds', $createdAndLinked);
+        $this->updateState('newCategories', $createdCategories);
+
+        $createdAndLinked = array_filter($createdCategories, function($catId) use($linkedCategories) {
+          return in_array($catId, $linkedCategories);
+        });
+
+        $this->updateState('newAndLinkedCategories', $createdCategories);
 
         $linkedCategories = $this->categoriesService->categoriesExist($this->getPayload('linkedCategories'));
         $rows = array_map(function($catId) use($wordId) {

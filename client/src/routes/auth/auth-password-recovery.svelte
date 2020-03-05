@@ -9,9 +9,7 @@
       loginOrEmail: [ errors, value, input ]
     },
     form
-  } = createValidation({ componentId: 'auth', routeId: 'askForPasswordRecovery' }, (data) => {
-    console.log('askForPasswordRecovery CALLBACK', data);
-  });
+  } = createValidation({ componentId: 'auth', routeId: 'askForPasswordRecovery' });
 </script>
 
 <FormValidation {form}>

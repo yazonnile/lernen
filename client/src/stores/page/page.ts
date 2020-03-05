@@ -3,7 +3,7 @@ import { getInitialState } from 'api/initial-state/initial-state';
 import responseDataStore from 'stores/response-data/response-data';
 import history from 'lib/history/history';
 
-const store: PageData & Writable<PageData> = writable(getInitialState('pageData')) as any;
+const store: PageData & Writable<PageData> = writable(getInitialState().pageData) as any;
 
 let initial = true;
 responseDataStore.subscribe(({ pageData, clientData }) => {

@@ -14,8 +14,21 @@
 
     public function getWords($userId) {
       return $this->setSql(
-        "SELECT original, active, wordId
+        "SELECT *
         FROM words
+
+        LEFT JOIN articles
+        USING (wordId)
+
+        LEFT JOIN plural
+        USING (wordId)
+
+        LEFT JOIN irregular
+        USING (wordId)
+
+        LEFT JOIN strong
+        USING (wordId)
+
         WHERE userId = :userId;"
       )->getAll([
         ':userId' => $userId

@@ -102,7 +102,8 @@ type PageData = {
   disabledIds?: number[];
   deletedIds?: number[];
   setupSaved?: boolean;
-  newCategoriesIds?: number[];
+  newCategories?: Category[];
+  newAndLinkedCategories?: number[];
   newWordId?: number;
 };
 

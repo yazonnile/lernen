@@ -1,7 +1,7 @@
 <script>
   import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import { useRoute } from 'lib/router/router';
-  import { page } from 'stores';
+  import { games } from 'stores';
 
   const onGame = (gameName) => {
     useRoute({ componentId: 'games', routeId: 'preGame', params: { gameName } });
@@ -11,9 +11,9 @@
 <DocumentTitle title="Список игр" />
 
 <div class="home">
-  {#each $page.games as {gameName, text} (gameName)}
+  {#each Object.keys($games) as gameName (gameName)}
     <button class="game" on:click={() => onGame(gameName)}>
-      {text}
+      {$games[gameName].buttonText}
     </button>
   {/each}
 </div>

@@ -26,18 +26,12 @@
       }, []);
     }
 
-    public function createCategories($categories, $joinedCats, $userId) {
+    public function createCategories($categories, $userId) {
       // validate
       $categories = array_filter($categories, function($cat) {
         $name = $cat['categoryName'] ?? null;
         return is_string($name) && mb_strlen($name) > 0 && mb_strlen($name) <= 100;
       });
-
-      $joinedCategoriesByNames = array_map(function($cat) {
-        return $cat['categoryName'];
-      }, array_filter($categories, function($cat) use($joinedCats) {
-        return in_array($cat['categoryId'], $joinedCats);
-      }));
 
       if (!count($categories)) {
         return [];
@@ -50,14 +44,14 @@
         ];
       }, $categories));
 
-      if (!count($joinedCategoriesByNames)) {
-        return [];
-      }
-
       // get new assigned
-      return array_map(function($item) {
-        return $item['categoryId'];
-      }, $this->api->getIdsByNames($joinedCategoriesByNames, $userId));
+      return $this->getIdsByNames(array_map(function($cat) {
+        return $cat['categoryName'];
+      }, $categories), $userId);
+    }
+
+    public function getIdsByNames($categoriesNames, $userId) {
+      return $this->api->getIdsByNames($categoriesNames, $userId);
     }
 
     public function categoriesExist($categoriesIds) {

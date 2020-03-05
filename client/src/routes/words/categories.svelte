@@ -20,7 +20,6 @@
     if (!newCategoryName) {
       return;
     }
-    // TODO
 
     newCategoryName = newCategoryName.toLowerCase();
     const existedCatyName = categories.find(c => c.categoryName === newCategoryName);

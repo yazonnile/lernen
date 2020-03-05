@@ -5,19 +5,18 @@
   import Verb from './learn/verb.svelte';
   import Noun from './learn/noun.svelte';
   import speech from 'lib/speech/speech';
-  import { page } from 'stores';
+  import { words as wordsStore, setup } from 'stores';
   import { onDestroy } from 'svelte';
 
   let visible = false;
   let activeIndex = 0;
-  let words = $page.learn;
-  let setup = $page.setup;
-  let activeWord = $page.learn[0];
+  let words = $wordsStore;
+  let activeWord = $wordsStore[0];
   $: activeWord = words[activeIndex];
 
   const showTranslation = () => {
     visible = true;
-    speech.sayWord(activeWord, setup);
+    speech.sayWord(activeWord, $setup);
   };
 
   const nextWord =  () => {
@@ -41,9 +40,9 @@
 
     <div class="item item-extra" class:visible>
       {#if activeWord.type === 'noun'}
-        <Noun {setup} word={activeWord} />
+        <Noun word={activeWord} />
       {:else if activeWord.type === 'verb'}
-        <Verb {setup} word={activeWord} />
+        <Verb word={activeWord} />
       {:else}
         {activeWord.original}
       {/if}

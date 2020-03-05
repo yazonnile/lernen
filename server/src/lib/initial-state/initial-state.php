@@ -16,7 +16,8 @@
       return [
         'games' => [
           'learn' => [
-            'buttonText' => 'учить'
+            'buttonText' => 'учить',
+            'categories' => []
           ]
         ],
         'categories' => $categoriesService->getCategories($userId),

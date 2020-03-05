@@ -45,7 +45,7 @@ class Categories extends \lib\Db {
   public function getIdsByNames($categoryNames, $userId) {
     $in = str_repeat('?,', count($categoryNames) - 1) . '?';
     return $this->setSql(
-      "SELECT categoryId
+      "SELECT categoryId, categoryName
         FROM categories
         WHERE categoryName IN ($in)
         AND userId = ?;"

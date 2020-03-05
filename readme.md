@@ -17,14 +17,9 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* update client stores
- - words
- - categories
- - games
- - setup
+* learn game
 
 # TODO
-* simplify state
 * service worker
 * manifest.json + icon
 * pwa

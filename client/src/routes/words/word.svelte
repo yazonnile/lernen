@@ -1,6 +1,5 @@
 <script>
   export let word = {};
-  export let linkedCategories = [];
 
   import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import FormElement from 'sdk/form-element/form-element.svelte';
@@ -9,10 +8,10 @@
   import ButtonsRow from 'sdk/buttons-row/buttons-row.svelte';
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
   import createValidation from 'lib/validation/validation';
-  import Categories from 'sdk/categories/categories.svelte';
+  import Categories from './categories.svelte';
   import Slide from 'sdk/transition/slide.svelte';
   import { useRoute } from 'lib/router/router';
-  import { page } from 'stores';
+  import { categories, words, user } from 'stores';
 
   let { wordId = null } = word;
   let type = word.type || '';
@@ -20,6 +19,7 @@
   let irregularVerb = word.irregular1 || word.irregular2;
 
   let createdCategories = [];
+  let linkedCategories = wordId ? categories.getCategoriesByWordId(wordId) : [];
   let categoriesActive = !!linkedCategories.length;
 
   const resetState = (t = '') => {
@@ -59,10 +59,58 @@
   const params = {
     initialValues: word,
     assignPayload: (payload) => ({ ...payload, type, linkedCategories, createdCategories, categoriesActive, wordId, strongVerb, irregularVerb }),
-    cb: ({ categories }) => {
-      $page.categories = categories;
+    cb: ({ newCategories, newAndLinkedCategories, wordId: id }) => {
+      const newWordObj = {
+        userId: user.userId,
+        wordId: wordId || id,
+        type,
+      };
+
+      if (!wordId) {
+        newWordObj.active = true;
+      }
+
+      if (type === 'noun') {
+        newWordObj.original = $nounOrigValue;
+        newWordObj.translation = $nounTrValue;
+        newWordObj.plural = $pluralValue;
+        newWordObj.article = $articleValue;
+      } else if (type === 'verb') {
+        newWordObj.original = $verbOrigValue;
+        newWordObj.translation = $verbTrValue;
+        newWordObj.strong1 = $strong1Value;
+        newWordObj.strong2 = $strong2Value;
+        newWordObj.strong3 = $strong3Value;
+        newWordObj.strong4 = $strong4Value;
+        newWordObj.strong5 = $strong5Value;
+        newWordObj.strong6 = $strong6Value;
+        newWordObj.irregular1 = $irregular1Value;
+        newWordObj.irregular2 = $irregular2Value;
+      } else {
+        newWordObj.original = $otherOrigValue;
+        newWordObj.translation = $otherTrValue;
+      }
+
+      // update word
+      $words[newWordObj.wordId] = {
+        ...$words[newWordObj.wordId],
+        ...newWordObj,
+      };
+
+      if (newCategories) {
+        categories.createCategories(newCategories);
+      }
+
       if (wordId) {
-        useRoute({ componentId: 'home' });
+        categories.removeWordFromCategories(wordId);
+      }
+
+      if (categoriesActive) {
+        categories.assignWordToCategories(wordId || id, [...linkedCategories, ...newAndLinkedCategories]);
+      }
+
+      if (wordId) {
+        useRoute({ componentId: 'dict' });
       } else {
         resetState();
       }
@@ -118,12 +166,14 @@
 <div>
   <h1>{wordId ? 'Редактировать' : 'Добавить'} слово</h1>
 
-  <ButtonsRow twoInARow>
-    <button on:click|preventDefault={() => resetState('noun')} class:active={type === 'noun'}>Существ.</button>
-    <button on:click|preventDefault={() => resetState('verb')} class:active={type === 'verb'}>Глагол</button>
-    <button on:click|preventDefault={() => resetState('phrase')} class:active={type === 'phrase'}>Фраза</button>
-    <button on:click|preventDefault={() => resetState('other')} class:active={type === 'other'}>Другое</button>
-  </ButtonsRow>
+  {#if !wordId}
+    <ButtonsRow twoInARow>
+      <button on:click|preventDefault={() => resetState('noun')} class:active={type === 'noun'}>Существ.</button>
+      <button on:click|preventDefault={() => resetState('verb')} class:active={type === 'verb'}>Глагол</button>
+      <button on:click|preventDefault={() => resetState('phrase')} class:active={type === 'phrase'}>Фраза</button>
+      <button on:click|preventDefault={() => resetState('other')} class:active={type === 'other'}>Другое</button>
+    </ButtonsRow>
+  {/if}
 
   {#if type}
     {#if type === 'noun'}

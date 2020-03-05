@@ -1,9 +1,6 @@
 <script>
   import Word from './word.svelte';
-  import { page } from 'stores';
+  import { page, words } from 'stores';
 </script>
 
-<Word
-  word={$page.word}
-  linkedCategories={$page.linkedCategories}
-/>
+<Word word={$words[$page.activeRoute.params.wordId]} />

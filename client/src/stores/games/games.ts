@@ -4,6 +4,10 @@ import { getInitialState } from 'api/initial-state/initial-state';
 interface GamesInterface {
   [key: string]: {
     buttonText: string;
+    categories: {
+      selected: number[];
+      nullCategory: boolean;
+    }
   }
 }
 
