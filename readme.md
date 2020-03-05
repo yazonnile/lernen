@@ -17,15 +17,15 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* learn game
+* service worker
 
 # TODO
-* service worker
 * manifest.json + icon
 * pwa
 * categories page
 * stat page
 * fancy ui
+* intro animation
 
 ## far-far away
 * reverse game

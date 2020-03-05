@@ -15,7 +15,7 @@
 
   const onReady = () => {
     $games[gameName].categories = {
-      selectedCategories,
+      selected: selectedCategories,
       nullCategory
     };
 

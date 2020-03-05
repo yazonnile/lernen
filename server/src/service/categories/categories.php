@@ -21,7 +21,9 @@
           ];
         }
 
-        $carry[$catId]['words'][] = $row['wordId'];
+        if ($row['wordId']) {
+          $carry[$catId]['words'][] = $row['wordId'];
+        }
         return $carry;
       }, []);
     }

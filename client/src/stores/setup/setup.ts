@@ -1,6 +1,18 @@
-import { Writable, writable } from 'svelte/store';
+import createStore from 'lib/create-store/create-store';
 import { getInitialState } from 'api/initial-state/initial-state';
 
-const store: Setup & Writable<Setup> = writable(getInitialState().initialData.setup) as any;
+interface GamesStoreInterface {
+  getSetup(): Setup;
+}
+
+const store = createStore<GamesStoreInterface, Setup>(
+  getInitialState().initialData.setup,
+  null,
+  ($setup: Setup) => ({
+    getSetup() {
+      return $setup;
+    }
+  })
+);
 
 export default store;

@@ -10,9 +10,9 @@
 
   let visible = false;
   let activeIndex = 0;
-  let words = $wordsStore;
-  let activeWord = $wordsStore[0];
-  $: activeWord = words[activeIndex];
+  let wordsIds = wordsStore.getWordsByCategoriesAndSetup('learn');
+  let activeWord = $wordsStore[wordsIds[0]];
+  $: activeWord = $wordsStore[wordsIds[activeIndex]];
 
   const showTranslation = () => {
     visible = true;
@@ -22,7 +22,7 @@
   const nextWord =  () => {
     speech.stop();
     visible = false;
-    activeIndex = activeIndex === words.length - 1 ? 0 : (activeIndex + 1);
+    activeIndex = activeIndex === wordsIds.length - 1 ? 0 : (activeIndex + 1);
   };
 
   onDestroy(() => {
@@ -32,7 +32,7 @@
 
 <DocumentTitle title="Обучение" />
 
-{#if !words.length}
+{#if !wordsIds.length}
   нет слов
 {:else}
   <div class="learn" on:click={showTranslation}>

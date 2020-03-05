@@ -5,8 +5,11 @@ interface CategoriesStoreInterface {
   createCategories(categories: Category[]);
   assignWordToCategories(wordId: number, categoriesIds: number[]);
   removeWordFromCategories(wordId: number);
+
   getIds(): number[];
   getCategoriesByWordId(wordId: number): number[];
+  getWordIdsByCategoryId(catId: number): number[];
+  getWordsWithCategory(): number[];
 }
 
 interface CategoriesStoreValue {
@@ -55,6 +58,18 @@ const store = createStore<CategoriesStoreInterface,CategoriesStoreValue >(
       return Object.values($categories).filter(cat => {
         return cat.words.find(w => w === wordId);
       }).map(cat => cat.categoryId);
+    },
+
+    getWordIdsByCategoryId(catId: number): number[] {
+      return $categories[catId].words;
+    },
+
+    getWordsWithCategory(): number {
+      return Object.values($categories).reduce((sum, cat) => {
+        return [ ...sum, ...cat.words ];
+      }, []).filter((value, index, self) => {
+        return self.indexOf(value) === index;
+      });
     }
   })
 );
