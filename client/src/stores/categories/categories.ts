@@ -9,7 +9,7 @@ interface CategoriesStoreInterface {
   getIds(): number[];
   getCategoriesByWordId(wordId: number): number[];
   getWordIdsByCategoryId(catId: number): number[];
-  getWordsWithCategory(): number[];
+  getWordsWithNullCategory(wordsIds): number[];
 }
 
 interface CategoriesStoreValue {
@@ -64,11 +64,16 @@ const store = createStore<CategoriesStoreInterface,CategoriesStoreValue >(
       return $categories[catId].words;
     },
 
-    getWordsWithCategory(): number {
-      return Object.values($categories).reduce((sum, cat) => {
-        return [ ...sum, ...cat.words ];
-      }, []).filter((value, index, self) => {
-        return self.indexOf(value) === index;
+    getWordsWithNullCategory(wordsIds: number[]): number[] {
+      const categories = Object.values($categories);
+      return wordsIds.filter(wordId => {
+        for (let i = 0; i < categories.length; i++) {
+          if (categories[i].words.indexOf(wordId) > -1) {
+            return false;
+          }
+        }
+
+        return true;
       });
     }
   })

@@ -26,6 +26,7 @@
     letter-spacing: 1px;
     line-height: 27px;
     border-radius: 5px;
+    margin-top: 10px;
     padding: 20px;
     text-transform: uppercase;
     width: 100%;

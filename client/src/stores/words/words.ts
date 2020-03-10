@@ -33,27 +33,32 @@ const store = createStore<WordsStoreInterface, { [key: number]: Word }>(
     getWordsByCategoriesAndSetup(gameName: string): Word[] {
       const { categoriesIds, nullCategory } = games.getGamesCategories(gameName);
       const setup = setupStore.getSetup();
-      const wordsInCategory = categoriesStore.getWordsWithCategory();
 
-      return categoriesIds.reduce((words, catId) => {
-        return [ ...words, ...categoriesStore.getWordIdsByCategoryId(catId) ];
-      }, [])
+      let wordsIds = [];
 
-      // add null category if needed
-      .concat(nullCategory
-        ? Object.keys($words).map(Number).filter(wordId => {
-          return wordsInCategory.indexOf(wordId) === -1;
-        }) : []
-      )
+      // add selected categories
+      categoriesIds.forEach(catId => {
+        const wordsInCategory = categoriesStore.getWordIdsByCategoryId(catId);
+        wordsIds.push(...wordsInCategory);
+      });
+
+      // null category
+      if (nullCategory) {
+        wordsIds.push(...categoriesStore.getWordsWithNullCategory(Object.keys($words)));
+      }
 
       // get uniq words array
-      .filter((value, index, self) => {
+      wordsIds = wordsIds.filter((value, index, self) => {
         return self.indexOf(value) === index;
-      })
+      });
 
-      // filter words by setup
-      .filter(wordId => {
+      // filter words by setup and active state
+      wordsIds = wordsIds.filter(wordId => {
         const word: Word = $words[wordId];
+
+        if (!word.active) {
+          return false;
+        }
 
         switch (word.type) {
           case 'other':
@@ -69,6 +74,8 @@ const store = createStore<WordsStoreInterface, { [key: number]: Word }>(
             return setup.verbs;
         }
       });
+
+      return wordsIds;
     }
   })
 );
