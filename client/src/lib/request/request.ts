@@ -40,7 +40,13 @@ const request: Request = (options) => {
   }).then(status).then(json).then((responseData: ResponseData) => {
     busy = false;
 
-    const { error, ...rest } = responseData;
+    const { error, offline, ...rest } = responseData;
+
+    if (offline) {
+      messagesStore.addMessage(offline);
+      return null;
+    }
+
     const { persistentData: { messages, user } } = rest;
 
     if (Array.isArray(messages)) {

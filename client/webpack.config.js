@@ -12,7 +12,8 @@ module.exports = ({ isProduction }) => {
     mode: isProduction ? 'production' : 'development',
 
     entry: {
-      index: './src/index.ts'
+      index: './src/index.ts',
+      sw: './src/sw.ts'
     },
 
     output: {
@@ -85,7 +86,6 @@ module.exports = ({ isProduction }) => {
 
     plugins: [
       new CopyPlugin([
-        './src/index.html',
         './src/static'
       ]),
       new MiniCssExtractPlugin({ ignoreOrder: true }),

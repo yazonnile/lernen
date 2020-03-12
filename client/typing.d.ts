@@ -99,7 +99,6 @@ type PageData = {
   enabledIds?: number[];
   disabledIds?: number[];
   deletedIds?: number[];
-  setupSaved?: boolean;
   newCategories?: Category[];
   newAndLinkedCategories?: number[];
   newWordId?: number;
@@ -116,6 +115,7 @@ type ResponseStore = {
 
 type ResponseData = {
   error?: [];
+  offline?: Message;
 } & ResponseStore;
 
 type PayloadSchemeType = 'login' | 'email' | 'password' | 'newPassword' | 'mcnulty' | 'loginOrEmail';

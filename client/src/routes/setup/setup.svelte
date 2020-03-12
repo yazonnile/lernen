@@ -11,11 +11,8 @@
   let setup = $setupStore;
 
   const onSave = () => {
-    useRoute({ componentId: 'setup', routeId: 'updateSetup', payload: { ...setup }}, ({ setupSaved }) => {
-      if (setupSaved) {
-        $setupStore = setup;
-      }
-    });
+    $setupStore = setup;
+    useRoute({ componentId: 'setup', routeId: 'updateSetup', payload: { ...setup }});
   };
 
   const onVoiceSpeedChange = (s) => {

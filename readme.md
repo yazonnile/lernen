@@ -20,8 +20,6 @@
 * service worker
 
 # TODO
-* manifest.json + icon
-* pwa
 * categories page
 * stat page
 * fancy ui
@@ -30,3 +28,8 @@
 ## far-far away
 * reverse game
 * spelling game
+
+# v2.0
+* two apps
+  * auth app
+  * user is logged in app

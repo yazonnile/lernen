@@ -33,6 +33,5 @@
       ]);
 
       $this->addMessage('updateSetup.success');
-      $this->updateState('setupSaved', true);
     }
   }
