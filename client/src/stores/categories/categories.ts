@@ -65,15 +65,13 @@ const store = createStore<CategoriesStoreInterface,CategoriesStoreValue >(
     },
 
     getWordsWithNullCategory(wordsIds: number[]): number[] {
-      const categories = Object.values($categories);
-      return wordsIds.filter(wordId => {
-        for (let i = 0; i < categories.length; i++) {
-          if (categories[i].words.indexOf(wordId) > -1) {
-            return false;
-          }
-        }
+      const idsInCategories = Object.values($categories).reduce((carry, cat) => {
+        carry.push(...cat.words);
+        return carry;
+      }, []);
 
-        return true;
+      return wordsIds.filter(wordId => {
+        return idsInCategories.indexOf(+wordId) === -1;
       });
     }
   })
