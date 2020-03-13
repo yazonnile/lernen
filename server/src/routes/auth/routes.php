@@ -7,7 +7,7 @@ class AuthRoutes {
     return [
       'registerUser' => [
         'method' => 'POST',
-        'payloadScheme' => ['login', 'password', 'email', 'mcnulty'],
+        'payloadScheme' => ['login', 'password', 'mcnulty'],
         'access' => [\api\Access::guest]
       ],
 
@@ -18,19 +18,13 @@ class AuthRoutes {
 
       'login' => [
         'method' => 'POST',
-        'payloadScheme' => ['loginOrEmail', 'password'],
+        'payloadScheme' => ['login', 'password'],
         'access' => [\api\Access::guest]
       ],
 
       'auth' => [
         'access' => [\api\Access::guest]
       ],
-
-      'askForPasswordRecovery' => [
-        'method' => 'POST',
-        'payloadScheme' => ['loginOrEmail'],
-        'access' => [\api\Access::guest]
-      ]
     ];
   }
 }

@@ -171,17 +171,6 @@
     }
   }
 
-  class EmailValidator extends BaseValidator {
-    public function __construct($value, $rule) {
-      $value = filter_var(trim($value), FILTER_VALIDATE_EMAIL);
-      parent::__construct($value, $rule);
-    }
-
-    public function type() {
-      return $this->value;
-    }
-  }
-
   class BooleanValidator extends BaseValidator {
     public function type($value) {
       return is_bool($value);

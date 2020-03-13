@@ -51,14 +51,14 @@
 
     public function getUserIdByLogin() {
       // there is no login attempt - so do nothing
-      if (!$this->getPayload('loginOrEmail') || !$this->getPayload('password')) {
+      if (!$this->getPayload('login') || !$this->getPayload('password')) {
         return null;
       }
 
       // validate login data
       $payload = $this->getPayload();
       $errors = Validation::validateData($payload, [
-        'loginOrEmail',
+        'login',
         'password'
       ]);
 
@@ -67,25 +67,25 @@
         return null;
       }
 
-      $loginOrEmail = $payload['loginOrEmail'];
+      $login = $payload['login'];
       $password = $payload['password'];
-      $userByLoginOrEmail = $this->api->getByLoginOrEmail($loginOrEmail);
+      $userByLogin = $this->api->getByLogin($login);
 
-      if (!$userByLoginOrEmail) {
+      if (!$userByLogin) {
         $this->setError('noSuchUser.error');
         return null;
       }
 
-      if (!password_verify($password, $userByLoginOrEmail['password'])) {
+      if (!password_verify($password, $userByLogin['password'])) {
         $this->setError('login.error');
         return null;
       }
 
-      if (password_needs_rehash($userByLoginOrEmail['password'], PASSWORD_DEFAULT)) {
-        $this->api->updatePassword($userByLoginOrEmail['userId'], password_hash($password, PASSWORD_DEFAULT));
+      if (password_needs_rehash($userByLogin['password'], PASSWORD_DEFAULT)) {
+        $this->api->updatePassword($userByLogin['userId'], password_hash($password, PASSWORD_DEFAULT));
       }
 
-      $userId = $userByLoginOrEmail['userId'];
+      $userId = $userByLogin['userId'];
       $this->setUserCookie($userId);
       return $userId;
     }
@@ -111,11 +111,6 @@
     public function setupById($userId) {
       $userObj = $this->api->getById($userId);
       if ($userObj) {
-        // update last visit time in DB and client
-        $lastVisitDate = time();
-        $this->api->updateLastVisitDate($userId, $lastVisitDate);
-        $userObj['lastVisitDate'] = $lastVisitDate;
-
         $this->updateState(null, $userObj);
       }
     }

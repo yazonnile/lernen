@@ -2,10 +2,7 @@
 CREATE TABLE IF NOT EXISTS users (
   userId        MEDIUMINT    NOT NULL AUTO_INCREMENT PRIMARY KEY,
   login         CHAR(25)     NOT NULL DEFAULT '' UNIQUE KEY,
-  email         CHAR(100)    NOT NULL DEFAULT '' UNIQUE KEY,
   password      VARCHAR(255) NOT NULL DEFAULT '',
-  regDate       INT          NOT NULL DEFAULT -1,
-  lastVisitDate INT          NOT NULL DEFAULT -1,
   CONSTRAINT id UNIQUE KEY (userId)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8

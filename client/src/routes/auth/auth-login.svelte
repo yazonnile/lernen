@@ -8,7 +8,7 @@
 
   const {
     entries: {
-      loginOrEmail: [ lErrors, lValue, lInput ],
+      login: [ lErrors, lValue, lInput ],
       password: [ pErrors, pValue, pInput ],
     },
     form
@@ -25,7 +25,7 @@
 
 <FormValidation {form}>
   <h1>Вход</h1>
-  <FormElement errors={lErrors} label="Логин или Email">
+  <FormElement errors={lErrors} label="Логин">
     <input type="text" bind:value={$lValue} use:lInput />
   </FormElement>
   <FormElement errors={pErrors} label="Пароль">

@@ -7,8 +7,6 @@ interface UseFunction<Params = { [key: string]: any }> {
 type User = {
   login?: string;
   userId?: number;
-  regDate?: number;
-  lastVisitDate?: number;
 };
 
 interface MessageOptions {
@@ -118,7 +116,7 @@ type ResponseData = {
   offline?: Message;
 } & ResponseStore;
 
-type PayloadSchemeType = 'login' | 'email' | 'password' | 'newPassword' | 'mcnulty' | 'loginOrEmail';
+type PayloadSchemeType = 'login' | 'password' | 'newPassword' | 'mcnulty';
 
 interface Params {
   userId?: number;

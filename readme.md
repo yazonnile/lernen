@@ -17,9 +17,14 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* service worker
+* webpack -> rollup (build + dev system)
 
 # TODO
+* remove url + history
+* simplify router
+* simplify DB structure (words table into 1)
+* voice speed to slider
+
 * categories page
 * stat page
 * fancy ui

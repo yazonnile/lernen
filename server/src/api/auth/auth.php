@@ -3,35 +3,29 @@
   namespace api;
 
   class Auth extends \lib\Db {
-    public function register($login, $email, $password) {
+    public function register($login, $password) {
       $this->setSql(
         "INSERT INTO users
 
         SET
           login = :login,
-          email = :email,
-          password = :password,
-          regDate = :regDate,
-          lastVisitDate = :regDate;"
+          password = :password;"
       )->insertData([
         ':login' => $login,
-        ':email' => $email,
-        ':password' => $password,
-        ':regDate' => time()
+        ':password' => $password
       ]);
 
       return $this->getLastInsertId();
     }
 
-    public function existByCredentials($login, $email) {
+    public function existByCredentials($login) {
       return $this->setSql(
-        "SELECT userId, email, login
+        "SELECT userId, login
         FROM users
-        WHERE login = :login OR email = :email
+        WHERE login = :login
         LIMIT 1;"
       )->getRow([
-        ':login' => $login,
-        ':email' => $email
+        ':login' => $login
       ]);
     }
 
@@ -46,21 +40,20 @@
       ]);
     }
 
-    public function getByLoginOrEmail($loginOrEmail) {
+    public function getByLogin($login) {
       return $this->setSql(
         "SELECT *
         FROM users
-        WHERE login = :login OR email = :email
+        WHERE login = :login
         LIMIT 1;"
       )->getRow([
-        ':login' => $loginOrEmail,
-        ':email' => $loginOrEmail
+        ':login' => $login
       ]);
     }
 
     public function getById($userId) {
       return $this->setSql(
-        "SELECT userId, login, regDate, lastVisitDate
+        "SELECT userId, login
         FROM users
         WHERE userId = :userId
         LIMIT 1;"
@@ -72,13 +65,6 @@
     public function updatePassword($userId, $password) {
       return $this->insertOnDuplicateKeyUpdate('users', [
         'password' => $password,
-        'userId' => $userId
-      ]);
-    }
-
-    public function updateLastVisitDate($userId, $lastVisitDate) {
-      return $this->insertOnDuplicateKeyUpdate('users', [
-        'lastVisitDate' => $lastVisitDate,
         'userId' => $userId
       ]);
     }

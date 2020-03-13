@@ -9,7 +9,6 @@
   let {
     entries: {
       login: [ lErrors, lValue, lInput ],
-      email: [ eErrors, eValue, eInput ],
       password: [ pErrors, pValue, pInput ],
       mcnulty: [ mErrors, mValue, mInput ],
     },
@@ -23,9 +22,6 @@
   <h1>Регистрация</h1>
   <FormElement errors={lErrors} label="Логин">
     <input type="text" bind:value={$lValue} use:lInput />
-  </FormElement>
-  <FormElement errors={eErrors} label="Email">
-    <input type="email" bind:value={$eValue} use:eInput />
   </FormElement>
   <FormElement errors={pErrors} label="Пароль">
     <input type="password" bind:value={$pValue} use:pInput />

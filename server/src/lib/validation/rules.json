@@ -3,9 +3,6 @@
     "type": "string",
     "between": [2, 25]
   },
-  "email": {
-    "type": "email"
-  },
   "password": {
     "type": "string",
     "max": 25,
@@ -19,9 +16,6 @@
   "mcnulty": {
     "type": "number",
     "equal": 5
-  },
-  "loginOrEmail": {
-    "type": "string"
   },
 
   "userId": {
