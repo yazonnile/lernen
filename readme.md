@@ -1,11 +1,15 @@
 # 2.0
 
-## requirements
+# now
 - auth
+
+## requirements
 - offline first
 - a simple server just for SYNC
 - rollup builder
 - single build for a server and client
+- no urls
+- no routes, just views
 
 
 
