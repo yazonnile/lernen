@@ -1,5 +1,4 @@
 <script>
-  import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import Category from 'sdk/category/category.svelte';
   import Button from 'sdk/button/button.svelte';
   import Fly from 'sdk/transition/fly.svelte';
@@ -37,8 +36,6 @@
     selectedState = !selectedState;
   };
 </script>
-
-<DocumentTitle title="Выбор категорий" />
 
 <div class="pre-game">
   {#if categories.length}

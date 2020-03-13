@@ -1,6 +1,5 @@
 import { getInitialState } from 'api/initial-state/initial-state';
 import { user, view } from 'stores';
-import history from 'lib/history/history';
 import request from 'lib/request/request';
 
 const getRoute = ({ componentId, routeId }: RouteId): Route => {
@@ -57,7 +56,6 @@ export const useRoute: UseRoute = ({
     // no request here
     const newView = { url, componentId, routeId, params, route };
     view.set(newView);
-    history.push(url, newView);
     return processCallback(cb);
   }
 
@@ -68,13 +66,6 @@ export const useRoute: UseRoute = ({
     }
   });
 };
-
-// sync history with router
-history.listen((location, action) => {
-  if (action === 'POP') {
-    view.set({ ...location.state });
-  }
-});
 
 export const getRouteValidationScheme = ({ componentId, routeId }: RouteId): PayloadSchemeType[]  => {
   const route = getRoute({ componentId, routeId: routeId || componentId });

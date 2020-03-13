@@ -1,5 +1,4 @@
 <script>
-  import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
   import Icon from 'sdk/icon/icon.svelte';
   import { useRoute } from 'lib/router/router';
@@ -48,8 +47,6 @@
   const onTurnOn = () => editWords('enableWords');
   const onTurnOff = () => editWords('disableWords');
 </script>
-
-<DocumentTitle title="Словарь" />
 
 <div class="dict">
   <Autocomplete data={Object.values($words)} bind:result label="Начните вводить слово/фразу" />

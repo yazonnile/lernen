@@ -1,5 +1,4 @@
 <script>
-  import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import BottomButtons from 'sdk/bottom-buttons/bottom-buttons.svelte';
   import Button from 'sdk/button/button.svelte';
   import Verb from './learn/verb.svelte';
@@ -30,8 +29,6 @@
     speech.stop();
   });
 </script>
-
-<DocumentTitle title="Обучение" />
 
 {#if !wordsIds.length}
   нет слов

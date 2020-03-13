@@ -1,7 +1,6 @@
 <script>
   export let word = {};
 
-  import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import FormElement from 'sdk/form-element/form-element.svelte';
   import Button from 'sdk/button/button.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
@@ -162,7 +161,6 @@
   } = createValidation({ componentId: 'words', routeId: 'saveVerb' }, params);
 </script>
 
-<DocumentTitle title={`${wordId ? 'Редактировать' : 'Добавить'} слово`} />
 <div>
   <h1>{wordId ? 'Редактировать' : 'Добавить'} слово</h1>
 

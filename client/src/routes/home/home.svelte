@@ -1,5 +1,4 @@
 <script>
-  import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import { useRoute } from 'lib/router/router';
   import { games } from 'stores';
 
@@ -7,8 +6,6 @@
     useRoute({ componentId: 'games', routeId: 'preGame', params: { gameName } });
   };
 </script>
-
-<DocumentTitle title="Список игр" />
 
 <div class="home">
   {#each Object.keys($games) as gameName (gameName)}

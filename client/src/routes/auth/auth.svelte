@@ -1,5 +1,4 @@
 <script>
-  import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import Button from 'sdk/button/button.svelte';
   import Login from './auth-login.svelte';
   import Registration from './auth-registration.svelte';
@@ -7,8 +6,6 @@
 
   let authMode = 'login';
 </script>
-
-<DocumentTitle title="Авторизация" />
 
 <div class="form-auth">
   <Buttons>

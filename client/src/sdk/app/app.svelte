@@ -3,10 +3,19 @@
   import ScrollToggle from 'sdk/scroll-toggle/scroll-toggle.svelte';
   import Messages from 'sdk/messages/messages.svelte';
   import Header from 'sdk/header/header.svelte';
-  import getActiveRoute from './get-active-route';
-  import { view } from 'stores';
 
-  $: activeRoute = getActiveRoute($view);
+  import Auth from 'routes/auth/auth.svelte';
+  import Categories from 'routes/categories/categories.svelte';
+  import Dict from 'routes/dict/dict.svelte';
+  import PreGame from 'routes/games/pre-game.svelte';
+  import Learn from 'routes/games/learn.svelte';
+  import Home from 'routes/home/home.svelte';
+  import Setup from 'routes/setup/setup.svelte';
+  import Stat from 'routes/stat/stat.svelte';
+  import AddWord from 'routes/words/add-word.svelte';
+  import EditWord from 'routes/words/edit-word.svelte';
+
+  import { view, user } from 'stores';
 </script>
 
 <div class="app">
@@ -14,7 +23,35 @@
 
   <div id="bottom-buttons" class="bottom-buttons"></div>
   <main class="main">
-    <svelte:component this={activeRoute} />
+    {#if !$user.userId}
+      <Auth />
+    {:else}
+      {#if $view.componentId === 'categories'}
+        <Categories />
+      {:else if $view.componentId === 'dict'}
+        <Dict />
+      {:else if $view.componentId === 'games'}
+        {#if $view.routeId === 'preGame'}
+          <PreGame />
+        {:else}
+          <Learn />
+        {/if}
+      {:else if $view.componentId === 'home'}
+        <Home />
+      {:else if $view.componentId === 'setup'}
+        <Setup />
+      {:else if $view.componentId === 'stat'}
+        <Stat />
+      {:else if $view.componentId === 'words'}
+        {#if $view.routeId === 'editWord'}
+          <EditWord />
+        {:else}
+          <AddWord />
+        {/if}
+      {:else}
+        404
+      {/if}
+    {/if}
   </main>
 
   <ScrollToggle />

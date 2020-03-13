@@ -17,20 +17,20 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* webpack -> rollup (build + dev system)
+* build + dev system
 
 # TODO
+* icons
 * remove url + history
 * simplify router
 * simplify DB structure (words table into 1)
 * voice speed to slider
 
+## far-far away
 * categories page
 * stat page
 * fancy ui
 * intro animation
-
-## far-far away
 * reverse game
 * spelling game
 

@@ -1,5 +1,6 @@
 .idea
-client/public
+client/public/*
+!client/public/index.html
 client/node_modules
 server/src/api/config/config.json
 server/src/lib/vendor

@@ -1,5 +1,4 @@
 <script>
-  import DocumentTitle from 'sdk/document-title/document-title.svelte';
   import SetupBox from './setup-box.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import Button from 'sdk/button/button.svelte';
@@ -23,8 +22,6 @@
     play(['Wie heißen Sie?'], setup.voiceSpeed);
   }
 </script>
-
-<DocumentTitle title="Настройки" />
 
 <div class="setup">
   <Button text="Сохранить" on:click={onSave} />

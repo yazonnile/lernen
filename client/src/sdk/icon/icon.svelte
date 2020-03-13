@@ -1,11 +1,11 @@
 <script>
   export let name;
-  import getIcon from './icons';
-  $: svg = getIcon(name);
+
+  import CheckboxIcon from './files/checkbox.svelte';
 </script>
 
 <i {...$$props} class="{`icon icon-${name}`}">
-  {@html svg}
+  <CheckboxIcon />
 </i>
 
 <style global>
