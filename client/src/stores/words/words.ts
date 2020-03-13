@@ -1,6 +1,8 @@
 import createStore from 'lib/create-store/create-store';
 import { getInitialState } from 'api/initial-state/initial-state';
-import { games, setup as setupStore, categories as categoriesStore } from 'stores';
+import games from 'stores/games/games';
+import setupStore from 'stores/setup/setup';
+import categoriesStore from 'stores/categories/categories';
 
 interface WordsStoreInterface {
   deleteWords(ids: number[]);

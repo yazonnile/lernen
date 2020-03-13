@@ -72,6 +72,17 @@ module.exports = {
 
     require('rollup-plugin-postcss')({
       extract: true
+    }),
+
+    require('rollup-plugin-cleaner')({
+      targets: [ folders.dist ]
+    }),
+
+    require('rollup-plugin-copy')({
+      targets: [
+        { src: 'src/static/*', dest: folders.dist }
+      ],
+      flatten: false
     })
   ]
 };
