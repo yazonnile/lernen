@@ -1,36 +1,3 @@
-# 2.0
-
-# now
-- auth
-
-## requirements
-- offline first
-- a simple server just for SYNC
-- rollup builder
-- single build for a server and client
-- no urls
-- no routes, just views
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # install
 * 1 create `/server/src/api/config/config.json` file from template `_config.json`
 * 2 create database/user with DB_ID name and DB_PASSWORD from config.json
@@ -50,11 +17,7 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-# v2.0
-* two apps
-  * auth app
-  * user is logged in app
-
+* service worker
 
 # TODO
 * categories page
@@ -66,3 +29,7 @@
 * reverse game
 * spelling game
 
+# v2.0
+* two apps
+  * auth app
+  * user is logged in app

@@ -1,29 +1,45 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
+  import Menu from 'sdk/menu/menu.svelte';
+  import { useRoute } from 'lib/router/router';
+  import { user } from 'stores';
+
+  let menuActive = false;
+  const openMenu = () => {
+    menuActive = true;
+  };
+
+  const logoClick = () => {
+    useRoute({ componentId: 'home' });
+  };
 </script>
 
 <header class="header">
-  <a
-    href="/"
-    class="logo"
-    on:click|preventDefault
-  >
+  <a class="logo" href="/" on:click|preventDefault={logoClick}>
     <span class="black">le</span>
     <span class="red">rn</span>
     <span class="yellow">en</span>
   </a>
+  {#if $user.userId}
+    <button
+      class="header--button header--menu"
+      on:click="{openMenu}"
+    ><Icon name="menu" /></button>
+  {/if}
 
-  <button
-    class="header--button"
-    on:click|preventDefault
-  >
-    <Icon name="menu" />
-  </button>
+<!--  <button-->
+<!--    class="header&#45;&#45;button header&#45;&#45;nav"-->
+<!--    on:click="{openMenu}"-->
+<!--  ><Icon name="menu" /></button>-->
+
+  {#if menuActive}
+    <Menu bind:menuActive />
+  {/if}
 </header>
 
 <style>
   .header {
-    background: var(--mainColor);
+    background: var(--mainColorLight);
     box-shadow: 0 -10px 10px 10px #000;
     position: relative;
     text-align: center;
@@ -49,10 +65,17 @@
     height: 40px;
     padding: 8px;
     position: absolute;
-    right: 0;
     top: 0;
     width: 40px;
   }
+
+  .header--menu {
+    right: 0;
+  }
+
+  /*.header--nav {*/
+  /*  left: 0;*/
+  /*}*/
 
   .logo span {
     display: block;

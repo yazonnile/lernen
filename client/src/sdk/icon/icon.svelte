@@ -1,15 +1,11 @@
 <script>
   export let name;
-
-  import MenuIcon from './files/menu.svelte';
+  import getIcon from './icons';
+  $: svg = getIcon(name);
 </script>
 
-<i class="{`icon icon-${name}`}">
-  {#if name === 'menu'}
-    <MenuIcon />
-  {:else}
-    {name}
-  {/if}
+<i {...$$props} class="{`icon icon-${name}`}">
+  {@html svg}
 </i>
 
 <style global>

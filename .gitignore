@@ -1,6 +1,8 @@
 .idea
-client/public/*
-!client/public/index.html
+client/public
 client/node_modules
-server/api/config/config.json
-server/lib/vendor
+server/src/api/config/config.json
+server/src/lib/vendor
+server/node_modules
+server/_build
+server/src/public
