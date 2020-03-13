@@ -1,4 +1,9 @@
 .idea
+__refactor
+
+
+
+
 client/public
 client/node_modules
 server/src/api/config/config.json

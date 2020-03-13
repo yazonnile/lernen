@@ -1,4 +1,4 @@
-const cacheName = 'app-lernen-v3';
+const cacheName = 'app-lernen-v21';
 
 // cache
 self.addEventListener('install', (event: FetchEvent) => {
@@ -35,16 +35,7 @@ self.addEventListener('fetch', (event: FetchEvent) => {
         return resp;
       }
 
-      return fetch(event.request).then((response) => {
-        if (event.request.method.toUpperCase() === 'GET') {
-          let responseClone = response.clone();
-          caches.open(cacheName).then((cache: Cache) => {
-            cache.put(event.request, responseClone);
-          });
-        }
-
-        return response;
-      });
+      return fetch(event.request);
     }).catch(() => {
       if (event.request.method.toUpperCase() === 'GET') {
         return caches.match('/');
