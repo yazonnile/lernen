@@ -17,10 +17,9 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* word edit/create
+* local storage? IDB?
 
 # TODO
-* local storage? IDB?
 * voice speed to slider
 * TODO: SYNC
 

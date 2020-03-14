@@ -12,140 +12,51 @@
   import { categories, words, user } from 'stores';
 
   let { wordId = null } = word;
-  let type = word.type || '';
-  let strongVerb = word.strong1 || word.strong2 || word.strong3 || word.strong4 || word.strong5 || word.strong6;
-  let irregularVerb = word.irregular1 || word.irregular2;
+  let strongVerb = words.verbIsStrong(word);
+  let irregularVerb = words.verbIsIrregular(word);
 
   let createdCategories = [];
   let linkedCategories = wordId ? categories.getCategoriesByWordId(wordId) : [];
   let categoriesActive = !!linkedCategories.length;
 
-  const resetState = (t = '') => {
-    word = {};
-    type = t;
-    categoriesActive = false;
-    linkedCategories = [];
-    createdCategories = [];
-    strongVerb = false;
-    irregularVerb = false;
-    if (type === 'noun') {
-      $nounOrigValue = '';
-      $nounTrValue = '';
-      $pluralValue = '';
-      $articleValue = '';
-      clearNounErrors();
-    } else if (type === 'verb') {
-      $verbOrigValue = '';
-      $verbTrValue = '';
-      $strong1Value = '';
-      $strong2Value = '';
-      $strong3Value = '';
-      $strong4Value = '';
-      $strong5Value = '';
-      $strong6Value = '';
-      $irregular1Value = '';
-      $irregular2Value = '';
-      clearVerbErrors();
-    } else {
-      $otherOrigValue = '';
-      $otherTrValue = '';
-      $otherTypeValue = '';
-      clearOtherErrors();
+  const callback = (values) => {
+    const wordObject = {
+      ...values,
+      userId: user.userId
+    };
+
+    if (!wordId) {
+      wordObject.active = true;
+      wordObject.wordId = +(Math.random() * 100000).toFixed(); // TODO: SYNC
     }
-  };
 
-  const params = {
-    initialValues: word,
-    assignPayload: (payload) => ({ ...payload, type, linkedCategories, createdCategories, categoriesActive, wordId, strongVerb, irregularVerb }),
-    cb: ({ newCategories, newAndLinkedCategories, wordId: id }) => {
-      const newWordObj = {
-        userId: user.userId,
-        wordId: wordId || id,
-        type,
-      };
+    // save word
+    words.updateWord(wordObject);
 
-      if (!wordId) {
-        newWordObj.active = true;
-      }
+    // create categories
+    if (createdCategories) {
+      categories.createCategories(createdCategories);
+    }
 
-      if (type === 'noun') {
-        newWordObj.original = $nounOrigValue;
-        newWordObj.translation = $nounTrValue;
-        newWordObj.plural = $pluralValue;
-        newWordObj.article = $articleValue;
-      } else if (type === 'verb') {
-        newWordObj.original = $verbOrigValue;
-        newWordObj.translation = $verbTrValue;
-        newWordObj.strong1 = $strong1Value;
-        newWordObj.strong2 = $strong2Value;
-        newWordObj.strong3 = $strong3Value;
-        newWordObj.strong4 = $strong4Value;
-        newWordObj.strong5 = $strong5Value;
-        newWordObj.strong6 = $strong6Value;
-        newWordObj.irregular1 = $irregular1Value;
-        newWordObj.irregular2 = $irregular2Value;
-      } else {
-        newWordObj.original = $otherOrigValue;
-        newWordObj.translation = $otherTrValue;
-      }
+    // assign word into linked categories if categoriesActive
+    categories.removeWordFromCategories(wordId);
+    if (categoriesActive) {
+      categories.assignWordToCategories(wordObject.wordId, [...linkedCategories]); // TODO: SYNC
+    }
 
-      // update word
-      $words[newWordObj.wordId] = {
-        ...$words[newWordObj.wordId],
-        ...newWordObj,
-      };
-
-      if (newCategories) {
-        categories.createCategories(newCategories);
-      }
-
-      if (wordId) {
-        categories.removeWordFromCategories(wordId);
-      }
-
-      if (categoriesActive) {
-        categories.assignWordToCategories(wordId || id, [...linkedCategories, ...newAndLinkedCategories]);
-      }
-
-      if (wordId) {
-        // useRoute({ componentId: 'dict' });
-      } else {
-        resetState();
-      }
+    if (!wordId) {
+      resetState();
     }
   };
 
   let {
+    form, clearErrors,
     entries: {
-      original: [ nounOrigErrors, nounOrigValue, nounOrigInput ],
-      translation: [ nounTrErrors, nounTrValue, nounTrInput ],
+      type: [ typeErrors, typeValue ],
+      original: [ origErrors, origValue, origInput ],
+      translation: [ trErrors, trValue, trInput ],
       plural: [ pluralErrors, pluralValue, pluralInput ],
-      article: [ articleErrors, articleValue ]
-    },
-    form: nounForm,
-    clearErrors: clearNounErrors
-  } = createValidation({ componentId: 'words', routeId: 'saveNoun' }, params);
-
-  const articleChange = (article) => {
-    $articleValue = article;
-    $articleErrors = {};
-  };
-
-  let {
-    entries: {
-      original: [ otherOrigErrors, otherOrigValue, otherOrigInput ],
-      translation: [ otherTrErrors, otherTrValue, otherTrInput ],
-      type: [ otherTypeErrors, otherTypeValue ],
-    },
-    form: otherForm,
-    clearErrors: clearOtherErrors
-  } = createValidation({ componentId: 'words', routeId: 'saveOther' }, params);
-  $: $otherTypeValue = type; // workaround to skip validation
-
-  let {
-    entries: {
-      original: [ verbOrigErrors, verbOrigValue, verbOrigInput ],
-      translation: [ verbTrErrors, verbTrValue, verbTrInput ],
+      article: [ articleErrors, articleValue ],
       strong1: [ strong1Errors, strong1Value, strong1Input ],
       strong2: [ strong2Errors, strong2Value, strong2Input ],
       strong3: [ strong3Errors, strong3Value, strong3Input ],
@@ -155,9 +66,40 @@
       irregular1: [ irregular1Errors, irregular1Value, irregular1Input ],
       irregular2: [ irregular2Errors, irregular2Value, irregular2Input ],
     },
-    form: verbForm,
-    clearErrors: clearVerbErrors
-  } = createValidation({ componentId: 'words', routeId: 'saveVerb' }, params);
+  } = createValidation({
+    scheme: ['type', 'original', 'plural', 'article', 'translation', 'strong1', 'strong2', 'strong3', 'strong4', 'strong5', 'strong6', 'irregular1', 'irregular2'],
+    initial: word
+  }, callback);
+
+  const articleChange = (article) => {
+    $articleValue = article;
+    $articleErrors = [];
+  };
+
+  const resetState = (t = '') => {
+    word = {};
+    $typeValue = t;
+    categoriesActive = false;
+    linkedCategories = [];
+    createdCategories = [];
+    strongVerb = false;
+    irregularVerb = false;
+
+    $origValue = '';
+    $trValue = '';
+    $pluralValue = '';
+    $articleValue = '';
+    $strong1Value = '';
+    $strong2Value = '';
+    $strong3Value = '';
+    $strong4Value = '';
+    $strong5Value = '';
+    $strong6Value = '';
+    $irregular1Value = '';
+    $irregular2Value = '';
+
+    clearErrors(true);
+  };
 </script>
 
 <div>
@@ -165,66 +107,38 @@
 
   {#if !wordId}
     <ButtonsRow twoInARow>
-      <button on:click|preventDefault={() => resetState('noun')} class:active={type === 'noun'}>Существ.</button>
-      <button on:click|preventDefault={() => resetState('verb')} class:active={type === 'verb'}>Глагол</button>
-      <button on:click|preventDefault={() => resetState('phrase')} class:active={type === 'phrase'}>Фраза</button>
-      <button on:click|preventDefault={() => resetState('other')} class:active={type === 'other'}>Другое</button>
+      <button on:click|preventDefault={() => resetState('noun')} class:active={$typeValue === 'noun'}>Существ.</button>
+      <button on:click|preventDefault={() => resetState('verb')} class:active={$typeValue === 'verb'}>Глагол</button>
+      <button on:click|preventDefault={() => resetState('phrase')} class:active={$typeValue === 'phrase'}>Фраза</button>
+      <button on:click|preventDefault={() => resetState('other')} class:active={$typeValue === 'other'}>Другое</button>
     </ButtonsRow>
   {/if}
 
-  {#if type}
-    {#if type === 'noun'}
-      <FormValidation form={nounForm}>
-        <ButtonsRow error={$articleErrors.length}>
+  {#if $typeValue}
+    <FormValidation {form}>
+      {#if $typeValue === 'noun'}
+        <ButtonsRow error={!$articleValue}>
           <button on:click|preventDefault={() => articleChange('der')} class:active={$articleValue === 'der'}>der</button>
           <button on:click|preventDefault={() => articleChange('die')} class:active={$articleValue === 'die'}>die</button>
           <button on:click|preventDefault={() => articleChange('das')} class:active={$articleValue === 'das'}>das</button>
         </ButtonsRow>
+      {/if}
 
-        <FormInput errors={nounOrigErrors} label="Слово">
-          <input type="text" bind:value={$nounOrigValue} use:nounOrigInput />
-        </FormInput>
+      <FormInput errors={origErrors} label={$typeValue === 'phrase' ? 'Фраза' : 'Слово'}>
+        <input type="text" bind:value={$origValue} use:origInput />
+      </FormInput>
 
-        <FormInput errors={nounTrErrors} label="Перевод">
-          <input type="text" bind:value={$nounTrValue} use:nounTrInput />
-        </FormInput>
+      <FormInput errors={trErrors} label="Перевод">
+        <input type="text" bind:value={$trValue} use:trInput />
+      </FormInput>
 
+      {#if $typeValue === 'noun'}
         <FormInput errors={pluralErrors} label="Plural">
           <input type="text" bind:value={$pluralValue} use:pluralInput />
         </FormInput>
+      {/if}
 
-        <Categories bind:linked={linkedCategories} bind:created={createdCategories} bind:active={categoriesActive} />
-
-        <Button type="submit" text={wordId ? 'редактировать' : 'создать'} />
-      </FormValidation>
-    {/if}
-
-    {#if type === 'phrase' || type === 'other'}
-      <FormValidation form={otherForm}>
-        <FormInput errors={otherOrigErrors} label={type === 'other' ? 'Слово' : 'Фраза'}>
-          <input type="text" bind:value={$otherOrigValue} use:otherOrigInput />
-        </FormInput>
-
-        <FormInput errors={otherTrErrors} label="Перевод">
-          <input type="text" bind:value={$otherTrValue} use:otherTrInput />
-        </FormInput>
-
-        <Categories bind:linked={linkedCategories} bind:created={createdCategories} bind:active={categoriesActive} />
-
-        <Button type="submit" text={wordId ? 'редактировать' : 'создать'} />
-      </FormValidation>
-    {/if}
-
-    {#if type === 'verb'}
-      <FormValidation form={verbForm}>
-        <FormInput errors={verbOrigErrors} label="Слово">
-          <input type="text" bind:value={$verbOrigValue} use:verbOrigInput />
-        </FormInput>
-
-        <FormInput errors={verbTrErrors} label="Перевод">
-          <input type="text" bind:value={$verbTrValue} use:verbTrInput />
-        </FormInput>
-
+      {#if $typeValue === 'verb'}
         <FormSwitcher type="toggle" bind:checked={strongVerb}>Сильный глагол</FormSwitcher>
 
         <Slide active={strongVerb}>
@@ -258,11 +172,11 @@
             <input type="text" bind:value={$irregular2Value} use:irregular2Input />
           </FormInput>
         </Slide>
+      {/if}
 
-        <Categories bind:linked={linkedCategories} bind:created={createdCategories} bind:active={categoriesActive} />
+      <Categories bind:linked={linkedCategories} bind:created={createdCategories} bind:active={categoriesActive} />
 
-        <Button type="submit" text={wordId ? 'редактировать' : 'создать'} />
-      </FormValidation>
-    {/if}
+      <Button type="submit" text={wordId ? 'редактировать' : 'создать'} />
+    </FormValidation>
   {/if}
 </div>

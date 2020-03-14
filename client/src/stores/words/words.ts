@@ -22,6 +22,9 @@ const storeMethods = {
     for (let i = 0; i < ids.length; i++) {
       this[ids[i]].active = true;
     }
+  },
+  updateWord(this: WordsStore, word: Word) {
+    this[word.wordId] = word;
   }
 };
 
@@ -76,7 +79,15 @@ const storeViews = {
     });
 
     return wordsIds;
-  }
+  },
+
+  verbIsStrong(word: Word): boolean {
+    return !!(word.strong1 || word.strong2 || word.strong3 || word.strong4 || word.strong5 || word.strong6);
+  },
+
+  verbIsIrregular(word: Word): boolean {
+    return !!(word.irregular1 || word.irregular2);
+  },
 };
 
 const store = createStore<WordsStore, typeof storeMethods, typeof storeViews>(

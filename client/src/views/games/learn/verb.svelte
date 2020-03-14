@@ -1,14 +1,14 @@
 <script>
   export let word;
 
-  import { user } from 'stores';
+  import { user, words } from 'stores';
 
   const strongExists = (word, setup) => {
     if (!setup.strongVerbs) {
       return false;
     }
 
-    return word.strong1 || word.strong2 || word.strong3 || word.strong4 || word.strong5 || word.strong6;
+    return words.verbIsStrong(word);
   };
 
   const irregularExists = (word, setup) => {
@@ -16,7 +16,7 @@
       return false;
     }
 
-    return word.irregular1 || word.irregular2;
+    return words.verbIsIrregular(word);
   };
 </script>
 

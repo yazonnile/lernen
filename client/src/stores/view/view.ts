@@ -46,7 +46,7 @@ const storeMethods = {
 };
 
 const store = createStore<View, typeof storeMethods>(
-  getInitialState().user ? Views.home : Views.auth,
+  getInitialState().user ? storeMethods.home() : storeMethods.auth(),
   storeMethods
 );
 

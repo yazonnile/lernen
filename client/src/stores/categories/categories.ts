@@ -33,7 +33,7 @@ const storeMethods = {
       const cat = categoriesList[i];
       cat.words = cat.words.filter(w => w !== wordId);
     }
-  }
+  },
 };
 
 const storeViews = {

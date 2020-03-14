@@ -6,8 +6,11 @@ const { validationRules: rules } = getInitialState();
 
 type ValidationOption = {
   scheme: string[];
+  initial?: {
+    [key: string]: any;
+  };
   validationOptions?: {
-    [key: string]: any
+    [key: string]: any;
   }
 };
 
@@ -27,7 +30,7 @@ type Validation = {
 }
 
 export default (options: ValidationOption, callback): Validation => {
-  const { validationOptions = {}, scheme } = options;
+  const { validationOptions = {}, scheme, initial = {} } = options;
   const { createForm, createEntries, clearErrors } = createValidation(Object.assign({
     presence: 'required',
     trim: true,
@@ -47,6 +50,10 @@ export default (options: ValidationOption, callback): Validation => {
         ...rules[entryId],
         id: entryId
       };
+
+      if (initial[entryId]) {
+        result[entryId].value = initial[entryId];
+      }
 
       return result;
     }, {}))
