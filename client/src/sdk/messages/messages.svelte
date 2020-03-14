@@ -13,7 +13,7 @@
   <div
     use:init
     class="messages-holder"
-    transition:fly|local="{{ duration: 300, easing: quintOut, x: 30, opacity: 0 }}"
+    transition:fly|local="{{ duration: 300, easing: quintOut, y: -30, opacity: 0 }}"
   >
     {#each $messages as message (message.id)}
       <Message {...message} />
@@ -25,10 +25,10 @@
   .messages-holder {
     background: var(--mainColorLight);
     box-shadow: 0 0 5px #000;
-    bottom: 0;
     padding: 10px;
     position: fixed;
     right: 0;
+    top: 0;
     width: 100%;
     z-index: 2000;
   }

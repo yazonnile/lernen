@@ -9,7 +9,7 @@
   import createValidation from 'lib/validation/validation';
   import Categories from './categories.svelte';
   import Slide from 'sdk/transition/slide.svelte';
-  import { categories, words, user } from 'stores';
+  import { categories, words, user, messages } from 'stores';
 
   let { wordId = null } = word;
   let strongVerb = words.verbIsStrong(word);
@@ -44,6 +44,11 @@
     if (!wordId) {
       resetState();
     }
+
+    messages.addMessage({
+      status: 'success',
+      text: wordId ? 'wordEdit.success' : 'wordCreat.success'
+    });
   };
 
   let {

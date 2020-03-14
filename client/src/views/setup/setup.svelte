@@ -3,14 +3,19 @@
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import Button from 'sdk/button/button.svelte';
   import Slide from 'sdk/transition/slide.svelte'
-  import { user as userStore } from 'stores';
+  import { user, messages } from 'stores';
   import { play } from 'lib/speech/speech';
 
-  let setup = $userStore;
+  let setup = $user;
 
   const onSave = () => {
-    $userStore = setup;
     // TODO: SYNC
+    $user = setup;
+
+    messages.addMessage({
+      status: 'success',
+      text: 'setupSave.success'
+    });
   };
 
   const onVoiceSpeedChange = (s) => {
