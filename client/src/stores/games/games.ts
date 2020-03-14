@@ -1,7 +1,22 @@
 import createStore from 'lib/create-store/create-store';
 
-interface GamesInterface {
-  [key: string]: {
+const storeViews = {
+  getGamesCategories(this: GamesInterface, gameName: string): {
+    categoriesIds: number[];
+    nullCategory: boolean;
+  } {
+    const cats = this[gameName].categories.selected || [];
+    return {
+      categoriesIds: cats,
+      nullCategory: this[gameName].categories.nullCategory || !cats.length
+    };
+  }
+};
+
+type GameNames = 'learn';
+
+type GamesInterface = {
+  [gameName in GameNames]: {
     buttonText: string;
     categories: {
       selected: number[];
@@ -10,27 +25,12 @@ interface GamesInterface {
   }
 }
 
-interface GamesStoreInterface {
-  getGamesCategories(gameName): {
-    categoriesIds: number[];
-    nullCategory: boolean;
-  };
-}
-
-const store = createStore<GamesStoreInterface, GamesInterface>({
+const store = createStore<GamesInterface, typeof storeViews>({
     learn: {
       buttonText: 'учить',
       categories: []
     }
-  }, null, ($games: GamesInterface) => ({
-    getGamesCategories(gameName) {
-      const cats = $games[gameName].categories.selected || [];
-      return {
-        categoriesIds: cats,
-        nullCategory: $games[gameName].categories.nullCategory || !cats.length
-      };
-    }
-  })
+  }, null, storeViews
 );
 
 export default store;

@@ -3,79 +3,84 @@ import games from 'stores/games/games';
 import userStore from 'stores/user/user';
 import categoriesStore from 'stores/categories/categories';
 
-interface WordsStoreInterface {
-  deleteWords(ids: number[]);
-  disableWords(ids: number[]);
-  enableWords(ids: number[]);
-
-  getWordsByCategoriesAndSetup(gameName: string): Word[];
+interface WordsStore {
+  [key: number]: Word
 }
 
-const store = createStore<WordsStoreInterface, { [key: number]: Word }>({}, $words => ({
-    deleteWords(ids: number[]) {
-      for (let i = 0; i < ids.length; i++) {
-        delete $words[ids[i]];
-      }
-    },
-    disableWords(ids: number[]) {
-      for (let i = 0; i < ids.length; i++) {
-        $words[ids[i]].active = false;
-      }
-    },
-    enableWords(ids: number[]) {
-      for (let i = 0; i < ids.length; i++) {
-        $words[ids[i]].active = true;
-      }
+const storeMethods = {
+  deleteWords(this: WordsStore, ids: number[]) {
+    for (let i = 0; i < ids.length; i++) {
+      delete this[ids[i]];
     }
-  }), $words => ({
-    getWordsByCategoriesAndSetup(gameName: string): Word[] {
-      const { categoriesIds, nullCategory } = games.getGamesCategories(gameName);
-      const setup = userStore.getSetup();
+  },
+  disableWords(this: WordsStore, ids: number[]) {
+    for (let i = 0; i < ids.length; i++) {
+      this[ids[i]].active = false;
+    }
+  },
+  enableWords(this: WordsStore, ids: number[]) {
+    for (let i = 0; i < ids.length; i++) {
+      this[ids[i]].active = true;
+    }
+  }
+};
 
-      let wordsIds = [];
+const storeViews = {
+  getWordsByCategoriesAndSetup(this: WordsStore, gameName: string): Word[] {
+    const { categoriesIds, nullCategory } = games.getGamesCategories(gameName);
+    const setup = userStore.getSetup();
 
-      // add selected categories
-      categoriesIds.forEach(catId => {
-        const wordsInCategory = categoriesStore.getWordIdsByCategoryId(catId);
-        wordsIds.push(...wordsInCategory);
-      });
+    let wordsIds = [];
 
-      // null category
-      if (nullCategory) {
-        wordsIds.push(...categoriesStore.getWordsWithNullCategory(Object.keys($words)));
+    // add selected categories
+    categoriesIds.forEach(catId => {
+      const wordsInCategory = categoriesStore.getWordIdsByCategoryId(catId);
+      wordsIds.push(...wordsInCategory);
+    });
+
+    // null category
+    if (nullCategory) {
+      wordsIds.push(
+        ...categoriesStore.getWordsWithNullCategory(
+          Object.keys(this).map(Number)
+        )
+      );
+    }
+
+    // get uniq words array
+    wordsIds = wordsIds.filter((value, index, self) => {
+      return self.indexOf(value) === index;
+    });
+
+    // filter words by setup and active state
+    wordsIds = wordsIds.filter(wordId => {
+      const word: Word = this[wordId];
+
+      if (!word.active) {
+        return false;
       }
 
-      // get uniq words array
-      wordsIds = wordsIds.filter((value, index, self) => {
-        return self.indexOf(value) === index;
-      });
+      switch (word.type) {
+        case 'other':
+          return setup.other;
 
-      // filter words by setup and active state
-      wordsIds = wordsIds.filter(wordId => {
-        const word: Word = $words[wordId];
+        case 'phrase':
+          return setup.phrases;
 
-        if (!word.active) {
-          return false;
-        }
+        case 'noun':
+          return setup.nouns;
 
-        switch (word.type) {
-          case 'other':
-            return setup.other;
+        case 'verb':
+          return setup.verbs;
+      }
+    });
 
-          case 'phrase':
-            return setup.phrases;
+    return wordsIds;
+  }
+};
 
-          case 'noun':
-            return setup.nouns;
-
-          case 'verb':
-            return setup.verbs;
-        }
-      });
-
-      return wordsIds;
-    }
-  })
+const store = createStore<WordsStore, typeof storeMethods, typeof storeViews>(
+  {}, storeMethods, storeViews
 );
 
 export default store;

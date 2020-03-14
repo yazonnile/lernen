@@ -1,19 +1,18 @@
 import { getInitialState } from 'api/get-initial-state/get-initial-state';
 import createStore from 'lib/create-store/create-store';
 
-interface UserStoreInterface {
-  getSetup(): User;
-  getId(): number;
-}
+const storeViews = {
+  getSetup(this: User): User {
+    return this;
+  },
 
-const store = createStore<UserStoreInterface, User>(getInitialState().user || null, null, ($user: User) => ({
-    getSetup(): User {
-      return $user;
-    },
-    getId(): number {
-      return $user.userId;
-    }
-  })
+  getId(this: User): number {
+    return this.userId;
+  }
+};
+
+const store = createStore<User, {}, typeof storeViews>(
+  getInitialState().user || null, null, storeViews
 );
 
 export default store;

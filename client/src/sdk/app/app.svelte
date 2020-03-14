@@ -17,6 +17,7 @@
   import EditWord from 'views/words/edit-word.svelte';
 
   import { view, user } from 'stores';
+  import { Views } from 'stores/view/view';
 
   onMount(() => {
     // load initial data if user exists
@@ -27,14 +28,14 @@
 
   const getActiveComponent = (viewId) => {
     switch (viewId) {
-      case 'categories': return Categories;
-      case 'dict': return Dict;
-      case 'preGame': return PreGame;
-      case 'learn': return Learn;
-      case 'setup': return Setup;
-      case 'stat': return Stat;
-      case 'editWord': return EditWord;
-      case 'addWord': return AddWord;
+      case Views.categories: return Categories;
+      case Views.dict: return Dict;
+      case Views.preGame: return PreGame;
+      case Views.learn: return Learn;
+      case Views.setup: return Setup;
+      case Views.stat: return Stat;
+      case Views.editWord: return EditWord;
+      case Views.addWord: return AddWord;
       default: return Home;
     }
   };

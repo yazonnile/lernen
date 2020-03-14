@@ -1,33 +1,30 @@
 import createStore from 'lib/create-store/create-store';
 
-interface MessagesStoreInterface {
-  clearById(id: string);
-  addMessage(options: MessageOptions);
-  addMessages(messages: MessageOptions[]);
-}
+const storeMethods = {
+  clearById(this: Message[], id: string) {
+    return this.filter(message => {
+      return message.id !== id;
+    });
+  },
+
+  addMessage(this: Message[], options: MessageOptions) {
+    this.push(createMessage(options));
+  },
+
+  addMessages(this: Message[], data: MessageOptions[]) {
+    this.push(
+      ...data.map(createMessage)
+    );
+  }
+};
 
 const createMessage = (options: MessageOptions): Message => ({
   ...options,
   id: (Date.now() + Math.random()).toString()
 });
 
-const store = createStore<MessagesStoreInterface, Message[]>([], $messages => ({
-    clearById(id: string) {
-      return $messages.filter(message => {
-        return message.id !== id;
-      });
-    },
-
-    addMessage(options: MessageOptions) {
-      $messages.push(createMessage(options));
-    },
-
-    addMessages(data: MessageOptions[]) {
-      $messages.push(
-        ...data.map(createMessage)
-      );
-    }
-  })
+const store = createStore<Message[], typeof storeMethods>(
+  [], storeMethods
 );
 
 export default store;

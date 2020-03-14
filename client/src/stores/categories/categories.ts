@@ -1,76 +1,70 @@
 import createStore from 'lib/create-store/create-store';
 
-interface CategoriesStoreInterface {
-  createCategories(categories: Category[]);
-  assignWordToCategories(wordId: number, categoriesIds: number[]);
-  removeWordFromCategories(wordId: number);
-
-  getIds(): number[];
-  getCategoriesByWordId(wordId: number): number[];
-  getWordIdsByCategoryId(catId: number): number[];
-  getWordsWithNullCategory(wordsIds): number[];
-}
-
-interface CategoriesStoreValue {
+interface CategoriesStore {
   [key: number]: Category;
 }
 
-const store = createStore<CategoriesStoreInterface,CategoriesStoreValue>({}, ($categories: CategoriesStoreValue) => ({
-    createCategories(categories: Category[]) {
-      for (let i = 0; i < categories.length; i++) {
-        const catId = categories[i].categoryId;
-        $categories[catId] = {
-          ...categories[i],
-          words: []
-        };
-      }
-    },
-    assignWordToCategories(wordId: number, categoriesIds: number[]) {
-      for (let i = 0; i < categoriesIds.length; i++) {
-        const cat = $categories[categoriesIds[i]];
+const storeMethods = {
+  createCategories(this: CategoriesStore, categories: Category[]) {
+    for (let i = 0; i < categories.length; i++) {
+      const catId = categories[i].categoryId;
+      this[catId] = {
+        ...categories[i],
+        words: []
+      };
+    }
+  },
+  assignWordToCategories(this: CategoriesStore, wordId: number, categoriesIds: number[]) {
+    for (let i = 0; i < categoriesIds.length; i++) {
+      const cat = this[categoriesIds[i]];
 
-        if (!cat) {
-          continue;
-        }
-
-        if (cat.words.indexOf(wordId) === -1) {
-          cat.words.push(wordId);
-        }
+      if (!cat) {
+        continue;
       }
-    },
-    removeWordFromCategories(wordId: number) {
-      const categoriesList = Object.values($categories);
-      for (let i = 0; i < categoriesList.length; i++) {
-        const cat = categoriesList[i];
-        cat.words = cat.words.filter(w => w !== wordId);
+
+      if (cat.words.indexOf(wordId) === -1) {
+        cat.words.push(wordId);
       }
     }
-  }), ($categories: CategoriesStoreValue) => ({
-    getIds(): number[] {
-      return Object.keys($categories).map(Number);
-    },
-
-    getCategoriesByWordId(wordId: number): number[] {
-      return Object.values($categories).filter(cat => {
-        return cat.words.find(w => w === wordId);
-      }).map(cat => cat.categoryId);
-    },
-
-    getWordIdsByCategoryId(catId: number): number[] {
-      return $categories[catId].words;
-    },
-
-    getWordsWithNullCategory(wordsIds: number[]): number[] {
-      const idsInCategories = Object.values($categories).reduce((carry, cat) => {
-        carry.push(...cat.words);
-        return carry;
-      }, []);
-
-      return wordsIds.filter(wordId => {
-        return idsInCategories.indexOf(+wordId) === -1;
-      });
+  },
+  removeWordFromCategories(this: CategoriesStore, wordId: number) {
+    const categoriesList = Object.values(this);
+    for (let i = 0; i < categoriesList.length; i++) {
+      const cat = categoriesList[i];
+      cat.words = cat.words.filter(w => w !== wordId);
     }
-  })
+  }
+};
+
+const storeViews = {
+  getIds(this: CategoriesStore): number[] {
+    return Object.keys(this).map(Number);
+  },
+
+  getCategoriesByWordId(this: CategoriesStore, wordId: number): number[] {
+    return Object.values(this).filter(cat => {
+      return cat.words.find(w => w === wordId);
+    }).map(cat => cat.categoryId);
+  },
+
+  getWordIdsByCategoryId(this: CategoriesStore, catId: number): number[] {
+    return this[catId].words;
+  },
+
+  getWordsWithNullCategory(this: CategoriesStore, wordsIds: number[]): number[] {
+    const idsInCategories = Object.values(this).reduce((carry, cat) => {
+      carry.push(...cat.words);
+      return carry;
+    }, []);
+
+    return wordsIds.filter(wordId => {
+      return idsInCategories.indexOf(+wordId) === -1;
+    });
+  }
+};
+
+const store = createStore<CategoriesStore, typeof storeMethods, typeof storeViews>(
+  {}, storeMethods, storeViews
 );
 
 export default store;
