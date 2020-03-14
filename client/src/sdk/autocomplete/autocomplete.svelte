@@ -4,7 +4,7 @@
   export let value = '';
   export let label = null;
 
-  import FormElement from 'sdk/form-element/form-element.svelte';
+  import FormInput from 'sdk/form-input/form-input.svelte';
 
   $: {
     result = value && value.length ? data.filter(word => {
@@ -24,6 +24,6 @@
   }
 </script>
 
-<FormElement {label}>
+<FormInput {label}>
   <input type="text" bind:value />
-</FormElement>
+</FormInput>

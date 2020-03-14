@@ -1,8 +1,7 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
   import Menu from 'sdk/menu/menu.svelte';
-  import { useRoute } from 'lib/router/router';
-  import { user } from 'stores';
+  import { user, view } from 'stores';
 
   let menuActive = false;
   const openMenu = () => {
@@ -10,7 +9,7 @@
   };
 
   const logoClick = () => {
-    useRoute({ componentId: 'home' });
+    view.home();
   };
 </script>
 
@@ -20,7 +19,7 @@
     <span class="red">rn</span>
     <span class="yellow">en</span>
   </a>
-  {#if $user.userId}
+  {#if $user}
     <button
       class="header--button header--menu"
       on:click="{openMenu}"

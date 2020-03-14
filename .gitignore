@@ -2,7 +2,8 @@
 client/public
 client/node_modules
 server/src/api/config/config.json
-server/src/lib/vendor
+server/src/vendor
 server/node_modules
 server/_build
 server/src/public
+server/src_old

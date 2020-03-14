@@ -18,30 +18,9 @@ interface Message extends MessageOptions {
   id: string;
 }
 
-type View = {
-  url?: string;
-  params?: Params;
-  route: Route;
-} & RouteId;
-
 type InitialData = {
-  validationRules: { [key: string]: object; };
-  routes: {
-    [componentId: string]: {
-      [routeId: string]: Route;
-    };
-  };
-  games: {
-    [key: string]: {
-      buttonText: string;
-    };
-  };
-  categories: { [key: number]: Category };
-  setup: Setup;
-  words?: {
-    [key: number]: Word;
-  };
-  view: View;
+  validationRules?: { [key: string]: object; };
+  user?: User | null;
 };
 
 type Category = {
@@ -93,54 +72,21 @@ type Setup = {
   other: boolean;
 };
 
-type PageData = {
-  enabledIds?: number[];
-  disabledIds?: number[];
-  deletedIds?: number[];
-  newCategories?: Category[];
-  newAndLinkedCategories?: number[];
-  newWordId?: number;
-  initialData?: InitialData;
-};
-
-type ResponseStore = {
-  persistentData: {
-    user: User;
-    messages?: Message[];
-  };
-  pageData: PageData;
-};
+// type ResponseStore = {
+  // enabledIds?: number[];
+  // disabledIds?: number[];
+  // deletedIds?: number[];
+  // newCategories?: Category[];
+  // newAndLinkedCategories?: number[];
+  // newWordId?: number;
+// };
 
 type ResponseData = {
   error?: [];
   offline?: Message;
-} & ResponseStore;
+  messages?: Message[];
+  user: User;
+  initialData?: InitialData;
+};
 
 type PayloadSchemeType = 'login' | 'password' | 'newPassword' | 'mcnulty';
-
-interface Params {
-  userId?: number;
-  wordId?: number;
-  gameName?: 'learn' | 'second';
-}
-
-type RouteMethodsType = 'POST' | 'GET';
-
-type RouteAccessType = 0 | 1 | 2;
-
-interface RouteId {
-  componentId: string;
-  routeId?: string;
-}
-
-interface Route {
-  method?: RouteMethodsType;
-  access?: RouteAccessType[];
-  payloadScheme?: PayloadSchemeType[];
-  url: string;
-  confirm?: true;
-}
-
-interface Payload {
-  [key: string]: any;
-}

@@ -7,21 +7,12 @@ date_default_timezone_set('UTC');
 chdir(dirname(__FILE__));
 define('HOME', dirname(__FILE__));
 
-//header("Content-Security-Policy: ". implode('; ', [
-//    "default-src 'self'",
-//    "script-src lll.com:*",
-//    "style-src lll.com:*",
-//    "connect-src 'self'",
-//    "img-src 'self' data: ll.ru ",
-//    "font-src 'self' data:"
-//  ]));
-
 // execute vendor libraries
-require_once './lib/vendor/autoload.php';
+require_once './vendor/autoload.php';
 
 // turn class auto-loading on
-require_once './lib/autoload/autoload.php';
-\lib\autoload();
+require_once './autoload/autoload.php';
+autoload();
 
 // run application
-new \lib\App();
+new App();

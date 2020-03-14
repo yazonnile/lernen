@@ -1,8 +1,8 @@
 <script>
   export let menuActive;
 
-  import { useRoute } from 'lib/router/router';
-  import { user } from 'stores';
+  import request from 'lib/request/request';
+  import { user, view } from 'stores';
   import { fly, fade } from 'svelte/transition';
 
   const hideMenu = () => {
@@ -11,21 +11,21 @@
 
   const onLogout = () => {
     hideMenu();
-    useRoute({ componentId: 'auth', routeId: 'logout' }, () => {
-      if (!$user.userId) {
-        useRoute({ componentId: 'auth' });
+    request({ api: 'logoutUser' }).then(response => {
+      if (response) {
+        $user = null;
       }
     });
   };
 
   const onMenu = (componentId) => {
-    let opts = { componentId };
-    if (componentId === 'words') {
-      opts.routeId = 'addWord';
-    }
+    // let opts = { componentId };
+    // if (componentId === 'words') {
+    //   opts.routeId = 'addWord';
+    // }
 
     hideMenu();
-    useRoute(opts);
+    // useRoute(opts);
   };
 </script>
 

@@ -16,7 +16,7 @@ const folders = {
   stores: path.resolve(root, './src/stores'),
   lib: path.resolve(root, './src/lib'),
   api: path.resolve(root, './src/api'),
-  routes: path.resolve(root, './src/routes'),
+  views: path.resolve(root, './src/views'),
 };
 
 module.exports = {
@@ -81,8 +81,7 @@ module.exports = {
     require('rollup-plugin-copy')({
       targets: [
         { src: 'src/static/*', dest: folders.dist }
-      ],
-      flatten: false
+      ]
     })
   ]
 };

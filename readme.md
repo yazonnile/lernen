@@ -17,12 +17,14 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* simplify router
+* initial data (words...)
 
 # TODO
 * icons
 * simplify DB structure (words table into 1)
 * voice speed to slider
+* update create-store
+* remove ibitial-state file from server
 
 ## far-far away
 * categories page

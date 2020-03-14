@@ -1,78 +1,52 @@
-import { getInitialState } from 'api/initial-state/initial-state';
-import { getRouteValidationScheme } from 'lib/router/router';
+import { getInitialState } from 'api/get-initial-state/get-initial-state';
 import createValidation from 'svelidation';
-import { useRoute } from 'lib/router/router';
 import { Writable } from 'svelte/store';
 
-export const { validationRules: rules } = getInitialState().initialData;
+const { validationRules: rules } = getInitialState();
 
-type ValidationOptions = {
-  cb?();
-  assignPayload?(payload: Payload): Payload;
-  scheme?: PayloadSchemeType[];
-  initialValues?: {
-    [key: string]: any;
-  };
+type ValidationOption = {
+  scheme: string[];
+  validationOptions?: {
+    [key: string]: any
+  }
 };
 
-interface CreateValidationResult {
+type Validation = {
+  clearErrors(includeAllEntries?: boolean);
   form: {
     use: UseFunction;
     onSuccess(values);
   };
   entries: {
     [key in PayloadSchemeType]: [
-      Writable<{ [key: string]: any }[]>,
-      Writable<any>,
+      Writable<string[]>,
+      Writable<string>,
       UseFunction
     ];
   };
-  clearErrors(a?: boolean);
 }
 
-export const defaultValidationOptions = {
-  presence: 'required',
-  trim: true,
-  clearErrorsOnEvents: { focus: true },
-  includeAllEntries: true,
-  getValues: entries => {
-    return entries.reduce((result, { value, params }) => {
-      result[params.id] = value;
-      return result;
-    }, {});
-  },
-};
-
-export default (validationParams: {params?: Params} & RouteId, options: ValidationOptions = {}): CreateValidationResult => {
-  const { createForm, createEntries, clearErrors } = createValidation(defaultValidationOptions);
-
-  const scheme: PayloadSchemeType[] = options.scheme || getRouteValidationScheme(validationParams) || [];
-  const cb = typeof options === 'function' ? options : options.cb;
-  const initialValues = options.initialValues || [];
-
-  const onSuccess = (payload?: Payload) => {
-    if (typeof options.assignPayload === 'function') {
-      payload = options.assignPayload(payload);
+export default (options: ValidationOption, callback): Validation => {
+  const { validationOptions = {}, scheme } = options;
+  const { createForm, createEntries, clearErrors } = createValidation(Object.assign({
+    presence: 'required',
+    trim: true,
+    getValues: entries => {
+      return entries.reduce((result, { value, params }) => {
+        result[params.id] = value;
+        return result;
+      }, {});
     }
-
-    useRoute({
-      ...validationParams,
-      payload
-    }, cb);
-  };
+  }, validationOptions));
 
   return {
     clearErrors,
-    form: { use: createForm, onSuccess },
+    form: { use: createForm, onSuccess: callback },
     entries: createEntries(scheme.reduce((result, entryId) => {
       result[entryId] = {
         ...rules[entryId],
         id: entryId
       };
-
-      if (initialValues[entryId]) {
-        result[entryId].value = initialValues[entryId];
-      }
 
       return result;
     }, {}))

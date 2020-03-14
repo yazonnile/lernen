@@ -1,4 +1,4 @@
-import { messages as messagesStore, user as userStore} from 'stores';
+import { messages as messagesStore } from 'stores';
 
 const status = response => new Promise((resolve, reject) => {
   if (response.status >= 200 && response.status < 300) {
@@ -14,8 +14,8 @@ let busy = false;
 
 interface Request {
   (options: {
-    url: string;
-    payload: {
+    api: string;
+    payload?: {
       [key: string]: any;
     };
   }): Promise<void | ResponseData>;
@@ -28,12 +28,13 @@ const request: Request = (options) => {
 
   busy = true;
 
-  const { url, payload } = options;
+  const { api, payload = {} } = options;
 
   const body = new FormData;
   body.append('payload', JSON.stringify(payload));
+  body.append('api', JSON.stringify(api));
 
-  return fetch(url, {
+  return fetch('/api', {
     method: 'post',
     credentials: 'include',
     body
@@ -47,13 +48,11 @@ const request: Request = (options) => {
       return null;
     }
 
-    const { persistentData: { messages, user } } = rest;
+    const { messages } = rest;
 
     if (Array.isArray(messages)) {
       messagesStore.addMessages(messages);
     }
-
-    userStore.set(user);
 
     if (error) {
       return null;
