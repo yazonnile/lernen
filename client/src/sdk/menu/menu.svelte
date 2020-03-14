@@ -18,14 +18,11 @@
     });
   };
 
-  const onMenu = (componentId) => {
-    // let opts = { componentId };
-    // if (componentId === 'words') {
-    //   opts.routeId = 'addWord';
-    // }
-
-    hideMenu();
-    // useRoute(opts);
+  const onMenu = (viewId) => {
+    if (view[viewId]) {
+      view[viewId]();
+      hideMenu();
+    }
   };
 </script>
 
@@ -33,7 +30,7 @@
   <div class="menu--wrap" transition:fly="{{ x: 200, opacity: 0, duration: 300 }}">
     <div>
       <button on:click={() => onMenu('home')}>Домой</button>
-      <button on:click={() => onMenu('words')}>Добавить слово</button>
+      <button on:click={() => onMenu('addWord')}>Добавить слово</button>
       <button on:click={() => onMenu('setup')}>Настройки</button>
       <button on:click={() => onMenu('dict')}>словарь</button>
       <button disabled on:click={() => onMenu('categories')}>категории</button>

@@ -1,7 +1,6 @@
 <script>
   import 'api/get-initial-state/get-initial-state';
   import { loadInitialState } from 'api/load-initial-data/load-initial-state';
-  import ScrollToggle from 'sdk/scroll-toggle/scroll-toggle.svelte';
   import Messages from 'sdk/messages/messages.svelte';
   import Header from 'sdk/header/header.svelte';
   import { onMount } from 'svelte';
@@ -25,6 +24,23 @@
       loadInitialState();
     }
   });
+
+  const getActiveComponent = (viewId) => {
+    switch (viewId) {
+      case 'categories': return Categories;
+      case 'dict': return Dict;
+      case 'preGame': return PreGame;
+      case 'learn': return Learn;
+      case 'setup': return Setup;
+      case 'stat': return Stat;
+      case 'editWord': return EditWord;
+      case 'addWord': return AddWord;
+      default: return Home;
+    }
+  };
+
+  let activeComponent;
+  $: activeComponent = !$user ? Auth : getActiveComponent($view.viewId);
 </script>
 
 <div class="app">
@@ -32,36 +48,10 @@
 
   <div id="bottom-buttons" class="bottom-buttons"></div>
   <main class="main">
-    {#if !$user}
-      <Auth />
-    {:else}
-      {#if $view.viewId === 'categories'}
-        <Categories />
-      {:else if $view.viewId === 'dict'}
-        <Dict />
-      {:else if $view.viewId === 'preGame'}
-        <PreGame />
-      {:else if $view.viewId === 'learn'}
-        <Learn />
-      {:else if $view.viewId === 'home'}
-        <Home />
-      {:else if $view.viewId === 'setup'}
-        <Setup />
-      {:else if $view.viewId === 'stat'}
-        <Stat />
-      {:else if $view.viewId === 'editWord'}
-        <EditWord />
-      {:else if  $view.viewId === 'addWord'}
-        <AddWord />
-      {:else}
-        404
-      {/if}
-    {/if}
+    <svelte:component this={activeComponent} />
   </main>
 
-  <ScrollToggle />
   <Messages />
-
 </div>
 
 <style>

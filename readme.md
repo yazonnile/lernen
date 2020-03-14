@@ -17,15 +17,13 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* views switch
+* update create-store
 
 # TODO
 * local storage? IDB?
-* update create-store
-* icons
-* simplify DB structure (words table into 1)
 * voice speed to slider
-* remove ibitial-state file from server
+* TODO: SYNC
+* word edit/create
 
 ## far-far away
 * categories page

@@ -2,10 +2,32 @@
   export let name;
 
   import CheckboxIcon from './files/checkbox.svelte';
+  import CloseIcon from './files/close.svelte';
+  import DeleteIcon from './files/delete.svelte';
+  import DownIcon from './files/down.svelte';
+  import EditIcon from './files/edit.svelte';
+  import MenuIcon from './files/menu.svelte';
+  import PlusIcon from './files/plus.svelte';
+  import TurnOffIcon from './files/turn-off.svelte';
+  import TurnOnIcon from './files/turn-on.svelte';
+
+  const getActiveIcon = (iconName) => {
+    switch (iconName) {
+      case 'checkbox': return CheckboxIcon;
+      case 'close': return CloseIcon;
+      case 'delete': return DeleteIcon;
+      case 'down': return DownIcon;
+      case 'edit': return EditIcon;
+      case 'menu': return MenuIcon;
+      case 'plus': return PlusIcon;
+      case 'turn-off': return TurnOffIcon;
+      case 'turn-on': return TurnOnIcon;
+    }
+  };
 </script>
 
 <i {...$$props} class="{`icon icon-${name}`}">
-  <CheckboxIcon />
+  <svelte:component this={getActiveIcon(name)} />
 </i>
 
 <style global>

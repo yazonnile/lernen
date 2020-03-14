@@ -12,15 +12,14 @@
   $: selectedState = nullCategory && selectedCategories.length === categories.length;
 
   const onReady = () => {
-    $games[gameId].categories = {
-      selected: selectedCategories,
-      nullCategory
-    };
+    if (view[gameId]) {
+      $games[gameId].categories = {
+        selected: selectedCategories,
+        nullCategory
+      };
 
-    // useRoute({
-    //   componentId: 'games',
-    //   routeId: gameId
-    // });
+      view[gameId]();
+    }
   };
 
   const onToggleAll = () => {

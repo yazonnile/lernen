@@ -1,7 +1,7 @@
 <script>
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
   import Icon from 'sdk/icon/icon.svelte';
-  import { words } from 'stores';
+  import { words, view } from 'stores';
 
   let result = [];
   let checked = [];
@@ -12,34 +12,28 @@
     }
   }
 
-  const editWords = (routeId) => {
-    // useRoute({
-    //   componentId: 'dict',
-    //   routeId,
-    //   payload: {
-    //     wordsIds: checked.map(id => $words[id].wordId)
-    //   }
-    // }, ({ enabledIds, disabledIds, deletedIds }) => {
-    //   checked = [];
-    //   switch (routeId) {
-    //     case 'deleteWords':
-    //       result = result.filter(id => !deletedIds.includes(id));
-    //       words.deleteWords(deletedIds);
-    //       break;
-    //
-    //     case 'enableWords':
-    //       words.enableWords(enabledIds);
-    //       break;
-    //
-    //     case 'disableWords':
-    //       words.disableWords(disabledIds);
-    //       break;
-    //   }
-    // });
+  const editWords = (selectedWordsAction) => {
+    switch (selectedWordsAction) {
+      case 'deleteWords':
+        result = result.filter(id => !checked.includes(id));
+        words.deleteWords(checked);
+        break;
+
+      case 'enableWords':
+        words.enableWords(checked);
+        break;
+
+      case 'disableWords':
+        words.disableWords(checked);
+        break;
+    }
+
+    checked = [];
+    // TODO: SYNC
   };
 
   const onEdit = (wordId) => {
-    // useRoute({ componentId: 'words', routeId: 'editWord', params: { wordId } });
+    view.editWord({ wordId });
   };
 
   const onRemove = () => editWords('deleteWords');
