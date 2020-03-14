@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
   login               CHAR(25)           NOT NULL DEFAULT '' UNIQUE KEY,
   password            VARCHAR(255)       NOT NULL DEFAULT '',
   voice               BOOLEAN DEFAULT 1  NOT NULL,
-  voiceSpeed          TINYINT DEFAULT 50 NOT NULL,
+  voiceSpeed          TINYINT DEFAULT 10 NOT NULL,
   phrases             BOOLEAN DEFAULT 1  NOT NULL,
   other               BOOLEAN DEFAULT 1  NOT NULL,
   soundPhrases        BOOLEAN DEFAULT 1  NOT NULL,

@@ -31,7 +31,6 @@ type Category = {
 
 type WordType = 'noun' | 'verb' | 'phrase' | 'other';
 type WordArticles = 'der' | 'die' | 'das';
-type SetupVoiceSpeed = 1 | 2 | 3;
 
 type Word = {
   wordId: number;
@@ -54,7 +53,7 @@ type Word = {
 
 type Setup = {
   voice?: boolean;
-  voiceSpeed?: SetupVoiceSpeed;
+  voiceSpeed?: number;
   phrases?: boolean;
   soundPhrases?: boolean;
   nouns?: boolean;

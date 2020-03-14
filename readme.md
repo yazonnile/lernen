@@ -20,7 +20,6 @@
 * local storage? IDB?
 
 # TODO
-* voice speed to slider
 * TODO: SYNC
 
 ## far-far away
@@ -30,8 +29,3 @@
 * intro animation
 * reverse game
 * spelling game
-
-# v2.0
-* two apps
-  * auth app
-  * user is logged in app

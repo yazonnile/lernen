@@ -61,19 +61,19 @@ const pronouncing = {
       speechSynthesis.cancel();
     }
   },
-  start(text: string, speed: SetupVoiceSpeed, callback) {
+  start(text: string, speed: number, callback) {
     this.stop();
 
     const utterThis = new SpeechSynthesisUtterance(text);
     utterThis.voice = speechSynthesis.getVoices().find(i => i.lang === 'de-DE');
     utterThis.lang = 'de-DE';
-    utterThis.rate = Math.min(1, .40 + .20 * speed);
+    utterThis.rate = Math.max(.5, Math.min(1.5, speed * 10 / 100));
     speechSynthesis.speak(utterThis);
     utterThis.addEventListener('end', callback);
   }
 };
 
-export const play = (textArray: string[], voiceSpeed: SetupVoiceSpeed) => {
+export const play = (textArray: string[], voiceSpeed: number) => {
   const text = textArray.shift();
 
   if (text === null) {
@@ -92,7 +92,7 @@ export const play = (textArray: string[], voiceSpeed: SetupVoiceSpeed) => {
 
 const getVoiceSpeed = (wordType, voiceSpeed) => {
   if (wordType === 'verb') {
-    return voiceSpeed / 1.5;
+    return voiceSpeed - 2;
   }
 
   return voiceSpeed;

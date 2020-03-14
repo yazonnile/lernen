@@ -19,7 +19,7 @@
 
   const onVoiceTest = () => {
     play(['Wie heißen Sie?'], setup.voiceSpeed);
-  }
+  };
 </script>
 
 <div class="setup">
@@ -31,9 +31,23 @@
   <Slide active={setup.voice}>
     <Button text="проверить звук" on:click={() => onVoiceTest()} />
     <SetupBox title="скорость" flex>
-      <Button text="1" active={setup.voiceSpeed === 1} on:click={() => onVoiceSpeedChange(1)} />
-      <Button text="2" active={setup.voiceSpeed === 2} on:click={() => onVoiceSpeedChange(2)} />
-      <Button text="3" active={setup.voiceSpeed === 3} on:click={() => onVoiceSpeedChange(3)} />
+      <div class="range">
+        <input type="range" bind:value={setup.voiceSpeed} min="5" max="15" step=".5" list="tickmarks" />
+        <datalist id="tickmarks">
+          <option value="5" label="50%">
+          <option value="6">
+          <option value="7">
+          <option value="8">
+          <option value="9">
+          <option value="10" label="100%">
+          <option value="11">
+          <option value="12">
+          <option value="13">
+          <option value="14">
+          <option value="15" label="150%">
+        </datalist>
+      </div>
+
     </SetupBox>
   </Slide>
 
@@ -106,5 +120,23 @@
 
   .setup :global(.button) {
     margin-bottom: 20px;
+  }
+
+  .range {
+    padding: 20px 0 0;
+    position: relative;
+  }
+
+  .range datalist {
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  .range input {
+    width: 100%;
   }
 </style>

@@ -5,7 +5,7 @@
   import { view, categories as categoriesStore, games } from 'stores';
 
   let { gameId } = $view.params;
-  let categories = Object.values($categoriesStore);
+  $: categories = Object.values($categoriesStore);
   let selectedCategories = $games[gameId].categories.selected || [];
   let nullCategory = $games[gameId].categories.nullCategory || false;
   let selectedState = false;
