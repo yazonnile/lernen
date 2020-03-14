@@ -1,7 +1,7 @@
 <script>
   export let word;
 
-  import { setup } from 'stores';
+  import { user } from 'stores';
 
   const strongExists = (word, setup) => {
     if (!setup.strongVerbs) {
@@ -23,7 +23,7 @@
 <p>{word.original}</p>
 
 <div class="verb">
-  {#if strongExists(word, $setup)}
+  {#if strongExists(word, $user)}
     <table>
       <tr>
         <td>Ich <b>{word.strong1}</b></td>
@@ -40,7 +40,7 @@
     </table>
   {/if}
 
-  {#if irregularExists(word, $setup)}
+  {#if irregularExists(word, $user)}
     <p>{word.irregular1} / {word.irregular2}</p>
   {/if}
 </div>

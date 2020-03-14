@@ -1,24 +1,24 @@
 <script>
   export let word;
 
-  import { setup } from 'stores';
+  import { user } from 'stores';
 </script>
 
 <p>
-  {#if $setup.articles}
+  {#if $user.articles}
     {word.article}
   {/if}
 
   {word.original}
 </p>
 
-{#if $setup.plural}
+{#if $user.plural}
   <p>
     {#if !word.plural}
       plural
     {:else}
 
-      {#if $setup.articles}
+      {#if $user.articles}
         die
       {/if}
 

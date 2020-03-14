@@ -1,5 +1,4 @@
 import createStore from 'lib/create-store/create-store';
-import { getInitialState } from 'api/initial-state/initial-state';
 
 interface CategoriesStoreInterface {
   createCategories(categories: Category[]);
@@ -16,9 +15,7 @@ interface CategoriesStoreValue {
   [key: number]: Category;
 }
 
-const store = createStore<CategoriesStoreInterface,CategoriesStoreValue >(
-  getInitialState().initialData.categories,
-  ($categories: CategoriesStoreValue) => ({
+const store = createStore<CategoriesStoreInterface,CategoriesStoreValue>({}, ($categories: CategoriesStoreValue) => ({
     createCategories(categories: Category[]) {
       for (let i = 0; i < categories.length; i++) {
         const catId = categories[i].categoryId;
@@ -48,8 +45,7 @@ const store = createStore<CategoriesStoreInterface,CategoriesStoreValue >(
         cat.words = cat.words.filter(w => w !== wordId);
       }
     }
-  }),
-  ($categories: CategoriesStoreValue) => ({
+  }), ($categories: CategoriesStoreValue) => ({
     getIds(): number[] {
       return Object.keys($categories).map(Number);
     },

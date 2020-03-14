@@ -1,21 +1,30 @@
 <script>
-  import 'api/initial-state/initial-state';
+  import 'api/get-initial-state/get-initial-state';
+  import { loadInitialState } from 'api/load-initial-data/load-initial-state';
   import ScrollToggle from 'sdk/scroll-toggle/scroll-toggle.svelte';
   import Messages from 'sdk/messages/messages.svelte';
   import Header from 'sdk/header/header.svelte';
+  import { onMount } from 'svelte';
 
-  import Auth from 'routes/auth/auth.svelte';
-  import Categories from 'routes/categories/categories.svelte';
-  import Dict from 'routes/dict/dict.svelte';
-  import PreGame from 'routes/games/pre-game.svelte';
-  import Learn from 'routes/games/learn.svelte';
-  import Home from 'routes/home/home.svelte';
-  import Setup from 'routes/setup/setup.svelte';
-  import Stat from 'routes/stat/stat.svelte';
-  import AddWord from 'routes/words/add-word.svelte';
-  import EditWord from 'routes/words/edit-word.svelte';
+  import Auth from 'views/auth/auth.svelte';
+  import Categories from 'views/categories/categories.svelte';
+  import Dict from 'views/dict/dict.svelte';
+  import PreGame from 'views/games/pre-game.svelte';
+  import Learn from 'views/games/learn.svelte';
+  import Home from 'views/home/home.svelte';
+  import Setup from 'views/setup/setup.svelte';
+  import Stat from 'views/stat/stat.svelte';
+  import AddWord from 'views/words/add-word.svelte';
+  import EditWord from 'views/words/edit-word.svelte';
 
   import { view, user } from 'stores';
+
+  onMount(() => {
+    // load initial data if user exists
+    if ($user) {
+      loadInitialState();
+    }
+  });
 </script>
 
 <div class="app">
@@ -23,31 +32,27 @@
 
   <div id="bottom-buttons" class="bottom-buttons"></div>
   <main class="main">
-    {#if !$user.userId}
+    {#if !$user}
       <Auth />
     {:else}
-      {#if $view.componentId === 'categories'}
+      {#if $view.viewId === 'categories'}
         <Categories />
-      {:else if $view.componentId === 'dict'}
+      {:else if $view.viewId === 'dict'}
         <Dict />
-      {:else if $view.componentId === 'games'}
-        {#if $view.routeId === 'preGame'}
-          <PreGame />
-        {:else}
-          <Learn />
-        {/if}
-      {:else if $view.componentId === 'home'}
+      {:else if $view.viewId === 'preGame'}
+        <PreGame />
+      {:else if $view.viewId === 'learn'}
+        <Learn />
+      {:else if $view.viewId === 'home'}
         <Home />
-      {:else if $view.componentId === 'setup'}
+      {:else if $view.viewId === 'setup'}
         <Setup />
-      {:else if $view.componentId === 'stat'}
+      {:else if $view.viewId === 'stat'}
         <Stat />
-      {:else if $view.componentId === 'words'}
-        {#if $view.routeId === 'editWord'}
-          <EditWord />
-        {:else}
-          <AddWord />
-        {/if}
+      {:else if $view.viewId === 'editWord'}
+        <EditWord />
+      {:else if  $view.viewId === 'addWord'}
+        <AddWord />
       {:else}
         404
       {/if}

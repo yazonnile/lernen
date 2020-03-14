@@ -1,11 +1,11 @@
 import request from 'lib/request/request';
+import { words, categories } from 'stores';
 
 export const loadInitialState = (callback?) => {
   request({ api: 'getInitialData' }).then(response => {
     if (response) {
-      console.log(response);
-
-      // TODO: set DATA!!!
+      words.set(response.words);
+      categories.set(response.categories);
       callback && callback();
     }
   });

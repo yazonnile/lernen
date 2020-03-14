@@ -1,5 +1,4 @@
 import createStore from 'lib/create-store/create-store';
-import { getInitialState } from 'api/initial-state/initial-state';
 
 interface MessagesStoreInterface {
   clearById(id: string);
@@ -12,8 +11,7 @@ const createMessage = (options: MessageOptions): Message => ({
   id: (Date.now() + Math.random()).toString()
 });
 
-const store = createStore<MessagesStoreInterface, Message[]>(
-  getInitialState().persistentData.messages, $messages => ({
+const store = createStore<MessagesStoreInterface, Message[]>([], $messages => ({
     clearById(id: string) {
       return $messages.filter(message => {
         return message.id !== id;

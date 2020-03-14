@@ -5,7 +5,7 @@
   import Noun from './learn/noun.svelte';
   import speech from 'lib/speech/speech';
   import shuffle from 'lib/shuffle/shuffle';
-  import { words as wordsStore, setup } from 'stores';
+  import { words as wordsStore, user } from 'stores';
   import { onDestroy } from 'svelte';
 
   let visible = false;
@@ -16,7 +16,7 @@
 
   const showTranslation = () => {
     visible = true;
-    speech.sayWord(activeWord, $setup);
+    speech.sayWord(activeWord, $user);
   };
 
   const nextWord =  () => {

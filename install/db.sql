@@ -1,8 +1,25 @@
 -- users
 CREATE TABLE IF NOT EXISTS users (
-  userId   MEDIUMINT    NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  login    CHAR(25)     NOT NULL DEFAULT '' UNIQUE KEY,
-  password VARCHAR(255) NOT NULL DEFAULT '',
+  userId              MEDIUMINT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  login               CHAR(25)           NOT NULL DEFAULT '' UNIQUE KEY,
+  password            VARCHAR(255)       NOT NULL DEFAULT '',
+  voice               BOOLEAN DEFAULT 1  NOT NULL,
+  voiceSpeed          TINYINT DEFAULT 50 NOT NULL,
+  phrases             BOOLEAN DEFAULT 1  NOT NULL,
+  other               BOOLEAN DEFAULT 1  NOT NULL,
+  soundPhrases        BOOLEAN DEFAULT 1  NOT NULL,
+  nouns               BOOLEAN DEFAULT 1  NOT NULL,
+  soundNouns          BOOLEAN DEFAULT 1  NOT NULL,
+  articles            BOOLEAN DEFAULT 1  NOT NULL,
+  soundArticles       BOOLEAN DEFAULT 1  NOT NULL,
+  plural              BOOLEAN DEFAULT 1  NOT NULL,
+  soundPlural         BOOLEAN DEFAULT 1  NOT NULL,
+  verbs               BOOLEAN DEFAULT 1  NOT NULL,
+  soundVerbs          BOOLEAN DEFAULT 1  NOT NULL,
+  strongVerbs         BOOLEAN DEFAULT 1  NOT NULL,
+  soundStrongVerbs    BOOLEAN DEFAULT 0  NOT NULL,
+  irregularVerbs      BOOLEAN DEFAULT 0  NOT NULL,
+  soundIrregularVerbs BOOLEAN DEFAULT 0  NOT NULL,
   CONSTRAINT id UNIQUE KEY (userId)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
@@ -51,32 +68,6 @@ CREATE TABLE IF NOT EXISTS words_to_categories (
   wordId     MEDIUMINT NOT NULL,
   categoryId SMALLINT  NOT NULL,
   CONSTRAINT id UNIQUE KEY (wordId, categoryId)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_bin
-  AUTO_INCREMENT = 1;
-
--- setup
-CREATE TABLE IF NOT EXISTS setup (
-  userId              MEDIUMINT         NOT NULL PRIMARY KEY,
-  voice               BOOLEAN DEFAULT 1 NOT NULL,
-  voiceSpeed          TINYINT DEFAULT 50 NOT NULL,
-  phrases             BOOLEAN DEFAULT 1 NOT NULL,
-  other               BOOLEAN DEFAULT 1 NOT NULL,
-  soundPhrases        BOOLEAN DEFAULT 1 NOT NULL,
-  nouns               BOOLEAN DEFAULT 1 NOT NULL,
-  soundNouns          BOOLEAN DEFAULT 1 NOT NULL,
-  articles            BOOLEAN DEFAULT 1 NOT NULL,
-  soundArticles       BOOLEAN DEFAULT 1 NOT NULL,
-  plural              BOOLEAN DEFAULT 1 NOT NULL,
-  soundPlural         BOOLEAN DEFAULT 1 NOT NULL,
-  verbs               BOOLEAN DEFAULT 1 NOT NULL,
-  soundVerbs          BOOLEAN DEFAULT 1 NOT NULL,
-  strongVerbs         BOOLEAN DEFAULT 1 NOT NULL,
-  soundStrongVerbs    BOOLEAN DEFAULT 0 NOT NULL,
-  irregularVerbs      BOOLEAN DEFAULT 0 NOT NULL,
-  soundIrregularVerbs BOOLEAN DEFAULT 0 NOT NULL,
-  CONSTRAINT id UNIQUE KEY (userId)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin

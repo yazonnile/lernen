@@ -1,5 +1,4 @@
 import createStore from 'lib/create-store/create-store';
-import { getInitialState } from 'api/initial-state/initial-state';
 
 interface GamesInterface {
   [key: string]: {
@@ -18,10 +17,12 @@ interface GamesStoreInterface {
   };
 }
 
-const store = createStore<GamesStoreInterface, GamesInterface>(
-  getInitialState().initialData.games,
-  null,
-  ($games: GamesInterface) => ({
+const store = createStore<GamesStoreInterface, GamesInterface>({
+    learn: {
+      buttonText: 'учить',
+      categories: []
+    }
+  }, null, ($games: GamesInterface) => ({
     getGamesCategories(gameName) {
       const cats = $games[gameName].categories.selected || [];
       return {

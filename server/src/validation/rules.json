@@ -1,0 +1,15 @@
+{
+  "login": {
+    "type": "string",
+    "between": [2, 25]
+  },
+  "password": {
+    "type": "string",
+    "max": 25,
+    "trim": false
+  },
+  "mcnulty": {
+    "type": "number",
+    "equal": 5
+  }
+}

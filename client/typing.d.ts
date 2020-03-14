@@ -7,7 +7,7 @@ interface UseFunction<Params = { [key: string]: any }> {
 type User = {
   login?: string;
   userId?: number;
-};
+} & Setup;
 
 interface MessageOptions {
   status: string;
@@ -53,33 +53,24 @@ type Word = {
 };
 
 type Setup = {
-  voice: boolean;
-  voiceSpeed: SetupVoiceSpeed;
-  phrases: boolean;
-  soundPhrases: boolean;
-  nouns: boolean;
-  soundNouns: boolean;
-  articles: boolean;
-  soundArticles: boolean;
-  plural: boolean;
-  soundPlural: boolean;
-  verbs: boolean;
-  soundVerbs: boolean;
-  strongVerbs: boolean;
-  soundStrongVerbs: boolean;
-  irregularVerbs: boolean;
-  soundIrregularVerbs: boolean;
-  other: boolean;
+  voice?: boolean;
+  voiceSpeed?: SetupVoiceSpeed;
+  phrases?: boolean;
+  soundPhrases?: boolean;
+  nouns?: boolean;
+  soundNouns?: boolean;
+  articles?: boolean;
+  soundArticles?: boolean;
+  plural?: boolean;
+  soundPlural?: boolean;
+  verbs?: boolean;
+  soundVerbs?: boolean;
+  strongVerbs?: boolean;
+  soundStrongVerbs?: boolean;
+  irregularVerbs?: boolean;
+  soundIrregularVerbs?: boolean;
+  other?: boolean;
 };
-
-// type ResponseStore = {
-  // enabledIds?: number[];
-  // disabledIds?: number[];
-  // deletedIds?: number[];
-  // newCategories?: Category[];
-  // newAndLinkedCategories?: number[];
-  // newWordId?: number;
-// };
 
 type ResponseData = {
   error?: [];
@@ -87,6 +78,12 @@ type ResponseData = {
   messages?: Message[];
   user: User;
   initialData?: InitialData;
+  words: {
+    [key: number]: Word
+  };
+  categories: {
+    [key: number]: Category;
+  }
 };
 
 type PayloadSchemeType = 'login' | 'password' | 'newPassword' | 'mcnulty';

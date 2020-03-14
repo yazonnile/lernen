@@ -40,7 +40,7 @@ class Query extends Db {
 
   public function getUserByLogin($login) {
     return $this->setSql(
-      "SELECT *
+      "SELECT userId, password
         FROM users
         WHERE login = :login
         LIMIT 1;"
@@ -51,7 +51,13 @@ class Query extends Db {
 
   public function getUserById($userId) {
     return $this->setSql(
-      "SELECT userId, login
+      "SELECT userId, login,
+          voice, voiceSpeed, phrases,
+          soundPhrases, nouns, soundNouns,
+          articles, soundArticles, plural,
+          soundPlural, verbs, soundVerbs,
+          strongVerbs, soundStrongVerbs, irregularVerbs,
+          soundIrregularVerbs, other
         FROM users
         WHERE userId = :userId
         LIMIT 1;"
@@ -67,5 +73,25 @@ class Query extends Db {
     ]);
   }
 
+  public function getWordsByUserId($userId) {
+    return $this->setSql(
+      "SELECT *
+        FROM words
+        WHERE userId = :userId;"
+    )->getAll([
+      ':userId' => $userId
+    ]);
+  }
 
+  public function getCategoriesByUserId($userId) {
+    return $this->setSql("SELECT categoryId, categoryName, wordId
+        FROM categories
+
+        LEFT JOIN words_to_categories
+        USING (categoryId)
+
+        WHERE userId = :userId
+        ORDER BY categoryId;"
+    )->getAll([':userId' => $userId]);
+  }
 }

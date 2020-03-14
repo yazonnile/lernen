@@ -157,7 +157,30 @@
     }
 
     private function getInitialData() {
-      $this->updateState('lol', 1);
+      $userId = $this->user->getId();
+
+      // get words
+      $this->updateState('words', array_reduce($this->query->getWordsByUserId($userId), function($carry, $word) {
+        $carry[$word['wordId']] = $word;
+        return $carry;
+      }, []));
+
+      // get categories
+      $this->updateState('categories', array_reduce($this->query->getCategoriesByUserId($userId), function($carry, $row) {
+        $catId = $row['categoryId'];
+        if (!isset($carry[$catId])) {
+          $carry[$catId] = [
+            'categoryName' => $row['categoryName'],
+            'categoryId' => $catId,
+            'words' => []
+          ];
+        }
+
+        if ($row['wordId']) {
+          $carry[$catId]['words'][] = $row['wordId'];
+        }
+        return $carry;
+      }, []));
     }
 
     private function sync() {

@@ -1,7 +1,6 @@
 import createStore from 'lib/create-store/create-store';
-import { getInitialState } from 'api/initial-state/initial-state';
 import games from 'stores/games/games';
-import setupStore from 'stores/setup/setup';
+import userStore from 'stores/user/user';
 import categoriesStore from 'stores/categories/categories';
 
 interface WordsStoreInterface {
@@ -12,9 +11,7 @@ interface WordsStoreInterface {
   getWordsByCategoriesAndSetup(gameName: string): Word[];
 }
 
-const store = createStore<WordsStoreInterface, { [key: number]: Word }>(
-  getInitialState().initialData.words,
-  $words => ({
+const store = createStore<WordsStoreInterface, { [key: number]: Word }>({}, $words => ({
     deleteWords(ids: number[]) {
       for (let i = 0; i < ids.length; i++) {
         delete $words[ids[i]];
@@ -30,11 +27,10 @@ const store = createStore<WordsStoreInterface, { [key: number]: Word }>(
         $words[ids[i]].active = true;
       }
     }
-  }),
-  $words => ({
+  }), $words => ({
     getWordsByCategoriesAndSetup(gameName: string): Word[] {
       const { categoriesIds, nullCategory } = games.getGamesCategories(gameName);
-      const setup = setupStore.getSetup();
+      const setup = userStore.getSetup();
 
       let wordsIds = [];
 

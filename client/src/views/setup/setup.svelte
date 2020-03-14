@@ -3,13 +3,13 @@
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import Button from 'sdk/button/button.svelte';
   import Slide from 'sdk/transition/slide.svelte'
-  import { setup as setupStore } from 'stores';
+  import { user as userStore } from 'stores';
   import { play } from 'lib/speech/speech';
 
-  let setup = $setupStore;
+  let setup = $userStore;
 
   const onSave = () => {
-    $setupStore = setup;
+    $userStore = setup;
     // useRoute({ componentId: 'setup', routeId: 'updateSetup', payload: { ...setup }});
   };
 

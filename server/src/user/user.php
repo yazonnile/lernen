@@ -12,8 +12,8 @@
 
       $this->config = $config;
       $this->updateState(null, []);
-      $userId = $this->getUserIdFromCookies();
       $this->query = new Query();
+      $userId = $this->getUserIdFromCookies();
 
       if ($userId) {
         $this->setupById($userId);
@@ -36,7 +36,7 @@
       $userId = $jwtData['userId'] ?? null;
       $jwtValue = $jwtData[$this->config->getState('jwt.key')] ?? null;
 
-      if ($userId && $jwtValue === $this->config->getState('jwt.value')) {
+      if ($userId && $jwtValue === $this->config->getState('jwt.value') && $this->query->isUserExistsById($userId)) {
         return $userId;
       }
 
