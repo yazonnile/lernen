@@ -20,15 +20,12 @@
   let categoriesActive = !!linkedCategories.length;
 
   const callback = (values) => {
+    // TODO: SYNC
     const wordObject = {
       ...values,
-      userId: user.userId
+      wordId: wordId || +(Math.random() * 100000).toFixed(),
+      active: !wordId || word.active
     };
-
-    if (!wordId) {
-      wordObject.active = true;
-      wordObject.wordId = +(Math.random() * 100000).toFixed(); // TODO: SYNC
-    }
 
     // save word
     words.updateWord(wordObject);

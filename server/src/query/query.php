@@ -75,7 +75,10 @@ class Query extends Db {
 
   public function getWordsByUserId($userId) {
     return $this->setSql(
-      "SELECT *
+      "SELECT wordId, original, active,
+          translation, type, article,
+          plural, strong1, strong2, strong3,
+          strong4, strong5, strong6, irregular1, irregular2
         FROM words
         WHERE userId = :userId;"
     )->getAll([

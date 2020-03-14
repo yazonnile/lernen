@@ -17,15 +17,16 @@
   }
 
   .item {
-    background: #f7f7f7;
-    border: 1px solid var(--mainColorLight);
+    background: var(--categoryColor);
+    border: 1px solid #ddd;
     border-radius: 5px;
+    cursor: pointer;
     display: block;
     font-size: 12px;
     line-height: 15px;
     padding: 7px 10px 7px 33px;
+    user-select: none;
     text-transform: uppercase;
-    transition: background-color .3s ease, color .3s ease;
   }
 
   label :global(.icon) {
@@ -33,12 +34,13 @@
     height: 16px;
     position: absolute;
     left: 9px;
+    transition: all .15s ease-in-out;
     top: 8px;
     width: 16px;
   }
 
   label :global(input:checked) ~ :global(.icon) {
-    color: #fff;
+    color: inherit;
     height: 20px;
     left: 7px;
     top: 5px;
@@ -46,8 +48,7 @@
   }
 
   :global(input:checked) + .item {
-    background: var(--mainColor);
-    color: #fff;
+    background: var(--categoryActiveColor);
   }
 
   label :global(input) {

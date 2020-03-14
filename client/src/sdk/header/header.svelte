@@ -90,6 +90,6 @@
   }
 
   .yellow {
-    color: #f7b800;
+    color: var(--categoryActiveColor);
   }
 </style>
