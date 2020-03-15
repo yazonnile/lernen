@@ -29,40 +29,38 @@ const storeMethods = {
 };
 
 const storeViews = {
-  getWordsByCategoriesAndSetup(this: WordsStore, gameName: string): Word[] {
+  getWordsByCategoriesAndSetup(this: WordsStore, gameName: string): number[] {
     const { categoriesIds, nullCategory } = games.getGamesCategories(gameName);
     const setup = userStore.getSetup();
 
-    let wordsIds = [];
-
-    // add selected categories
-    categoriesIds.forEach(catId => {
-      const wordsInCategory = categoriesStore.getWordIdsByCategoryId(catId);
-      wordsIds.push(...wordsInCategory);
-    });
-
-    // null category
-    if (nullCategory) {
-      wordsIds.push(
-        ...categoriesStore.getWordsWithNullCategory(
-          Object.keys(this).map(Number)
-        )
-      );
-    }
-
-    // get uniq words array
-    wordsIds = wordsIds.filter((value, index, self) => {
-      return self.indexOf(value) === index;
-    });
-
-    // filter words by setup and active state
-    wordsIds = wordsIds.filter(wordId => {
-      const word: Word = this[wordId];
-
+    return Object.values(this).filter(word => {
+      // skip not active words
       if (!word.active) {
         return false;
       }
 
+      if (!word.categories.length) {
+        // skip non-categories words with not selected null category
+        if (!nullCategory) {
+          return false;
+        }
+      } else {
+        let wordInSelectedCategories = false;
+        for (let i = 0; i < word.categories.length; i++) {
+          const wordCategory = word.categories[i];
+          if (categoriesIds.indexOf(wordCategory) > -1) {
+            wordInSelectedCategories = true;
+            break;
+          }
+        }
+
+        // skip words with not selected categories
+        if (!wordInSelectedCategories) {
+          return false;
+        }
+      }
+
+      // final sort - by types in setup
       switch (word.type) {
         case 'other':
           return setup.other;
@@ -76,9 +74,7 @@ const storeViews = {
         case 'verb':
           return setup.verbs;
       }
-    });
-
-    return wordsIds;
+    }).map(word => word.wordId);
   },
 
   verbIsStrong(word: Word): boolean {

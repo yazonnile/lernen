@@ -78,8 +78,20 @@ class Query extends Db {
       "SELECT wordId, original, active,
           translation, type, article,
           plural, strong1, strong2, strong3,
-          strong4, strong5, strong6, irregular1, irregular2
+          strong4, strong5, strong6, irregular1, irregular2,
+          wordCats.categories
+
         FROM words
+
+        LEFT JOIN (
+          SELECT
+            wordId,
+            GROUP_CONCAT(categoryId ORDER BY categoryId ASC SEPARATOR ', ') categories
+          FROM words_to_categories
+          GROUP BY wordId
+        ) as wordCats
+        USING (wordId)
+
         WHERE userId = :userId;"
     )->getAll([
       ':userId' => $userId
@@ -87,14 +99,10 @@ class Query extends Db {
   }
 
   public function getCategoriesByUserId($userId) {
-    return $this->setSql("SELECT categoryId, categoryName, wordId
+    return $this->setSql(
+      "SELECT categoryId, categoryName
         FROM categories
-
-        LEFT JOIN words_to_categories
-        USING (categoryId)
-
-        WHERE userId = :userId
-        ORDER BY categoryId;"
+        WHERE userId = :userId;"
     )->getAll([':userId' => $userId]);
   }
 }

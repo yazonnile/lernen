@@ -34,7 +34,7 @@ const request: Request = (options) => {
   body.append('payload', JSON.stringify(payload));
   body.append('api', JSON.stringify(api));
 
-  return fetch('/api', {
+  return fetch(`/${api}`, {
     method: 'post',
     credentials: 'include',
     body

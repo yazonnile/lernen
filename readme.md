@@ -20,9 +20,10 @@
 * local storage? IDB?
 
 # TODO
-* TODO: SYNC
+* create-store refactor
 
 ## far-far away
+* TODO: SYNC
 * categories page
 * stat page
 * fancy ui

@@ -161,24 +161,15 @@
 
       // get words
       $this->updateState('words', array_reduce($this->query->getWordsByUserId($userId), function($carry, $word) {
-        $carry[$word['wordId']] = $word;
+        $carry[$word['wordId']] = array_merge($word, [
+          'categories' => is_null($word['categories']) ? [] : explode(',', $word['categories'])
+        ]);
         return $carry;
       }, []));
 
       // get categories
       $this->updateState('categories', array_reduce($this->query->getCategoriesByUserId($userId), function($carry, $row) {
-        $catId = $row['categoryId'];
-        if (!isset($carry[$catId])) {
-          $carry[$catId] = [
-            'categoryName' => $row['categoryName'],
-            'categoryId' => $catId,
-            'words' => []
-          ];
-        }
-
-        if ($row['wordId']) {
-          $carry[$catId]['words'][] = $row['wordId'];
-        }
+        $carry[$row['categoryId']] = $row;
         return $carry;
       }, []));
     }

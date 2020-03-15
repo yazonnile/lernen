@@ -26,7 +26,6 @@ type InitialData = {
 type Category = {
   categoryId: number;
   categoryName: string;
-  words: number[];
 };
 
 type WordType = 'noun' | 'verb' | 'phrase' | 'other';
@@ -49,6 +48,7 @@ type Word = {
   strong6?: string;
   irregular1?: string;
   irregular2?: string;
+  categories?: number[];
 };
 
 type Setup = {

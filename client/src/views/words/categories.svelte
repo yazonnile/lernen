@@ -1,6 +1,5 @@
 <script>
   export let linked;
-  export let created;
   export let active;
 
   import Category from 'sdk/category/category.svelte';
@@ -10,11 +9,11 @@
   import Slide from 'sdk/transition/slide.svelte'
   import { categories as categoriesStore } from 'stores';
 
-  let categories = Object.values($categoriesStore);
+  let categories;
+  $: categories = Object.values($categoriesStore);
   let formView = false;
   let newCategoryName = '';
   let tmpId = -999; // TODO: SYNC
-  $: result = [...categories, ...created];
 
   const onCategoryAdd = () => {
     if (!newCategoryName) {
@@ -26,7 +25,7 @@
 
     if (!existedCatyName) {
       const newCat = { categoryName: newCategoryName, categoryId: tmpId++ }; // TODO: SYNC
-      created = [...created, newCat];
+      categoriesStore.createCategory(newCat);
       linked = [...linked, newCat.categoryId];
     } else if (linked.indexOf(existedCatyName.categoryId) === -1) {
       linked = [...linked, existedCatyName.categoryId];
@@ -54,7 +53,7 @@
       <Button text="создать категорию" icon="plus" on:click={() => (formView = true)} />
     {/if}
 
-    {#each result as { categoryName, categoryId } (categoryId)}
+    {#each categories as { categoryName, categoryId } (categoryId)}
       <Category {categoryName}>
         <input type="checkbox" bind:group={linked} value={categoryId} />
       </Category>

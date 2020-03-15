@@ -2,14 +2,15 @@
   import Category from 'sdk/category/category.svelte';
   import Button from 'sdk/button/button.svelte';
   import Fly from 'sdk/transition/fly.svelte';
-  import { view, categories as categoriesStore, games } from 'stores';
+  import { view, categories, games } from 'stores';
 
   let { gameId } = $view.params;
-  $: categories = Object.values($categoriesStore);
+  let categoriesList;
+  $: categoriesList = Object.values($categories);
   let selectedCategories = $games[gameId].categories.selected || [];
   let nullCategory = $games[gameId].categories.nullCategory || false;
   let selectedState = false;
-  $: selectedState = nullCategory && selectedCategories.length === categories.length;
+  $: selectedState = nullCategory && selectedCategories.length === categoriesList.length;
 
   const onReady = () => {
     if (view[gameId]) {
@@ -27,7 +28,7 @@
       selectedCategories = [];
       nullCategory = false;
     } else {
-      selectedCategories = categoriesStore.getIds();
+      selectedCategories = categories.getIds();
       nullCategory = true;
     }
 
@@ -36,10 +37,10 @@
 </script>
 
 <div class="pre-game">
-  {#if categories.length}
+  {#if categoriesList.length}
     <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
 
-    {#each categories as { categoryName, categoryId } (categoryId)}
+    {#each categoriesList as { categoryName, categoryId } (categoryId)}
       <Category {categoryName}>
         <input type="checkbox" bind:group={selectedCategories} value={categoryId} />
       </Category>

@@ -9,14 +9,12 @@
   import createValidation from 'lib/validation/validation';
   import Categories from './categories.svelte';
   import Slide from 'sdk/transition/slide.svelte';
-  import { categories, words, user, messages } from 'stores';
+  import { words, messages } from 'stores';
 
-  let { wordId = null } = word;
+  let { wordId = null, categories: linkedCategories = [] } = word;
   let strongVerb = words.verbIsStrong(word);
   let irregularVerb = words.verbIsIrregular(word);
 
-  let createdCategories = [];
-  let linkedCategories = wordId ? categories.getCategoriesByWordId(wordId) : [];
   let categoriesActive = !!linkedCategories.length;
 
   const callback = (values) => {
@@ -24,22 +22,12 @@
     const wordObject = {
       ...values,
       wordId: wordId || +(Math.random() * 100000).toFixed(),
-      active: !wordId || word.active
+      active: !wordId || word.active,
+      categories: categoriesActive ? linkedCategories : []
     };
 
     // save word
     words.updateWord(wordObject);
-
-    // create categories
-    if (createdCategories) {
-      categories.createCategories(createdCategories);
-    }
-
-    // assign word into linked categories if categoriesActive
-    categories.removeWordFromCategories(wordId);
-    if (categoriesActive) {
-      categories.assignWordToCategories(wordObject.wordId, [...linkedCategories]); // TODO: SYNC
-    }
 
     if (!wordId) {
       resetState();
@@ -47,7 +35,7 @@
 
     messages.addMessage({
       status: 'success',
-      text: wordId ? 'wordEdit.success' : 'wordCreat.success'
+      text: wordId ? 'wordEdit.success' : 'wordCreate.success'
     });
   };
 
@@ -83,7 +71,6 @@
     $typeValue = t;
     categoriesActive = false;
     linkedCategories = [];
-    createdCategories = [];
     strongVerb = false;
     irregularVerb = false;
 
@@ -176,7 +163,7 @@
         </Slide>
       {/if}
 
-      <Categories bind:linked={linkedCategories} bind:created={createdCategories} bind:active={categoriesActive} />
+      <Categories bind:linked={linkedCategories} bind:active={categoriesActive} />
 
       <Button type="submit" text={wordId ? 'редактировать' : 'создать'} />
     </FormValidation>
