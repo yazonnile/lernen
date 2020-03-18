@@ -17,10 +17,9 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* local storage? IDB?
+* TODO: SYNC
 
 # TODO
-* TODO: SYNC
 * index.html is different for user and guest
 
 ## far-far away

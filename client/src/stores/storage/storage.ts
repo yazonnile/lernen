@@ -11,8 +11,4 @@ const store = derived(
   }
 );
 
-store.subscribe($store => {
-  localStorage.setItem('lernen-storage', JSON.stringify($store));
-});
-
 export default store;
