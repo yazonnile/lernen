@@ -2,7 +2,7 @@
   export let menuActive;
 
   import request from 'lib/request/request';
-  import { user, view } from 'stores';
+  import { user, view, storage } from 'stores';
   import { fly, fade } from 'svelte/transition';
 
   const hideMenu = () => {
@@ -11,10 +11,9 @@
 
   const onLogout = () => {
     hideMenu();
-    request({ api: 'logoutUser' }).then(response => {
-      if (response) {
-        $user = null;
-      }
+    request({ api: 'logoutUser' }).then(() => {
+      $user = null;
+      $storage = null;
     });
   };
 
@@ -33,6 +32,7 @@
       <button on:click={() => onMenu('addWord')}>Добавить слово</button>
       <button on:click={() => onMenu('setup')}>Настройки</button>
       <button on:click={() => onMenu('dict')}>словарь</button>
+      <button on:click={() => onMenu('sync')}>синхронизация</button>
       <button disabled on:click={() => onMenu('categories')}>категории</button>
       <button disabled on:click={() => onMenu('stat')}>статистика</button>
     </div>

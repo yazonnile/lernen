@@ -4,13 +4,13 @@
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
   import createValidation from 'lib/validation/validation'
   import request from 'lib/request/request';
-  import { loadInitialState } from 'api/load-initial-data/load-initial-state';
+  import { loadInitialData } from 'api/load-initial-data/load-initial-data';
   import { user, view } from 'stores';
 
   const callback = (values) => {
     request({ api: 'loginUser', payload: values }).then(response => {
       if (response) {
-        loadInitialState(() => {
+        loadInitialData(() => {
           view.home();
           $user = response.user;
         });

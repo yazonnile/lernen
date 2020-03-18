@@ -18,10 +18,8 @@
   let categoriesActive = !!linkedCategories.length;
 
   const callback = (values) => {
-    // TODO: SYNC
     const wordObject = {
       ...values,
-      wordId: wordId || +(Math.random() * 100000).toFixed(),
       active: !wordId || word.active,
       categories: categoriesActive ? linkedCategories : []
     };

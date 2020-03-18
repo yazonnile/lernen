@@ -29,7 +29,6 @@
     }
 
     checked = [];
-    // TODO: SYNC
   };
 
   const onEdit = (wordId) => {

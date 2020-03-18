@@ -13,7 +13,6 @@
   $: categories = Object.values($categoriesStore);
   let formView = false;
   let newCategoryName = '';
-  let tmpId = -999; // TODO: SYNC
 
   const onCategoryAdd = () => {
     if (!newCategoryName) {
@@ -24,9 +23,9 @@
     const existedCatyName = categories.find(c => c.categoryName === newCategoryName);
 
     if (!existedCatyName) {
-      const newCat = { categoryName: newCategoryName, categoryId: tmpId++ }; // TODO: SYNC
-      categoriesStore.createCategory(newCat);
-      linked = [...linked, newCat.categoryId];
+      const newCat = { categoryName: newCategoryName };
+      categoriesStore.updateCategory(newCat);
+      linked = [...linked, categoriesStore.getCategoryIdByName(newCategoryName)];
     } else if (linked.indexOf(existedCatyName.categoryId) === -1) {
       linked = [...linked, existedCatyName.categoryId];
     }

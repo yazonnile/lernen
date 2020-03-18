@@ -24,7 +24,7 @@ type InitialData = {
 };
 
 type Category = {
-  categoryId: number;
+  categoryId?: number;
   categoryName: string;
 };
 

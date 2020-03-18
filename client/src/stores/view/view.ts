@@ -12,6 +12,7 @@ export enum Views {
   stat,
   editWord,
   addWord,
+  sync,
 }
 
 type PreGameParams = { gameId: string; }
@@ -34,6 +35,7 @@ const storeMethods = {
   learn: (): View => ({ viewId: Views.learn }),
   setup: (): View => ({ viewId: Views.setup }),
   stat: (): View => ({ viewId: Views.stat }),
+  sync: (): View => ({ viewId: Views.sync }),
   addWord: (): View => ({ viewId: Views.addWord }),
   editWord: (params: EditWordParams): EditWordView => ({
     viewId: Views.editWord,
@@ -46,7 +48,7 @@ const storeMethods = {
 };
 
 const store = createStore<View, typeof storeMethods>(
-  getInitialState().user ? storeMethods.home() : storeMethods.auth(),
+  getInitialState().user ? storeMethods.sync() : storeMethods.auth(),
   storeMethods
 );
 

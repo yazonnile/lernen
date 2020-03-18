@@ -108,7 +108,6 @@
         $this->response->addMessage('registration.success');
 
         $userId = $this->query->getLastInsertId();
-        $this->query->update('setup', [ 'userId' => $userId ]);
       }
     }
 

@@ -1,6 +1,6 @@
 <script>
   import 'api/get-initial-state/get-initial-state';
-  import { loadInitialState } from 'api/load-initial-data/load-initial-state';
+  import { loadInitialData } from 'api/load-initial-data/load-initial-data';
   import Messages from 'sdk/messages/messages.svelte';
   import Header from 'sdk/header/header.svelte';
   import { onMount } from 'svelte';
@@ -13,6 +13,7 @@
   import Home from 'views/home/home.svelte';
   import Setup from 'views/setup/setup.svelte';
   import Stat from 'views/stat/stat.svelte';
+  import Sync from 'views/sync/sync.svelte';
   import AddWord from 'views/words/add-word.svelte';
   import EditWord from 'views/words/edit-word.svelte';
 
@@ -22,7 +23,7 @@
   onMount(() => {
     // load initial data if user exists
     if ($user) {
-      loadInitialState();
+      loadInitialData();
     }
   });
 
@@ -34,6 +35,7 @@
       case Views.learn: return Learn;
       case Views.setup: return Setup;
       case Views.stat: return Stat;
+      case Views.sync: return Sync;
       case Views.editWord: return EditWord;
       case Views.addWord: return AddWord;
       default: return Home;

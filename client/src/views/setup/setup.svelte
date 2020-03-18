@@ -9,8 +9,7 @@
   let setup = $user;
 
   const onSave = () => {
-    // TODO: SYNC
-    $user = setup;
+    user.saveSetup(setup);
 
     messages.addMessage({
       status: 'success',

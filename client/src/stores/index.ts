@@ -4,3 +4,5 @@ export { default as categories } from './categories/categories';
 export { default as words } from './words/words';
 export { default as user } from './user/user';
 export { default as view } from './view/view';
+export { default as storage } from './storage/storage';
+export { default as sync } from './sync/sync';

@@ -10,7 +10,7 @@ const setValue = <V>(store: Writable<V>, value: V) => {
   }
 };
 
-export default <Value, Methods = {}, Views = {}>(initial, methods?: Methods, views?: Views): Writable<Value> & Methods & Views & Value => {
+export default <Value, Methods = {}, Views = {}>(initial: Value, methods?: Methods, views?: Views): Writable<Value> & Methods & Views & Value => {
   const store = writable(initial);
 
   const publicApi = {

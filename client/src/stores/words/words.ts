@@ -1,7 +1,7 @@
 import createStore from 'lib/create-store/create-store';
+import syncManager from 'api/sync-manager/sync-manager';
 import games from 'stores/games/games';
 import userStore from 'stores/user/user';
-import categoriesStore from 'stores/categories/categories';
 
 interface WordsStore {
   [key: number]: Word
@@ -10,21 +10,22 @@ interface WordsStore {
 const storeMethods = {
   deleteWords(this: WordsStore, ids: number[]) {
     for (let i = 0; i < ids.length; i++) {
-      delete this[ids[i]];
+      delete this[syncManager.deleteWord(ids[i])];
     }
   },
   disableWords(this: WordsStore, ids: number[]) {
     for (let i = 0; i < ids.length; i++) {
-      this[ids[i]].active = false;
+      this[syncManager.syncWord(ids[i])].active = false;
     }
   },
   enableWords(this: WordsStore, ids: number[]) {
     for (let i = 0; i < ids.length; i++) {
-      this[ids[i]].active = true;
+      this[syncManager.syncWord(ids[i])].active = true;
     }
   },
   updateWord(this: WordsStore, word: Word) {
-    this[word.wordId] = word;
+    const wordId = syncManager.syncWord(word.wordId);
+    this[wordId] = { ...word, wordId };
   }
 };
 

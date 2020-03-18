@@ -20,10 +20,10 @@
 * local storage? IDB?
 
 # TODO
-* create-store refactor
+* TODO: SYNC
+* index.html is different for user and guest
 
 ## far-far away
-* TODO: SYNC
 * categories page
 * stat page
 * fancy ui
