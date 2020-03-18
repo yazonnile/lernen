@@ -20,6 +20,10 @@ const storeViews = {
   getCategoryIdByName(this: CategoriesStore, categoryName: string): number {
     const category = Object.values(this).find(c => c.categoryName === categoryName);
     return category ? category.categoryId : null;
+  },
+
+  getCategoryById(this: CategoriesStore, categoryId: number): Category {
+    return this[categoryId];
   }
 };
 

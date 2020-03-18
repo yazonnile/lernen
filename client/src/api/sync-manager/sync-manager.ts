@@ -1,8 +1,20 @@
-import syncStore, { SyncTypes } from 'stores/sync/sync';
+import unique from 'lib/unique/unique';
+import syncStore, { SyncTypes, SyncStore } from 'stores/sync/sync';
+import wordsStore from 'stores/words/words';
+import categoriesStore from 'stores/categories/categories';
+import userStore from 'stores/user/user';
 
-syncStore.subscribe($store => {
-  console.log('syncStore >> ', $store);
-});
+interface DataToSync extends SyncStore {
+  data: {
+    words: {
+      [key: number]: Word;
+    };
+    categories: {
+      [key: number]: Category;
+    };
+    setup: User;
+  };
+}
 
 class SyncManager {
   syncSetup() {
@@ -47,6 +59,35 @@ class SyncManager {
 
   deleteCategory(categoryId: number): number {
     return this.delete(categoryId, SyncTypes.categories);
+  }
+
+  getDataToSync() {
+    const dataToSync: DataToSync = { data: { words: {}, categories: {}, setup: {} } };
+    const syncStoreData = syncStore.getData();
+
+    // merge sync store into data
+    Object.assign(dataToSync, syncStoreData);
+
+    // save setup
+    if (syncStoreData.setup) {
+      dataToSync.data.setup = userStore.getSetup();
+    }
+
+    // save words models
+    const wordsToUpdate = [...syncStoreData.words.toUpdate, ...syncStoreData.words.toCreate].filter(unique);
+    for (let i = 0; i < wordsToUpdate.length; i++) {
+      const wordId = wordsToUpdate[i];
+      dataToSync.data.words[wordId] = wordsStore.getWordById(wordId);
+    }
+
+    // save categories models
+    const categoriesToUpdate = [...syncStoreData.categories.toUpdate, ...syncStoreData.categories.toCreate].filter(unique);
+    for (let i = 0; i < categoriesToUpdate.length; i++) {
+      const categoryId = categoriesToUpdate[i];
+      dataToSync.data.categories[categoryId] = categoriesStore.getCategoryById(categoryId);
+    }
+
+    return dataToSync;
   }
 }
 

@@ -85,6 +85,10 @@ const storeViews = {
   verbIsIrregular(word: Word): boolean {
     return !!(word.irregular1 || word.irregular2);
   },
+
+  getWordById(this: WordsStore, wordId: number): Word {
+    return this[wordId];
+  }
 };
 
 const store = createStore<WordsStore, typeof storeMethods, typeof storeViews>(

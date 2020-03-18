@@ -173,7 +173,7 @@
       }, []));
     }
 
-    private function sync() {
+    private function syncData() {
       if (!$this->user->isLoggedIn()) {
         $this->exitWithError('access');
         return;

@@ -6,10 +6,10 @@ interface SyncType {
   toCreate: number[];
 }
 
-interface SyncStore {
-  words: SyncType;
-  categories: SyncType;
-  setup: boolean;
+export interface SyncStore {
+  words?: SyncType;
+  categories?: SyncType;
+  setup?: boolean;
 }
 
 export enum SyncTypes {
@@ -56,6 +56,10 @@ const storeViews = {
     const { words, categories } = this;
     return !!(words.toCreate.length || words.toDelete.length || words.toUpdate.length
       || categories.toCreate.length || categories.toDelete.length || categories.toUpdate.length);
+  },
+
+  getData(this: SyncStore): SyncStore {
+    return this;
   }
 };
 
