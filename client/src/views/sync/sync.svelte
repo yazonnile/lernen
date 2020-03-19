@@ -10,7 +10,7 @@
 </script>
 
 <div class="sync">
-  {#if !$user}
+  {#if !$user.userId}
     <Auth />
   {/if}
 
@@ -28,7 +28,7 @@
   </div>
 
   {#if $sync && sync.syncRequired()}
-    {#if $user}
+    {#if $user.userId}
       <Button
         on:click={syncData}
         text="синхронизировать"

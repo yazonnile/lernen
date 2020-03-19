@@ -21,7 +21,7 @@
     on:click={openMenu}
   ><Icon name="menu" /></button>
 
-  {#if $user}
+  {#if $user.userId}
     <button
       class="header--button header--nav"
       on:click={() => view.stat()}

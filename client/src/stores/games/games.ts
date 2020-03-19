@@ -27,7 +27,7 @@ type GamesInterface = {
 
 const store = createStore<GamesInterface, typeof storeViews>({
     learn: {
-      buttonText: 'учить',
+      buttonText: 'учить слова',
       categories: {
         selected: [],
         nullCategory: false

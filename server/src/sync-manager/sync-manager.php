@@ -23,7 +23,7 @@
     }
 
     private function getPayloadValue($key) {
-      return $this->payload['data'][$key] ?? null;
+      return $this->payload['data']['setup'][$key] ?? null;
     }
 
     private function getSetupPayloadValue($key) {
@@ -35,7 +35,7 @@
         $this->query->update('users', [
           'userId' => $this->userId,
           'voice' => $this->getSetupPayloadValue('voice'),
-          'voiceSpeed' => max(15, min(5, intval($this->getPayloadValue('voiceSpeed')))),
+          'voiceSpeed' => min(15, max(5, intval($this->getPayloadValue('voiceSpeed')))),
           'phrases' => $this->getSetupPayloadValue('phrases'),
           'soundPhrases' => $this->getSetupPayloadValue('soundPhrases'),
           'other' => $this->getSetupPayloadValue('other'),

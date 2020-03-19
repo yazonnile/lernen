@@ -190,6 +190,7 @@
       }
 
       // get user setup
+      $this->user->setupById($this->user->getId());
       $this->updateState('user', $this->user->getState());
     }
 

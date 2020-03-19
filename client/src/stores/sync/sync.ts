@@ -59,8 +59,9 @@ const storeViews = {
   },
 
   syncRequired(this: SyncStore): boolean {
-    const { words, categories } = this;
-    return !!(words.toCreate.length || words.toDelete.length || words.toUpdate.length
+    const { words, categories, setup } = this;
+    return !!(setup
+      || words.toCreate.length || words.toDelete.length || words.toUpdate.length
       || categories.toCreate.length || categories.toDelete.length || categories.toUpdate.length);
   },
 

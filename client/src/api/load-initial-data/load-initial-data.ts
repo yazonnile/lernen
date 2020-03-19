@@ -18,8 +18,18 @@ export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => 
     sync.set(initialData.sync);
     words.set(initialData.words || {});
     categories.set(initialData.categories || {});
-    view.set(initialData.view || view.home());
-    user.set(initialData.user || null);
+
+    if (initialData.view) {
+      view.set(initialData.view);
+    } else {
+      view.home();
+    }
+
+    if (initialData.user) {
+      user.set(initialData.user);
+    } else {
+      user.resetSetup();
+    }
   }
 
   request({

@@ -1,21 +1,11 @@
 <script>
   export let menuActive;
 
-  import request from 'lib/request/request';
-  import { user, view, words, categories } from 'stores';
+  import { view } from 'stores';
   import { fly, fade } from 'svelte/transition';
 
   const hideMenu = () => {
     menuActive = false;
-  };
-
-  const onLogout = () => {
-    hideMenu();
-    request({ api: 'logoutUser' }).then(() => {
-      $user = null;
-      $categories = {};
-      $words = {};
-    });
   };
 
   const onMenu = (viewId) => {
@@ -36,10 +26,7 @@
       <button on:click={() => onMenu('sync')}>синхронизация</button>
       <button disabled on:click={() => onMenu('categories')}>категории</button>
     </div>
-
-    {#if $user}
-      <button on:click={onLogout}>выйти</button>
-    {/if}
+<!--    <span>bottom info</span>-->
   </div>
   <i class="menu--overlay" on:click={hideMenu} transition:fade></i>
 </div>

@@ -74,7 +74,7 @@
       <SetupBox title="артикли">
         <FormSwitcher type="toggle" bind:checked={setup.articles}>показывать</FormSwitcher>
         <Slide active={setup.voice}>
-          <FormSwitcher type="toggle" bind:checked={setup.soundNouns}>озвучивать</FormSwitcher>
+          <FormSwitcher type="toggle" bind:checked={setup.soundArticles}>озвучивать</FormSwitcher>
         </Slide>
       </SetupBox>
 

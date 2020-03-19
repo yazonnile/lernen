@@ -1,26 +1,19 @@
 <script>
+  import Button from 'sdk/button/button.svelte';
   import { games, view } from 'stores';
 </script>
 
 <div class="home">
   {#each Object.keys($games) as gameId (gameId)}
-    <button class="game" on:click={() => view.preGame({ gameId })}>
-      {$games[gameId].buttonText}
-    </button>
+    <Button
+      text={$games[gameId].buttonText}
+      on:click={() => view.preGame({ gameId })}
+    />
   {/each}
 </div>
 
 <style>
-  .game {
-    background: var(--mainColorLight);
-    box-shadow: 0 0 2px #000;
-    font-size: 19px;
-    letter-spacing: 1px;
-    line-height: 27px;
-    border-radius: 5px;
+  .home > :global(.button)  {
     margin-top: 10px;
-    padding: 20px;
-    text-transform: uppercase;
-    width: 100%;
   }
 </style>
