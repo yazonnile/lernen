@@ -24,6 +24,22 @@
   const onVoiceTest = () => {
     play(['Wie heißen Sie?'], setup.voiceSpeed);
   };
+
+  const incVoiceSpeed = () => {
+    if (setup.voiceSpeed === 15) {
+      return;
+    }
+
+    setup.voiceSpeed += .5;
+  };
+
+  const decVoiceSpeed = () => {
+    if (setup.voiceSpeed === 5) {
+      return;
+    }
+
+    setup.voiceSpeed -= .5;
+  };
 </script>
 
 <div class="setup">
@@ -34,24 +50,12 @@
   <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить голос</FormSwitcher>
   <Slide active={setup.voice}>
     <Button text="проверить звук" on:click={() => onVoiceTest()} />
-    <SetupBox title="скорость" flex>
+    <SetupBox title="скорость голоса" flex>
       <div class="range">
-        <input type="range" bind:value={setup.voiceSpeed} min="5" max="15" step=".5" list="tickmarks" />
-        <datalist id="tickmarks">
-          <option value="5" label="50%">
-          <option value="6">
-          <option value="7">
-          <option value="8">
-          <option value="9">
-          <option value="10" label="100%">
-          <option value="11">
-          <option value="12">
-          <option value="13">
-          <option value="14">
-          <option value="15" label="150%">
-        </datalist>
+        <Button text="-5%" on:click={decVoiceSpeed} />
+        <h2>{setup.voiceSpeed*10}%</h2>
+        <Button text="+5%" on:click={incVoiceSpeed} />
       </div>
-
     </SetupBox>
   </Slide>
 
@@ -127,21 +131,19 @@
   }
 
   .range {
+    display: flex;
+    align-items: center;
     margin-right: 10px;
-    padding: 20px 0 0;
     position: relative;
   }
 
-  .range datalist {
-    display: flex;
-    justify-content: space-between;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
+  .range :global(.button) {
+    font-size: 15px;
+    margin: 0;
   }
 
-  .range input {
-    width: 100%;
+  .range h2 {
+    min-width: 100px;
+    text-align: center;
   }
 </style>
