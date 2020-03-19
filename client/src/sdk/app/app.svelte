@@ -66,7 +66,7 @@
   .main {
     display: flex;
     flex: 1;
-    padding: 10px;
+    padding: 20px 10px 10px;
     order: 1;
   }
 

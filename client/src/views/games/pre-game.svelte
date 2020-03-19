@@ -57,6 +57,6 @@
 
 <style>
   .pre-game :global(.button) {
-    margin-top: 10px;
+    margin-bottom: 10px;
   }
 </style>
