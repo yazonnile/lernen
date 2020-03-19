@@ -40,17 +40,19 @@
   {#if categoriesList.length}
     <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
 
-    {#each categoriesList as { categoryName, categoryId } (categoryId)}
-      <Category {categoryName}>
-        <input type="checkbox" bind:group={selectedCategories} value={categoryId} />
-      </Category>
-    {/each}
+    <div class="categories">
+      {#each categoriesList as { categoryName, categoryId } (categoryId)}
+        <Category {categoryName}>
+          <input type="checkbox" bind:group={selectedCategories} value={categoryId} />
+        </Category>
+      {/each}
 
-    <Fly active={selectedCategories.length}>
-      <Category categoryName="без категории">
-        <input type="checkbox" bind:checked={nullCategory} />
-      </Category>
-    </Fly>
+      <Fly active={selectedCategories.length}>
+        <Category categoryName="без категории">
+          <input type="checkbox" bind:checked={nullCategory} />
+        </Category>
+      </Fly>
+    </div>
   {/if}
   <Button text="играть" on:click={onReady} />
 </div>
@@ -58,5 +60,9 @@
 <style>
   .pre-game :global(.button) {
     margin-bottom: 10px;
+  }
+
+  .categories {
+    margin-bottom: 20px;
   }
 </style>

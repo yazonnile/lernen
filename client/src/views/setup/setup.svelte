@@ -127,6 +127,7 @@
   }
 
   .range {
+    margin-right: 10px;
     padding: 20px 0 0;
     position: relative;
   }
