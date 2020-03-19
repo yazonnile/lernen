@@ -10,6 +10,16 @@ const storeMethods = {
     const categoryId = syncManager.syncCategory(category.categoryId);
     this[categoryId] = { ...category, categoryId };
   },
+
+  updateCategoriesIds(this: CategoriesStore, categoriesMap: { [key: number]: number }) {
+    const oldIds = Object.keys(categoriesMap);
+    for (let i = 0; i < oldIds.length; i++) {
+      const oldId = oldIds[i];
+      const newId = categoriesMap[oldId];
+      this[newId] = { ...this[oldId], categoryId: newId };
+      delete this[oldId];
+    }
+  }
 };
 
 const storeViews = {

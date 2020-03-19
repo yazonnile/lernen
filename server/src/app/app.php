@@ -179,6 +179,7 @@
         return;
       }
 
-      // validate data
+      $syncManager = new SyncManager($this->request->getState('payload'), $this->query, $this->user->getId());
+      $this->updateState('syncResult', $syncManager->getState());
     }
   }

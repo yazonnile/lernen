@@ -24,6 +24,10 @@
       categories: categoriesActive ? linkedCategories : []
     };
 
+    if (wordId) {
+      wordObject.wordId = wordId;
+    }
+
     // save word
     words.updateWord(wordObject);
 

@@ -17,15 +17,15 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* TODO: SYNC
+* auth not required + user to load data
 
 # TODO
+* intro animation
 * index.html is different for user and guest
 
 ## far-far away
 * categories page
 * stat page
 * fancy ui
-* intro animation
 * reverse game
 * spelling game

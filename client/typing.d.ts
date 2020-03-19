@@ -12,6 +12,7 @@ type User = {
 interface MessageOptions {
   status: string;
   text: string;
+  persistent?: boolean;
 }
 
 interface Message extends MessageOptions {
@@ -82,6 +83,18 @@ type ResponseData = {
   };
   categories: {
     [key: number]: Category;
+  };
+  syncResult: {
+    categoriesMap: {
+      [key: number]: number;
+    };
+    wordsMap: {
+      [key: number]: number;
+    };
+    notValidNewCategories: number[];
+    notValidUpdatedCategories: number[];
+    notValidNewWords: number[];
+    notValidUpdatedWords: number[];
   }
 };
 

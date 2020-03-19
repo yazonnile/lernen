@@ -45,6 +45,12 @@ const storeMethods = {
       this[type].toDelete.push(id);
     }
   },
+
+  reset() {
+    return {
+      words: { toCreate: [], toDelete: [], toUpdate: [] }, categories: { toCreate: [], toDelete: [], toUpdate: [] }, setup: false
+    };
+  }
 };
 
 const storeViews = {

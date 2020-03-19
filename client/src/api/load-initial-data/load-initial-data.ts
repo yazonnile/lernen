@@ -1,5 +1,5 @@
 import request from 'lib/request/request';
-import { words, categories, sync, storage } from 'stores';
+import { words, categories, sync, storage, user } from 'stores';
 
 export const loadInitialData = (callback?) => {
   request({ api: 'getInitialData' }).then(response => {
@@ -17,8 +17,12 @@ export const loadInitialData = (callback?) => {
       const initialData = JSON.parse(localStorage.getItem('lernen-storage'));
       if (initialData) {
         sync.set(initialData.sync);
-        Object.assign(wordsToStore, initialData.words);
-        Object.assign(categoriesToStore, initialData.categories);
+        user.set(initialData.user);
+
+        if (sync.syncRequired() || !response) {
+          Object.assign(wordsToStore, initialData.words);
+          Object.assign(categoriesToStore, initialData.categories);
+        }
       }
     } catch (e) {}
 

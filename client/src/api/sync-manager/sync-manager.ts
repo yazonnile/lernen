@@ -22,9 +22,12 @@ class SyncManager {
   }
 
   private sync(id: number, type: SyncTypes) {
-    if (id && !syncStore.isNew(id, type)) {
-      // update in case of existing is and its NOT new
-      syncStore.update(id, type);
+    if (id) {
+      // update in case of existing
+      if (!syncStore.isNew(id, type)) {
+        syncStore.update(id, type);
+      }
+
       return id;
     }
 

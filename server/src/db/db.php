@@ -36,6 +36,10 @@
     }
 
     public function update($table, $data) {
+      if (!$data) {
+        return;
+      }
+
       return $this->insertOnDuplicateKeyUpdate($table, $data);
     }
 

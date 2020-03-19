@@ -20,7 +20,7 @@ const storeViews = {
 };
 
 const store = createStore<User, typeof storeMethods, typeof storeViews>(
-  getInitialState().user || null, null, storeViews
+  getInitialState().user || null, storeMethods, storeViews
 );
 
 export default store;

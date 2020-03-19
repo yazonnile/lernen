@@ -26,6 +26,29 @@ const storeMethods = {
   updateWord(this: WordsStore, word: Word) {
     const wordId = syncManager.syncWord(word.wordId);
     this[wordId] = { ...word, wordId };
+  },
+  updateWordsCategories(this: WordsStore, categoriesMap: { [key: number]: number }) {
+    const words = Object.values(this);
+    const oldCategoriesIds = Object.keys(categoriesMap).map(Number);
+
+    for (let i = 0; i < words.length; i++) {
+      const wordCategories = words[i].categories;
+      for (let j = 0; j < oldCategoriesIds.length; j++) {
+        const oldIndex = wordCategories.indexOf(oldCategoriesIds[j]);
+        if (oldIndex > -1) {
+          this[words[i].wordId].categories.splice(oldIndex, 1, categoriesMap[oldCategoriesIds[j]]);
+        }
+      }
+    }
+  },
+  updateWordsIds(this: WordsStore, wordsMap: { [key: number]: number }) {
+    const oldIds = Object.keys(wordsMap);
+    for (let i = 0; i < oldIds.length; i++) {
+      const oldId = oldIds[i];
+      const newId = wordsMap[oldId];
+      this[newId] = { ...this[oldId], wordId: newId };
+      delete this[oldId];
+    }
   }
 };
 
