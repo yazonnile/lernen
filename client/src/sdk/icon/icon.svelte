@@ -8,6 +8,7 @@
   import EditIcon from './files/edit.svelte';
   import MenuIcon from './files/menu.svelte';
   import PlusIcon from './files/plus.svelte';
+  import ProfileIcon from './files/profile.svelte';
   import TurnOffIcon from './files/turn-off.svelte';
   import TurnOnIcon from './files/turn-on.svelte';
 
@@ -20,6 +21,7 @@
       case 'edit': return EditIcon;
       case 'menu': return MenuIcon;
       case 'plus': return PlusIcon;
+      case 'profile': return ProfileIcon;
       case 'turn-off': return TurnOffIcon;
       case 'turn-on': return TurnOnIcon;
     }

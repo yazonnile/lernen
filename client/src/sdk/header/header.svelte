@@ -1,20 +1,16 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
   import Menu from 'sdk/menu/menu.svelte';
-  import { view } from 'stores';
+  import { view, user } from 'stores';
 
   let menuActive = false;
   const openMenu = () => {
     menuActive = true;
   };
-
-  const logoClick = () => {
-    view.home();
-  };
 </script>
 
 <header class="header">
-  <a class="logo" href="/" on:click|preventDefault={logoClick}>
+  <a class="logo" href="/" on:click|preventDefault={() => view.home()}>
     <span class="black">le</span>
     <span class="red">rn</span>
     <span class="yellow">en</span>
@@ -22,8 +18,15 @@
 
   <button
     class="header--button header--menu"
-    on:click="{openMenu}"
+    on:click={openMenu}
   ><Icon name="menu" /></button>
+
+  {#if $user}
+    <button
+      class="header--button header--nav"
+      on:click={() => view.stat()}
+    ><Icon name="profile" /></button>
+  {/if}
 
   {#if menuActive}
     <Menu bind:menuActive />
@@ -64,6 +67,10 @@
 
   .header--menu {
     right: 0;
+  }
+
+  .header--nav {
+    left: 0;
   }
 
   .logo span {

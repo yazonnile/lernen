@@ -35,10 +35,11 @@
       <button on:click={() => onMenu('dict')}>словарь</button>
       <button on:click={() => onMenu('sync')}>синхронизация</button>
       <button disabled on:click={() => onMenu('categories')}>категории</button>
-      <button disabled on:click={() => onMenu('stat')}>статистика</button>
     </div>
 
-    <button on:click={onLogout}>выйти</button>
+    {#if $user}
+      <button on:click={onLogout}>выйти</button>
+    {/if}
   </div>
   <i class="menu--overlay" on:click={hideMenu} transition:fade></i>
 </div>
