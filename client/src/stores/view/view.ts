@@ -47,9 +47,16 @@ const storeMethods = {
   }),
 };
 
-const store = createStore<View, typeof storeMethods>(
-  getInitialState().user ? storeMethods.sync() : storeMethods.auth(),
-  storeMethods
+const storeViews = {
+  isSyncView(this: View) {
+    return this.viewId === Views.sync;
+  }
+};
+
+const store = createStore<View, typeof storeMethods, typeof storeViews>(
+  storeMethods.home(),
+  storeMethods,
+  storeViews
 );
 
 export default store;

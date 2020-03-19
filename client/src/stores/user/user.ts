@@ -1,5 +1,4 @@
 import syncManager from 'api/sync-manager/sync-manager';
-import { getInitialState } from 'api/get-initial-state/get-initial-state';
 import createStore from 'lib/create-store/create-store';
 
 const storeMethods = {
@@ -20,7 +19,7 @@ const storeViews = {
 };
 
 const store = createStore<User, typeof storeMethods, typeof storeViews>(
-  getInitialState().user || null, storeMethods, storeViews
+  null, storeMethods, storeViews
 );
 
 export default store;

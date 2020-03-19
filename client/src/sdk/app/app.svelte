@@ -5,7 +5,6 @@
   import Header from 'sdk/header/header.svelte';
   import { onMount } from 'svelte';
 
-  import Auth from 'views/auth/auth.svelte';
   import Categories from 'views/categories/categories.svelte';
   import Dict from 'views/dict/dict.svelte';
   import PreGame from 'views/games/pre-game.svelte';
@@ -17,7 +16,7 @@
   import AddWord from 'views/words/add-word.svelte';
   import EditWord from 'views/words/edit-word.svelte';
 
-  import { view, user } from 'stores';
+  import { view } from 'stores';
   import { Views } from 'stores/view/view';
 
   onMount(() => {
@@ -43,7 +42,7 @@
   };
 
   let activeComponent;
-  $: activeComponent = !$user ? Auth : getActiveComponent($view.viewId);
+  $: activeComponent = getActiveComponent($view.viewId);
 </script>
 
 <div class="app">

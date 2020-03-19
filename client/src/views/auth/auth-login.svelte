@@ -3,17 +3,12 @@
   import Button from 'sdk/button/button.svelte';
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
   import createValidation from 'lib/validation/validation'
-  import request from 'lib/request/request';
   import { loadInitialData } from 'api/load-initial-data/load-initial-data';
-  import { user, view } from 'stores';
 
   const callback = (values) => {
-    request({ api: 'loginUser', payload: values }).then(response => {
-      if (response) {
-        loadInitialData(() => {
-          view.home();
-          $user = response.user;
-        });
+    loadInitialData({
+      payload: {
+        login: values
       }
     });
   };

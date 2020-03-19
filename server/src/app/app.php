@@ -22,10 +22,6 @@
       $this->user = new User($this->config);
 
       if ($this->request->isGet()) {
-        if ($this->user->isLoggedIn()) {
-          $this->updateState('user', $this->user->getState());
-        }
-
         $this->updateState('validationRules', Validation::collectRules());
         echo preg_replace([
           '/{{% HOST %}}/',
@@ -39,7 +35,7 @@
 
       $apiId = $this->decode('api');
       if (!method_exists($this, $apiId)) {
-        $this->exitWithError('actionDoesntExist.error', [$apiId]);
+        $this->exitWithErrorMessage('actionDoesntExist.error', [$apiId]);
         return;
       }
 
@@ -57,12 +53,18 @@
       $errors = Validation::validateData($data, $scheme);
 
       if (count($errors)) {
-        $this->exitWithError('validation.error', $errors);
+        $this->exitWithErrorMessage('validation.error', $errors);
       }
     }
 
-    private function exitWithError($error, $errorData = []) {
+    private function exitWithErrorMessage($error, $errorData = []) {
       $this->response->addErrorMessage($error, $errorData);
+      $this->result();
+      exit();
+    }
+
+    private function exitWithError($errorData = []) {
+      $this->response->addError($errorData);
       $this->result();
       exit();
     }
@@ -71,7 +73,7 @@
       try {
         return json_decode($_POST[$key], true);
       } catch (\Exception $e) {
-        $this->exitWithError('parse.error', $e->getMessage());
+        $this->exitWithErrorMessage('parse.error', $e->getMessage());
       }
 
       return [];
@@ -88,7 +90,7 @@
 
     private function registerUser() {
       if ($this->user->isLoggedIn()) {
-        $this->exitWithError('access');
+        $this->exitWithErrorMessage('access');
         return;
       }
 
@@ -101,7 +103,7 @@
       $password = $this->request->getState('payload.password');
 
       if ($this->query->isLoginAlreadyExists($login)) {
-        $this->exitWithError('registration.userAlreadyExist.error');
+        $this->exitWithErrorMessage('registration.userAlreadyExist.error');
       } else {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $this->query->registerUser($login, $passwordHash);
@@ -112,28 +114,23 @@
     }
 
     private function loginUser() {
-      if ($this->user->isLoggedIn()) {
-        $this->exitWithError('access');
-        return;
-      }
-
       $this->validateData(
-        $this->request->getState('payload'),
+        $this->request->getState('payload.login'),
         ['login', 'password']
       );
 
-      $login = $this->request->getState('payload.login');
-      $password = $this->request->getState('payload.password');
+      $login = $this->request->getState('payload.login.login');
+      $password = $this->request->getState('payload.login.password');
 
       $userByLogin = $this->query->getUserByLogin($login);
 
       if (!$userByLogin) {
-        $this->exitWithError('noSuchUser.error');
+        $this->exitWithErrorMessage('noSuchUser.error');
         return;
       }
 
       if (!password_verify($password, $userByLogin['password'])) {
-        $this->exitWithError('login.error');
+        $this->exitWithErrorMessage('login.error');
         return;
       }
 
@@ -148,7 +145,7 @@
 
     private function logoutUser() {
       if (!$this->user->isLoggedIn()) {
-        $this->exitWithError('access');
+        $this->exitWithErrorMessage('access');
         return;
       }
 
@@ -156,27 +153,52 @@
     }
 
     private function getInitialData() {
+      if (!$this->user->isLoggedIn()) {
+        if ($this->request->getState('payload.login')) {
+          $this->loginUser();
+        }
+      }
+
+      if (!$this->user->isLoggedIn()) {
+        $this->exitWithError();
+        return;
+      }
+
+      $this->syncData(false);
       $userId = $this->user->getId();
 
       // get words
-      $this->updateState('words', array_reduce($this->query->getWordsByUserId($userId), function($carry, $word) {
+      $initialWords = array_reduce($this->query->getWordsByUserId($userId), function($carry, $word) {
         $carry[$word['wordId']] = array_merge($word, [
           'categories' => is_null($word['categories']) ? [] : explode(',', $word['categories'])
         ]);
         return $carry;
-      }, []));
+      }, []);
+
+      if (count($initialWords)) {
+        $this->updateState('words', $initialWords);
+      }
 
       // get categories
-      $this->updateState('categories', array_reduce($this->query->getCategoriesByUserId($userId), function($carry, $row) {
+      $initialCategories = array_reduce($this->query->getCategoriesByUserId($userId), function($carry, $row) {
         $carry[$row['categoryId']] = $row;
         return $carry;
-      }, []));
+      }, []);
+
+      if (count($initialCategories)) {
+        $this->updateState('categories', $initialCategories);
+      }
+
+      // get user setup
+      $this->updateState('user', $this->user->getState());
     }
 
-    private function syncData() {
-      if (!$this->user->isLoggedIn()) {
-        $this->exitWithError('access');
-        return;
+    private function syncData($originalRequest = true) {
+      if ($originalRequest) {
+        if (!$this->user->isLoggedIn()) {
+          $this->exitWithErrorMessage('access');
+          return;
+        }
       }
 
       $syncManager = new SyncManager($this->request->getState('payload'), $this->query, $this->user->getId());

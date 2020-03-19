@@ -2,7 +2,7 @@
   export let menuActive;
 
   import request from 'lib/request/request';
-  import { user, view, storage } from 'stores';
+  import { user, view, words, categories } from 'stores';
   import { fly, fade } from 'svelte/transition';
 
   const hideMenu = () => {
@@ -13,7 +13,8 @@
     hideMenu();
     request({ api: 'logoutUser' }).then(() => {
       $user = null;
-      $storage = null;
+      $categories = {};
+      $words = {};
     });
   };
 

@@ -21,7 +21,6 @@ interface Message extends MessageOptions {
 
 type InitialData = {
   validationRules?: { [key: string]: object; };
-  user?: User | null;
 };
 
 type Category = {

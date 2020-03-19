@@ -1,7 +1,7 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
   import Menu from 'sdk/menu/menu.svelte';
-  import { user, view } from 'stores';
+  import { view } from 'stores';
 
   let menuActive = false;
   const openMenu = () => {
@@ -19,17 +19,11 @@
     <span class="red">rn</span>
     <span class="yellow">en</span>
   </a>
-  {#if $user}
-    <button
-      class="header--button header--menu"
-      on:click="{openMenu}"
-    ><Icon name="menu" /></button>
-  {/if}
 
-<!--  <button-->
-<!--    class="header&#45;&#45;button header&#45;&#45;nav"-->
-<!--    on:click="{openMenu}"-->
-<!--  ><Icon name="menu" /></button>-->
+  <button
+    class="header--button header--menu"
+    on:click="{openMenu}"
+  ><Icon name="menu" /></button>
 
   {#if menuActive}
     <Menu bind:menuActive />
@@ -71,10 +65,6 @@
   .header--menu {
     right: 0;
   }
-
-  /*.header--nav {*/
-  /*  left: 0;*/
-  /*}*/
 
   .logo span {
     display: block;

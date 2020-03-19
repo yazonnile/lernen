@@ -31,7 +31,7 @@
     }
 
     private function syncSetup() {
-      if ($this->payload['setup']) {
+      if ($this->payload['setup'] ?? null) {
         $this->query->update('users', [
           'userId' => $this->userId,
           'voice' => $this->getSetupPayloadValue('voice'),
@@ -197,27 +197,29 @@
 
         $this->query->deleteWordToCategories($validWordsIds, $this->userId);
 
-        $categoriesToAssign = array_map(function($category) {
-          return $category['categoryId'];
-        }, $this->query->categoriesExistByIds($categoriesToAssign, $this->userId));
+        if (count($categoriesToAssign)) {
+          $categoriesToAssign = array_map(function($category) {
+            return $category['categoryId'];
+          }, $this->query->categoriesExistByIds($categoriesToAssign, $this->userId));
 
-        $this->query->update(
-          'words_to_categories',
-          array_reduce($validWordsIds, function($carry, $oldWordId) use($wordsMap, $wordsData, $categoriesToAssign, $categoriesMap) {
-            $categories = $wordsData[$oldWordId]['categories'] ?? [];
-            foreach ($categories as $categoryId) {
-              $categoryId = $categoriesMap[$categoryId] ?? $categoryId;
-              if (in_array($categoryId, $categoriesToAssign)) {
-                $carry[] = [
-                  'wordId' => $wordsMap[$oldWordId],
-                  'categoryId' => $categoryId
-                ];
+          $this->query->update(
+            'words_to_categories',
+            array_reduce($validWordsIds, function($carry, $oldWordId) use($wordsMap, $wordsData, $categoriesToAssign, $categoriesMap) {
+              $categories = $wordsData[$oldWordId]['categories'] ?? [];
+              foreach ($categories as $categoryId) {
+                $categoryId = $categoriesMap[$categoryId] ?? $categoryId;
+                if (in_array($categoryId, $categoriesToAssign)) {
+                  $carry[] = [
+                    'wordId' => $wordsMap[$oldWordId],
+                    'categoryId' => $categoryId
+                  ];
+                }
               }
-            }
 
-            return $carry;
-          }, [])
-        );
+              return $carry;
+            }, [])
+          );
+        }
 
         if ($returnMap) {
           return $wordsMap;

@@ -1,53 +1,19 @@
 <script>
+  import Auth from 'views/auth/auth.svelte';
   import Button from 'sdk/button/button.svelte';
-  import syncManager from 'api/sync-manager/sync-manager';
-  import request from 'lib/request/request';
-  import { sync, categories, words, messages } from 'stores';
-
-  const toSync = () => {
-    request({ api: 'syncData', payload: syncManager.getDataToSync() }).then(response => {
-      if (response) {
-        const {
-          categoriesMap, wordsMap,
-          notValidNewCategories = [], notValidUpdatedCategories = [],
-          notValidNewWords = [], notValidUpdatedWords = []
-        } = response.syncResult;
-
-        // handle not valid data
-        if (notValidNewCategories.length) {
-          messages.addMessage({ text: 'notValidNewCategories.error' + notValidNewCategories.join(','), status: 'error', persistent: true });
-        }
-
-        if (notValidUpdatedCategories.length) {
-          messages.addMessage({ text: 'notValidUpdatedCategories.error' + notValidUpdatedCategories.join(','), status: 'error', persistent: true });
-        }
-
-        if (notValidNewWords.length) {
-          messages.addMessage({ text: 'notValidNewWords.error' + notValidNewWords.join(','), status: 'error', persistent: true });
-        }
-
-        if (notValidUpdatedWords.length) {
-          messages.addMessage({ text: 'notValidUpdatedWords.error' + notValidUpdatedWords.join(','), status: 'error', persistent: true });
-        }
-
-        // update stores with real categories ids
-        words.updateWordsCategories(categoriesMap);
-        categories.updateCategoriesIds(categoriesMap);
-
-        // update stores with real words ids
-        words.updateWordsIds(wordsMap);
-
-        sync.reset();
-      }
-    });
-  };
+  import { syncData } from 'api/sync-data/sync-data';
+  import { sync, user } from 'stores';
 
   const clearLocalData = () => {
     sync.reset();
   };
 </script>
 
-<div>
+<div class="sync">
+  {#if !$user}
+    <Auth />
+  {/if}
+
   <div class="row">
     <h1>Слова</h1>
     <pre>{JSON.stringify($sync.words, null, ' ')}</pre>
@@ -62,24 +28,28 @@
   </div>
 
   {#if $sync && sync.syncRequired()}
-    <div class="row">
+    {#if $user}
       <Button
-        on:click={toSync}
+        on:click={syncData}
         text="синхронизировать"
       />
-    </div>
-    <div class="row">
-      <Button
-        empty
-        on:click={clearLocalData}
-        text="стереть данные для синхронизации"
-      />
-    </div>
+    {/if}
+
+    <Button
+      empty
+      on:click={clearLocalData}
+      text="стереть данные для синхронизации"
+    />
   {/if}
 </div>
 
 <style>
-  .row {
+  .row,
+  .sync :global(.button) {
     margin-bottom: 20px;
+  }
+
+  .sync > :global(.button):last-child {
+    margin-bottom: 0;
   }
 </style>

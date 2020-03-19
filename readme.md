@@ -17,11 +17,9 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* auth not required + user to load data
+* intro animation
 
 # TODO
-* intro animation
-* index.html is different for user and guest
 
 ## far-far away
 * categories page

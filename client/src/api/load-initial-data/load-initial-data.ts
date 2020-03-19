@@ -1,41 +1,47 @@
+import { syncCallback } from 'api/sync-data/sync-data';
+import syncManager from 'api/sync-manager/sync-manager';
 import request from 'lib/request/request';
-import { words, categories, sync, storage, user } from 'stores';
+import { words, categories, sync, storage, user, view } from 'stores';
 
-export const loadInitialData = (callback?) => {
-  request({ api: 'getInitialData' }).then(response => {
-    const wordsToStore = {};
-    const categoriesToStore = {};
+interface LoadInitialData {
+  callback?();
+  payload?: object;
+}
 
-    // take loaded data
-    if (response) {
-      Object.assign(wordsToStore, response.words);
-      Object.assign(categoriesToStore, response.categories);
+export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => {
+  let initialData;
+  try {
+    initialData = JSON.parse(localStorage.getItem('lernen-storage'));
+  } catch (e) { }
+
+  if (initialData) {
+    sync.set(initialData.sync);
+    words.set(initialData.words || {});
+    categories.set(initialData.categories || {});
+    view.set(initialData.view || view.home());
+    user.set(initialData.user || null);
+  }
+
+  request({
+    api: 'getInitialData',
+    payload: {
+      ...syncManager.getDataToSync(),
+      ...payload
     }
-
-    // merge with storage data
-    try {
-      const initialData = JSON.parse(localStorage.getItem('lernen-storage'));
-      if (initialData) {
-        sync.set(initialData.sync);
-        user.set(initialData.user);
-
-        if (sync.syncRequired() || !response) {
-          Object.assign(wordsToStore, initialData.words);
-          Object.assign(categoriesToStore, initialData.categories);
-        }
-      }
-    } catch (e) {}
-
-    words.set(wordsToStore);
-    categories.set(categoriesToStore);
+  }).then((response: ResponseData) => {
+    syncCallback(response);
 
     if (response) {
-      callback && callback();
+      words.set(response.words || {});
+      categories.set(response.categories || {});
+      user.set(response.user);
     }
 
     // subscribe to storage change to sync storage with browser
     storage.subscribe($store => {
       localStorage.setItem('lernen-storage', JSON.stringify($store));
     });
+
+    callback && callback();
   });
 };

@@ -5,8 +5,12 @@
       $this->updateState('messages', []);
     }
 
+    public function addError($errorData) {
+      $this->updateState('error', $errorData);
+    }
+
     public function addErrorMessage($messageName, $errorData = null) {
-      $this->updateState('error', $errorData ?? $messageName);
+      $this->addError($errorData ?? $messageName);
       if (!count($this->getState('messages'))) {
         $this->addMessage($messageName);
       }
