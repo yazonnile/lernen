@@ -17,13 +17,12 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* intro animation
+* stat page
 
 # TODO
+* categories page
 
 ## far-far away
-* categories page
-* stat page
 * fancy ui
 * reverse game
 * spelling game

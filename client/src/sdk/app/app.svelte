@@ -2,8 +2,8 @@
   import 'api/get-initial-state/get-initial-state';
   import { loadInitialData } from 'api/load-initial-data/load-initial-data';
   import Messages from 'sdk/messages/messages.svelte';
+  import Intro from 'sdk/intro/intro.svelte';
   import Header from 'sdk/header/header.svelte';
-  import { onMount } from 'svelte';
 
   import Categories from 'views/categories/categories.svelte';
   import Dict from 'views/dict/dict.svelte';
@@ -15,16 +15,9 @@
   import Sync from 'views/sync/sync.svelte';
   import AddWord from 'views/words/add-word.svelte';
   import EditWord from 'views/words/edit-word.svelte';
-
   import { view } from 'stores';
   import { Views } from 'stores/view/view';
 
-  onMount(() => {
-    // load initial data if user exists
-    if ($user) {
-      loadInitialData();
-    }
-  });
 
   const getActiveComponent = (viewId) => {
     switch (viewId) {
@@ -43,17 +36,33 @@
 
   let activeComponent;
   $: activeComponent = getActiveComponent($view.viewId);
+
+  let introActive = true;
+  let introToHide = false;
+  let dataReady = false;
+
+  loadInitialData({
+    callback: () => {
+      dataReady = true
+    }
+  });
 </script>
 
 <div class="app">
-  <Header />
+  {#if introActive}
+    <Intro {dataReady} bind:introActive bind:introToHide />
+  {/if}
 
-  <div id="bottom-buttons" class="bottom-buttons"></div>
-  <main class="main">
-    <svelte:component this={activeComponent} />
-  </main>
+  {#if !introActive || introToHide}
+    <Header />
 
-  <Messages />
+    <div id="bottom-buttons" class="bottom-buttons"></div>
+    <main class="main">
+      <svelte:component this={activeComponent} />
+    </main>
+
+    <Messages />
+  {/if}
 </div>
 
 <style>
