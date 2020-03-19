@@ -2,15 +2,21 @@
   import BottomButtons from 'sdk/bottom-buttons/bottom-buttons.svelte';
   import Button from 'sdk/button/button.svelte';
   import request from 'lib/request/request';
+  import { syncData } from 'api/sync-data/sync-data';
   import { user, words, categories, sync } from 'stores';
 
   const onLogout = () => {
-    request({ api: 'logoutUser' }).then(() => {
-      user.resetSetup();
-      sync.reset();
-      $categories = {};
-      $words = {};
-    });
+    if (confirm('Точно выйти?')) {
+      // sync data then logout
+      syncData().then(() => {
+        request({ api: 'logoutUser' }).then(() => {
+          user.resetSetup();
+          sync.reset();
+          $categories = {};
+          $words = {};
+        });
+      });
+    }
   };
 </script>
 

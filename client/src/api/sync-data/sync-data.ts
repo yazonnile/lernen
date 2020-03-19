@@ -42,5 +42,5 @@ export const syncCallback = (response: ResponseData) => {
 };
 
 export const syncData = () => {
-  request({ api: 'syncData', payload: syncManager.getDataToSync() }).then(syncCallback);
+  return request({ api: 'syncData', payload: syncManager.getDataToSync() }).then(syncCallback);
 };
