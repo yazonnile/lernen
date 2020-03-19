@@ -11,6 +11,7 @@
   import ProfileIcon from './files/profile.svelte';
   import TurnOffIcon from './files/turn-off.svelte';
   import TurnOnIcon from './files/turn-on.svelte';
+  import UnChainIcon from './files/unchain.svelte';
 
   const getActiveIcon = (iconName) => {
     switch (iconName) {
@@ -24,6 +25,7 @@
       case 'profile': return ProfileIcon;
       case 'turn-off': return TurnOffIcon;
       case 'turn-on': return TurnOnIcon;
+      case 'unchain': return UnChainIcon;
     }
   };
 </script>

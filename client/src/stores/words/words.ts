@@ -41,6 +41,25 @@ const storeMethods = {
       }
     }
   },
+  deleteCategoryIdFromWords(this: WordsStore, categoryId: number) {
+    const wordIds = Object.keys(this).map(Number);
+    for (let i = 0; i < wordIds.length; i++) {
+      const wordCategories = this[wordIds[i]].categories;
+
+      if (wordCategories.includes(categoryId)) {
+        this[wordIds[i]].categories.splice(
+          wordCategories.indexOf(categoryId), 1
+        );
+      }
+    }
+  },
+  unChainWordWithCategoryId(this: WordsStore, wordId: number, categoryId: number) {
+    this[wordId].categories.splice(
+      this[wordId].categories.indexOf(categoryId), 1
+    );
+
+    syncManager.syncWord(wordId);
+  },
   updateWordsIds(this: WordsStore, wordsMap: { [key: number]: number }) {
     const oldIds = Object.keys(wordsMap);
     for (let i = 0; i < oldIds.length; i++) {
@@ -53,6 +72,11 @@ const storeMethods = {
 };
 
 const storeViews = {
+  getWordsByCategoryId(this: WordsStore, categoryId: number): number[] {
+    return Object.values(this).filter(word => {
+      return word.categories.includes(categoryId);
+    }).map(word => word.wordId)
+  },
   getWordsByCategoriesAndSetup(this: WordsStore, gameName: string): number[] {
     const { categoriesIds, nullCategory } = games.getGamesCategories(gameName);
     const setup = userStore.getSetup();

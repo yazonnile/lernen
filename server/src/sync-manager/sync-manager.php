@@ -63,7 +63,7 @@
       $categoriesData = $this->payload['data']['categories'] ?? [];
 
       if (count($categoriesToDelete)) {
-        $this->query->deleteWords($categoriesToDelete, $this->userId);
+        $this->query->deleteCategories($categoriesToDelete, $this->userId);
       }
 
       if (count($categoriesToUpdate)) {

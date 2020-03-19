@@ -6,6 +6,11 @@ interface CategoriesStore {
 }
 
 const storeMethods = {
+  deleteCategory(this: CategoriesStore, categoryId: number) {
+    syncManager.deleteCategory(categoryId);
+    delete this[categoryId];
+  },
+
   updateCategory(this: CategoriesStore, category: Category) {
     const categoryId = syncManager.syncCategory(category.categoryId);
     this[categoryId] = { ...category, categoryId };

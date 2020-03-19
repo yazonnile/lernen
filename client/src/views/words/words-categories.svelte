@@ -22,7 +22,7 @@
     newCategoryName = newCategoryName.toLowerCase();
     const existedCatyName = categories.find(c => c.categoryName === newCategoryName);
 
-    if (!existedCatyName) {
+    if (!existedCatyName && newCategoryName.length <= 100) {
       const newCat = { categoryName: newCategoryName };
       categoriesStore.updateCategory(newCat);
       linked = [...linked, categoriesStore.getCategoryIdByName(newCategoryName)];

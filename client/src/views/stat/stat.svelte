@@ -21,13 +21,8 @@
 </script>
 
 <div class="stat">
-  <h1>Статистика</h1>
-
-  <h2>Слов</h2>
-  <p>{Object.keys($words).length}</p>
-
-  <h2>Категорий</h2>
-  <p>{Object.keys($categories).length}</p>
+  <h2>Слов: {Object.keys($words).length}</h2>
+  <h2>Категорий: {Object.keys($categories).length}</h2>
 
   {#if $user.userId}
     <BottomButtons>
@@ -37,5 +32,7 @@
 </div>
 
 <style>
-
+  h2 {
+    margin-bottom: 10px;
+  }
 </style>

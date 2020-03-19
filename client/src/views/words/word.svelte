@@ -7,7 +7,7 @@
   import ButtonsRow from 'sdk/buttons-row/buttons-row.svelte';
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
   import createValidation from 'lib/validation/validation';
-  import Categories from './categories.svelte';
+  import Categories from './words-categories.svelte';
   import Slide from 'sdk/transition/slide.svelte';
   import { words, messages } from 'stores';
 

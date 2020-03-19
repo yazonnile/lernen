@@ -18,13 +18,13 @@
 
 <div class="menu">
   <div class="menu--wrap" transition:fly="{{ x: 200, opacity: 0, duration: 300 }}">
-    <div>
+    <div class="menu--frame">
       <button on:click={() => onMenu('home')}>Домой</button>
       <button on:click={() => onMenu('addWord')}>Добавить слово</button>
       <button on:click={() => onMenu('setup')}>Настройки</button>
       <button on:click={() => onMenu('dict')}>словарь</button>
       <button on:click={() => onMenu('sync')}>синхронизация</button>
-      <button disabled on:click={() => onMenu('categories')}>категории</button>
+      <button on:click={() => onMenu('categories')}>категории</button>
     </div>
 <!--    <span>bottom info</span>-->
   </div>
@@ -64,9 +64,16 @@
     z-index: 2;
   }
 
+  .menu--frame {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
   button {
     background: var(--mainColorLight);
     border: 0;
+    flex: 1;
     padding: 20px;
     text-transform: uppercase;
     width: 100%;
