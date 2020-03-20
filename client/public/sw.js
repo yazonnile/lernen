@@ -1,4 +1,4 @@
-const cacheName = 'app-lernen-' + 1584731079368;
+const cacheName = 'app-lernen-' + 1584732258744;
 const basePath =  '/lernen/client/public' ;
 const cacheEnum = {
     index: `${basePath}/`,
@@ -31,6 +31,7 @@ self.addEventListener('activate', (event) => {
 });
 // fetch
 self.addEventListener('fetch', (event) => {
+    console.log('sw >>> fetch success, ', event.request);
     event.respondWith(fetch(event.request).then((response) => {
         if (event.request.method.toUpperCase() === 'GET') {
             let responseClone = response.clone();
@@ -38,16 +39,20 @@ self.addEventListener('fetch', (event) => {
                 cache.put(event.request, responseClone);
             });
         }
+        console.log('sw >>> fetch return, ', event.request);
         return response;
     }).catch(() => {
         return caches.match(event.request).then((resp) => {
             if (resp) {
+                console.log('sw >>> fetch return cache, ', event.request);
                 return resp;
             }
             if (event.request.method.toUpperCase() === 'GET') {
+                console.log('sw >>> fetch return INDEX, ', event.request);
                 return caches.match(cacheEnum.index);
             }
             else {
+                console.log('sw >>> fetch return OFFLINE, ', event.request);
                 return new Response(JSON.stringify({
                     offline: {
                         status: 'error',

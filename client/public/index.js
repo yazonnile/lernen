@@ -4099,8 +4099,8 @@ class Dict_buttons extends SvelteComponent {
 
 function add_css$b() {
 	var style = element("style");
-	style.id = "svelte-1o1wzs2-style";
-	style.textContent = ".dict.svelte-1o1wzs2.svelte-1o1wzs2{position:relative;padding-bottom:76px}input.svelte-1o1wzs2.svelte-1o1wzs2{visibility:hidden;position:absolute}.alphabet.svelte-1o1wzs2.svelte-1o1wzs2{display:flex;flex-wrap:wrap;margin:0 -1px -1px 0}.alphabet.svelte-1o1wzs2>button.svelte-1o1wzs2{background:#b7d8f4;border:solid #fff;border-width:0 1px 1px 0;flex:0 0 20%;font-size:20px;line-height:25px;padding:5px 15px}.alphabet--letter.svelte-1o1wzs2.svelte-1o1wzs2{flex:1 0 100%;margin:5px 0}";
+	style.id = "svelte-1erskxp-style";
+	style.textContent = ".dict.svelte-1erskxp.svelte-1erskxp{position:relative;padding-bottom:76px}input.svelte-1erskxp.svelte-1erskxp{visibility:hidden;position:absolute}.alphabet.svelte-1erskxp.svelte-1erskxp{display:flex;flex-wrap:wrap;margin:0 -1px -1px 0}.alphabet.svelte-1erskxp>button.svelte-1erskxp{background:#b7d8f4;border:solid #fff;border-width:0 1px 1px 0;flex:0 0 20%;font-size:20px;line-height:25px;padding:5px 15px}.alphabet--letter.svelte-1erskxp.svelte-1erskxp{flex:1 0 100%;margin:5px 0}.alphabet--letter+button.svelte-1erskxp.svelte-1erskxp{background:#104b8a;color:#fff;position:relative}.alphabet--letter+button.svelte-1erskxp.svelte-1erskxp:after{bottom:100%;border-style:solid;border-width:0 10px 10px 10px;border-color:transparent transparent #104b8a transparent;content:'';position:absolute;left:calc(50% - 10px);width:0;height:0}";
 	append(document.head, style);
 }
 
@@ -4169,7 +4169,7 @@ function create_if_block_1$3(ctx) {
 
 			t = space();
 			if (if_block) if_block.c();
-			attr(div, "class", "alphabet svelte-1o1wzs2");
+			attr(div, "class", "alphabet svelte-1erskxp");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4310,7 +4310,7 @@ function create_each_block_2(key_1, ctx) {
 			button = element("button");
 			t = text(t_value);
 			button.disabled = button_disabled_value = !/*alphabetWordsByLetters*/ ctx[6][/*letter*/ ctx[26]];
-			attr(button, "class", "svelte-1o1wzs2");
+			attr(button, "class", "svelte-1erskxp");
 			this.first = button;
 		},
 		m(target, anchor) {
@@ -4352,7 +4352,7 @@ function create_if_block_2$1(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "alphabet--letter svelte-1o1wzs2");
+			attr(div, "class", "alphabet--letter svelte-1erskxp");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4432,7 +4432,7 @@ function create_each_block_1$1(key_1, ctx) {
 			input.__value = input_value_value = /*wordId*/ ctx[21];
 			input.value = input.__value;
 			attr(input, "id", input_id_value = `cat${/*wordId*/ ctx[21]}`);
-			attr(input, "class", "svelte-1o1wzs2");
+			attr(input, "class", "svelte-1erskxp");
 			/*$$binding_groups*/ ctx[17][0].push(input);
 			this.first = input;
 		},
@@ -4517,7 +4517,7 @@ function create_each_block$2(key_1, ctx) {
 			input.__value = input_value_value = /*wordId*/ ctx[21];
 			input.value = input.__value;
 			attr(input, "id", input_id_value = `cat${/*wordId*/ ctx[21]}`);
-			attr(input, "class", "svelte-1o1wzs2");
+			attr(input, "class", "svelte-1erskxp");
 			/*$$binding_groups*/ ctx[17][0].push(input);
 			this.first = input;
 		},
@@ -4642,7 +4642,7 @@ function create_fragment$c(ctx) {
 			if (if_block1) if_block1.c();
 			t2 = space();
 			create_component(dictbuttons.$$.fragment);
-			attr(div, "class", "dict svelte-1o1wzs2");
+			attr(div, "class", "dict svelte-1erskxp");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4937,7 +4937,7 @@ function instance$c($$self, $$props, $$invalidate) {
 class Dict extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-1o1wzs2-style")) add_css$b();
+		if (!document.getElementById("svelte-1erskxp-style")) add_css$b();
 		init(this, options, instance$c, create_fragment$c, safe_not_equal, {});
 	}
 }
@@ -11470,7 +11470,7 @@ function create_fragment$v(ctx) {
 			if (if_block4) if_block4.c();
 			t10 = space();
 			p = element("p");
-			p.textContent = `${1584731079368}`;
+			p.textContent = `${1584732258744}`;
 			attr(h20, "class", "svelte-1p9u3is");
 			attr(div0, "class", "box svelte-1p9u3is");
 			attr(h21, "class", "svelte-1p9u3is");

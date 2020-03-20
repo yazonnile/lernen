@@ -40,6 +40,7 @@ self.addEventListener('activate', (event: FetchEvent) => {
 
 // fetch
 self.addEventListener('fetch', (event: FetchEvent) => {
+  console.log('sw >>> fetch success, ', event.request);
   event.respondWith(
     fetch(event.request).then((response) => {
       if (event.request.method.toUpperCase() === 'GET') {
@@ -48,17 +49,20 @@ self.addEventListener('fetch', (event: FetchEvent) => {
           cache.put(event.request, responseClone);
         });
       }
-
+      console.log('sw >>> fetch return, ', event.request);
       return response;
     }).catch(() => {
       return caches.match(event.request).then((resp) => {
         if (resp) {
+          console.log('sw >>> fetch return cache, ', event.request);
           return resp;
         }
 
         if (event.request.method.toUpperCase() === 'GET') {
+          console.log('sw >>> fetch return INDEX, ', event.request);
           return caches.match(cacheEnum.index);
         } else {
+          console.log('sw >>> fetch return OFFLINE, ', event.request);
           return new Response(JSON.stringify({
             offline: {
               status: 'error',

@@ -140,4 +140,22 @@
     flex: 1 0 100%;
     margin: 5px 0;
   }
+
+  .alphabet--letter + button {
+    background: var(--mainColor);
+    color: #fff;
+    position: relative;
+  }
+
+  .alphabet--letter + button:after {
+    bottom: 100%;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    border-color: transparent transparent var(--mainColor) transparent;
+    content: '';
+    position: absolute;
+    left: calc(50% - 10px);
+    width: 0;
+    height: 0;
+  }
 </style>
