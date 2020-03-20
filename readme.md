@@ -17,10 +17,10 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* release?
+* require-context
 
 # TODO
-* require-context
+* release?
 * fancy ui
 
 ## far-far away
