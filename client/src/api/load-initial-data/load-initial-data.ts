@@ -1,7 +1,7 @@
 import { syncCallback } from 'api/sync-data/sync-data';
 import syncManager from 'api/sync-manager/sync-manager';
 import request from 'lib/request/request';
-import { words, categories, sync, storage, user, view } from 'stores';
+import { words, categories, sync, storage, user, view, games } from 'stores';
 
 interface LoadInitialData {
   callback?();
@@ -18,6 +18,10 @@ export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => 
     sync.set(initialData.sync);
     words.set(initialData.words || {});
     categories.set(initialData.categories || {});
+
+    if (initialData.games) {
+      games.set(initialData.games);
+    }
 
     if (initialData.view) {
       view.set(initialData.view);

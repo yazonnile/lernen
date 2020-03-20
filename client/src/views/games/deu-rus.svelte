@@ -2,9 +2,12 @@
   import Game from './game.svelte';
   import Verb from './verb.svelte';
   import Noun from './noun.svelte';
+
+  let activeWord;
+  let visible;
 </script>
 
-<Game let:activeWord let:visible>
+<Game let:activeWord let:visible gameName="deuRus">
   <div class="item">
     {#if activeWord.type === 'noun'}
       <Noun word={activeWord} />

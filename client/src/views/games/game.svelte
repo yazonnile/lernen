@@ -1,4 +1,6 @@
 <script>
+  export let gameName;
+
   import BottomButtons from 'sdk/bottom-buttons/bottom-buttons.svelte';
   import Button from 'sdk/button/button.svelte';
   import speech from 'lib/speech/speech';
@@ -8,7 +10,7 @@
 
   let visible = false;
   let activeIndex = 0;
-  let wordsIds = shuffle(wordsStore.getWordsByCategoriesAndSetup('rusDeu'));
+  let wordsIds = shuffle(wordsStore.getWordsByCategoriesAndSetup(gameName));
   let activeWord = 1;
   $: activeWord = $wordsStore[wordsIds[activeIndex]];
 
