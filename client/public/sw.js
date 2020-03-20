@@ -1,4 +1,4 @@
-const cacheName = 'app-lernen-' + 1584729939801;
+const cacheName = 'app-lernen-' + 1584730811104;
 const basePath =  '/lernen/client/public' ;
 const cacheEnum = {
     index: `${basePath}/`,
@@ -31,33 +31,33 @@ self.addEventListener('activate', (event) => {
 });
 // fetch
 self.addEventListener('fetch', (event) => {
-    event.respondWith(caches.match(event.request).then((resp) => {
-        if (resp) {
-            return resp;
-        }
-        return fetch(event.request).then((response) => {
-            if (event.request.method.toUpperCase() === 'GET') {
-                let responseClone = response.clone();
-                caches.open(cacheName).then((cache) => {
-                    cache.put(event.request, responseClone);
-                });
-            }
-            return response;
-        });
-    }).catch(() => {
+    event.respondWith(fetch(event.request).then((response) => {
         if (event.request.method.toUpperCase() === 'GET') {
-            return caches.match(cacheEnum.index);
-        }
-        else {
-            return new Response(JSON.stringify({
-                offline: {
-                    status: 'error',
-                    text: 'offline'
-                }
-            }), {
-                headers: { 'Content-Type': 'application/json' }
+            let responseClone = response.clone();
+            caches.open(cacheName).then((cache) => {
+                cache.put(event.request, responseClone);
             });
         }
+        return response;
+    }).catch(() => {
+        return caches.match(event.request).then((resp) => {
+            if (resp) {
+                return resp;
+            }
+            if (event.request.method.toUpperCase() === 'GET') {
+                return caches.match(cacheEnum.index);
+            }
+            else {
+                return new Response(JSON.stringify({
+                    offline: {
+                        status: 'error',
+                        text: 'offline'
+                    }
+                }), {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+        });
     }));
 });
 /*

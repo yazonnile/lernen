@@ -41,34 +41,34 @@ self.addEventListener('activate', (event: FetchEvent) => {
 // fetch
 self.addEventListener('fetch', (event: FetchEvent) => {
   event.respondWith(
-    caches.match(event.request).then((resp) => {
-      if (resp) {
-        return resp;
-      }
-
-      return fetch(event.request).then((response) => {
-        if (event.request.method.toUpperCase() === 'GET') {
-          let responseClone = response.clone();
-          caches.open(cacheName).then((cache: Cache) => {
-            cache.put(event.request, responseClone);
-          });
-        }
-
-        return response;
-      });
-    }).catch(() => {
+    fetch(event.request).then((response) => {
       if (event.request.method.toUpperCase() === 'GET') {
-        return caches.match(cacheEnum.index);
-      } else {
-        return new Response(JSON.stringify({
-          offline: {
-            status: 'error',
-            text: 'offline'
-          }
-        }), {
-          headers: {'Content-Type': 'application/json'}
+        let responseClone = response.clone();
+        caches.open(cacheName).then((cache: Cache) => {
+          cache.put(event.request, responseClone);
         });
       }
+
+      return response;
+    }).catch(() => {
+      return caches.match(event.request).then((resp) => {
+        if (resp) {
+          return resp;
+        }
+
+        if (event.request.method.toUpperCase() === 'GET') {
+          return caches.match(cacheEnum.index);
+        } else {
+          return new Response(JSON.stringify({
+            offline: {
+              status: 'error',
+              text: 'offline'
+            }
+          }), {
+            headers: {'Content-Type': 'application/json'}
+          });
+        }
+      })
     })
   );
 });
