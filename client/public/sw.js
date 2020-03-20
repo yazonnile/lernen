@@ -1,4 +1,4 @@
-const cacheName = 'app-lernen-' + 1584715314275;
+const cacheName = 'app-lernen-' + 1584715448661;
 const basePath =  '/lernen/client/public' ;
 const cacheEnum = {
     index: `${basePath}/`,
