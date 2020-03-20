@@ -17,6 +17,8 @@ self.addEventListener('install', (event: FetchEvent) => {
         cacheEnum.css,
         cacheEnum.js,
       ]);
+    }).catch(e => {
+      console.log('install', e);
     })
   );
 });
@@ -30,6 +32,8 @@ self.addEventListener('activate', (event: FetchEvent) => {
           return caches.delete(key);
         }
       }));
+    }).catch(e => {
+      console.log('activate', e);
     })
   );
 });

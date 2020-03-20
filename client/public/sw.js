@@ -1,4 +1,4 @@
-const cacheName = 'app-lernen-' + 1584714620447;
+const cacheName = 'app-lernen-' + 1584715314275;
 const basePath =  '/lernen/client/public' ;
 const cacheEnum = {
     index: `${basePath}/`,
@@ -13,6 +13,8 @@ self.addEventListener('install', (event) => {
             cacheEnum.css,
             cacheEnum.js,
         ]);
+    }).catch(e => {
+        console.log('install', e);
     }));
 });
 // remove all except actual
@@ -23,6 +25,8 @@ self.addEventListener('activate', (event) => {
                 return caches.delete(key);
             }
         }));
+    }).catch(e => {
+        console.log('activate', e);
     }));
 });
 // fetch
