@@ -41,7 +41,7 @@ self.addEventListener('activate', (event: FetchEvent) => {
 // fetch
 self.addEventListener('fetch', (event: FetchEvent) => {
   event.respondWith(
-    fetch(event.request).then((response) => {
+    fetch(event.request + '?' + process.env.VERSION).then((response) => {
       if (event.request.method.toUpperCase() === 'GET') {
         let responseClone = response.clone();
         return caches.open(cacheName).then((cache: Cache) => {
