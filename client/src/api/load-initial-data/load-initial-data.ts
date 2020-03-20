@@ -1,4 +1,4 @@
-import { syncCallback } from 'api/sync-data/sync-data';
+import { syncCallback, syncData } from 'api/sync-data/sync-data';
 import syncManager from 'api/sync-manager/sync-manager';
 import request from 'lib/request/request';
 import { words, categories, sync, storage, user, view, games } from 'stores';
@@ -36,6 +36,15 @@ export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => 
     }
   }
 
+  const requestLoadOrDie = () => {
+    // subscribe to storage change to sync storage with browser
+    storage.subscribe($store => {
+      localStorage.setItem('lernen-storage', JSON.stringify($store));
+    });
+
+    callback && callback();
+  };
+
   request({
     api: 'getInitialData',
     payload: {
@@ -50,12 +59,5 @@ export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => 
       categories.set(response.categories || {});
       user.set(response.user);
     }
-
-    // subscribe to storage change to sync storage with browser
-    storage.subscribe($store => {
-      localStorage.setItem('lernen-storage', JSON.stringify($store));
-    });
-
-    callback && callback();
-  });
+  }).then(requestLoadOrDie).catch(requestLoadOrDie);
 };

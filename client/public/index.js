@@ -1456,6 +1456,7 @@ const request = (options) => {
         }
     }).catch((e) => {
         busy = false;
+        return Promise.reject('request-error');
     });
 };
 
@@ -1486,9 +1487,23 @@ const syncCallback = (response) => {
         store$2.reset();
     }
 };
-const syncData = () => {
-    return request({ api: 'syncData', payload: syncManager.getDataToSync() }).then(syncCallback);
-};
+const syncData = (() => {
+    const f = () => {
+        return store$2.syncRequired()
+            ? request({ api: 'syncData', payload: syncManager.getDataToSync() })
+                .then(syncCallback)
+                .catch(() => { })
+            : Promise.resolve();
+    };
+    let syncTimer;
+    let refreshSyncTimer = () => {
+        clearTimeout(syncTimer);
+        syncTimer = setTimeout(f, 10000);
+    };
+    // sync data when sync store changes
+    store$2.subscribe(refreshSyncTimer);
+    return f;
+})();
 
 const loadInitialData = ({ callback, payload = {} }) => {
     let initialData;
@@ -1516,6 +1531,13 @@ const loadInitialData = ({ callback, payload = {} }) => {
             store$3.resetSetup();
         }
     }
+    const requestLoadOrDie = () => {
+        // subscribe to storage change to sync storage with browser
+        store$7.subscribe($store => {
+            localStorage.setItem('lernen-storage', JSON.stringify($store));
+        });
+        callback && callback();
+    };
     request({
         api: 'getInitialData',
         payload: Object.assign(Object.assign({}, syncManager.getDataToSync()), payload)
@@ -1526,12 +1548,7 @@ const loadInitialData = ({ callback, payload = {} }) => {
             store$5.set(response.categories || {});
             store$3.set(response.user);
         }
-        // subscribe to storage change to sync storage with browser
-        store$7.subscribe($store => {
-            localStorage.setItem('lernen-storage', JSON.stringify($store));
-        });
-        callback && callback();
-    });
+    }).then(requestLoadOrDie).catch(requestLoadOrDie);
 };
 
 var checkbox = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 26 20\">\n  <path d=\"M.3 11c-.2-.2-.3-.5-.3-.7s.1-.5.3-.7l1.4-1.4c.4-.4 1-.4 1.4 0l.1.1 5.5 5.9c.2.2.5.2.7 0L22.8.3h.1c.4-.4 1-.4 1.4 0l1.4 1.4c.4.4.4 1 0 1.4l-16 16.6c-.2.2-.4.3-.7.3a.9.9 0 0 1-.7-.3L.5 11.3.3 11z\" />\n</svg>";
@@ -10712,7 +10729,7 @@ function add_css$n() {
 }
 
 // (13:2) {#if !$user.userId}
-function create_if_block_2$2(ctx) {
+function create_if_block_3$1(ctx) {
 	let current;
 	const auth = new Auth({});
 
@@ -10742,46 +10759,39 @@ function create_if_block_2$2(ctx) {
 // (30:2) {#if $sync && sync.syncRequired()}
 function create_if_block$i(ctx) {
 	let t;
+	let if_block1_anchor;
 	let current;
-	let if_block = /*$user*/ ctx[0].userId && create_if_block_1$9();
-
-	const button = new Button({
-			props: {
-				empty: true,
-				text: "стереть данные для синхронизации"
-			}
-		});
-
-	button.$on("click", /*clearLocalData*/ ctx[2]);
+	let if_block0 = /*$user*/ ctx[0].userId && create_if_block_2$2();
+	let if_block1 = false ;
 
 	return {
 		c() {
-			if (if_block) if_block.c();
+			if (if_block0) if_block0.c();
 			t = space();
-			create_component(button.$$.fragment);
+			if_block1_anchor = empty();
 		},
 		m(target, anchor) {
-			if (if_block) if_block.m(target, anchor);
+			if (if_block0) if_block0.m(target, anchor);
 			insert(target, t, anchor);
-			mount_component(button, target, anchor);
+			insert(target, if_block1_anchor, anchor);
 			current = true;
 		},
 		p(ctx, dirty) {
 			if (/*$user*/ ctx[0].userId) {
-				if (if_block) {
-					if_block.p(ctx, dirty);
-					transition_in(if_block, 1);
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+					transition_in(if_block0, 1);
 				} else {
-					if_block = create_if_block_1$9();
-					if_block.c();
-					transition_in(if_block, 1);
-					if_block.m(t.parentNode, t);
+					if_block0 = create_if_block_2$2();
+					if_block0.c();
+					transition_in(if_block0, 1);
+					if_block0.m(t.parentNode, t);
 				}
-			} else if (if_block) {
+			} else if (if_block0) {
 				group_outros();
 
-				transition_out(if_block, 1, 1, () => {
-					if_block = null;
+				transition_out(if_block0, 1, 1, () => {
+					if_block0 = null;
 				});
 
 				check_outros();
@@ -10789,25 +10799,25 @@ function create_if_block$i(ctx) {
 		},
 		i(local) {
 			if (current) return;
-			transition_in(if_block);
-			transition_in(button.$$.fragment, local);
+			transition_in(if_block0);
+			transition_in(if_block1);
 			current = true;
 		},
 		o(local) {
-			transition_out(if_block);
-			transition_out(button.$$.fragment, local);
+			transition_out(if_block0);
+			transition_out(if_block1);
 			current = false;
 		},
 		d(detaching) {
-			if (if_block) if_block.d(detaching);
+			if (if_block0) if_block0.d(detaching);
 			if (detaching) detach(t);
-			destroy_component(button, detaching);
+			if (detaching) detach(if_block1_anchor);
 		}
 	};
 }
 
 // (31:4) {#if $user.userId}
-function create_if_block_1$9(ctx) {
+function create_if_block_2$2(ctx) {
 	let current;
 	const button = new Button({ props: { text: "синхронизировать" } });
 	button.$on("click", syncData);
@@ -10862,7 +10872,7 @@ function create_fragment$u(ctx) {
 	let t12;
 	let show_if = /*$sync*/ ctx[1] && store$2.syncRequired();
 	let current;
-	let if_block0 = !/*$user*/ ctx[0].userId && create_if_block_2$2();
+	let if_block0 = !/*$user*/ ctx[0].userId && create_if_block_3$1();
 	let if_block1 = show_if && create_if_block$i(ctx);
 
 	return {
@@ -10925,7 +10935,7 @@ function create_fragment$u(ctx) {
 		p(ctx, [dirty]) {
 			if (!/*$user*/ ctx[0].userId) {
 				if (!if_block0) {
-					if_block0 = create_if_block_2$2();
+					if_block0 = create_if_block_3$1();
 					if_block0.c();
 					transition_in(if_block0, 1);
 					if_block0.m(div3, t0);
@@ -11813,7 +11823,7 @@ function create_if_block$k(ctx) {
 }
 
 // (110:6) {#if $typeValue === 'noun'}
-function create_if_block_3$1(ctx) {
+function create_if_block_3$2(ctx) {
 	let current;
 
 	const buttonsrow = new Buttons_row({
@@ -12059,7 +12069,7 @@ function create_default_slot_13$1(ctx) {
 }
 
 // (132:6) {#if $typeValue === 'verb'}
-function create_if_block_1$a(ctx) {
+function create_if_block_1$9(ctx) {
 	let updating_checked;
 	let t0;
 	let t1;
@@ -12749,7 +12759,7 @@ function create_default_slot$b(ctx) {
 	let updating_active;
 	let t5;
 	let current;
-	let if_block0 = /*$typeValue*/ ctx[5] === "noun" && create_if_block_3$1(ctx);
+	let if_block0 = /*$typeValue*/ ctx[5] === "noun" && create_if_block_3$2(ctx);
 
 	const forminput0 = new Form_input({
 			props: {
@@ -12770,7 +12780,7 @@ function create_default_slot$b(ctx) {
 		});
 
 	let if_block1 = /*$typeValue*/ ctx[5] === "noun" && create_if_block_2$3(ctx);
-	let if_block2 = /*$typeValue*/ ctx[5] === "verb" && create_if_block_1$a(ctx);
+	let if_block2 = /*$typeValue*/ ctx[5] === "verb" && create_if_block_1$9(ctx);
 
 	function categories_linked_binding(value) {
 		/*categories_linked_binding*/ ctx[82].call(null, value);
@@ -12839,7 +12849,7 @@ function create_default_slot$b(ctx) {
 					if_block0.p(ctx, dirty);
 					transition_in(if_block0, 1);
 				} else {
-					if_block0 = create_if_block_3$1(ctx);
+					if_block0 = create_if_block_3$2(ctx);
 					if_block0.c();
 					transition_in(if_block0, 1);
 					if_block0.m(t0.parentNode, t0);
@@ -12895,7 +12905,7 @@ function create_default_slot$b(ctx) {
 					if_block2.p(ctx, dirty);
 					transition_in(if_block2, 1);
 				} else {
-					if_block2 = create_if_block_1$a(ctx);
+					if_block2 = create_if_block_1$9(ctx);
 					if_block2.c();
 					transition_in(if_block2, 1);
 					if_block2.m(t4.parentNode, t4);
@@ -13444,7 +13454,7 @@ function add_css$q() {
 }
 
 // (25:2) {#if introActive}
-function create_if_block_1$b(ctx) {
+function create_if_block_1$a(ctx) {
 	let updating_introActive;
 	let updating_introToHide;
 	let current;
@@ -13615,7 +13625,7 @@ function create_fragment$A(ctx) {
 	let div;
 	let t;
 	let current;
-	let if_block0 = /*introActive*/ ctx[1] && create_if_block_1$b(ctx);
+	let if_block0 = /*introActive*/ ctx[1] && create_if_block_1$a(ctx);
 	let if_block1 = (!/*introActive*/ ctx[1] || /*introToHide*/ ctx[2]) && create_if_block$l(ctx);
 
 	return {
@@ -13639,7 +13649,7 @@ function create_fragment$A(ctx) {
 					if_block0.p(ctx, dirty);
 					transition_in(if_block0, 1);
 				} else {
-					if_block0 = create_if_block_1$b(ctx);
+					if_block0 = create_if_block_1$a(ctx);
 					if_block0.c();
 					transition_in(if_block0, 1);
 					if_block0.m(div, t);

@@ -41,6 +41,24 @@ export const syncCallback = (response: ResponseData) => {
   }
 };
 
-export const syncData = () => {
-  return request({ api: 'syncData', payload: syncManager.getDataToSync() }).then(syncCallback);
-};
+export const syncData = (() => {
+  const f = () => {
+    return sync.syncRequired()
+      ? request({ api: 'syncData', payload: syncManager.getDataToSync() })
+        .then(syncCallback)
+        .catch(() => {})
+      : Promise.resolve();
+  };
+
+  let syncTimer;
+  let refreshSyncTimer = () => {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(f, 10000);
+  };
+
+  // sync data when sync store changes
+  sync.subscribe(refreshSyncTimer);
+
+  return f;
+})();
+

@@ -35,11 +35,13 @@
       />
     {/if}
 
-    <Button
-      empty
-      on:click={clearLocalData}
-      text="стереть данные для синхронизации"
-    />
+    {#if process.env.DEV}
+      <Button
+        empty
+        on:click={clearLocalData}
+        text="стереть данные для синхронизации"
+      />
+    {/if}
   {/if}
 </div>
 

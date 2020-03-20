@@ -65,6 +65,8 @@ const request: Request = (options) => {
     }
 
     busy = false;
+
+    return Promise.reject('request-error');
   });
 };
 

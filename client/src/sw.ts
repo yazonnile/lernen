@@ -1,13 +1,21 @@
-const cacheName = 'app-lernen-v8';
+const cacheName = 'app-lernen-' + process.env.VERSION;
+
+const basePath = !process.env.DEV ? '/lernen/client/public' : '';
+
+const cacheEnum = {
+  index: `${basePath}/`,
+  css: `${basePath}/index.css'`,
+  js: `${basePath}/index.js`,
+};
 
 // cache
 self.addEventListener('install', (event: FetchEvent) => {
   event.waitUntil(
     caches.open(cacheName).then((cache) => {
       return cache.addAll([
-        '/lernen/client/public/',
-        '/lernen/client/public/index.css',
-        '/lernen/client/public/index.js',
+        cacheEnum.index,
+        cacheEnum.css,
+        cacheEnum.js,
       ]);
     })
   );
@@ -46,7 +54,7 @@ self.addEventListener('fetch', (event: FetchEvent) => {
       });
     }).catch(() => {
       if (event.request.method.toUpperCase() === 'GET') {
-        return caches.match('/lernen/client/public/');
+        return caches.match(cacheEnum.index);
       } else {
         return new Response(JSON.stringify({
           offline: {

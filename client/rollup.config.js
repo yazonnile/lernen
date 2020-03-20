@@ -67,7 +67,8 @@ module.exports = {
     }),
 
     require('@rollup/plugin-replace')({
-      'process.env.DEV': JSON.stringify(!production)
+      'process.env.DEV': JSON.stringify(!production),
+      'process.env.VERSION': JSON.stringify(Date.now())
     }),
 
     require('rollup-plugin-postcss')({
