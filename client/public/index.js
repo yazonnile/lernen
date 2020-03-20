@@ -11434,6 +11434,8 @@ function create_fragment$v(ctx) {
 	let t8;
 	let t9;
 	let show_if = /*$sync*/ ctx[3] && store$2.syncRequired();
+	let t10;
+	let p;
 	let current;
 	const if_block_creators = [create_if_block_6, create_else_block$6];
 	const if_blocks = [];
@@ -11466,6 +11468,9 @@ function create_fragment$v(ctx) {
 			t8 = space();
 			t9 = space();
 			if (if_block4) if_block4.c();
+			t10 = space();
+			p = element("p");
+			p.textContent = `${1584731079368}`;
 			attr(h20, "class", "svelte-1p9u3is");
 			attr(div0, "class", "box svelte-1p9u3is");
 			attr(h21, "class", "svelte-1p9u3is");
@@ -11490,6 +11495,8 @@ function create_fragment$v(ctx) {
 			append(div2, t8);
 			append(div2, t9);
 			if (if_block4) if_block4.m(div2, null);
+			append(div2, t10);
+			append(div2, p);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -11529,7 +11536,7 @@ function create_fragment$v(ctx) {
 					if_block4 = create_if_block$i(ctx);
 					if_block4.c();
 					transition_in(if_block4, 1);
-					if_block4.m(div2, null);
+					if_block4.m(div2, t10);
 				}
 			} else if (if_block4) {
 				group_outros();

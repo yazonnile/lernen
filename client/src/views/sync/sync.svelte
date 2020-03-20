@@ -71,6 +71,8 @@
       />
     {/if}
   {/if}
+
+  <p>{process.env.VERSION}</p>
 </div>
 
 <style>
