@@ -38,38 +38,38 @@ self.addEventListener('activate', (event: FetchEvent) => {
   );
 });
 
+const getCache = event => {
+  return caches.match(event.request).then((resp) => {
+    if (resp) {
+      return resp;
+    }
+
+    if (event.request.method.toUpperCase() === 'GET') {
+      return caches.match(cacheEnum.index);
+    } else {
+      return new Response(JSON.stringify({
+        offline: {
+          status: 'error',
+          text: 'offline'
+        }
+      }), {
+        headers: {'Content-Type': 'application/json'}
+      });
+    }
+  });
+} ;
+
 // fetch
 self.addEventListener('fetch', (event: FetchEvent) => {
   event.respondWith(
     fetch(event.request).then((response) => {
-      if (event.request.method.toUpperCase() === 'GET') {
-        let responseClone = response.clone();
-        return caches.open(cacheName).then((cache: Cache) => {
-          cache.put(event.request, responseClone);
-          return response;
-        });
-      } else {
+      if (response) {
         return response;
+      } else {
+        return getCache(event.request);
       }
     }).catch(() => {
-      return caches.match(event.request).then((resp) => {
-        if (resp) {
-          return resp;
-        }
-
-        if (event.request.method.toUpperCase() === 'GET') {
-          return caches.match(cacheEnum.index);
-        } else {
-          return new Response(JSON.stringify({
-            offline: {
-              status: 'error',
-              text: 'offline'
-            }
-          }), {
-            headers: {'Content-Type': 'application/json'}
-          });
-        }
-      })
+      return getCache(event.request);
     })
   );
 });
