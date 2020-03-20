@@ -13,7 +13,7 @@ const storeViews = {
   }
 };
 
-type GameNames = 'learn';
+type GameNames = 'rusDeu' | 'deuRus';
 
 type GamesInterface = {
   [gameName in GameNames]: {
@@ -26,8 +26,15 @@ type GamesInterface = {
 }
 
 const store = createStore<GamesInterface, typeof storeViews>({
-    learn: {
-      buttonText: 'учить слова',
+    rusDeu: {
+      buttonText: 'RUS - DEU',
+      categories: {
+        selected: [],
+        nullCategory: false
+      }
+    },
+    deuRus: {
+      buttonText: 'DEU - RUS',
       categories: {
         selected: [],
         nullCategory: false

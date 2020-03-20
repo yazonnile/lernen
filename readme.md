@@ -20,10 +20,9 @@
 * release?
 
 # TODO
+* require-context
 * fancy ui
 
-
 ## far-far away
-* reverse game
 * spelling game
 * stat page

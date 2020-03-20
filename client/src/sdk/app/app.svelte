@@ -8,7 +8,8 @@
   import Categories from 'views/categories/categories.svelte';
   import Dict from 'views/dict/dict.svelte';
   import PreGame from 'views/games/pre-game.svelte';
-  import Learn from 'views/games/learn.svelte';
+  import RusDeu from 'views/games/rus-deu.svelte';
+  import DeuRus from 'views/games/deu-rus.svelte';
   import Home from 'views/home/home.svelte';
   import Setup from 'views/setup/setup.svelte';
   import Stat from 'views/stat/stat.svelte';
@@ -24,7 +25,8 @@
       case Views.categories: return Categories;
       case Views.dict: return Dict;
       case Views.preGame: return PreGame;
-      case Views.learn: return Learn;
+      case Views.rusDeu: return RusDeu;
+      case Views.deuRus: return DeuRus;
       case Views.setup: return Setup;
       case Views.stat: return Stat;
       case Views.sync: return Sync;
@@ -37,7 +39,7 @@
   let activeComponent;
   $: activeComponent = getActiveComponent($view.viewId);
 
-  let introActive = true;
+  let introActive = false;
   let introToHide = false;
   let dataReady = false;
 

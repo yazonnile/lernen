@@ -49,7 +49,7 @@
 
   <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить голос</FormSwitcher>
   <Slide active={setup.voice}>
-    <Button text="проверить звук" on:click={() => onVoiceTest()} />
+    <Button text="проверить голос" on:click={() => onVoiceTest()} />
     <SetupBox title="скорость голоса" flex>
       <div class="range">
         <Button text="-5%" on:click={decVoiceSpeed} />
