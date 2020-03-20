@@ -78,7 +78,7 @@
   afterUpdate(selectText);
 </script>
 
-<div class="cats">
+<div>
   {#each categoriesList as { categoryName, categoryId, words } (categoryId)}
     <h2
       class="category"
@@ -124,13 +124,9 @@
 </div>
 
 <style>
-  .cats {
-
-  }
-
   .category {
-    background: var(--categoryActiveColor);
-    border: 1px solid #ddd;
+    background: var(--categoryColor);
+    border: 1px solid var(--mainColor);
     border-radius: 5px;
     cursor: pointer;
     display: block;
@@ -168,7 +164,7 @@
   }
 
   .category button {
-    background: var(--categoryColor);
+    background: var(--categoryActiveColor);
     border: 0;
     border-radius: 5px;
     margin-left: 3px;
