@@ -23,5 +23,9 @@
 * fancy ui
 
 ## far-far away
+* learn article
+* learn plural
+* learn strong
+* learn irregular
 * spelling game
 * stat page

@@ -1,5 +1,4 @@
 .idea
-client/public
 client/node_modules
 server/src/api/config/config.json
 server/src/vendor

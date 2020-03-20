@@ -60,7 +60,10 @@ const request: Request = (options) => {
       return rest;
     }
   }).catch((e) => {
-    console.error('unhandled in promise', e);
+    if (process.env.DEV) {
+      console.error('unhandled in promise', e);
+    }
+
     busy = false;
   });
 };

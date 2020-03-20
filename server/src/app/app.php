@@ -27,7 +27,7 @@
           '/{{% HOST %}}/',
           '/{{% DATA %}}/',
         ], [
-          '//localhost:4000',
+          Utils::isDebug() ? '//localhost:4000/' : '',
           base64_encode(json_encode($this->getState(), JSON_NUMERIC_CHECK)),
         ], Utils::getFile('/view/index.html'));
         return;

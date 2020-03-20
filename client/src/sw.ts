@@ -1,14 +1,13 @@
-const cacheName = 'app-lernen-v3';
+const cacheName = 'app-lernen-v6';
 
 // cache
 self.addEventListener('install', (event: FetchEvent) => {
   event.waitUntil(
     caches.open(cacheName).then((cache) => {
       return cache.addAll([
-        '/',
-        '/styles.css',
-        '/styles.js',
-        '/index.js',
+        '/pwa-test/',
+        '/pwa-test/index.css',
+        '/pwa-test/index.js',
       ]);
     })
   );
@@ -47,7 +46,7 @@ self.addEventListener('fetch', (event: FetchEvent) => {
       });
     }).catch(() => {
       if (event.request.method.toUpperCase() === 'GET') {
-        return caches.match('/');
+        return caches.match('/pwa-test/');
       } else {
         return new Response(JSON.stringify({
           offline: {
