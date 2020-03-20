@@ -13070,14 +13070,14 @@ function instance$x($$self, $$props, $$invalidate) {
 		// save word
 		store$4.updateWord(wordObject);
 
-		if (!wordId) {
-			resetState();
-		}
-
 		store.addMessage({
 			status: "success",
 			text: wordId ? "wordEdit.success" : "wordCreate.success"
 		});
+
+		if (!wordId) {
+			setTimeout(resetState, 1);
+		}
 	};
 
 	let { form, clearErrors, entries: { type: [typeErrors, typeValue], original: [origErrors, origValue, origInput], translation: [trErrors, trValue, trInput], plural: [pluralErrors, pluralValue, pluralInput], article: [articleErrors, articleValue], strong1: [strong1Errors, strong1Value, strong1Input], strong2: [strong2Errors, strong2Value, strong2Input], strong3: [strong3Errors, strong3Value, strong3Input], strong4: [strong4Errors, strong4Value, strong4Input], strong5: [strong5Errors, strong5Value, strong5Input], strong6: [strong6Errors, strong6Value, strong6Input], irregular1: [irregular1Errors, irregular1Value, irregular1Input], irregular2: [irregular2Errors, irregular2Value, irregular2Input] } } = createValidation$1(

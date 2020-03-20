@@ -31,14 +31,14 @@
     // save word
     words.updateWord(wordObject);
 
-    if (!wordId) {
-      resetState();
-    }
-
     messages.addMessage({
       status: 'success',
       text: wordId ? 'wordEdit.success' : 'wordCreate.success'
     });
+
+    if (!wordId) {
+      setTimeout(resetState, 1);
+    }
   };
 
   let {
