@@ -4,7 +4,7 @@ const basePath = !process.env.DEV ? '/lernen/client/public' : '';
 
 const cacheEnum = {
   index: `${basePath}/`,
-  css: `${basePath}/index.css'`,
+  css: `${basePath}/index.css`,
   js: `${basePath}/index.js`,
 };
 
