@@ -120,6 +120,8 @@
         {/each}
       </div>
     </Slide>
+  {:else}
+    нет категорий
   {/each}
 </div>
 

@@ -1,121 +1,118 @@
 <script>
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
   import Icon from 'sdk/icon/icon.svelte';
+  import DictWord from './dict-word.svelte';
+  import DictButtons from './dict-buttons.svelte';
   import { words, view } from 'stores';
+  import { tick } from 'svelte';
 
+  let autocompleteValue = '';
   let result = [];
+  let renderResult = [];
   let checked = [];
+  let activeLetter = null;
+  let initLetterBox = null;
+  let alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','Ä','Ö','Ü','ẞ'];
+  let alphabetWordsByLetters;
+  let alphabetWords;
 
   $: {
-    if (!result.length) {
-      checked = [];
+    alphabetWordsByLetters = {};
+    alphabetWords = [];
+
+    let wordsData = Object.values($words);
+    for (let i = 0; i < wordsData.length; i++) {
+      const firstLetter = wordsData[i].original[0].toUpperCase();
+
+      if (!alphabetWordsByLetters[firstLetter]) {
+        alphabetWordsByLetters[firstLetter] = {};
+      }
+
+      alphabetWordsByLetters[firstLetter][wordsData[i].wordId] = 1;
+    }
+
+    if (activeLetter) {
+      if (alphabetWordsByLetters[activeLetter.innerText]) {
+        alphabetWords = Object.keys(alphabetWordsByLetters[activeLetter.innerText]).sort((a, b) => {
+          a = $words[a].original.toLowerCase();
+          b = $words[b].original.toLowerCase();
+          return a > b ? 1 : (a < b ? -1 : 0);
+        });
+      } else {
+        activeLetter = null;
+      }
     }
   }
 
-  const editWords = (selectedWordsAction) => {
-    switch (selectedWordsAction) {
-      case 'deleteWords':
-        result = result.filter(id => !checked.includes(id));
-        words.deleteWords(checked);
-        break;
-
-      case 'enableWords':
-        words.enableWords(checked);
-        break;
-
-      case 'disableWords':
-        words.disableWords(checked);
-        break;
+  $: {
+    if (autocompleteValue) {
+      activeLetter = null;
     }
+  }
 
-    checked = [];
-  };
+  $: {
+    renderResult = result.filter(wordId => $words[wordId]);
+  }
 
-  const onEdit = (wordId) => {
+  const onEdit = ({ detail: wordId }) => {
     view.editWord({ wordId });
   };
 
-  const onRemove = () => editWords('deleteWords');
-  const onTurnOn = () => editWords('enableWords');
-  const onTurnOff = () => editWords('disableWords');
+  const showWordsByLetter = async({ target }) => {
+    if (activeLetter === target) {
+      activeLetter = null;
+      return;
+    }
+
+    activeLetter = target;
+    await tick();
+    activeLetter.parentNode.insertBefore(initLetterBox, activeLetter);
+  };
+
+  const checkbox = (node) => {
+    return {
+      destroy() {
+        checked = checked.filter(n => n.toString() !== node.value.toString());
+      }
+    }
+  };
 </script>
 
 <div class="dict">
-  <Autocomplete data={Object.values($words)} bind:result label="Начните вводить слово/фразу" />
+  <Autocomplete label="Начните вводить слово/фразу" bind:result bind:value={autocompleteValue} />
+  {#if autocompleteValue && !renderResult.length}
+    <p>слов не найдено</p>
+  {/if}
 
-  {#each result as wordId (wordId)}
-    <input type="checkbox" bind:group={checked} value={wordId} id={`cat${wordId}`} />
+  {#if renderResult.length}
+    {#each renderResult as wordId (wordId)}
+      <input type="checkbox" bind:group={checked} value={wordId} id={`cat${wordId}`} use:checkbox />
+      <DictWord word={$words[wordId]} checked={checked.includes(wordId)} on:edit={onEdit} />
+    {/each}
+  {:else if !autocompleteValue}
+    <div class="alphabet" on:click={showWordsByLetter}>
+      {#each alphabet as letter (letter)}
+        <button disabled={!alphabetWordsByLetters[letter]}>{letter}</button>
+      {/each}
 
-    <div class="item" class:disabled={!$words[wordId].active}>
-      <label class="text" for={`cat${wordId}`}>{$words[wordId].original}</label>
-
-      {#if !$words[wordId].active && !checked.includes(wordId)}
-        <Icon name="turnOff" />
-      {/if}
-
-      {#if checked.includes(wordId)}
-        <button class="edit" on:click={() => onEdit(wordId)}><Icon name="edit" /></button>
+      {#if activeLetter}
+        <div class="alphabet--letter" bind:this={initLetterBox} on:click|stopPropagation>
+          {#each alphabetWords as wordId (wordId)}
+            <input type="checkbox" bind:group={checked} value={wordId} id={`cat${wordId}`} use:checkbox />
+            <DictWord word={$words[wordId]} checked={checked.includes(wordId)} on:edit={onEdit} />
+          {/each}
+        </div>
       {/if}
     </div>
+  {/if}
 
-  {/each}
-
-  <div class="buttons" class:buttons--active={checked.length}>
-    <button on:click={onTurnOff} class="grey"><Icon name="turnOff" />выкл</button>
-    <button on:click={onTurnOn} class="green"><Icon name="turnOn" />вкл</button>
-    <button on:click={onRemove} class="red"><Icon name="delete" />удалить</button>
-  </div>
+  <DictButtons bind:checked />
 </div>
 
 <style>
   .dict {
     position: relative;
-    overflow: hidden;
     padding-bottom: 76px;
-  }
-
-  .item {
-    border-top: 1px solid var(--mainColorLight);
-    font-size: 16px;
-    line-height: 21px;
-    position: relative;
-    transition: background-color .3s ease;
-  }
-
-  .disabled {
-    background: linear-gradient(to right, #ececec, #fff);
-  }
-
-  .item :global(.icon-turnOff) {
-    color: #ccc;
-    height: 21px;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 21px;
-  }
-
-  .item:first-of-type {
-    border: 0;
-  }
-
-  .edit {
-    background: none;
-    border: 0;
-    border-radius: 5px;
-    padding: 10px;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  .edit :global(.icon) {
-    height: 21px;
-    width: 21px;
-  }
-
-  input:checked + .item {
-    background: var(--mainColorLight);
   }
 
   input {
@@ -123,60 +120,24 @@
     position: absolute;
   }
 
-  .text {
-    display: block;
-    padding: 10px;
-  }
-
-  .buttons {
-    background: #fff;
-    box-shadow: 0 0 5px #000;
-    bottom: -100px;
+  .alphabet {
     display: flex;
-    left: 0;
-    opacity: 0;
-    padding: 10px;
-    position: fixed;
-    transition: all .3s ease;
-    width: 100%;
+    flex-wrap: wrap;
+    margin: 0 -1px -1px 0;
   }
 
-  .buttons--active {
-    bottom: 0;
-    opacity: 1;
+  .alphabet > button {
+    background: var(--mainColorLight);
+    border: solid #fff;
+    border-width: 0 1px 1px 0;
+    flex: 0 0 20%;
+    font-size: 20px;
+    line-height: 25px;
+    padding: 5px 15px;
   }
 
-  .buttons button {
-    border: 0;
-    border-radius: 5px;
-    font-size: 12px;
-    flex: 1;
-    line-height: 15px;
-    padding: 7px;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  .green {
-    background: var(--greenColorLight);
-  }
-
-  .grey {
-    background: var(--categoryColor);
-  }
-
-  .red {
-    background: var(--redColorLight);
-  }
-
-  .buttons button + button {
-    margin-left: 10px;
-  }
-
-  .buttons :global(.icon) {
-    display: block;
-    height: 20px;
-    margin: 0 auto 7px;
-    width: 20px;
+  .alphabet--letter {
+    flex: 1 0 100%;
+    margin: 5px 0;
   }
 </style>

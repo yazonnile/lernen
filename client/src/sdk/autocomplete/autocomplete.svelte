@@ -1,13 +1,13 @@
 <script>
-  export let data;
   export let result;
   export let value = '';
   export let label = null;
 
   import FormInput from 'sdk/form-input/form-input.svelte';
+  import { words } from 'stores';
 
   $: {
-    result = value && value.length ? data.filter(word => {
+    result = value && value.length ? Object.values($words).filter(word => {
       return word.original.toString().toLowerCase().indexOf(value.toLowerCase()) > -1;
     }).sort((a, b) => {
       a = a.original.toLowerCase();
