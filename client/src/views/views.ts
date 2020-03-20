@@ -1,0 +1,11 @@
+export { default as categories } from 'views/categories/categories.svelte';
+export { default as dict } from 'views/dict/dict.svelte';
+export { default as preGame } from 'views/games/pre-game.svelte';
+export { default as rusDeu } from 'views/games/rus-deu.svelte';
+export { default as deuRus } from 'views/games/deu-rus.svelte';
+export { default as home } from 'views/home/home.svelte';
+export { default as setup } from 'views/setup/setup.svelte';
+export { default as stat } from 'views/stat/stat.svelte';
+export { default as sync } from 'views/sync/sync.svelte';
+export { default as addWord } from 'views/words/add-word.svelte';
+export { default as editWord } from 'views/words/edit-word.svelte';

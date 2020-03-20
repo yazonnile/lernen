@@ -4,40 +4,11 @@
   import Messages from 'sdk/messages/messages.svelte';
   import Intro from 'sdk/intro/intro.svelte';
   import Header from 'sdk/header/header.svelte';
-
-  import Categories from 'views/categories/categories.svelte';
-  import Dict from 'views/dict/dict.svelte';
-  import PreGame from 'views/games/pre-game.svelte';
-  import RusDeu from 'views/games/rus-deu.svelte';
-  import DeuRus from 'views/games/deu-rus.svelte';
-  import Home from 'views/home/home.svelte';
-  import Setup from 'views/setup/setup.svelte';
-  import Stat from 'views/stat/stat.svelte';
-  import Sync from 'views/sync/sync.svelte';
-  import AddWord from 'views/words/add-word.svelte';
-  import EditWord from 'views/words/edit-word.svelte';
+  import * as views from 'views/views';
   import { view } from 'stores';
-  import { Views } from 'stores/view/view';
-
-
-  const getActiveComponent = (viewId) => {
-    switch (viewId) {
-      case Views.categories: return Categories;
-      case Views.dict: return Dict;
-      case Views.preGame: return PreGame;
-      case Views.rusDeu: return RusDeu;
-      case Views.deuRus: return DeuRus;
-      case Views.setup: return Setup;
-      case Views.stat: return Stat;
-      case Views.sync: return Sync;
-      case Views.editWord: return EditWord;
-      case Views.addWord: return AddWord;
-      default: return Home;
-    }
-  };
 
   let activeComponent;
-  $: activeComponent = getActiveComponent($view.viewId);
+  $: activeComponent = views[$view.viewId] || views.home;
 
   let introActive = !process.env.DEV;
   let introToHide = false;

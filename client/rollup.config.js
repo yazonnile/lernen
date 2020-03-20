@@ -33,13 +33,13 @@ module.exports = {
   plugins: [
     require('@rollup/plugin-alias')({
       entries: folders,
-      resolve: ['.ts', '.js', '.svelte']
+      resolve: ['.ts', '.js', '.svelte', '.svg']
     }),
 
     require('rollup-plugin-node-resolve')({
       browser: true,
       mainFields: ['svelte', 'browser', 'module', 'main'],
-      extensions: ['.mjs', '.ts', '.js', '.svelte', '.css'],
+      extensions: ['.mjs', '.ts', '.js', '.svelte', '.css', '.svg'],
       dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
     }),
 
@@ -82,6 +82,8 @@ module.exports = {
       targets: [
         { src: 'src/static/*', dest: folders.dist }
       ]
-    })
+    }),
+
+    require('rollup-plugin-svg')()
   ]
 };

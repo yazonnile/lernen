@@ -1,0 +1,11 @@
+export { default as checkboxIcon } from 'sdk/icon/files/checkbox.svg';
+export { default as closeIcon } from 'sdk/icon/files/close.svg';
+export { default as deleteIcon } from 'sdk/icon/files/delete.svg';
+export { default as downIcon } from 'sdk/icon/files/down.svg';
+export { default as editIcon } from 'sdk/icon/files/edit.svg';
+export { default as menuIcon } from 'sdk/icon/files/menu.svg';
+export { default as plusIcon } from 'sdk/icon/files/plus.svg';
+export { default as profileIcon } from 'sdk/icon/files/profile.svg';
+export { default as turnOffIcon } from 'sdk/icon/files/turnOff.svg';
+export { default as turnOnIcon } from 'sdk/icon/files/turnOn.svg';
+export { default as unchainIcon } from 'sdk/icon/files/unchain.svg';

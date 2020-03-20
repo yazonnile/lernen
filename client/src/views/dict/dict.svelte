@@ -50,7 +50,7 @@
       <label class="text" for={`cat${wordId}`}>{$words[wordId].original}</label>
 
       {#if !$words[wordId].active && !checked.includes(wordId)}
-        <Icon name="turn-off" />
+        <Icon name="turnOff" />
       {/if}
 
       {#if checked.includes(wordId)}
@@ -61,8 +61,8 @@
   {/each}
 
   <div class="buttons" class:buttons--active={checked.length}>
-    <button on:click={onTurnOff} class="grey"><Icon name="turn-off" />выкл</button>
-    <button on:click={onTurnOn} class="green"><Icon name="turn-on" />вкл</button>
+    <button on:click={onTurnOff} class="grey"><Icon name="turnOff" />выкл</button>
+    <button on:click={onTurnOn} class="green"><Icon name="turnOn" />вкл</button>
     <button on:click={onRemove} class="red"><Icon name="delete" />удалить</button>
   </div>
 </div>
@@ -86,7 +86,7 @@
     background: linear-gradient(to right, #ececec, #fff);
   }
 
-  .item :global(.icon-turn-off) {
+  .item :global(.icon-turnOff) {
     color: #ccc;
     height: 21px;
     position: absolute;

@@ -98,7 +98,7 @@
       <div class="buttons">
         {#if categoryId === categoryToEdit}
           <button on:click|stopPropagation={() => onSave(categoryId)}><Icon name="checkbox" /></button>
-          <button on:click|stopPropagation={onCancel}><Icon name="turn-off" /></button>
+          <button on:click|stopPropagation={onCancel}><Icon name="turnOff" /></button>
         {:else}
           <button on:click|stopPropagation={() => onEdit(categoryId)}><Icon name="edit" /></button>
         {/if}

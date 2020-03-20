@@ -1,24 +1,23 @@
 import createStore from 'lib/create-store/create-store';
-import { getInitialState } from 'api/get-initial-state/get-initial-state';
 
 export enum Views {
-  home,
-  auth,
-  categories,
-  dict,
-  preGame,
-  rusDeu,
-  deuRus,
-  setup,
-  stat,
-  editWord,
-  addWord,
-  sync,
+  home = 'home',
+  auth = 'auth',
+  categories = 'categories',
+  dict = 'dict',
+  preGame = 'preGame',
+  rusDeu = 'rusDeu',
+  deuRus = 'deuRus',
+  setup = 'setup',
+  stat = 'stat',
+  editWord = 'editWord',
+  addWord = 'addWord',
+  sync = 'sync',
 }
 
 type PreGameParams = { gameId: string; }
 type EditWordParams = { wordId: number; };
-interface DefaultView { viewId: number; }
+interface DefaultView { viewId: string; }
 interface PreGameView extends DefaultView { params: PreGameParams; }
 interface EditWordView extends DefaultView { params: EditWordParams; }
 interface View extends DefaultView {
