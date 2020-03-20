@@ -4099,8 +4099,8 @@ class Dict_buttons extends SvelteComponent {
 
 function add_css$b() {
 	var style = element("style");
-	style.id = "svelte-1erskxp-style";
-	style.textContent = ".dict.svelte-1erskxp.svelte-1erskxp{position:relative;padding-bottom:76px}input.svelte-1erskxp.svelte-1erskxp{visibility:hidden;position:absolute}.alphabet.svelte-1erskxp.svelte-1erskxp{display:flex;flex-wrap:wrap;margin:0 -1px -1px 0}.alphabet.svelte-1erskxp>button.svelte-1erskxp{background:#b7d8f4;border:solid #fff;border-width:0 1px 1px 0;flex:0 0 20%;font-size:20px;line-height:25px;padding:5px 15px}.alphabet--letter.svelte-1erskxp.svelte-1erskxp{flex:1 0 100%;margin:5px 0}.alphabet--letter+button.svelte-1erskxp.svelte-1erskxp{background:#104b8a;color:#fff;position:relative}.alphabet--letter+button.svelte-1erskxp.svelte-1erskxp:after{bottom:100%;border-style:solid;border-width:0 10px 10px 10px;border-color:transparent transparent #104b8a transparent;content:'';position:absolute;left:calc(50% - 10px);width:0;height:0}";
+	style.id = "svelte-1n7fkrn-style";
+	style.textContent = ".dict.svelte-1n7fkrn.svelte-1n7fkrn{position:relative;padding-bottom:76px}input.svelte-1n7fkrn.svelte-1n7fkrn{visibility:hidden;position:absolute}.alphabet.svelte-1n7fkrn.svelte-1n7fkrn{display:flex;flex-wrap:wrap;margin:0 -1px -1px 0}.alphabet.svelte-1n7fkrn button.svelte-1n7fkrn{background:#b7d8f4;border:solid #fff;border-width:0 1px 1px 0;flex:0 0 20%;font-size:20px;line-height:25px;padding:5px 15px}.alphabet--letter.svelte-1n7fkrn.svelte-1n7fkrn{flex:1 0 100%;margin:5px 0}.alphabet.svelte-1n7fkrn button.active.svelte-1n7fkrn{background:#104b8a;color:#fff;position:relative}.alphabet.svelte-1n7fkrn button.active.svelte-1n7fkrn:after{top:100%;border-style:solid;border-width:10px 10px 0;border-color:#104b8a transparent transparent;content:'';position:absolute;left:calc(50% - 10px);width:0;height:0}";
 	append(document.head, style);
 }
 
@@ -4122,7 +4122,7 @@ function get_each_context$2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (83:2) {#if autocompleteValue && !renderResult.length}
+// (84:2) {#if autocompleteValue && !renderResult.length}
 function create_if_block_3(ctx) {
 	let p;
 
@@ -4140,7 +4140,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (92:31) 
+// (93:31) 
 function create_if_block_1$3(ctx) {
 	let div;
 	let each_blocks = [];
@@ -4169,7 +4169,7 @@ function create_if_block_1$3(ctx) {
 
 			t = space();
 			if (if_block) if_block.c();
-			attr(div, "class", "alphabet svelte-1erskxp");
+			attr(div, "class", "alphabet svelte-1n7fkrn");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4184,7 +4184,7 @@ function create_if_block_1$3(ctx) {
 			dispose = listen(div, "click", /*showWordsByLetter*/ ctx[11]);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*alphabetWordsByLetters, alphabet*/ 576) {
+			if (dirty & /*alphabetWordsByLetters, alphabet, activeLetter*/ 592) {
 				const each_value_2 = /*alphabet*/ ctx[9];
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_2, each_1_lookup, div, destroy_block, create_each_block_2, t, get_each_context_2);
 			}
@@ -4231,7 +4231,7 @@ function create_if_block_1$3(ctx) {
 	};
 }
 
-// (87:2) {#if renderResult.length}
+// (88:2) {#if renderResult.length}
 function create_if_block$6(ctx) {
 	let each_blocks = [];
 	let each_1_lookup = new Map();
@@ -4296,7 +4296,7 @@ function create_if_block$6(ctx) {
 	};
 }
 
-// (94:6) {#each alphabet as letter (letter)}
+// (95:6) {#each alphabet as letter (letter)}
 function create_each_block_2(key_1, ctx) {
 	let button;
 	let t_value = /*letter*/ ctx[26] + "";
@@ -4310,7 +4310,8 @@ function create_each_block_2(key_1, ctx) {
 			button = element("button");
 			t = text(t_value);
 			button.disabled = button_disabled_value = !/*alphabetWordsByLetters*/ ctx[6][/*letter*/ ctx[26]];
-			attr(button, "class", "svelte-1erskxp");
+			attr(button, "class", "svelte-1n7fkrn");
+			toggle_class(button, "active", /*activeLetter*/ ctx[4] && /*letter*/ ctx[26] === /*activeLetter*/ ctx[4].innerText);
 			this.first = button;
 		},
 		m(target, anchor) {
@@ -4321,6 +4322,10 @@ function create_each_block_2(key_1, ctx) {
 			if (dirty & /*alphabetWordsByLetters*/ 64 && button_disabled_value !== (button_disabled_value = !/*alphabetWordsByLetters*/ ctx[6][/*letter*/ ctx[26]])) {
 				button.disabled = button_disabled_value;
 			}
+
+			if (dirty & /*activeLetter, alphabet*/ 528) {
+				toggle_class(button, "active", /*activeLetter*/ ctx[4] && /*letter*/ ctx[26] === /*activeLetter*/ ctx[4].innerText);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(button);
@@ -4328,7 +4333,7 @@ function create_each_block_2(key_1, ctx) {
 	};
 }
 
-// (98:6) {#if activeLetter}
+// (99:6) {#if activeLetter}
 function create_if_block_2$1(ctx) {
 	let div;
 	let each_blocks = [];
@@ -4352,7 +4357,7 @@ function create_if_block_2$1(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "alphabet--letter svelte-1erskxp");
+			attr(div, "class", "alphabet--letter svelte-1n7fkrn");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4402,7 +4407,7 @@ function create_if_block_2$1(ctx) {
 	};
 }
 
-// (100:10) {#each alphabetWords as wordId (wordId)}
+// (101:10) {#each alphabetWords as wordId (wordId)}
 function create_each_block_1$1(key_1, ctx) {
 	let input;
 	let input_value_value;
@@ -4432,7 +4437,7 @@ function create_each_block_1$1(key_1, ctx) {
 			input.__value = input_value_value = /*wordId*/ ctx[21];
 			input.value = input.__value;
 			attr(input, "id", input_id_value = `cat${/*wordId*/ ctx[21]}`);
-			attr(input, "class", "svelte-1erskxp");
+			attr(input, "class", "svelte-1n7fkrn");
 			/*$$binding_groups*/ ctx[17][0].push(input);
 			this.first = input;
 		},
@@ -4487,7 +4492,7 @@ function create_each_block_1$1(key_1, ctx) {
 	};
 }
 
-// (88:4) {#each renderResult as wordId (wordId)}
+// (89:4) {#each renderResult as wordId (wordId)}
 function create_each_block$2(key_1, ctx) {
 	let input;
 	let input_value_value;
@@ -4517,7 +4522,7 @@ function create_each_block$2(key_1, ctx) {
 			input.__value = input_value_value = /*wordId*/ ctx[21];
 			input.value = input.__value;
 			attr(input, "id", input_id_value = `cat${/*wordId*/ ctx[21]}`);
-			attr(input, "class", "svelte-1erskxp");
+			attr(input, "class", "svelte-1n7fkrn");
 			/*$$binding_groups*/ ctx[17][0].push(input);
 			this.first = input;
 		},
@@ -4642,7 +4647,7 @@ function create_fragment$c(ctx) {
 			if (if_block1) if_block1.c();
 			t2 = space();
 			create_component(dictbuttons.$$.fragment);
-			attr(div, "class", "dict svelte-1erskxp");
+			attr(div, "class", "dict svelte-1n7fkrn");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4815,7 +4820,8 @@ function instance$c($$self, $$props, $$invalidate) {
 
 		$$invalidate(4, activeLetter = target);
 		await tick();
-		activeLetter.parentNode.insertBefore(initLetterBox, activeLetter);
+		activeLetter.parentNode.insertBefore(initLetterBox, activeLetter.nextElementSibling);
+		window.scrollTo(0, 0);
 	};
 
 	const checkbox = node => {
@@ -4937,7 +4943,7 @@ function instance$c($$self, $$props, $$invalidate) {
 class Dict extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-1erskxp-style")) add_css$b();
+		if (!document.getElementById("svelte-1n7fkrn-style")) add_css$b();
 		init(this, options, instance$c, create_fragment$c, safe_not_equal, {});
 	}
 }
@@ -11470,7 +11476,7 @@ function create_fragment$v(ctx) {
 			if (if_block4) if_block4.c();
 			t10 = space();
 			p = element("p");
-			p.textContent = `${1584736276645}`;
+			p.textContent = `${1584738652043}`;
 			attr(h20, "class", "svelte-1p9u3is");
 			attr(div0, "class", "box svelte-1p9u3is");
 			attr(h21, "class", "svelte-1p9u3is");

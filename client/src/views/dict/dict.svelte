@@ -66,7 +66,8 @@
 
     activeLetter = target;
     await tick();
-    activeLetter.parentNode.insertBefore(initLetterBox, activeLetter);
+    activeLetter.parentNode.insertBefore(initLetterBox, activeLetter.nextElementSibling);
+    window.scrollTo(0,0);
   };
 
   const checkbox = (node) => {
@@ -92,7 +93,7 @@
   {:else if !autocompleteValue}
     <div class="alphabet" on:click={showWordsByLetter}>
       {#each alphabet as letter (letter)}
-        <button disabled={!alphabetWordsByLetters[letter]}>{letter}</button>
+        <button class:active={activeLetter && letter === activeLetter.innerText} disabled={!alphabetWordsByLetters[letter]}>{letter}</button>
       {/each}
 
       {#if activeLetter}
@@ -126,7 +127,7 @@
     margin: 0 -1px -1px 0;
   }
 
-  .alphabet > button {
+  .alphabet button {
     background: var(--mainColorLight);
     border: solid #fff;
     border-width: 0 1px 1px 0;
@@ -141,17 +142,17 @@
     margin: 5px 0;
   }
 
-  .alphabet--letter + button {
+  .alphabet button.active {
     background: var(--mainColor);
     color: #fff;
     position: relative;
   }
 
-  .alphabet--letter + button:after {
-    bottom: 100%;
+  .alphabet button.active:after {
+    top: 100%;
     border-style: solid;
-    border-width: 0 10px 10px 10px;
-    border-color: transparent transparent var(--mainColor) transparent;
+    border-width: 10px 10px 0;
+    border-color: var(--mainColor) transparent transparent;
     content: '';
     position: absolute;
     left: calc(50% - 10px);
