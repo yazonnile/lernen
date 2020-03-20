@@ -23,8 +23,13 @@
 
   <button
     class="header--button header--nav"
-    on:click={() => view.stat()}
-  ><Icon name="profile" /></button>
+    on:click={() => view.sync()}
+  >
+    <Icon name="profile" />
+    {#if !$user.userId}
+      <i class="attention"></i>
+    {/if}
+  </button>
 
   {#if menuActive}
     <Menu bind:menuActive />
@@ -86,5 +91,23 @@
 
   .yellow {
     color: var(--categoryActiveColor);
+  }
+
+  .attention {
+    background: var(--redColor);
+    border-radius: 7px;
+    bottom: 5px;
+    color: #fff;
+    font-style: normal;
+    font-size: 11px;
+    height: 14px;
+    line-height: 14px;
+    right: 2px;
+    position: absolute;
+    text-align: center;
+    width: 14px;
+  }
+  .attention:after {
+    content: '!';
   }
 </style>

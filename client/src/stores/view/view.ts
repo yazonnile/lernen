@@ -9,7 +9,6 @@ export enum Views {
   rusDeu = 'rusDeu',
   deuRus = 'deuRus',
   setup = 'setup',
-  stat = 'stat',
   editWord = 'editWord',
   addWord = 'addWord',
   sync = 'sync',
@@ -35,7 +34,6 @@ const storeMethods = {
   rusDeu: (): View => ({ viewId: Views.rusDeu }),
   deuRus: (): View => ({ viewId: Views.deuRus }),
   setup: (): View => ({ viewId: Views.setup }),
-  stat: (): View => ({ viewId: Views.stat }),
   sync: (): View => ({ viewId: Views.sync }),
   addWord: (): View => ({ viewId: Views.addWord }),
   editWord: (params: EditWordParams): EditWordView => ({

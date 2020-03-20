@@ -81,7 +81,8 @@ module.exports = {
 
     require('rollup-plugin-copy')({
       targets: [
-        { src: 'src/static/*', dest: folders.dist }
+        { src: ['src/static/*', '!**/*.html'], dest: folders.dist },
+        { src: `src/static/index.${production ? 'build' : 'dev'}.html`, dest: folders.dist, rename: 'index.html' }
       ]
     }),
 

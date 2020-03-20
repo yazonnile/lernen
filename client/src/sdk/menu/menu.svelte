@@ -21,10 +21,9 @@
     <div class="menu--frame">
       <button on:click={() => onMenu('home')}>Домой</button>
       <button on:click={() => onMenu('addWord')}>Добавить слово</button>
-      <button on:click={() => onMenu('setup')}>Настройки</button>
       <button on:click={() => onMenu('dict')}>словарь</button>
-      <button on:click={() => onMenu('sync')}>синхронизация</button>
       <button on:click={() => onMenu('categories')}>категории</button>
+      <button on:click={() => onMenu('setup')}>Настройки</button>
     </div>
 <!--    <span>bottom info</span>-->
   </div>
