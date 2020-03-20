@@ -39,7 +39,7 @@
   let activeComponent;
   $: activeComponent = getActiveComponent($view.viewId);
 
-  let introActive = false;
+  let introActive = true;
   let introToHide = false;
   let dataReady = false;
 
