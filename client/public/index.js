@@ -3763,8 +3763,8 @@ class Autocomplete extends SvelteComponent {
 
 function add_css$9() {
 	var style = element("style");
-	style.id = "svelte-l8z6hn-style";
-	style.textContent = ".item.svelte-l8z6hn{border-top:1px solid #b7d8f4;font-size:16px;line-height:21px;position:relative;transition:background-color .3s ease}.disabled.svelte-l8z6hn{background:linear-gradient(to right, #ececec, #fff)}.item.svelte-l8z6hn .icon-turnOff{color:#ccc;height:21px;position:absolute;right:10px;top:10px;width:21px}.item.svelte-l8z6hn:first-of-type{border:0}.edit.svelte-l8z6hn{background:none;border:0;border-radius:5px;padding:10px;position:absolute;right:0;top:0}.edit.svelte-l8z6hn .icon{height:21px;width:21px}input:checked+.item.svelte-l8z6hn{background:#b7d8f4}.text.svelte-l8z6hn{display:block;padding:10px}";
+	style.id = "svelte-5f9ren-style";
+	style.textContent = ".item.svelte-5f9ren{border-top:1px solid #104b8a;font-size:16px;line-height:21px;position:relative;transition:background-color .3s ease}.disabled.svelte-5f9ren{background:linear-gradient(to right, #ececec, #fff)}.item.svelte-5f9ren .icon-turnOff{color:#ccc;height:21px;position:absolute;right:10px;top:10px;width:21px}.item.svelte-5f9ren:first-of-type{border:0}.edit.svelte-5f9ren{background:none;border:0;border-radius:5px;padding:10px;position:absolute;right:0;top:0}.edit.svelte-5f9ren .icon{height:21px;width:21px}input:checked+.item.svelte-5f9ren{background:#b7d8f4}.text.svelte-5f9ren{display:block;padding:10px}";
 	append(document.head, style);
 }
 
@@ -3807,7 +3807,7 @@ function create_if_block$5(ctx) {
 		c() {
 			button = element("button");
 			create_component(icon.$$.fragment);
-			attr(button, "class", "edit svelte-l8z6hn");
+			attr(button, "class", "edit svelte-5f9ren");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -3854,9 +3854,9 @@ function create_fragment$a(ctx) {
 			if (if_block0) if_block0.c();
 			t2 = space();
 			if (if_block1) if_block1.c();
-			attr(label, "class", "text svelte-l8z6hn");
+			attr(label, "class", "text svelte-5f9ren");
 			attr(label, "for", label_for_value = `cat${/*word*/ ctx[0].wordId}`);
-			attr(div, "class", "item svelte-l8z6hn");
+			attr(div, "class", "item svelte-5f9ren");
 			toggle_class(div, "disabled", !/*word*/ ctx[0].active);
 		},
 		m(target, anchor) {
@@ -3958,7 +3958,7 @@ function instance$a($$self, $$props, $$invalidate) {
 class Dict_word extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-l8z6hn-style")) add_css$9();
+		if (!document.getElementById("svelte-5f9ren-style")) add_css$9();
 		init(this, options, instance$a, create_fragment$a, safe_not_equal, { word: 0, checked: 1 });
 	}
 }
@@ -11470,7 +11470,7 @@ function create_fragment$v(ctx) {
 			if (if_block4) if_block4.c();
 			t10 = space();
 			p = element("p");
-			p.textContent = `${1584732258744}`;
+			p.textContent = `${1584732656702}`;
 			attr(h20, "class", "svelte-1p9u3is");
 			attr(div0, "class", "box svelte-1p9u3is");
 			attr(h21, "class", "svelte-1p9u3is");

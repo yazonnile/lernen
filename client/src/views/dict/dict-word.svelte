@@ -25,7 +25,7 @@
 
 <style>
   .item {
-    border-top: 1px solid var(--mainColorLight);
+    border-top: 1px solid var(--mainColor);
     font-size: 16px;
     line-height: 21px;
     position: relative;
