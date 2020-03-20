@@ -21,12 +21,10 @@
     on:click={openMenu}
   ><Icon name="menu" /></button>
 
-  {#if $user.userId}
-    <button
-      class="header--button header--nav"
-      on:click={() => view.stat()}
-    ><Icon name="profile" /></button>
-  {/if}
+  <button
+    class="header--button header--nav"
+    on:click={() => view.stat()}
+  ><Icon name="profile" /></button>
 
   {#if menuActive}
     <Menu bind:menuActive />

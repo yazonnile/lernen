@@ -2379,50 +2379,13 @@ function add_css$5() {
 	append(document.head, style);
 }
 
-// (24:2) {#if $user.userId}
-function create_if_block_1(ctx) {
-	let button;
-	let current;
-	let dispose;
-	const icon = new Icon({ props: { name: "profile" } });
-
-	return {
-		c() {
-			button = element("button");
-			create_component(icon.$$.fragment);
-			attr(button, "class", "header--button header--nav svelte-396zuc");
-		},
-		m(target, anchor) {
-			insert(target, button, anchor);
-			mount_component(icon, button, null);
-			current = true;
-			dispose = listen(button, "click", /*click_handler_1*/ ctx[4]);
-		},
-		p: noop,
-		i(local) {
-			if (current) return;
-			transition_in(icon.$$.fragment, local);
-			current = true;
-		},
-		o(local) {
-			transition_out(icon.$$.fragment, local);
-			current = false;
-		},
-		d(detaching) {
-			if (detaching) detach(button);
-			destroy_component(icon);
-			dispose();
-		}
-	};
-}
-
-// (31:2) {#if menuActive}
+// (29:2) {#if menuActive}
 function create_if_block$1(ctx) {
 	let updating_menuActive;
 	let current;
 
 	function menu_menuActive_binding(value) {
-		/*menu_menuActive_binding*/ ctx[5].call(null, value);
+		/*menu_menuActive_binding*/ ctx[4].call(null, value);
 	}
 
 	let menu_props = {};
@@ -2472,14 +2435,15 @@ function create_fragment$5(ctx) {
 	let header;
 	let a;
 	let t5;
-	let button;
+	let button0;
 	let t6;
+	let button1;
 	let t7;
 	let current;
 	let dispose;
-	const icon = new Icon({ props: { name: "menu" } });
-	let if_block0 = /*$user*/ ctx[1].userId && create_if_block_1(ctx);
-	let if_block1 = /*menuActive*/ ctx[0] && create_if_block$1(ctx);
+	const icon0 = new Icon({ props: { name: "menu" } });
+	const icon1 = new Icon({ props: { name: "profile" } });
+	let if_block = /*menuActive*/ ctx[0] && create_if_block$1(ctx);
 
 	return {
 		c() {
@@ -2491,70 +2455,54 @@ function create_fragment$5(ctx) {
     <span class="yellow svelte-396zuc">en</span>`;
 
 			t5 = space();
-			button = element("button");
-			create_component(icon.$$.fragment);
+			button0 = element("button");
+			create_component(icon0.$$.fragment);
 			t6 = space();
-			if (if_block0) if_block0.c();
+			button1 = element("button");
+			create_component(icon1.$$.fragment);
 			t7 = space();
-			if (if_block1) if_block1.c();
+			if (if_block) if_block.c();
 			attr(a, "class", "logo svelte-396zuc");
 			attr(a, "href", "/");
-			attr(button, "class", "header--button header--menu svelte-396zuc");
+			attr(button0, "class", "header--button header--menu svelte-396zuc");
+			attr(button1, "class", "header--button header--nav svelte-396zuc");
 			attr(header, "class", "header svelte-396zuc");
 		},
 		m(target, anchor) {
 			insert(target, header, anchor);
 			append(header, a);
 			append(header, t5);
-			append(header, button);
-			mount_component(icon, button, null);
+			append(header, button0);
+			mount_component(icon0, button0, null);
 			append(header, t6);
-			if (if_block0) if_block0.m(header, null);
+			append(header, button1);
+			mount_component(icon1, button1, null);
 			append(header, t7);
-			if (if_block1) if_block1.m(header, null);
+			if (if_block) if_block.m(header, null);
 			current = true;
 
 			dispose = [
-				listen(a, "click", prevent_default(/*click_handler*/ ctx[3])),
-				listen(button, "click", /*openMenu*/ ctx[2])
+				listen(a, "click", prevent_default(/*click_handler*/ ctx[2])),
+				listen(button0, "click", /*openMenu*/ ctx[1]),
+				listen(button1, "click", /*click_handler_1*/ ctx[3])
 			];
 		},
 		p(ctx, [dirty]) {
-			if (/*$user*/ ctx[1].userId) {
-				if (if_block0) {
-					if_block0.p(ctx, dirty);
-					transition_in(if_block0, 1);
-				} else {
-					if_block0 = create_if_block_1(ctx);
-					if_block0.c();
-					transition_in(if_block0, 1);
-					if_block0.m(header, t7);
-				}
-			} else if (if_block0) {
-				group_outros();
-
-				transition_out(if_block0, 1, 1, () => {
-					if_block0 = null;
-				});
-
-				check_outros();
-			}
-
 			if (/*menuActive*/ ctx[0]) {
-				if (if_block1) {
-					if_block1.p(ctx, dirty);
-					transition_in(if_block1, 1);
+				if (if_block) {
+					if_block.p(ctx, dirty);
+					transition_in(if_block, 1);
 				} else {
-					if_block1 = create_if_block$1(ctx);
-					if_block1.c();
-					transition_in(if_block1, 1);
-					if_block1.m(header, null);
+					if_block = create_if_block$1(ctx);
+					if_block.c();
+					transition_in(if_block, 1);
+					if_block.m(header, null);
 				}
-			} else if (if_block1) {
+			} else if (if_block) {
 				group_outros();
 
-				transition_out(if_block1, 1, 1, () => {
-					if_block1 = null;
+				transition_out(if_block, 1, 1, () => {
+					if_block = null;
 				});
 
 				check_outros();
@@ -2562,30 +2510,28 @@ function create_fragment$5(ctx) {
 		},
 		i(local) {
 			if (current) return;
-			transition_in(icon.$$.fragment, local);
-			transition_in(if_block0);
-			transition_in(if_block1);
+			transition_in(icon0.$$.fragment, local);
+			transition_in(icon1.$$.fragment, local);
+			transition_in(if_block);
 			current = true;
 		},
 		o(local) {
-			transition_out(icon.$$.fragment, local);
-			transition_out(if_block0);
-			transition_out(if_block1);
+			transition_out(icon0.$$.fragment, local);
+			transition_out(icon1.$$.fragment, local);
+			transition_out(if_block);
 			current = false;
 		},
 		d(detaching) {
 			if (detaching) detach(header);
-			destroy_component(icon);
-			if (if_block0) if_block0.d();
-			if (if_block1) if_block1.d();
+			destroy_component(icon0);
+			destroy_component(icon1);
+			if (if_block) if_block.d();
 			run_all(dispose);
 		}
 	};
 }
 
 function instance$5($$self, $$props, $$invalidate) {
-	let $user;
-	component_subscribe($$self, store$3, $$value => $$invalidate(1, $user = $$value));
 	let menuActive = false;
 
 	const openMenu = () => {
@@ -2600,14 +2546,7 @@ function instance$5($$self, $$props, $$invalidate) {
 		$$invalidate(0, menuActive);
 	}
 
-	return [
-		menuActive,
-		$user,
-		openMenu,
-		click_handler,
-		click_handler_1,
-		menu_menuActive_binding
-	];
+	return [menuActive, openMenu, click_handler, click_handler_1, menu_menuActive_binding];
 }
 
 class Header extends SvelteComponent {
@@ -2878,7 +2817,7 @@ function create_else_block(ctx) {
 }
 
 // (99:8) {#if categoryId === categoryToEdit}
-function create_if_block_1$1(ctx) {
+function create_if_block_1(ctx) {
 	let button0;
 	let t;
 	let button1;
@@ -3139,7 +3078,7 @@ function create_each_block$1(key_1, ctx) {
 
 	let current_block_type = select_block_type(ctx);
 	let if_block0 = current_block_type(ctx);
-	const if_block_creators = [create_if_block_1$1, create_else_block];
+	const if_block_creators = [create_if_block_1, create_else_block];
 	const if_blocks = [];
 
 	function select_block_type_1(ctx, dirty) {
@@ -3751,7 +3690,7 @@ function get_each_context$2(ctx, list, i) {
 }
 
 // (52:6) {#if !$words[wordId].active && !checked.includes(wordId)}
-function create_if_block_1$2(ctx) {
+function create_if_block_1$1(ctx) {
 	let current;
 	const icon = new Icon({ props: { name: "turnOff" } });
 
@@ -3838,7 +3777,7 @@ function create_each_block$2(key_1, ctx) {
 	let show_if = /*checked*/ ctx[1].includes(/*wordId*/ ctx[12]);
 	let current;
 	let dispose;
-	let if_block0 = show_if_1 && create_if_block_1$2();
+	let if_block0 = show_if_1 && create_if_block_1$1();
 	let if_block1 = show_if && create_if_block$5(ctx);
 
 	return {
@@ -3905,7 +3844,7 @@ function create_each_block$2(key_1, ctx) {
 
 			if (show_if_1) {
 				if (!if_block0) {
-					if_block0 = create_if_block_1$2();
+					if_block0 = create_if_block_1$1();
 					if_block0.c();
 					transition_in(if_block0, 1);
 					if_block0.m(div, t3);
@@ -4346,7 +4285,7 @@ function add_css$b() {
 }
 
 // (24:4) {#if icon}
-function create_if_block_1$3(ctx) {
+function create_if_block_1$2(ctx) {
 	let span;
 	let current;
 	const icon_1 = new Icon({ props: { name: /*icon*/ ctx[0] } });
@@ -4416,7 +4355,7 @@ function create_fragment$c(ctx) {
 	let clickSplash_action;
 	let current;
 	let dispose;
-	let if_block0 = /*icon*/ ctx[0] && create_if_block_1$3(ctx);
+	let if_block0 = /*icon*/ ctx[0] && create_if_block_1$2(ctx);
 	let if_block1 = /*text*/ ctx[2] && create_if_block$6(ctx);
 	const default_slot_template = /*$$slots*/ ctx[8].default;
 	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], null);
@@ -4463,7 +4402,7 @@ function create_fragment$c(ctx) {
 					if_block0.p(ctx, dirty);
 					transition_in(if_block0, 1);
 				} else {
-					if_block0 = create_if_block_1$3(ctx);
+					if_block0 = create_if_block_1$2(ctx);
 					if_block0.c();
 					transition_in(if_block0, 1);
 					if_block0.m(span, t0);
@@ -5622,7 +5561,7 @@ function add_css$f() {
 }
 
 // (26:2) {#if strongExists(word, $user)}
-function create_if_block_1$4(ctx) {
+function create_if_block_1$3(ctx) {
 	let table;
 	let tr0;
 	let td0;
@@ -5796,7 +5735,7 @@ function create_fragment$h(ctx) {
 	let show_if_1 = /*strongExists*/ ctx[2](/*word*/ ctx[0], /*$user*/ ctx[1]);
 	let t2;
 	let show_if = /*irregularExists*/ ctx[3](/*word*/ ctx[0], /*$user*/ ctx[1]);
-	let if_block0 = show_if_1 && create_if_block_1$4(ctx);
+	let if_block0 = show_if_1 && create_if_block_1$3(ctx);
 	let if_block1 = show_if && create_if_block$a(ctx);
 
 	return {
@@ -5827,7 +5766,7 @@ function create_fragment$h(ctx) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
-					if_block0 = create_if_block_1$4(ctx);
+					if_block0 = create_if_block_1$3(ctx);
 					if_block0.c();
 					if_block0.m(div, t2);
 				}
@@ -5926,7 +5865,7 @@ function create_if_block$b(ctx) {
 	let p;
 
 	function select_block_type(ctx, dirty) {
-		if (!/*word*/ ctx[0].plural) return create_if_block_1$5;
+		if (!/*word*/ ctx[0].plural) return create_if_block_1$4;
 		return create_else_block$2;
 	}
 
@@ -6003,7 +5942,7 @@ function create_else_block$2(ctx) {
 }
 
 // (17:4) {#if !word.plural}
-function create_if_block_1$5(ctx) {
+function create_if_block_1$4(ctx) {
 	let t;
 
 	return {
@@ -6159,7 +6098,7 @@ function create_else_block$3(ctx) {
 }
 
 // (16:41) 
-function create_if_block_1$6(ctx) {
+function create_if_block_1$5(ctx) {
 	let current;
 	const verb = new Verb({ props: { word: /*activeWord*/ ctx[0] } });
 
@@ -6234,7 +6173,7 @@ function create_default_slot$4(ctx) {
 	let current_block_type_index;
 	let if_block;
 	let current;
-	const if_block_creators = [create_if_block$c, create_if_block_1$6, create_else_block$3];
+	const if_block_creators = [create_if_block$c, create_if_block_1$5, create_else_block$3];
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
@@ -6409,7 +6348,7 @@ function create_else_block$4(ctx) {
 }
 
 // (14:41) 
-function create_if_block_1$7(ctx) {
+function create_if_block_1$6(ctx) {
 	let current;
 	const verb = new Verb({ props: { word: /*activeWord*/ ctx[0] } });
 
@@ -6484,7 +6423,7 @@ function create_default_slot$5(ctx) {
 	let t1_value = /*activeWord*/ ctx[0].translation + "";
 	let t1;
 	let current;
-	const if_block_creators = [create_if_block$d, create_if_block_1$7, create_else_block$4];
+	const if_block_creators = [create_if_block$d, create_if_block_1$6, create_else_block$4];
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
@@ -6912,7 +6851,7 @@ function add_css$k() {
 }
 
 // (10:2) {#if name}
-function create_if_block_1$8(ctx) {
+function create_if_block_1$7(ctx) {
 	let input;
 
 	return {
@@ -6980,7 +6919,7 @@ function create_fragment$n(ctx) {
 	let span;
 	let current;
 	let dispose;
-	let if_block0 = /*name*/ ctx[2] && create_if_block_1$8(ctx);
+	let if_block0 = /*name*/ ctx[2] && create_if_block_1$7(ctx);
 	let if_block1 = /*type*/ ctx[1] === "checkbox" && create_if_block$f();
 	const default_slot_template = /*$$slots*/ ctx[4].default;
 	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[3], null);
@@ -7030,7 +6969,7 @@ function create_fragment$n(ctx) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
-					if_block0 = create_if_block_1$8(ctx);
+					if_block0 = create_if_block_1$7(ctx);
 					if_block0.c();
 					if_block0.m(label, t0);
 				}
@@ -12069,7 +12008,7 @@ function create_default_slot_13$1(ctx) {
 }
 
 // (132:6) {#if $typeValue === 'verb'}
-function create_if_block_1$9(ctx) {
+function create_if_block_1$8(ctx) {
 	let updating_checked;
 	let t0;
 	let t1;
@@ -12780,7 +12719,7 @@ function create_default_slot$b(ctx) {
 		});
 
 	let if_block1 = /*$typeValue*/ ctx[5] === "noun" && create_if_block_2$3(ctx);
-	let if_block2 = /*$typeValue*/ ctx[5] === "verb" && create_if_block_1$9(ctx);
+	let if_block2 = /*$typeValue*/ ctx[5] === "verb" && create_if_block_1$8(ctx);
 
 	function categories_linked_binding(value) {
 		/*categories_linked_binding*/ ctx[82].call(null, value);
@@ -12905,7 +12844,7 @@ function create_default_slot$b(ctx) {
 					if_block2.p(ctx, dirty);
 					transition_in(if_block2, 1);
 				} else {
-					if_block2 = create_if_block_1$9(ctx);
+					if_block2 = create_if_block_1$8(ctx);
 					if_block2.c();
 					transition_in(if_block2, 1);
 					if_block2.m(t4.parentNode, t4);
@@ -13454,7 +13393,7 @@ function add_css$q() {
 }
 
 // (25:2) {#if introActive}
-function create_if_block_1$a(ctx) {
+function create_if_block_1$9(ctx) {
 	let updating_introActive;
 	let updating_introToHide;
 	let current;
@@ -13625,7 +13564,7 @@ function create_fragment$A(ctx) {
 	let div;
 	let t;
 	let current;
-	let if_block0 = /*introActive*/ ctx[1] && create_if_block_1$a(ctx);
+	let if_block0 = /*introActive*/ ctx[1] && create_if_block_1$9(ctx);
 	let if_block1 = (!/*introActive*/ ctx[1] || /*introToHide*/ ctx[2]) && create_if_block$l(ctx);
 
 	return {
@@ -13649,7 +13588,7 @@ function create_fragment$A(ctx) {
 					if_block0.p(ctx, dirty);
 					transition_in(if_block0, 1);
 				} else {
-					if_block0 = create_if_block_1$a(ctx);
+					if_block0 = create_if_block_1$9(ctx);
 					if_block0.c();
 					transition_in(if_block0, 1);
 					if_block0.m(div, t);
