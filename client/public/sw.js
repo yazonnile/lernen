@@ -1,4 +1,4 @@
-const cacheName = 'app-lernen-' + 1584736053724;
+const cacheName = 'app-lernen-' + 1584736276645;
 const basePath =  '/lernen/client/public' ;
 const cacheEnum = {
     index: `${basePath}/`,
@@ -29,12 +29,12 @@ self.addEventListener('activate', (event) => {
         console.log('activate', e);
     }));
 });
-const getCache = event => {
-    return caches.match(event.request).then((resp) => {
+const getCache = request => {
+    return caches.match(request).then((resp) => {
         if (resp) {
             return resp;
         }
-        if (event.request.method.toUpperCase() === 'GET') {
+        if (request.method.toUpperCase() === 'GET') {
             return caches.match(cacheEnum.index);
         }
         else {
