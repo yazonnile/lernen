@@ -145,6 +145,7 @@
   .alphabet button.active {
     background: var(--mainColor);
     color: #fff;
+    border-radius: 0 0 10px;
     position: relative;
   }
 
@@ -158,5 +159,6 @@
     left: calc(50% - 10px);
     width: 0;
     height: 0;
+    z-index: 1;
   }
 </style>

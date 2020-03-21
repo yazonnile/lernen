@@ -1513,26 +1513,26 @@ const syncData = (() => {
 })();
 
 const loadInitialData = ({ callback, payload = {} }) => {
-    let initialData;
+    let storageData;
     try {
-        initialData = JSON.parse(localStorage.getItem('lernen-storage'));
+        storageData = JSON.parse(localStorage.getItem('lernen-storage'));
     }
     catch (e) { }
-    if (initialData) {
-        store$2.set(initialData.sync);
-        store$4.set(initialData.words || {});
-        store$5.set(initialData.categories || {});
-        if (initialData.games) {
-            store$1.set(initialData.games);
+    if (storageData) {
+        store$2.set(storageData.sync);
+        store$4.set(storageData.words || {});
+        store$5.set(storageData.categories || {});
+        if (storageData.games) {
+            store$1.set(storageData.games);
         }
-        if (initialData.view) {
-            store$6.set(initialData.view);
+        if (storageData.view) {
+            store$6.set(storageData.view);
         }
         else {
             store$6.home();
         }
-        if (initialData.user) {
-            store$3.set(initialData.user);
+        if (storageData.user) {
+            store$3.set(storageData.user);
         }
         else {
             store$3.resetSetup();
@@ -2208,8 +2208,8 @@ class Intro extends SvelteComponent {
 
 function add_css$4() {
 	var style = element("style");
-	style.id = "svelte-tdal7u-style";
-	style.textContent = ".menu.svelte-tdal7u{position:absolute;right:0;text-align:left;top:0;width:75%;z-index:1}.menu--overlay.svelte-tdal7u{background:rgba(0,0,0,.5);content:'';height:100%;left:0;position:fixed;top:0;width:100%;z-index:1}.menu--wrap.svelte-tdal7u{background:#fff;box-shadow:5px 0 7px 5px #000;display:flex;flex-direction:column;justify-content:space-between;height:100vh;overflow:auto;position:relative;z-index:2}.menu--frame.svelte-tdal7u{display:flex;flex:1;flex-direction:column}button.svelte-tdal7u{background:#b7d8f4;border:0;flex:1;padding:20px;text-transform:uppercase;width:100%}button+button.svelte-tdal7u{border-top:1px solid #fff}";
+	style.id = "svelte-1ndaji1-style";
+	style.textContent = ".menu.svelte-1ndaji1{position:absolute;right:0;text-align:left;top:0;width:75%;z-index:2}.menu--overlay.svelte-1ndaji1{background:rgba(0,0,0,.5);content:'';height:100%;left:0;position:fixed;top:0;width:100%;z-index:1}.menu--wrap.svelte-1ndaji1{background:#fff;box-shadow:5px 0 7px 5px #000;display:flex;flex-direction:column;justify-content:space-between;height:100vh;overflow:auto;position:relative;z-index:2}.menu--frame.svelte-1ndaji1{display:flex;flex:1;flex-direction:column}button.svelte-1ndaji1{background:#b7d8f4;border:0;flex:1;padding:20px;text-transform:uppercase;width:100%}button+button.svelte-1ndaji1{border-top:1px solid #104b8a}";
 	append(document.head, style);
 }
 
@@ -2254,15 +2254,15 @@ function create_fragment$4(ctx) {
 			button4.textContent = "Настройки";
 			t9 = space();
 			i = element("i");
-			attr(button0, "class", "svelte-tdal7u");
-			attr(button1, "class", "svelte-tdal7u");
-			attr(button2, "class", "svelte-tdal7u");
-			attr(button3, "class", "svelte-tdal7u");
-			attr(button4, "class", "svelte-tdal7u");
-			attr(div0, "class", "menu--frame svelte-tdal7u");
-			attr(div1, "class", "menu--wrap svelte-tdal7u");
-			attr(i, "class", "menu--overlay svelte-tdal7u");
-			attr(div2, "class", "menu svelte-tdal7u");
+			attr(button0, "class", "svelte-1ndaji1");
+			attr(button1, "class", "svelte-1ndaji1");
+			attr(button2, "class", "svelte-1ndaji1");
+			attr(button3, "class", "svelte-1ndaji1");
+			attr(button4, "class", "svelte-1ndaji1");
+			attr(div0, "class", "menu--frame svelte-1ndaji1");
+			attr(div1, "class", "menu--wrap svelte-1ndaji1");
+			attr(i, "class", "menu--overlay svelte-1ndaji1");
+			attr(div2, "class", "menu svelte-1ndaji1");
 		},
 		m(target, anchor) {
 			insert(target, div2, anchor);
@@ -2361,7 +2361,7 @@ function instance$4($$self, $$props, $$invalidate) {
 class Menu extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-tdal7u-style")) add_css$4();
+		if (!document.getElementById("svelte-1ndaji1-style")) add_css$4();
 		init(this, options, instance$4, create_fragment$4, safe_not_equal, { menuActive: 2 });
 	}
 }
@@ -3763,8 +3763,8 @@ class Autocomplete extends SvelteComponent {
 
 function add_css$9() {
 	var style = element("style");
-	style.id = "svelte-5f9ren-style";
-	style.textContent = ".item.svelte-5f9ren{border-top:1px solid #104b8a;font-size:16px;line-height:21px;position:relative;transition:background-color .3s ease}.disabled.svelte-5f9ren{background:linear-gradient(to right, #ececec, #fff)}.item.svelte-5f9ren .icon-turnOff{color:#ccc;height:21px;position:absolute;right:10px;top:10px;width:21px}.item.svelte-5f9ren:first-of-type{border:0}.edit.svelte-5f9ren{background:none;border:0;border-radius:5px;padding:10px;position:absolute;right:0;top:0}.edit.svelte-5f9ren .icon{height:21px;width:21px}input:checked+.item.svelte-5f9ren{background:#b7d8f4}.text.svelte-5f9ren{display:block;padding:10px}";
+	style.id = "svelte-1um0uqf-style";
+	style.textContent = ".item.svelte-1um0uqf{border-top:1px solid #104b8a;font-size:16px;line-height:21px;position:relative;transition:background-color .3s ease}.disabled.svelte-1um0uqf{background:linear-gradient(to right, #ececec, #fff)}.item.svelte-1um0uqf .icon-turnOff{color:#ccc;height:21px;position:absolute;right:10px;top:10px;width:21px}.item.svelte-1um0uqf:first-of-type{border:0}.edit.svelte-1um0uqf{background:#fff;border:0;border-radius:5px;padding:7px;position:absolute;right:3px;top:3px}.edit.svelte-1um0uqf .icon{height:21px;width:21px}input:checked+.item.svelte-1um0uqf{background:#b7d8f4}.text.svelte-1um0uqf{display:block;padding:10px}";
 	append(document.head, style);
 }
 
@@ -3807,7 +3807,7 @@ function create_if_block$5(ctx) {
 		c() {
 			button = element("button");
 			create_component(icon.$$.fragment);
-			attr(button, "class", "edit svelte-5f9ren");
+			attr(button, "class", "edit svelte-1um0uqf");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
@@ -3854,9 +3854,9 @@ function create_fragment$a(ctx) {
 			if (if_block0) if_block0.c();
 			t2 = space();
 			if (if_block1) if_block1.c();
-			attr(label, "class", "text svelte-5f9ren");
+			attr(label, "class", "text svelte-1um0uqf");
 			attr(label, "for", label_for_value = `cat${/*word*/ ctx[0].wordId}`);
-			attr(div, "class", "item svelte-5f9ren");
+			attr(div, "class", "item svelte-1um0uqf");
 			toggle_class(div, "disabled", !/*word*/ ctx[0].active);
 		},
 		m(target, anchor) {
@@ -3958,7 +3958,7 @@ function instance$a($$self, $$props, $$invalidate) {
 class Dict_word extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-5f9ren-style")) add_css$9();
+		if (!document.getElementById("svelte-1um0uqf-style")) add_css$9();
 		init(this, options, instance$a, create_fragment$a, safe_not_equal, { word: 0, checked: 1 });
 	}
 }
@@ -4099,8 +4099,8 @@ class Dict_buttons extends SvelteComponent {
 
 function add_css$b() {
 	var style = element("style");
-	style.id = "svelte-1n7fkrn-style";
-	style.textContent = ".dict.svelte-1n7fkrn.svelte-1n7fkrn{position:relative;padding-bottom:76px}input.svelte-1n7fkrn.svelte-1n7fkrn{visibility:hidden;position:absolute}.alphabet.svelte-1n7fkrn.svelte-1n7fkrn{display:flex;flex-wrap:wrap;margin:0 -1px -1px 0}.alphabet.svelte-1n7fkrn button.svelte-1n7fkrn{background:#b7d8f4;border:solid #fff;border-width:0 1px 1px 0;flex:0 0 20%;font-size:20px;line-height:25px;padding:5px 15px}.alphabet--letter.svelte-1n7fkrn.svelte-1n7fkrn{flex:1 0 100%;margin:5px 0}.alphabet.svelte-1n7fkrn button.active.svelte-1n7fkrn{background:#104b8a;color:#fff;position:relative}.alphabet.svelte-1n7fkrn button.active.svelte-1n7fkrn:after{top:100%;border-style:solid;border-width:10px 10px 0;border-color:#104b8a transparent transparent;content:'';position:absolute;left:calc(50% - 10px);width:0;height:0}";
+	style.id = "svelte-1x5rgtw-style";
+	style.textContent = ".dict.svelte-1x5rgtw.svelte-1x5rgtw{position:relative;padding-bottom:76px}input.svelte-1x5rgtw.svelte-1x5rgtw{visibility:hidden;position:absolute}.alphabet.svelte-1x5rgtw.svelte-1x5rgtw{display:flex;flex-wrap:wrap;margin:0 -1px -1px 0}.alphabet.svelte-1x5rgtw button.svelte-1x5rgtw{background:#b7d8f4;border:solid #fff;border-width:0 1px 1px 0;flex:0 0 20%;font-size:20px;line-height:25px;padding:5px 15px}.alphabet--letter.svelte-1x5rgtw.svelte-1x5rgtw{flex:1 0 100%;margin:5px 0}.alphabet.svelte-1x5rgtw button.active.svelte-1x5rgtw{background:#104b8a;color:#fff;border-radius:0 0 10px;position:relative}.alphabet.svelte-1x5rgtw button.active.svelte-1x5rgtw:after{top:100%;border-style:solid;border-width:10px 10px 0;border-color:#104b8a transparent transparent;content:'';position:absolute;left:calc(50% - 10px);width:0;height:0;z-index:1}";
 	append(document.head, style);
 }
 
@@ -4169,7 +4169,7 @@ function create_if_block_1$3(ctx) {
 
 			t = space();
 			if (if_block) if_block.c();
-			attr(div, "class", "alphabet svelte-1n7fkrn");
+			attr(div, "class", "alphabet svelte-1x5rgtw");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4310,7 +4310,7 @@ function create_each_block_2(key_1, ctx) {
 			button = element("button");
 			t = text(t_value);
 			button.disabled = button_disabled_value = !/*alphabetWordsByLetters*/ ctx[6][/*letter*/ ctx[26]];
-			attr(button, "class", "svelte-1n7fkrn");
+			attr(button, "class", "svelte-1x5rgtw");
 			toggle_class(button, "active", /*activeLetter*/ ctx[4] && /*letter*/ ctx[26] === /*activeLetter*/ ctx[4].innerText);
 			this.first = button;
 		},
@@ -4357,7 +4357,7 @@ function create_if_block_2$1(ctx) {
 				each_blocks[i].c();
 			}
 
-			attr(div, "class", "alphabet--letter svelte-1n7fkrn");
+			attr(div, "class", "alphabet--letter svelte-1x5rgtw");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4437,7 +4437,7 @@ function create_each_block_1$1(key_1, ctx) {
 			input.__value = input_value_value = /*wordId*/ ctx[21];
 			input.value = input.__value;
 			attr(input, "id", input_id_value = `cat${/*wordId*/ ctx[21]}`);
-			attr(input, "class", "svelte-1n7fkrn");
+			attr(input, "class", "svelte-1x5rgtw");
 			/*$$binding_groups*/ ctx[17][0].push(input);
 			this.first = input;
 		},
@@ -4522,7 +4522,7 @@ function create_each_block$2(key_1, ctx) {
 			input.__value = input_value_value = /*wordId*/ ctx[21];
 			input.value = input.__value;
 			attr(input, "id", input_id_value = `cat${/*wordId*/ ctx[21]}`);
-			attr(input, "class", "svelte-1n7fkrn");
+			attr(input, "class", "svelte-1x5rgtw");
 			/*$$binding_groups*/ ctx[17][0].push(input);
 			this.first = input;
 		},
@@ -4647,7 +4647,7 @@ function create_fragment$c(ctx) {
 			if (if_block1) if_block1.c();
 			t2 = space();
 			create_component(dictbuttons.$$.fragment);
-			attr(div, "class", "dict svelte-1n7fkrn");
+			attr(div, "class", "dict svelte-1x5rgtw");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -4943,7 +4943,7 @@ function instance$c($$self, $$props, $$invalidate) {
 class Dict extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-1n7fkrn-style")) add_css$b();
+		if (!document.getElementById("svelte-1x5rgtw-style")) add_css$b();
 		init(this, options, instance$c, create_fragment$c, safe_not_equal, {});
 	}
 }
@@ -6011,6 +6011,9 @@ const getNounTextToSpeech = (word, setup) => {
         if (word.plural) {
             result.push(setup.soundArticles ? `die ${word.plural}` : word.plural);
         }
+        else if (word.plural === 'kein plural') {
+            result.push('kein plural');
+        }
         else {
             result.push('plural');
         }
@@ -6629,7 +6632,7 @@ class Verb extends SvelteComponent {
 
 /* src/views/games/noun.svelte generated by Svelte v3.19.1 */
 
-function create_if_block_3$1(ctx) {
+function create_if_block_4(ctx) {
 	let t_value = /*word*/ ctx[0].article + "";
 	let t;
 
@@ -6655,6 +6658,7 @@ function create_if_block$c(ctx) {
 
 	function select_block_type(ctx, dirty) {
 		if (!/*word*/ ctx[0].plural) return create_if_block_1$6;
+		if (/*word*/ ctx[0].plural === "kein plural") return create_if_block_2$2;
 		return create_else_block$2;
 	}
 
@@ -6690,12 +6694,12 @@ function create_if_block$c(ctx) {
 	};
 }
 
-// (19:4) {:else}
+// (21:4) {:else}
 function create_else_block$2(ctx) {
 	let t0;
 	let t1_value = /*word*/ ctx[0].plural + "";
 	let t1;
-	let if_block = /*$user*/ ctx[1].articles && create_if_block_2$2();
+	let if_block = /*$user*/ ctx[1].articles && create_if_block_3$1();
 
 	return {
 		c() {
@@ -6711,7 +6715,7 @@ function create_else_block$2(ctx) {
 		p(ctx, dirty) {
 			if (/*$user*/ ctx[1].articles) {
 				if (!if_block) {
-					if_block = create_if_block_2$2();
+					if_block = create_if_block_3$1();
 					if_block.c();
 					if_block.m(t0.parentNode, t0);
 				}
@@ -6726,6 +6730,24 @@ function create_else_block$2(ctx) {
 			if (if_block) if_block.d(detaching);
 			if (detaching) detach(t0);
 			if (detaching) detach(t1);
+		}
+	};
+}
+
+// (19:44) 
+function create_if_block_2$2(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = text("kein plural");
+		},
+		m(target, anchor) {
+			insert(target, t, anchor);
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(t);
 		}
 	};
 }
@@ -6748,8 +6770,8 @@ function create_if_block_1$6(ctx) {
 	};
 }
 
-// (21:6) {#if $user.articles}
-function create_if_block_2$2(ctx) {
+// (23:6) {#if $user.articles}
+function create_if_block_3$1(ctx) {
 	let t;
 
 	return {
@@ -6772,7 +6794,7 @@ function create_fragment$k(ctx) {
 	let t1;
 	let t2;
 	let if_block1_anchor;
-	let if_block0 = /*$user*/ ctx[1].articles && create_if_block_3$1(ctx);
+	let if_block0 = /*$user*/ ctx[1].articles && create_if_block_4(ctx);
 	let if_block1 = /*$user*/ ctx[1].plural && create_if_block$c(ctx);
 
 	return {
@@ -6799,7 +6821,7 @@ function create_fragment$k(ctx) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
-					if_block0 = create_if_block_3$1(ctx);
+					if_block0 = create_if_block_4(ctx);
 					if_block0.c();
 					if_block0.m(p, t0);
 				}
@@ -7634,8 +7656,8 @@ class Setup_box extends SvelteComponent {
 
 function add_css$m() {
 	var style = element("style");
-	style.id = "svelte-1ex3y9y-style";
-	style.textContent = ".form-switcher{cursor:pointer;display:flex;align-items:center;justify-items:flex-start;margin-bottom:20px;position:relative}.form-switcher--real-element{position:absolute;visibility:hidden;z-index:-9}.form-switcher--label{margin-left:10px}.form-switcher--toggle{background:#ccc;border-radius:13px;display:inline-block;height:20px;min-width:42px;position:relative;transition:background 0.25s cubic-bezier(0.77, 0, 0.175, 1);vertical-align:top;width:42px}.form-switcher--toggle .form-switcher--icon{background:#fff;border-radius:10px;display:block;height:14px;left:5px;position:absolute;transform:translateX(-1px);top:3px;width:14px;transition-duration:0.25s;transition-timing-function:cubic-bezier(0.77, 0, 0.175, 1);transition-property:transform, background}.form-switcher--real-element:checked ~ .form-switcher--toggle{background:#104b8a}.form-switcher--real-element:checked ~ .form-switcher--toggle .form-switcher--icon{background:#fff;transform:translateX(18px)}.form-switcher--checkbox{background:#fff;border:1px solid #ccc;border-radius:2px;color:#104b8a;display:block;height:16px;transition:border-color 0.25s ease;width:16px}.form-switcher--real-element:checked ~ .form-switcher--checkbox{border-color:#b7d8f4}.form-switcher--checkbox .form-switcher--icon{display:inline-block;height:100%;opacity:0;position:relative;transform:scale(0.1);transition-duration:0.25s;transition-timing-function:cubic-bezier(0.45, -0.67, 0.53, 2);transition-property:transform, opacity;vertical-align:top;width:100%}.form-switcher--real-element:checked ~ .form-switcher--checkbox .form-switcher--icon{opacity:1;transform:scale(1)}";
+	style.id = "svelte-1jb8txr-style";
+	style.textContent = ".form-switcher{cursor:pointer;display:flex;align-items:center;justify-items:flex-start;margin-bottom:20px;position:relative}.form-switcher--real-element{position:absolute;visibility:hidden;z-index:-9}.form-switcher--label{margin-left:10px}.form-switcher--toggle{background:#ccc;border-radius:13px;display:inline-block;height:20px;min-width:42px;position:relative;transition:background 0.25s cubic-bezier(0.77, 0, 0.175, 1);vertical-align:top;width:42px}.form-switcher--toggle .form-switcher--icon{background:#fff;border-radius:10px;display:block;height:14px;left:5px;position:absolute;transform:translateX(-1px);top:3px;width:14px;transition-duration:0.25s;transition-timing-function:cubic-bezier(0.77, 0, 0.175, 1);transition-property:transform, background}.form-switcher--real-element:checked ~ .form-switcher--toggle{background:#104b8a}.form-switcher--real-element:checked ~ .form-switcher--toggle .form-switcher--icon{background:#fff;transform:translateX(19px)}.form-switcher--checkbox{background:#fff;border:1px solid #ccc;border-radius:2px;color:#104b8a;display:block;height:16px;transition:border-color 0.25s ease;width:16px}.form-switcher--real-element:checked ~ .form-switcher--checkbox{border-color:#b7d8f4}.form-switcher--checkbox .form-switcher--icon{display:inline-block;height:100%;opacity:0;position:relative;transform:scale(0.1);transition-duration:0.25s;transition-timing-function:cubic-bezier(0.45, -0.67, 0.53, 2);transition-property:transform, opacity;vertical-align:top;width:100%}.form-switcher--real-element:checked ~ .form-switcher--checkbox .form-switcher--icon{opacity:1;transform:scale(1)}";
 	append(document.head, style);
 }
 
@@ -7843,7 +7865,7 @@ function instance$p($$self, $$props, $$invalidate) {
 class Form_switcher extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-1ex3y9y-style")) add_css$m();
+		if (!document.getElementById("svelte-1jb8txr-style")) add_css$m();
 		init(this, options, instance$p, create_fragment$p, safe_not_equal, { type: 1, name: 2, checked: 0 });
 	}
 }
@@ -11476,7 +11498,7 @@ function create_fragment$v(ctx) {
 			if (if_block4) if_block4.c();
 			t10 = space();
 			p = element("p");
-			p.textContent = `${1584738652043}`;
+			p.textContent = `${1584753145691}`;
 			attr(h20, "class", "svelte-1p9u3is");
 			attr(div0, "class", "box svelte-1p9u3is");
 			attr(h21, "class", "svelte-1p9u3is");
@@ -12255,7 +12277,15 @@ class Words_categories extends SvelteComponent {
 
 /* src/views/words/word.svelte generated by Svelte v3.19.1 */
 
-function create_if_block_4(ctx) {
+function add_css$r() {
+	var style = element("style");
+	style.id = "svelte-1ma1iz7-style";
+	style.textContent = ".row.svelte-1ma1iz7{padding-bottom:20px}";
+	append(document.head, style);
+}
+
+// (99:2) {#if !wordId}
+function create_if_block_4$1(ctx) {
 	let current;
 
 	const buttonsrow = new Buttons_row({
@@ -12830,7 +12860,7 @@ function create_default_slot_12$1(ctx) {
 	};
 }
 
-// (136:10) <FormInput errors={strong1Errors} label="Ich">
+// (137:12) <FormInput errors={strong1Errors} label="Ich">
 function create_default_slot_11$1(ctx) {
 	let input;
 	let strong1Input_action;
@@ -12862,7 +12892,7 @@ function create_default_slot_11$1(ctx) {
 	};
 }
 
-// (139:10) <FormInput errors={strong2Errors} label="du">
+// (140:12) <FormInput errors={strong2Errors} label="du">
 function create_default_slot_10$1(ctx) {
 	let input;
 	let strong2Input_action;
@@ -12894,7 +12924,7 @@ function create_default_slot_10$1(ctx) {
 	};
 }
 
-// (142:10) <FormInput errors={strong3Errors} label="er, sie, es">
+// (143:12) <FormInput errors={strong3Errors} label="er, sie, es">
 function create_default_slot_9$1(ctx) {
 	let input;
 	let strong3Input_action;
@@ -12926,7 +12956,7 @@ function create_default_slot_9$1(ctx) {
 	};
 }
 
-// (145:10) <FormInput errors={strong4Errors} label="wir">
+// (146:12) <FormInput errors={strong4Errors} label="wir">
 function create_default_slot_8$1(ctx) {
 	let input;
 	let strong4Input_action;
@@ -12958,7 +12988,7 @@ function create_default_slot_8$1(ctx) {
 	};
 }
 
-// (148:10) <FormInput errors={strong5Errors} label="ihr">
+// (149:12) <FormInput errors={strong5Errors} label="ihr">
 function create_default_slot_7$1(ctx) {
 	let input;
 	let strong5Input_action;
@@ -12990,7 +13020,7 @@ function create_default_slot_7$1(ctx) {
 	};
 }
 
-// (151:10) <FormInput errors={strong6Errors} label="Sie, sie">
+// (152:12) <FormInput errors={strong6Errors} label="Sie, sie">
 function create_default_slot_6$1(ctx) {
 	let input;
 	let strong6Input_action;
@@ -13024,6 +13054,7 @@ function create_default_slot_6$1(ctx) {
 
 // (135:8) <Slide active={strongVerb}>
 function create_default_slot_5$1(ctx) {
+	let div;
 	let t0;
 	let t1;
 	let t2;
@@ -13087,6 +13118,7 @@ function create_default_slot_5$1(ctx) {
 
 	return {
 		c() {
+			div = element("div");
 			create_component(forminput0.$$.fragment);
 			t0 = space();
 			create_component(forminput1.$$.fragment);
@@ -13098,19 +13130,21 @@ function create_default_slot_5$1(ctx) {
 			create_component(forminput4.$$.fragment);
 			t4 = space();
 			create_component(forminput5.$$.fragment);
+			attr(div, "class", "row svelte-1ma1iz7");
 		},
 		m(target, anchor) {
-			mount_component(forminput0, target, anchor);
-			insert(target, t0, anchor);
-			mount_component(forminput1, target, anchor);
-			insert(target, t1, anchor);
-			mount_component(forminput2, target, anchor);
-			insert(target, t2, anchor);
-			mount_component(forminput3, target, anchor);
-			insert(target, t3, anchor);
-			mount_component(forminput4, target, anchor);
-			insert(target, t4, anchor);
-			mount_component(forminput5, target, anchor);
+			insert(target, div, anchor);
+			mount_component(forminput0, div, null);
+			append(div, t0);
+			mount_component(forminput1, div, null);
+			append(div, t1);
+			mount_component(forminput2, div, null);
+			append(div, t2);
+			mount_component(forminput3, div, null);
+			append(div, t3);
+			mount_component(forminput4, div, null);
+			append(div, t4);
+			mount_component(forminput5, div, null);
 			current = true;
 		},
 		p(ctx, dirty) {
@@ -13177,22 +13211,18 @@ function create_default_slot_5$1(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			destroy_component(forminput0, detaching);
-			if (detaching) detach(t0);
-			destroy_component(forminput1, detaching);
-			if (detaching) detach(t1);
-			destroy_component(forminput2, detaching);
-			if (detaching) detach(t2);
-			destroy_component(forminput3, detaching);
-			if (detaching) detach(t3);
-			destroy_component(forminput4, detaching);
-			if (detaching) detach(t4);
-			destroy_component(forminput5, detaching);
+			if (detaching) detach(div);
+			destroy_component(forminput0);
+			destroy_component(forminput1);
+			destroy_component(forminput2);
+			destroy_component(forminput3);
+			destroy_component(forminput4);
+			destroy_component(forminput5);
 		}
 	};
 }
 
-// (156:8) <FormSwitcher type="toggle" bind:checked={irregularVerb}>
+// (158:8) <FormSwitcher type="toggle" bind:checked={irregularVerb}>
 function create_default_slot_4$1(ctx) {
 	let t;
 
@@ -13209,7 +13239,7 @@ function create_default_slot_4$1(ctx) {
 	};
 }
 
-// (159:10) <FormInput errors={irregular1Errors} label="Präteritum">
+// (162:12) <FormInput errors={irregular1Errors} label="Präteritum">
 function create_default_slot_3$3(ctx) {
 	let input;
 	let irregular1Input_action;
@@ -13241,7 +13271,7 @@ function create_default_slot_3$3(ctx) {
 	};
 }
 
-// (162:10) <FormInput errors={irregular2Errors} label="Partizip II">
+// (165:12) <FormInput errors={irregular2Errors} label="Partizip II">
 function create_default_slot_2$5(ctx) {
 	let input;
 	let irregular2Input_action;
@@ -13273,8 +13303,9 @@ function create_default_slot_2$5(ctx) {
 	};
 }
 
-// (158:8) <Slide active={irregularVerb}>
+// (160:8) <Slide active={irregularVerb}>
 function create_default_slot_1$5(ctx) {
+	let div;
 	let t;
 	let current;
 
@@ -13298,14 +13329,17 @@ function create_default_slot_1$5(ctx) {
 
 	return {
 		c() {
+			div = element("div");
 			create_component(forminput0.$$.fragment);
 			t = space();
 			create_component(forminput1.$$.fragment);
+			attr(div, "class", "row svelte-1ma1iz7");
 		},
 		m(target, anchor) {
-			mount_component(forminput0, target, anchor);
-			insert(target, t, anchor);
-			mount_component(forminput1, target, anchor);
+			insert(target, div, anchor);
+			mount_component(forminput0, div, null);
+			append(div, t);
+			mount_component(forminput1, div, null);
 			current = true;
 		},
 		p(ctx, dirty) {
@@ -13336,9 +13370,9 @@ function create_default_slot_1$5(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			destroy_component(forminput0, detaching);
-			if (detaching) detach(t);
-			destroy_component(forminput1, detaching);
+			if (detaching) detach(div);
+			destroy_component(forminput0);
+			destroy_component(forminput1);
 		}
 	};
 }
@@ -13576,7 +13610,7 @@ function create_fragment$y(ctx) {
 	let t2;
 	let t3;
 	let current;
-	let if_block0 = !/*wordId*/ ctx[17] && create_if_block_4(ctx);
+	let if_block0 = !/*wordId*/ ctx[17] && create_if_block_4$1(ctx);
 	let if_block1 = /*$typeValue*/ ctx[5] && create_if_block$k(ctx);
 
 	return {
@@ -13927,6 +13961,7 @@ function instance$y($$self, $$props, $$invalidate) {
 class Word extends SvelteComponent {
 	constructor(options) {
 		super();
+		if (!document.getElementById("svelte-1ma1iz7-style")) add_css$r();
 		init(this, options, instance$y, create_fragment$y, safe_not_equal, { word: 57 }, [-1, -1, -1]);
 	}
 }
@@ -14040,7 +14075,7 @@ var views = /*#__PURE__*/Object.freeze({
 
 /* src/sdk/app/app.svelte generated by Svelte v3.19.1 */
 
-function add_css$r() {
+function add_css$s() {
 	var style = element("style");
 	style.id = "svelte-1g5wydk-style";
 	style.textContent = ".app.svelte-1g5wydk{display:flex;flex-direction:column;min-height:100%}.main.svelte-1g5wydk{display:flex;flex:1;padding:20px 10px 10px;order:1}.main.svelte-1g5wydk>*{flex:1;width:100%}#bottom-buttons.svelte-1g5wydk{order:2;padding:10px 10px 0}#bottom-buttons.svelte-1g5wydk:empty{margin:0;padding:0}";
@@ -14341,7 +14376,7 @@ function instance$A($$self, $$props, $$invalidate) {
 class App extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-1g5wydk-style")) add_css$r();
+		if (!document.getElementById("svelte-1g5wydk-style")) add_css$s();
 		init(this, options, instance$A, create_fragment$B, safe_not_equal, {});
 	}
 }

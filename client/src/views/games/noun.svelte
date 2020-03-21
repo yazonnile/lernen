@@ -16,6 +16,8 @@
   <p>
     {#if !word.plural}
       plural
+    {:else if word.plural === 'kein plural'}
+      kein plural
     {:else}
 
       {#if $user.articles}

@@ -79,7 +79,7 @@
 
   .form-switcher--real-element:checked ~ .form-switcher--toggle .form-switcher--icon {
     background: #fff;
-    transform: translateX(18px);
+    transform: translateX(19px);
   }
 
   .form-switcher--checkbox {

@@ -1,4 +1,4 @@
-const cacheName = 'app-lernen-' + 1584738652043;
+const cacheName = 'app-lernen-' + 1584753145691;
 const basePath =  '/lernen/client/public' ;
 const cacheEnum = {
     index: `${basePath}/`,
@@ -53,6 +53,14 @@ const getCache = request => {
 self.addEventListener('fetch', (event) => {
     event.respondWith(fetch(event.request).then((response) => {
         if (response) {
+            caches.match(event.request).then((resp) => {
+                if (resp) {
+                    let responseClone = response.clone();
+                    caches.open(cacheName).then((cache) => {
+                        cache.put(event.request, responseClone);
+                    });
+                }
+            });
             return response;
         }
         else {

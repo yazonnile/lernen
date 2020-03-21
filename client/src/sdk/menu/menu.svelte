@@ -37,7 +37,7 @@
     text-align: left;
     top: 0;
     width:75%;
-    z-index: 1;
+    z-index: 2;
   }
 
   .menu--overlay {
@@ -79,6 +79,6 @@
   }
 
   button + button {
-    border-top: 1px solid #fff;
+    border-top: 1px solid var(--mainColor);
   }
 </style>

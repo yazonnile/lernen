@@ -9,28 +9,28 @@ interface LoadInitialData {
 }
 
 export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => {
-  let initialData;
+  let storageData;
   try {
-    initialData = JSON.parse(localStorage.getItem('lernen-storage'));
+    storageData = JSON.parse(localStorage.getItem('lernen-storage'));
   } catch (e) { }
 
-  if (initialData) {
-    sync.set(initialData.sync);
-    words.set(initialData.words || {});
-    categories.set(initialData.categories || {});
+  if (storageData) {
+    sync.set(storageData.sync);
+    words.set(storageData.words || {});
+    categories.set(storageData.categories || {});
 
-    if (initialData.games) {
-      games.set(initialData.games);
+    if (storageData.games) {
+      games.set(storageData.games);
     }
 
-    if (initialData.view) {
-      view.set(initialData.view);
+    if (storageData.view) {
+      view.set(storageData.view);
     } else {
       view.home();
     }
 
-    if (initialData.user) {
-      user.set(initialData.user);
+    if (storageData.user) {
+      user.set(storageData.user);
     } else {
       user.resetSetup();
     }

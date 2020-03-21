@@ -50,13 +50,13 @@
   }
 
   .edit {
-    background: none;
+    background: #fff;
     border: 0;
     border-radius: 5px;
-    padding: 10px;
+    padding: 7px;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 3px;
+    top: 3px;
   }
 
   .edit :global(.icon) {

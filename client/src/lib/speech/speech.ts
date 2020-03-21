@@ -25,6 +25,8 @@ const getNounTextToSpeech = (word: Word, setup: Setup): string[] => {
     result.push(null);
     if (word.plural) {
       result.push(setup.soundArticles ? `die ${word.plural}` : word.plural);
+    } else if (word.plural === 'kein plural') {
+      result.push('kein plural');
     } else {
       result.push('plural');
     }

@@ -133,35 +133,39 @@
         <FormSwitcher type="toggle" bind:checked={strongVerb}>Сильный глагол</FormSwitcher>
 
         <Slide active={strongVerb}>
-          <FormInput errors={strong1Errors} label="Ich">
-            <input type="text" bind:value={$strong1Value} use:strong1Input />
-          </FormInput>
-          <FormInput errors={strong2Errors} label="du">
-            <input type="text" bind:value={$strong2Value} use:strong2Input />
-          </FormInput>
-          <FormInput errors={strong3Errors} label="er, sie, es">
-            <input type="text" bind:value={$strong3Value} use:strong3Input />
-          </FormInput>
-          <FormInput errors={strong4Errors} label="wir">
-            <input type="text" bind:value={$strong4Value} use:strong4Input />
-          </FormInput>
-          <FormInput errors={strong5Errors} label="ihr">
-            <input type="text" bind:value={$strong5Value} use:strong5Input />
-          </FormInput>
-          <FormInput errors={strong6Errors} label="Sie, sie">
-            <input type="text" bind:value={$strong6Value} use:strong6Input />
-          </FormInput>
+          <div class="row">
+            <FormInput errors={strong1Errors} label="Ich">
+              <input type="text" bind:value={$strong1Value} use:strong1Input />
+            </FormInput>
+            <FormInput errors={strong2Errors} label="du">
+              <input type="text" bind:value={$strong2Value} use:strong2Input />
+            </FormInput>
+            <FormInput errors={strong3Errors} label="er, sie, es">
+              <input type="text" bind:value={$strong3Value} use:strong3Input />
+            </FormInput>
+            <FormInput errors={strong4Errors} label="wir">
+              <input type="text" bind:value={$strong4Value} use:strong4Input />
+            </FormInput>
+            <FormInput errors={strong5Errors} label="ihr">
+              <input type="text" bind:value={$strong5Value} use:strong5Input />
+            </FormInput>
+            <FormInput errors={strong6Errors} label="Sie, sie">
+              <input type="text" bind:value={$strong6Value} use:strong6Input />
+            </FormInput>
+          </div>
         </Slide>
 
         <FormSwitcher type="toggle" bind:checked={irregularVerb}>Неправильный глагол</FormSwitcher>
 
         <Slide active={irregularVerb}>
-          <FormInput errors={irregular1Errors} label="Präteritum">
-            <input type="text" bind:value={$irregular1Value} use:irregular1Input />
-          </FormInput>
-          <FormInput errors={irregular2Errors} label="Partizip II">
-            <input type="text" bind:value={$irregular2Value} use:irregular2Input />
-          </FormInput>
+          <div class="row">
+            <FormInput errors={irregular1Errors} label="Präteritum">
+              <input type="text" bind:value={$irregular1Value} use:irregular1Input />
+            </FormInput>
+            <FormInput errors={irregular2Errors} label="Partizip II">
+              <input type="text" bind:value={$irregular2Value} use:irregular2Input />
+            </FormInput>
+          </div>
         </Slide>
       {/if}
 
@@ -171,3 +175,9 @@
     </FormValidation>
   {/if}
 </div>
+
+<style>
+  .row {
+    padding-bottom: 20px;
+  }
+</style>
