@@ -1275,6 +1275,15 @@ const storeViews$3 = {
     },
     getWordById(wordId) {
         return this[wordId];
+    },
+    wordExists(word) {
+        const words = Object.values(this);
+        for (let i = 0; i < words.length; i++) {
+            if (words[i].type === word.type && words[i].original === word.original) {
+                return true;
+            }
+        }
+        return false;
     }
 };
 const store$4 = createStore({}, storeMethods$3, storeViews$3);
@@ -1440,7 +1449,7 @@ const request = (options) => {
     const body = new FormData;
     body.append('payload', JSON.stringify(payload));
     body.append('api', JSON.stringify(api));
-    return fetch(`/${api}`, {
+    return fetch(`//192.168.1.142:4545/${api}`, {
         method: 'post',
         credentials: 'include',
         body
@@ -3763,12 +3772,37 @@ class Autocomplete extends SvelteComponent {
 
 function add_css$9() {
 	var style = element("style");
-	style.id = "svelte-1um0uqf-style";
-	style.textContent = ".item.svelte-1um0uqf{border-top:1px solid #104b8a;font-size:16px;line-height:21px;position:relative;transition:background-color .3s ease}.disabled.svelte-1um0uqf{background:linear-gradient(to right, #ececec, #fff)}.item.svelte-1um0uqf .icon-turnOff{color:#ccc;height:21px;position:absolute;right:10px;top:10px;width:21px}.item.svelte-1um0uqf:first-of-type{border:0}.edit.svelte-1um0uqf{background:#fff;border:0;border-radius:5px;padding:7px;position:absolute;right:3px;top:3px}.edit.svelte-1um0uqf .icon{height:21px;width:21px}input:checked+.item.svelte-1um0uqf{background:#b7d8f4}.text.svelte-1um0uqf{display:block;padding:10px}";
+	style.id = "svelte-16wobbx-style";
+	style.textContent = ".item.svelte-16wobbx{border-top:1px solid #104b8a;font-size:16px;line-height:21px;position:relative;transition:background-color .3s ease}.disabled.svelte-16wobbx{background:linear-gradient(to right, #ececec, #fff)}.item.svelte-16wobbx .icon-turnOff{color:#ccc;height:21px;position:absolute;right:10px;top:10px;width:21px}.item.svelte-16wobbx:first-of-type{border:0}.edit.svelte-16wobbx{background:#fff;border:0;border-radius:5px;padding:7px;position:absolute;right:3px;top:3px}.edit.svelte-16wobbx .icon{height:21px;width:21px}input:checked+.item.svelte-16wobbx{background:#b7d8f4}.text.svelte-16wobbx{display:block;overflow:hidden;padding:10px;text-overflow:ellipsis;white-space:nowrap}.mark.svelte-16wobbx{color:#aaa;font-size:.9em}";
 	append(document.head, style);
 }
 
-// (17:2) {#if !word.active && !checked}
+// (17:4) {#if word.type === 'noun' && $user.articles}
+function create_if_block_2$1(ctx) {
+	let span;
+	let t_value = /*word*/ ctx[0].article + "";
+	let t;
+
+	return {
+		c() {
+			span = element("span");
+			t = text(t_value);
+			attr(span, "class", "mark svelte-16wobbx");
+		},
+		m(target, anchor) {
+			insert(target, span, anchor);
+			append(span, t);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*word*/ 1 && t_value !== (t_value = /*word*/ ctx[0].article + "")) set_data(t, t_value);
+		},
+		d(detaching) {
+			if (detaching) detach(span);
+		}
+	};
+}
+
+// (23:2) {#if !word.active && !checked}
 function create_if_block_1$2(ctx) {
 	let current;
 	const icon = new Icon({ props: { name: "turnOff" } });
@@ -3796,7 +3830,7 @@ function create_if_block_1$2(ctx) {
 	};
 }
 
-// (21:2) {#if checked}
+// (27:2) {#if checked}
 function create_if_block$5(ctx) {
 	let button;
 	let current;
@@ -3807,13 +3841,13 @@ function create_if_block$5(ctx) {
 		c() {
 			button = element("button");
 			create_component(icon.$$.fragment);
-			attr(button, "class", "edit svelte-1um0uqf");
+			attr(button, "class", "edit svelte-16wobbx");
 		},
 		m(target, anchor) {
 			insert(target, button, anchor);
 			mount_component(icon, button, null);
 			current = true;
-			dispose = listen(button, "click", /*onEdit*/ ctx[2]);
+			dispose = listen(button, "click", /*onEdit*/ ctx[3]);
 		},
 		p: noop,
 		i(local) {
@@ -3836,74 +3870,88 @@ function create_if_block$5(ctx) {
 function create_fragment$a(ctx) {
 	let div;
 	let label;
-	let t0_value = /*word*/ ctx[0].original + "";
 	let t0;
-	let label_for_value;
+	let t1_value = /*word*/ ctx[0].original + "";
 	let t1;
 	let t2;
+	let span;
+	let t3;
+	let t4_value = /*word*/ ctx[0].translation + "";
+	let t4;
+	let label_for_value;
+	let t5;
+	let t6;
 	let current;
-	let if_block0 = !/*word*/ ctx[0].active && !/*checked*/ ctx[1] && create_if_block_1$2();
-	let if_block1 = /*checked*/ ctx[1] && create_if_block$5(ctx);
+	let if_block0 = /*word*/ ctx[0].type === "noun" && /*$user*/ ctx[2].articles && create_if_block_2$1(ctx);
+	let if_block1 = !/*word*/ ctx[0].active && !/*checked*/ ctx[1] && create_if_block_1$2();
+	let if_block2 = /*checked*/ ctx[1] && create_if_block$5(ctx);
 
 	return {
 		c() {
 			div = element("div");
 			label = element("label");
-			t0 = text(t0_value);
-			t1 = space();
 			if (if_block0) if_block0.c();
+			t0 = space();
+			t1 = text(t1_value);
 			t2 = space();
+			span = element("span");
+			t3 = text("- ");
+			t4 = text(t4_value);
+			t5 = space();
 			if (if_block1) if_block1.c();
-			attr(label, "class", "text svelte-1um0uqf");
+			t6 = space();
+			if (if_block2) if_block2.c();
+			attr(span, "class", "mark svelte-16wobbx");
+			attr(label, "class", "text svelte-16wobbx");
 			attr(label, "for", label_for_value = `cat${/*word*/ ctx[0].wordId}`);
-			attr(div, "class", "item svelte-1um0uqf");
+			attr(div, "class", "item svelte-16wobbx");
 			toggle_class(div, "disabled", !/*word*/ ctx[0].active);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 			append(div, label);
+			if (if_block0) if_block0.m(label, null);
 			append(label, t0);
-			append(div, t1);
-			if (if_block0) if_block0.m(div, null);
-			append(div, t2);
+			append(label, t1);
+			append(label, t2);
+			append(label, span);
+			append(span, t3);
+			append(span, t4);
+			append(div, t5);
 			if (if_block1) if_block1.m(div, null);
+			append(div, t6);
+			if (if_block2) if_block2.m(div, null);
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if ((!current || dirty & /*word*/ 1) && t0_value !== (t0_value = /*word*/ ctx[0].original + "")) set_data(t0, t0_value);
+			if (/*word*/ ctx[0].type === "noun" && /*$user*/ ctx[2].articles) {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+				} else {
+					if_block0 = create_if_block_2$1(ctx);
+					if_block0.c();
+					if_block0.m(label, t0);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			if ((!current || dirty & /*word*/ 1) && t1_value !== (t1_value = /*word*/ ctx[0].original + "")) set_data(t1, t1_value);
+			if ((!current || dirty & /*word*/ 1) && t4_value !== (t4_value = /*word*/ ctx[0].translation + "")) set_data(t4, t4_value);
 
 			if (!current || dirty & /*word*/ 1 && label_for_value !== (label_for_value = `cat${/*word*/ ctx[0].wordId}`)) {
 				attr(label, "for", label_for_value);
 			}
 
 			if (!/*word*/ ctx[0].active && !/*checked*/ ctx[1]) {
-				if (!if_block0) {
-					if_block0 = create_if_block_1$2();
-					if_block0.c();
-					transition_in(if_block0, 1);
-					if_block0.m(div, t2);
-				} else {
-					transition_in(if_block0, 1);
-				}
-			} else if (if_block0) {
-				group_outros();
-
-				transition_out(if_block0, 1, 1, () => {
-					if_block0 = null;
-				});
-
-				check_outros();
-			}
-
-			if (/*checked*/ ctx[1]) {
-				if (if_block1) {
-					if_block1.p(ctx, dirty);
-					transition_in(if_block1, 1);
-				} else {
-					if_block1 = create_if_block$5(ctx);
+				if (!if_block1) {
+					if_block1 = create_if_block_1$2();
 					if_block1.c();
 					transition_in(if_block1, 1);
-					if_block1.m(div, null);
+					if_block1.m(div, t6);
+				} else {
+					transition_in(if_block1, 1);
 				}
 			} else if (if_block1) {
 				group_outros();
@@ -3915,30 +3963,53 @@ function create_fragment$a(ctx) {
 				check_outros();
 			}
 
+			if (/*checked*/ ctx[1]) {
+				if (if_block2) {
+					if_block2.p(ctx, dirty);
+					transition_in(if_block2, 1);
+				} else {
+					if_block2 = create_if_block$5(ctx);
+					if_block2.c();
+					transition_in(if_block2, 1);
+					if_block2.m(div, null);
+				}
+			} else if (if_block2) {
+				group_outros();
+
+				transition_out(if_block2, 1, 1, () => {
+					if_block2 = null;
+				});
+
+				check_outros();
+			}
+
 			if (dirty & /*word*/ 1) {
 				toggle_class(div, "disabled", !/*word*/ ctx[0].active);
 			}
 		},
 		i(local) {
 			if (current) return;
-			transition_in(if_block0);
 			transition_in(if_block1);
+			transition_in(if_block2);
 			current = true;
 		},
 		o(local) {
-			transition_out(if_block0);
 			transition_out(if_block1);
+			transition_out(if_block2);
 			current = false;
 		},
 		d(detaching) {
 			if (detaching) detach(div);
 			if (if_block0) if_block0.d();
 			if (if_block1) if_block1.d();
+			if (if_block2) if_block2.d();
 		}
 	};
 }
 
 function instance$a($$self, $$props, $$invalidate) {
+	let $user;
+	component_subscribe($$self, store$3, $$value => $$invalidate(2, $user = $$value));
 	let { word } = $$props;
 	let { checked } = $$props;
 	const dispatch = createEventDispatcher();
@@ -3952,13 +4023,13 @@ function instance$a($$self, $$props, $$invalidate) {
 		if ("checked" in $$props) $$invalidate(1, checked = $$props.checked);
 	};
 
-	return [word, checked, onEdit];
+	return [word, checked, $user, onEdit];
 }
 
 class Dict_word extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document.getElementById("svelte-1um0uqf-style")) add_css$9();
+		if (!document.getElementById("svelte-16wobbx-style")) add_css$9();
 		init(this, options, instance$a, create_fragment$a, safe_not_equal, { word: 0, checked: 1 });
 	}
 }
@@ -4157,7 +4228,7 @@ function create_if_block_1$3(ctx) {
 		each_1_lookup.set(key, each_blocks[i] = create_each_block_2(key, child_ctx));
 	}
 
-	let if_block = /*activeLetter*/ ctx[4] && create_if_block_2$1(ctx);
+	let if_block = /*activeLetter*/ ctx[4] && create_if_block_2$2(ctx);
 
 	return {
 		c() {
@@ -4194,7 +4265,7 @@ function create_if_block_1$3(ctx) {
 					if_block.p(ctx, dirty);
 					transition_in(if_block, 1);
 				} else {
-					if_block = create_if_block_2$1(ctx);
+					if_block = create_if_block_2$2(ctx);
 					if_block.c();
 					transition_in(if_block, 1);
 					if_block.m(div, null);
@@ -4334,7 +4405,7 @@ function create_each_block_2(key_1, ctx) {
 }
 
 // (99:6) {#if activeLetter}
-function create_if_block_2$1(ctx) {
+function create_if_block_2$2(ctx) {
 	let div;
 	let each_blocks = [];
 	let each_1_lookup = new Map();
@@ -6008,11 +6079,11 @@ const getNounTextToSpeech = (word, setup) => {
     let result = setup.soundArticles ? [`${word.article} ${word.original}`] : [word.original];
     if (setup.soundPlural) {
         result.push(null);
-        if (word.plural) {
-            result.push(setup.soundArticles ? `die ${word.plural}` : word.plural);
-        }
-        else if (word.plural === 'kein plural') {
+        if (word.plural === 'kein plural') {
             result.push('kein plural');
+        }
+        else if (word.plural) {
+            result.push(setup.soundArticles ? `die ${word.plural}` : word.plural);
         }
         else {
             result.push('plural');
@@ -6658,7 +6729,7 @@ function create_if_block$c(ctx) {
 
 	function select_block_type(ctx, dirty) {
 		if (!/*word*/ ctx[0].plural) return create_if_block_1$6;
-		if (/*word*/ ctx[0].plural === "kein plural") return create_if_block_2$2;
+		if (/*word*/ ctx[0].plural === "kein plural") return create_if_block_2$3;
 		return create_else_block$2;
 	}
 
@@ -6735,7 +6806,7 @@ function create_else_block$2(ctx) {
 }
 
 // (19:44) 
-function create_if_block_2$2(ctx) {
+function create_if_block_2$3(ctx) {
 	let t;
 
 	return {
@@ -11356,7 +11427,7 @@ function create_if_block$i(ctx) {
 	let t;
 	let if_block1_anchor;
 	let current;
-	let if_block0 = /*$user*/ ctx[2].userId && create_if_block_2$3();
+	let if_block0 = /*$user*/ ctx[2].userId && create_if_block_2$4();
 	let if_block1 = false ;
 
 	return {
@@ -11377,7 +11448,7 @@ function create_if_block$i(ctx) {
 					if_block0.p(ctx, dirty);
 					transition_in(if_block0, 1);
 				} else {
-					if_block0 = create_if_block_2$3();
+					if_block0 = create_if_block_2$4();
 					if_block0.c();
 					transition_in(if_block0, 1);
 					if_block0.m(t.parentNode, t);
@@ -11412,7 +11483,7 @@ function create_if_block$i(ctx) {
 }
 
 // (59:4) {#if $user.userId}
-function create_if_block_2$3(ctx) {
+function create_if_block_2$4(ctx) {
 	let current;
 	const button = new Button({ props: { text: "синхронизировать" } });
 	button.$on("click", syncData);
@@ -11498,7 +11569,7 @@ function create_fragment$v(ctx) {
 			if (if_block4) if_block4.c();
 			t10 = space();
 			p = element("p");
-			p.textContent = `${1584753145691}`;
+			p.textContent = `${1584783759501}`;
 			attr(h20, "class", "svelte-1p9u3is");
 			attr(div0, "class", "box svelte-1p9u3is");
 			attr(h21, "class", "svelte-1p9u3is");
@@ -12284,7 +12355,7 @@ function add_css$r() {
 	append(document.head, style);
 }
 
-// (99:2) {#if !wordId}
+// (108:2) {#if !wordId}
 function create_if_block_4$1(ctx) {
 	let current;
 
@@ -12328,7 +12399,7 @@ function create_if_block_4$1(ctx) {
 	};
 }
 
-// (100:4) <ButtonsRow twoInARow>
+// (109:4) <ButtonsRow twoInARow>
 function create_default_slot_17$1(ctx) {
 	let button0;
 	let t1;
@@ -12403,7 +12474,7 @@ function create_default_slot_17$1(ctx) {
 	};
 }
 
-// (108:2) {#if $typeValue}
+// (117:2) {#if $typeValue}
 function create_if_block$k(ctx) {
 	let current;
 
@@ -12447,7 +12518,7 @@ function create_if_block$k(ctx) {
 	};
 }
 
-// (110:6) {#if $typeValue === 'noun'}
+// (119:6) {#if $typeValue === 'noun'}
 function create_if_block_3$2(ctx) {
 	let current;
 
@@ -12492,7 +12563,7 @@ function create_if_block_3$2(ctx) {
 	};
 }
 
-// (111:8) <ButtonsRow error={!$articleValue}>
+// (120:8) <ButtonsRow error={!$articleValue}>
 function create_default_slot_16$1(ctx) {
 	let button0;
 	let t1;
@@ -12552,7 +12623,7 @@ function create_default_slot_16$1(ctx) {
 	};
 }
 
-// (118:6) <FormInput errors={origErrors} label={$typeValue === 'phrase' ? 'Фраза' : 'Слово'}>
+// (127:6) <FormInput errors={origErrors} label={$typeValue === 'phrase' ? 'Фраза' : 'Слово'}>
 function create_default_slot_15$1(ctx) {
 	let input;
 	let origInput_action;
@@ -12584,7 +12655,7 @@ function create_default_slot_15$1(ctx) {
 	};
 }
 
-// (122:6) <FormInput errors={trErrors} label="Перевод">
+// (131:6) <FormInput errors={trErrors} label="Перевод">
 function create_default_slot_14$1(ctx) {
 	let input;
 	let trInput_action;
@@ -12616,8 +12687,8 @@ function create_default_slot_14$1(ctx) {
 	};
 }
 
-// (126:6) {#if $typeValue === 'noun'}
-function create_if_block_2$4(ctx) {
+// (135:6) {#if $typeValue === 'noun'}
+function create_if_block_2$5(ctx) {
 	let current;
 
 	const forminput = new Form_input({
@@ -12661,7 +12732,7 @@ function create_if_block_2$4(ctx) {
 	};
 }
 
-// (127:8) <FormInput errors={pluralErrors} label="Plural">
+// (136:8) <FormInput errors={pluralErrors} label="Plural">
 function create_default_slot_13$1(ctx) {
 	let input;
 	let pluralInput_action;
@@ -12693,7 +12764,7 @@ function create_default_slot_13$1(ctx) {
 	};
 }
 
-// (132:6) {#if $typeValue === 'verb'}
+// (141:6) {#if $typeValue === 'verb'}
 function create_if_block_1$a(ctx) {
 	let updating_checked;
 	let t0;
@@ -12843,7 +12914,7 @@ function create_if_block_1$a(ctx) {
 	};
 }
 
-// (133:8) <FormSwitcher type="toggle" bind:checked={strongVerb}>
+// (142:8) <FormSwitcher type="toggle" bind:checked={strongVerb}>
 function create_default_slot_12$1(ctx) {
 	let t;
 
@@ -12860,7 +12931,7 @@ function create_default_slot_12$1(ctx) {
 	};
 }
 
-// (137:12) <FormInput errors={strong1Errors} label="Ich">
+// (146:12) <FormInput errors={strong1Errors} label="Ich">
 function create_default_slot_11$1(ctx) {
 	let input;
 	let strong1Input_action;
@@ -12892,7 +12963,7 @@ function create_default_slot_11$1(ctx) {
 	};
 }
 
-// (140:12) <FormInput errors={strong2Errors} label="du">
+// (149:12) <FormInput errors={strong2Errors} label="du">
 function create_default_slot_10$1(ctx) {
 	let input;
 	let strong2Input_action;
@@ -12924,7 +12995,7 @@ function create_default_slot_10$1(ctx) {
 	};
 }
 
-// (143:12) <FormInput errors={strong3Errors} label="er, sie, es">
+// (152:12) <FormInput errors={strong3Errors} label="er, sie, es">
 function create_default_slot_9$1(ctx) {
 	let input;
 	let strong3Input_action;
@@ -12956,7 +13027,7 @@ function create_default_slot_9$1(ctx) {
 	};
 }
 
-// (146:12) <FormInput errors={strong4Errors} label="wir">
+// (155:12) <FormInput errors={strong4Errors} label="wir">
 function create_default_slot_8$1(ctx) {
 	let input;
 	let strong4Input_action;
@@ -12988,7 +13059,7 @@ function create_default_slot_8$1(ctx) {
 	};
 }
 
-// (149:12) <FormInput errors={strong5Errors} label="ihr">
+// (158:12) <FormInput errors={strong5Errors} label="ihr">
 function create_default_slot_7$1(ctx) {
 	let input;
 	let strong5Input_action;
@@ -13020,7 +13091,7 @@ function create_default_slot_7$1(ctx) {
 	};
 }
 
-// (152:12) <FormInput errors={strong6Errors} label="Sie, sie">
+// (161:12) <FormInput errors={strong6Errors} label="Sie, sie">
 function create_default_slot_6$1(ctx) {
 	let input;
 	let strong6Input_action;
@@ -13052,7 +13123,7 @@ function create_default_slot_6$1(ctx) {
 	};
 }
 
-// (135:8) <Slide active={strongVerb}>
+// (144:8) <Slide active={strongVerb}>
 function create_default_slot_5$1(ctx) {
 	let div;
 	let t0;
@@ -13222,7 +13293,7 @@ function create_default_slot_5$1(ctx) {
 	};
 }
 
-// (158:8) <FormSwitcher type="toggle" bind:checked={irregularVerb}>
+// (167:8) <FormSwitcher type="toggle" bind:checked={irregularVerb}>
 function create_default_slot_4$1(ctx) {
 	let t;
 
@@ -13239,7 +13310,7 @@ function create_default_slot_4$1(ctx) {
 	};
 }
 
-// (162:12) <FormInput errors={irregular1Errors} label="Präteritum">
+// (171:12) <FormInput errors={irregular1Errors} label="Präteritum">
 function create_default_slot_3$3(ctx) {
 	let input;
 	let irregular1Input_action;
@@ -13271,7 +13342,7 @@ function create_default_slot_3$3(ctx) {
 	};
 }
 
-// (165:12) <FormInput errors={irregular2Errors} label="Partizip II">
+// (174:12) <FormInput errors={irregular2Errors} label="Partizip II">
 function create_default_slot_2$5(ctx) {
 	let input;
 	let irregular2Input_action;
@@ -13303,7 +13374,7 @@ function create_default_slot_2$5(ctx) {
 	};
 }
 
-// (160:8) <Slide active={irregularVerb}>
+// (169:8) <Slide active={irregularVerb}>
 function create_default_slot_1$5(ctx) {
 	let div;
 	let t;
@@ -13377,7 +13448,7 @@ function create_default_slot_1$5(ctx) {
 	};
 }
 
-// (109:4) <FormValidation {form}>
+// (118:4) <FormValidation {form}>
 function create_default_slot$a(ctx) {
 	let t0;
 	let t1;
@@ -13408,7 +13479,7 @@ function create_default_slot$a(ctx) {
 			}
 		});
 
-	let if_block1 = /*$typeValue*/ ctx[5] === "noun" && create_if_block_2$4(ctx);
+	let if_block1 = /*$typeValue*/ ctx[5] === "noun" && create_if_block_2$5(ctx);
 	let if_block2 = /*$typeValue*/ ctx[5] === "verb" && create_if_block_1$a(ctx);
 
 	function categories_linked_binding(value) {
@@ -13514,7 +13585,7 @@ function create_default_slot$a(ctx) {
 					if_block1.p(ctx, dirty);
 					transition_in(if_block1, 1);
 				} else {
-					if_block1 = create_if_block_2$4(ctx);
+					if_block1 = create_if_block_2$5(ctx);
 					if_block1.c();
 					transition_in(if_block1, 1);
 					if_block1.m(t3.parentNode, t3);
@@ -13704,6 +13775,16 @@ function instance$y($$self, $$props, $$invalidate) {
 
 		if (wordId) {
 			wordObject.wordId = wordId;
+		}
+
+		// check word exists
+		if (!wordId && store$4.wordExists(wordObject)) {
+			store.addMessage({
+				status: "error",
+				text: "wordExists.error"
+			});
+
+			return;
 		}
 
 		// save word
