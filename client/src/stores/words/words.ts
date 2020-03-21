@@ -135,6 +135,17 @@ const storeViews = {
 
   getWordById(this: WordsStore, wordId: number): Word {
     return this[wordId];
+  },
+
+  wordExists(this: WordsStore, word: Word): boolean {
+    const words = Object.values(this);
+    for (let i = 0; i < words.length; i++) {
+      if (words[i].type === word.type && words[i].original === word.original) {
+        return true;
+      }
+    }
+
+    return false;
   }
 };
 

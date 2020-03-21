@@ -3,6 +3,7 @@
   export let checked;
 
   import Icon from 'sdk/icon/icon.svelte';
+  import { user } from 'stores';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
@@ -12,7 +13,12 @@
 </script>
 
 <div class="item" class:disabled={!word.active}>
-  <label class="text" for={`cat${word.wordId}`}>{word.original}</label>
+  <label class="text" for={`cat${word.wordId}`}>
+    {#if word.type === 'noun' && $user.articles}
+      <span class="mark">{word.article}</span>
+    {/if}
+    {word.original} <span class="mark"> - {word.translation}</span>
+  </label>
 
   {#if !word.active && !checked}
     <Icon name="turnOff" />
@@ -70,6 +76,14 @@
 
   .text {
     display: block;
+    overflow: hidden;
     padding: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mark {
+    color: #aaa;
+    font-size: .9em;
   }
 </style>

@@ -45,11 +45,18 @@ CREATE TABLE IF NOT EXISTS words (
   translation VARCHAR(100) NOT NULL DEFAULT '',
   type        TINYINT      NOT NULL DEFAULT 1,
   CONSTRAINT id UNIQUE KEY (wordId),
-  CONSTRAINT id2 UNIQUE KEY (wordId, userId)
+  CONSTRAINT id2 UNIQUE KEY (wordId, userId),
+  CONSTRAINT id3 UNIQUE KEY (original, type, userId)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin
   AUTO_INCREMENT = 1;
+
+alter table words
+  add constraint id3
+    unique (original, type, userId);
+
+
 
 -- categories
 CREATE TABLE IF NOT EXISTS categories (

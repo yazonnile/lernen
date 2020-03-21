@@ -20,9 +20,11 @@
 * release?
 
 # TODO
-* fancy ui
+* load from json
+* save to json
 
 ## far-far away
+* fancy ui
 * learn article
 * learn plural
 * learn strong

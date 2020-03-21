@@ -28,6 +28,15 @@
       wordObject.wordId = wordId;
     }
 
+    // check word exists
+    if (!wordId && words.wordExists(wordObject)) {
+      messages.addMessage({
+        status: 'error',
+        text: 'wordExists.error'
+      });
+      return;
+    }
+
     // save word
     words.updateWord(wordObject);
 
