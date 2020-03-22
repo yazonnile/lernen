@@ -31,11 +31,17 @@
 
 <style>
   .item {
-    border-top: 1px solid var(--mainColor);
+    box-shadow: 0 0 3px #777;
+    border-radius: 3px;
     font-size: 16px;
+    margin-top: 5px;
     line-height: 21px;
     position: relative;
     transition: background-color .3s ease;
+  }
+
+  .item:nth-of-type(even) {
+    background: #f1f9ff;
   }
 
   .disabled {
@@ -52,7 +58,7 @@
   }
 
   .item:first-of-type {
-    border: 0;
+    margin-top: 0;
   }
 
   .edit {

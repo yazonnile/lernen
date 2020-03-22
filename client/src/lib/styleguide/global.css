@@ -16,8 +16,8 @@ html, body {
 }
 
 body {
-  background: #fff;
-  color: #333;
+  background: var(--bgColor);
+  color: #fff;
   font: 14px/18px ubuntu, Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
   overflow-x: hidden;

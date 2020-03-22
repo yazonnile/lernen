@@ -30,8 +30,6 @@
       <p class="error">Войдите в свой аккаунт, чтобы не потерять свои слова</p>
       <Auth />
     </div>
-  {:else}
-    <Button text="выйти" on:click={onLogout} color="red" />
   {/if}
 
   <div class="box">
@@ -70,6 +68,10 @@
         text="стереть данные для синхронизации"
       />
     {/if}
+  {/if}
+
+  {#if $user.userId}
+    <Button text="выйти" on:click={onLogout} color="red" />
   {/if}
 
   <p>{process.env.VERSION}</p>

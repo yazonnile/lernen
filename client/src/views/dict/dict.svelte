@@ -81,7 +81,7 @@
 
 <div class="dict">
   <Autocomplete label="Начните вводить слово/фразу" bind:result bind:value={autocompleteValue} />
-  {#if autocompleteValue && !renderResult.length}
+  {#if autocompleteValue.length > 1 && !renderResult.length}
     <p>слов не найдено</p>
   {/if}
 
@@ -137,6 +137,11 @@
     padding: 5px 15px;
   }
 
+  .alphabet button:disabled {
+    background-color: #eee;
+    color: inherit;
+  }
+
   .alphabet--letter {
     flex: 1 0 100%;
     margin: 5px 0;
@@ -144,8 +149,9 @@
 
   .alphabet button.active {
     background: var(--mainColor);
-    color: #fff;
     border-radius: 0 0 10px;
+    color: #fff;
+    flex: 1;
     position: relative;
   }
 

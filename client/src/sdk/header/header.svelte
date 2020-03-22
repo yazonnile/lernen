@@ -7,14 +7,14 @@
   const openMenu = () => {
     menuActive = true;
   };
+
+  $: {
+    document.body.style.overflow = menuActive ? 'hidden' : '';
+  }
 </script>
 
 <header class="header">
-  <a class="logo" href="/" on:click|preventDefault={() => view.home()}>
-    <span class="black">le</span>
-    <span class="red">rn</span>
-    <span class="yellow">en</span>
-  </a>
+  <a class="logo" href="/" on:click|preventDefault={() => view.home()}>lernen</a>
 
   <button
     class="header--button header--menu"
@@ -38,8 +38,6 @@
 
 <style>
   .header {
-    background: var(--mainColorLight);
-    box-shadow: 0 -10px 10px 10px #000;
     position: relative;
     text-align: center;
   }
@@ -53,6 +51,7 @@
     overflow: hidden;
     padding: 0 10px;
     line-height: 40px;
+    text-shadow: var(--textHeaderShadow);
     text-transform: uppercase;
     text-decoration: none;
     vertical-align: top;
@@ -61,6 +60,8 @@
   .header--button {
     background: none;
     border: 0;
+    color: inherit;
+    filter: drop-shadow(var(--textHeaderShadow));
     height: 40px;
     padding: 8px;
     position: absolute;
@@ -74,23 +75,6 @@
 
   .header--nav {
     left: 0;
-  }
-
-  .logo span {
-    display: block;
-    text-shadow: 1px 1px 1px rgba(0,0,0,1), -1px -1px 1px rgba(0,0,0,1);
-  }
-
-  .black {
-    color: #424242;
-  }
-
-  .red {
-    color: #de0000;
-  }
-
-  .yellow {
-    color: var(--categoryActiveColor);
   }
 
   .attention {

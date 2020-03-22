@@ -87,12 +87,15 @@
     >
       {#if categoryId === categoryToEdit}
         <span
+          class="category--text"
           contenteditable
           bind:this={editableNode}
           on:click|stopPropagation
         >{categoryName}</span>
       {:else}
-        {categoryName}
+        <span class="category--text">
+          {categoryName}
+        </span>
       {/if}
 
       <div class="buttons">
@@ -131,7 +134,8 @@
     border: 1px solid var(--mainColor);
     border-radius: 5px;
     cursor: pointer;
-    display: block;
+    display: flex;
+    flex-wrap: nowrap;
     font-size: 12px;
     font-weight: normal;
     line-height: 16px;
@@ -160,8 +164,14 @@
     content: '+';
   }
 
+  .category--text {
+    white-space: nowrap;
+    overflow: hidden;
+    flex: 1;
+    text-overflow: ellipsis;
+  }
+
   .category .buttons {
-    float: right;
     margin: -4px -7px -4px 5px;
   }
 

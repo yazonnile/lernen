@@ -7,7 +7,7 @@
   import { words } from 'stores';
 
   $: {
-    result = value && value.length ? Object.values($words).filter(word => {
+    result = value && value.length > 1 ? Object.values($words).filter(word => {
       return word.original.toString().toLowerCase().indexOf(value.toLowerCase()) > -1;
     }).sort((a, b) => {
       a = a.original.toLowerCase();
