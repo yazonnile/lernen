@@ -1,9 +1,8 @@
 <script>
   export let title;
-  export let flex = false;
 </script>
 
-<div class="box" class:flex>
+<div class="box">
   {#if title}
     <h2 class="title">{title}</h2>
   {/if}
@@ -22,11 +21,6 @@
 
   .box:last-child {
     margin-bottom: 0;
-  }
-
-  .flex .wrap {
-    display: flex;
-    margin-right: -10px;
   }
 
   .title {

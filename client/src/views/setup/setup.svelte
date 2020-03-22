@@ -54,11 +54,11 @@
       <Button text="проверить голос" on:click={() => onVoiceTest()} />
     </div>
 
-    <SetupBox title="скорость голоса" flex>
+    <SetupBox title="скорость голоса">
       <div class="range">
-        <Button text="-5%" on:click={decVoiceSpeed} />
+        <button on:click={decVoiceSpeed}>-5%</button>
         <h2>{setup.voiceSpeed*10}%</h2>
-        <Button text="+5%" on:click={incVoiceSpeed} />
+        <button on:click={incVoiceSpeed}>+5%</button>
       </div>
     </SetupBox>
   {/if}
@@ -133,15 +133,24 @@
   }
 
   .range {
-    display: flex;
     align-items: center;
+    display: flex;
+    justify-content: space-between;
     margin-right: 10px;
     position: relative;
   }
 
-  .range :global(.button) {
+  .range {
     font-size: 15px;
     margin: 0;
+  }
+
+  .range button {
+    background: none;
+    border: 1px solid currentColor;
+    border-radius: 25px;
+    height: 50px;
+    width: 50px;
   }
 
   .range h2 {
