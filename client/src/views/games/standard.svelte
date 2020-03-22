@@ -7,8 +7,10 @@
   let visible;
 </script>
 
-<Game let:activeWord let:visible gameName="deuRus">
-  <div class="item">
+<Game let:activeWord let:visible gameName="standard">
+  <div class="item">{activeWord.translation}</div>
+
+  <div class="item item-extra" class:visible>
     {#if activeWord.type === 'noun'}
       <Noun word={activeWord} />
     {:else if activeWord.type === 'verb'}
@@ -17,8 +19,6 @@
       {activeWord.original}
     {/if}
   </div>
-
-  <div class="item item-extra" class:visible>{activeWord.translation}</div>
 </Game>
 
 <style>

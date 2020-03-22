@@ -13,12 +13,13 @@ const storeViews = {
   }
 };
 
-type GameNames = 'rusDeu' | 'deuRus';
+type GameNames = 'standard' | 'translationFirst' | 'articles' | 'plural' | 'spelling';
 
 type GamesInterface = {
   [gameName in GameNames]: {
     buttonText: string;
-    categories: {
+    description: string;
+    categories?: {
       selected: number[];
       nullCategory: boolean;
     }
@@ -26,21 +27,38 @@ type GamesInterface = {
 }
 
 const store = createStore<GamesInterface, typeof storeViews>({
-    rusDeu: {
-      buttonText: 'RUS - DEU',
-      categories: {
-        selected: [],
-        nullCategory: false
-      }
-    },
-    deuRus: {
-      buttonText: 'DEU - RUS',
-      categories: {
-        selected: [],
-        nullCategory: false
-      }
+  standard: {
+    buttonText: 'Стандартный',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    categories: {
+      selected: [],
+      nullCategory: false
     }
-  }, null, storeViews
-);
+  },
+  translationFirst: {
+    buttonText: 'Сначала перевод',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    categories: {
+      selected: [],
+      nullCategory: false
+    }
+  },
+  articles: {
+    buttonText: 'Артикли',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+  },
+  plural: {
+    buttonText: 'Plural',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+  },
+  spelling: {
+    buttonText: 'Правописание',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    categories: {
+      selected: [],
+      nullCategory: false
+    }
+  }
+}, null, storeViews);
 
 export default store;

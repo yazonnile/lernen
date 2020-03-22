@@ -6,4 +6,3 @@ server/src/vendor
 server/node_modules
 server/_build
 server/src/public
-server/src_old

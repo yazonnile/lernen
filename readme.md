@@ -40,6 +40,7 @@
   - 3 - полный рандом
   * вести статистику, какое слово сколько раз угадал
 
+* game categories to storage, not ALL games store
 * game page with controlls like - disable word..
 * stat page
 * learn strong

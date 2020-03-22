@@ -4,13 +4,17 @@ export enum Views {
   home = 'home',
   categories = 'categories',
   dict = 'dict',
-  preGame = 'preGame',
-  rusDeu = 'rusDeu',
-  deuRus = 'deuRus',
   setup = 'setup',
   editWord = 'editWord',
   addWord = 'addWord',
   sync = 'sync',
+  preGame = 'preGame',
+
+  standardGame = 'standardGame',
+  translationFirstGame = 'translationFirstGame',
+  articlesGame = 'articlesGame',
+  pluralGame = 'pluralGame',
+  spellingGame = 'spellingGame',
 }
 
 type PreGameParams = { gameId: string; }
@@ -29,8 +33,6 @@ const storeMethods = {
   home: (): View => ({ viewId: Views.home, title: 'lernen' }),
   categories: (): View => ({ viewId: Views.categories, title: 'категории' }),
   dict: (): View => ({ viewId: Views.dict, title: 'словарь' }),
-  rusDeu: (): View => ({ viewId: Views.rusDeu, title: 'игра №2' }),
-  deuRus: (): View => ({ viewId: Views.deuRus, title: 'игра №1' }),
   setup: (): View => ({ viewId: Views.setup, title: 'настройки' }),
   sync: (): View => ({ viewId: Views.sync, title: 'синхронизация' }),
   addWord: (): View => ({ viewId: Views.addWord, title: 'добавить слово' }),
@@ -44,14 +46,19 @@ const storeMethods = {
     title: 'выберите категории',
     params
   }),
+  standardGame: (): View => ({ viewId: Views.standardGame, title: 'стандартный' }),
+  translationFirstGame: (): View => ({ viewId: Views.translationFirstGame, title: 'сначала перевод' }),
+  articlesGame: (): View => ({ viewId: Views.articlesGame, title: 'артикли' }),
+  pluralGame: (): View => ({ viewId: Views.pluralGame, title: 'plural' }),
+  spellingGame: (): View => ({ viewId: Views.spellingGame, title: 'правописание' }),
 };
 
 const storeViews = {
   isSyncView(this: View) {
     return this.viewId === Views.sync;
   },
-  isHomeView(this: View) {
-    return this.viewId === Views.home;
+  getHomeViewId(): string {
+    return Views.home;
   },
 };
 
@@ -60,5 +67,9 @@ const store = createStore<View, typeof storeMethods, typeof storeViews>(
   storeMethods,
   storeViews
 );
+
+store.subscribe(() => {
+  window.scrollTo(0,0);
+});
 
 export default store;

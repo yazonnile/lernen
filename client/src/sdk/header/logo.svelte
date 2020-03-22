@@ -1,72 +1,125 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
   import Menu from 'sdk/menu/menu.svelte';
+  import { fly } from 'svelte/transition';
   import { view, user } from 'stores';
 
   let menuActive = false;
-  const openMenu = () => {
-    menuActive = true;
+  const openMenu = () => { menuActive = true; };
+
+  let title;
+  let viewId;
+  let textTop = false;
+
+  const homeViewId = view.getHomeViewId();
+  const duration = 250;
+  const animationOptions = { opacity: 0, duration };
+  const inAnimation = { ...animationOptions, delay: duration };
+  const outAnimation = { ...animationOptions, delay: 0 };
+
+  const updateTitle = () => {
+    title = $view.title;
+    viewId = $view.viewId;
   };
 
   $: {
-    document.body.style.overflow = menuActive ? 'hidden' : '';
+    if (viewId && homeViewId !== $view.viewId && homeViewId !== viewId) {
+      textTop = true;
+      setTimeout(() => {
+        updateTitle();
+        textTop = false;
+      }, duration);
+    } else {
+      updateTitle();
+    }
   }
+
+  $: document.body.style.overflow = menuActive ? 'hidden' : '';
 </script>
 
 <a
   href="/"
   class="logo"
-  class:home={view.isHomeView($view)}
   on:click|preventDefault={() => view.home()}
 >
-  {#if !view.isHomeView($view)}
-    <span class="icon">
-      <Icon name="down" />
+  {#if $view.viewId === homeViewId}
+    <span
+      class="logo--wrap"
+      in:fly|local={{ x: -50, ...inAnimation }}
+      out:fly|local={{ x: -50, ...outAnimation }}
+    >
+      <span class="text text--home">
+        <span class="black">le</span>
+        <span class="red">rn</span>
+        <span class="yellow">en</span>
+      </span>
+    </span>
+  {:else}
+    <span
+      class="logo--wrap"
+      in:fly|local={{ x: 50, ...inAnimation }}
+      out:fly|local={{ x: 50, ...outAnimation }}
+    >
+      <span class="icon">
+        <Icon name="down" />
+      </span>
+
+      <span
+        class="text"
+        class:text--top={textTop}
+      >
+        {title}
+      </span>
     </span>
   {/if}
-  <span class="text">
-    {#if view.isHomeView($view)}
-      <span class="black">le</span>
-      <span class="red">rn</span>
-      <span class="yellow">en</span>
-    {:else}
-      {$view.title}
-    {/if}
-  </span>
 </a>
 
 <style>
   .logo {
-    align-items: center;
     color: inherit;
     display: flex;
-    flex-wrap: nowrap;
-    font-size: 16px;
+    flex: 1;
+    font-size: 12px;
     height: 50px;
     line-height: 30px;
+    overflow: hidden;
     padding: 10px;
     text-decoration: none;
-    vertical-align: top;
   }
 
-  .home {
-    font-size: 22px;
-    font-weight: bold;
-    text-transform: uppercase;
+  .logo--wrap {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
   }
 
   .icon {
+    flex: 0 0 20px;
     height: 20px;
-    margin: 2px 10px 0 0;
+    margin-right: 10px;
     transform: rotate(90deg);
     width: 20px;
   }
 
   .text {
-    display: flex;
+    flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-transform: uppercase;
+    transition: all 250ms ease-in-out;
     white-space: nowrap;
+  }
+
+  .text--top {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  .text--home {
+    display: flex;
+    font-size: 22px;
+    font-weight: bold;
   }
 
   .black {

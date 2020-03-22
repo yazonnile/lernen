@@ -1,4 +1,24 @@
 :root {
+  --bgColor: #E6F4F1;
+  --bgColorContrast: #CFE8E4;
+  --textColor: #00355A;
+
+  --gameStandardBg: linear-gradient(to left, rgba(123, 212, 255, .5), rgba(0, 172, 255, 0.5));
+  --gameTranslationFirstBg: linear-gradient(to left, rgba(74, 255, 154, 0.5), rgba(0, 202, 62, 0.5));
+  --gameArticlesBg: linear-gradient(to left, rgba(255, 203, 107, 0.5), rgba(255, 164, 0, 0.5));
+  --gamePluralBg: linear-gradient(to left, rgba(255, 252, 144, 0.5), rgba(255, 247, 0, 0.5));
+  --gameSpellingBg: linear-gradient(to left, rgba(141, 250, 255, 0.5), rgba(0, 244, 255, 0.5));
+
+
+
+
+
+
+
+
+
+
+
   --mainColor: #104b8a;
   --mainColorBorder: #fff;
   --mainColorLight: #b7d8f4;

@@ -3,7 +3,7 @@
   import Menu from 'sdk/menu/menu.svelte';
   import Logo from './logo.svelte';
 
-  let menuActive = true;
+  let menuActive = false;
   const toggleMenu = () => {
     menuActive = !menuActive;
   };
@@ -15,15 +15,14 @@
 
 <header class="header">
   <Logo />
-  <div class="buttons">
-    <button
-      class="header--button"
-      class:header--button--menuActive={menuActive}
-      on:click={toggleMenu}
-    >
-      <Icon name="menu" />
-    </button>
-  </div>
+
+  <button
+    class="header--button"
+    class:header--button--menuActive={menuActive}
+    on:click={toggleMenu}
+  >
+    <Icon name="menu" />
+  </button>
 
   {#if menuActive}
     <Menu bind:menuActive />
@@ -34,14 +33,10 @@
   .header {
     background: var(--bgColorContrast);
     display: flex;
-    padding-right: 5px;
+    flex-wrap: nowrap;
+    padding: 0 5px;
     position: relative;
-  }
-
-  .buttons {
-    justify-content: flex-end;
-    display: flex;
-    flex: 1;
+    user-select: none;
   }
 
   .header--button {
@@ -49,6 +44,7 @@
     border: 0;
     color: inherit;
     height: 40px;
+    flex: 0 0 40px;
     margin-top: 5px;
     padding: 10px;
     width: 40px;

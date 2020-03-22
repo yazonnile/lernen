@@ -37,6 +37,7 @@
   .text {
     color: var(--bgColor);
     display: block;
+    text-shadow: 1px 1px 0 #000;
     padding: 12px 0;
   }
 
