@@ -75,7 +75,7 @@ module.exports = {
       extract: true
     }),
 
-    require('rollup-plugin-cleaner')({
+    production && require('rollup-plugin-cleaner')({
       targets: [ folders.dist ]
     }),
 

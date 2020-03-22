@@ -5,6 +5,7 @@
   import Intro from 'sdk/intro/intro.svelte';
   import Header from 'sdk/header/header.svelte';
   import * as views from 'views/views';
+  import mountainSvg from './mountain.svg';
   import { view } from 'stores';
 
   let activeComponent;
@@ -37,7 +38,9 @@
     <Messages />
   {/if}
 
-  <i class="bg"></i>
+  <i class="bg">
+    {@html mountainSvg}
+  </i>
 </div>
 
 <style>
@@ -49,22 +52,11 @@
     z-index: 1;
   }
 
-  .bg {
-    background: url(bg.jpg) 50% 50%;
-    background-size: cover;
-    display: flex;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: -1;
-  }
-
   .main {
+    background: linear-gradient(to bottom, var(--bgColorContrast), transparent 200px);
     display: flex;
     flex: 1;
-    padding: 20px 10px 10px;
+    padding: 5px 10px;
     order: 1;
   }
 
@@ -82,4 +74,25 @@
     margin: 0;
     padding: 0;
   }
+
+  .bg {
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+  }
+
+  .bg :global(svg) {
+    bottom: 0;
+    fill: var(--bgColorContrast);
+    left: -5%;
+    max-height: 200px;
+    max-width: none;
+    position: absolute;
+    width: 110%;
+  }
+
 </style>

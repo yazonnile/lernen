@@ -1,11 +1,11 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
   import Menu from 'sdk/menu/menu.svelte';
-  import { view, user } from 'stores';
+  import Logo from './logo.svelte';
 
-  let menuActive = false;
-  const openMenu = () => {
-    menuActive = true;
+  let menuActive = true;
+  const toggleMenu = () => {
+    menuActive = !menuActive;
   };
 
   $: {
@@ -14,22 +14,16 @@
 </script>
 
 <header class="header">
-  <a class="logo" href="/" on:click|preventDefault={() => view.home()}>lernen</a>
-
-  <button
-    class="header--button header--menu"
-    on:click={openMenu}
-  ><Icon name="menu" /></button>
-
-  <button
-    class="header--button header--nav"
-    on:click={() => view.sync()}
-  >
-    <Icon name="profile" />
-    {#if !$user.userId}
-      <i class="attention"></i>
-    {/if}
-  </button>
+  <Logo />
+  <div class="buttons">
+    <button
+      class="header--button"
+      class:header--button--menuActive={menuActive}
+      on:click={toggleMenu}
+    >
+      <Icon name="menu" />
+    </button>
+  </div>
 
   {#if menuActive}
     <Menu bind:menuActive />
@@ -38,60 +32,35 @@
 
 <style>
   .header {
+    background: var(--bgColorContrast);
+    display: flex;
+    padding-right: 5px;
     position: relative;
-    text-align: center;
   }
 
-  .header .logo {
-    color: inherit;
-    display: inline-flex;
-    font-size: 28px;
-    font-weight: bold;
-    height: 40px;
-    overflow: hidden;
-    padding: 0 10px;
-    line-height: 40px;
-    text-shadow: var(--textHeaderShadow);
-    text-transform: uppercase;
-    text-decoration: none;
-    vertical-align: top;
+  .buttons {
+    justify-content: flex-end;
+    display: flex;
+    flex: 1;
   }
 
   .header--button {
     background: none;
     border: 0;
     color: inherit;
-    filter: drop-shadow(var(--textHeaderShadow));
     height: 40px;
-    padding: 8px;
-    position: absolute;
-    top: 0;
+    margin-top: 5px;
+    padding: 10px;
     width: 40px;
   }
 
-  .header--menu {
-    right: 0;
-  }
-
-  .header--nav {
-    left: 0;
-  }
-
-  .attention {
-    background: var(--redColor);
-    border-radius: 7px;
-    bottom: 5px;
-    color: #fff;
-    font-style: normal;
-    font-size: 11px;
-    height: 14px;
-    line-height: 14px;
-    right: 2px;
-    position: absolute;
-    text-align: center;
-    width: 14px;
-  }
-  .attention:after {
-    content: '!';
+  .header--button--menuActive {
+    background: var(--bgColor);
+    border-radius: 20px;
+    position: fixed;
+    right: 5px;
+    text-align: right;
+    top: 0;
+    z-index: 3;
   }
 </style>

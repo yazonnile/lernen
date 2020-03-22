@@ -17,14 +17,17 @@ html, body {
 
 body {
   background: var(--bgColor);
-  color: #fff;
+  color: var(--textColor);
   font: 14px/18px ubuntu, Arial, sans-serif;
-  -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
   min-width: 320px;
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-text-size-adjust: 100%;
 }
 
 input, textarea, select, button {
+  color: var(--textColor);
   font-size: 100%;
   font-family: ubuntu, Arial, sans-serif;
   outline: none;
