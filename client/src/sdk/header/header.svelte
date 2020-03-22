@@ -53,7 +53,7 @@
   .header--button--menuActive {
     background: var(--bgColor);
     border-radius: 20px;
-    position: fixed;
+    position: absolute;
     right: 5px;
     text-align: right;
     top: 0;

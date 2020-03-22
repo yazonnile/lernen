@@ -14,9 +14,12 @@
 
 <style>
   .box {
-    background: var(--gameStandardBg);
-    margin: 25px 0;
-    padding: 20px;
+    margin: 20px -10px 0;
+    padding: 0 20px;
+  }
+
+  .box:first-child {
+    margin-top: 0;
   }
 
   .box:last-child {
@@ -24,13 +27,27 @@
   }
 
   .title {
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: normal;
     line-height: 20px;
-    margin-bottom: 20px;
     text-transform: uppercase;
   }
 
+  .wrap {
+    background: var(--gameStandardBg);
+    border: solid var(--blueContrast);
+    border-width: 1px 0;
+    margin: 0 -20px;
+    padding: 0 0 0 20px;
+  }
+
   .wrap > :global(*) {
+    border-top: 1px solid var(--blueContrast);
+    padding: 5px 15px 5px 0;
     flex: 1;
+  }
+
+  .wrap > :global(*):first-child {
+    border: 0;
   }
 </style>
