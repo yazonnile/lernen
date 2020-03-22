@@ -11,44 +11,43 @@
 
 <style>
   label {
-    display: block;
-    margin-top: 10px;
+    align-items: center;
+    display: flex;
     position: relative;
   }
 
   .item {
-    background: var(--categoryColor);
-    border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
     display: block;
+    flex: 1;
     font-size: 12px;
-    line-height: 15px;
-    padding: 7px 10px 7px 33px;
+    line-height: 16px;
+    overflow: hidden;
+    padding: 8px 5px 7px 0;
     user-select: none;
+    text-overflow: ellipsis;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   label :global(.icon) {
-    color: #ddd;
-    height: 16px;
-    position: absolute;
-    left: 9px;
-    transition: all .15s ease-in-out;
-    top: 8px;
-    width: 16px;
+    color: var(--blueContrast);
+    flex: 0 0 20px;
+    height: 20px;
+    opacity: .5;
+    padding: 4px;
+    transition: padding .15s ease-in-out;
   }
 
   label :global(input:checked) ~ :global(.icon) {
     color: inherit;
-    height: 20px;
-    left: 7px;
-    top: 5px;
-    width: 20px;
+    opacity: 1;
+    padding: 0;
   }
 
   :global(input:checked) + .item {
-    background: var(--categoryActiveColor);
+
   }
 
   label :global(input) {

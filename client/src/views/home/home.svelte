@@ -46,7 +46,7 @@
   }
 
   .section:first-child {
-    margin-top: -5px;
+    margin-top: 0;
   }
 
   .section:nth-child(1) { background: var(--gameStandardBg); }

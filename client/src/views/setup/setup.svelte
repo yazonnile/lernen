@@ -1,8 +1,7 @@
 <script>
-  import SetupBox from './setup-box.svelte';
+  import FormBox from 'sdk/form-box/form-box.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import Button from 'sdk/button/button.svelte';
-  import Slide from 'sdk/transition/slide.svelte'
   import { user, messages } from 'stores';
   import speech, { play } from 'lib/speech/speech';
 
@@ -44,7 +43,7 @@
 </script>
 
 <div class="setup">
-  <SetupBox title="голос">
+  <FormBox title="голос">
     <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить</FormSwitcher>
 
     {#if setup.voice}
@@ -57,16 +56,16 @@
         <span class="text">150%</span>
       </div>
     {/if}
-  </SetupBox>
+  </FormBox>
 
-  <SetupBox title="фразы">
+  <FormBox title="фразы">
     <FormSwitcher type="toggle" bind:checked={setup.phrases}>учить</FormSwitcher>
     {#if setup.phrases && setup.voice}
       <FormSwitcher type="toggle" bind:checked={setup.soundPhrases}>озвучивать</FormSwitcher>
     {/if}
-  </SetupBox>
+  </FormBox>
 
-  <SetupBox title="существительные">
+  <FormBox title="существительные">
     <FormSwitcher type="toggle" bind:checked={setup.nouns}>учить</FormSwitcher>
 
     {#if setup.nouns}
@@ -86,10 +85,10 @@
         <FormSwitcher type="toggle" bind:checked={setup.soundPlural}>озвучивать plural</FormSwitcher>
       {/if}
     {/if}
-  </SetupBox>
+  </FormBox>
 
 
-  <SetupBox title="глаголы">
+  <FormBox title="глаголы">
     <FormSwitcher type="toggle" bind:checked={setup.verbs}>учить</FormSwitcher>
     {#if setup.verbs}
       {#if setup.voice}
@@ -107,11 +106,11 @@
         <FormSwitcher type="toggle" bind:checked={setup.soundIrregularVerbs}>озвучивать неправильные</FormSwitcher>
       {/if}
     {/if}
-  </SetupBox>
+  </FormBox>
 
-  <SetupBox title="другое">
+  <FormBox title="другое">
     <FormSwitcher type="toggle" bind:checked={setup.other}>учить</FormSwitcher>
-  </SetupBox>
+  </FormBox>
 
   <div class="row">
     <Button text="Сохранить" on:click={onSave} />

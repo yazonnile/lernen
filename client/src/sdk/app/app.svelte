@@ -56,7 +56,7 @@
     background: linear-gradient(to bottom, var(--bgColorContrast), transparent 200px);
     display: flex;
     flex: 1;
-    padding: 5px 10px 10px;
+    padding: 0 10px 10px;
     order: 1;
   }
 

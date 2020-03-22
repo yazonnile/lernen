@@ -3,56 +3,41 @@
   export let errors = null;
 </script>
 
-<span class="form-input" class:form-input--error={errors && $errors.length}>
-  <label>
-    {#if label}
-      <span class="form-input--label">{label}</span>
-    {/if}
-    <slot />
-  </label>
-</span>
+<label class="form-input" class:form-input--error={errors && $errors.length}>
+  {#if label}
+    <span class="label">{label}</span>
+  {/if}
+  <slot />
+</label>
 
 <style>
   .form-input {
-    display: block;
-    margin-bottom: 20px;
-    position: relative;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
   }
 
-  .form-input:last-child {
-    margin-bottom: 0;
+  .label {
+    flex: 0 0 100px;
+    white-space: nowrap;
   }
 
-  .form-input--label {
-    display: inline-block;
-    margin-bottom: 1px;
-    vertical-align: top;
-  }
-
-  .form-input :global(input),
-  .form-input :global(select) {
-    background: #fff;
-    border: solid #ccc;
-    border-width: 1px 1px 3px;
-    border-radius: 2px;
-    color: #4b4b4b;
-    display: block;
+  .form-input :global(input) {
+    background: none;
+    border: 0;
+    flex: 1;
     font-size: 15px;
+    margin-right: -5px;
     line-height: 21px;
-    height: 40px;
-    padding: 7px 10px 8px;
-    max-width: 100%;
-    min-width: 100%;
-    width: 100%;
+    height: 31px;
+    padding: 5px;
   }
 
-  .form-input :global(input):focus,
-  .form-input :global(select):focus {
-    border-color: var(--mainColorLight);
+  .form-input :global(input)::placeholder {
+    color: var(--blueContrast);
   }
 
-  .form-input--error :global(input),
-  .form-input--error :global(select) {
-    border-color: var(--redColor);
+  .form-input--error :global(input) {
+    background: var(--buttonRedBg);
   }
 </style>
