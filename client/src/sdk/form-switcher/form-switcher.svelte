@@ -31,7 +31,6 @@
     align-items: center;
     cursor: pointer;
     display: flex;
-    margin-bottom: 20px;
     position: relative;
   }
 

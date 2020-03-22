@@ -2,6 +2,7 @@
   --bgColor: #E6F4F1;
   --bgColorContrast: #CFE8E4;
   --textColor: #00355A;
+  --blueContrast: #00acff;
 
   --gameStandardBg: linear-gradient(to left, rgba(123, 212, 255, .5), rgba(0, 172, 255, 0.5));
   --gameTranslationFirstBg: linear-gradient(to left, rgba(74, 255, 154, 0.5), rgba(0, 202, 62, 0.5));

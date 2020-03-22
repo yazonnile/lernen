@@ -33,16 +33,20 @@
 </div>
 
 <style>
-  .home > :global(.button)  {
-    margin-bottom: 10px;
+  .home {
+    margin: 0 -10px;
   }
 
   .section {
     align-items: center;
     display: flex;
-    margin-bottom: 10px;
+    margin-top: 10px;
     padding: 30px 10px 30px 30px;
     position: relative;
+  }
+
+  .section:first-child {
+    margin-top: -5px;
   }
 
   .section:nth-child(1) { background: var(--gameStandardBg); }
