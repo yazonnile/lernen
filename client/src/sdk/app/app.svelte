@@ -36,6 +36,8 @@
 
     <Messages />
   {/if}
+
+  <i class="bg"></i>
 </div>
 
 <style>
@@ -43,6 +45,20 @@
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .bg {
+    background: url(bg.jpg) 50% 50%;
+    background-size: cover;
+    display: flex;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1;
   }
 
   .main {
