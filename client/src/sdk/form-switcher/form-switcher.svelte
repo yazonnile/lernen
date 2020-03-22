@@ -17,23 +17,26 @@
     type="checkbox"
   />
 
+  <span class="form-switcher--label"><slot /></span>
+
   <i class="form-switcher--fake-element form-switcher--{type}">
     <i class="form-switcher--icon">
       {#if type === 'checkbox'}<Icon name="checkbox" />{/if}
     </i>
   </i>
-
-  <span class="form-switcher--label"><slot /></span>
 </label>
 
 <style global>
   .form-switcher {
+    align-items: center;
     cursor: pointer;
     display: flex;
-    align-items: center;
-    justify-items: flex-start;
     margin-bottom: 20px;
     position: relative;
+  }
+
+  .form-switcher:last-child {
+    margin-bottom: 0;
   }
 
   .form-switcher--real-element {
@@ -43,43 +46,45 @@
   }
 
   .form-switcher--label {
-    margin-left: 10px;
+    flex: 1;
+    padding-right: 10px;
   }
 
   .form-switcher--toggle {
     background: #ccc;
-    border-radius: 13px;
+    border-radius: 14px;
     display: inline-block;
-    height: 20px;
-    min-width: 42px;
+    flex: 0 0 52px;
+    height: 28px;
+    min-width: 22px;
     position: relative;
     transition: background 0.25s cubic-bezier(0.77, 0, 0.175, 1);
     vertical-align: top;
-    width: 42px;
+    width: 48px;
   }
 
   .form-switcher--toggle .form-switcher--icon {
     background: #fff;
-    border-radius: 10px;
+    border-radius: 12px;
     display: block;
-    height: 14px;
-    left: 5px;
+    height: 24px;
+    left: 4px;
     position: absolute;
-    transform: translateX(-1px);
-    top: 3px;
-    width: 14px;
+    transform: translateX(-2px);
+    top: 2px;
+    width: 24px;
     transition-duration: 0.25s;
     transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
     transition-property: transform, background;
   }
 
   .form-switcher--real-element:checked ~ .form-switcher--toggle {
-    background: var(--mainColor);
+    background: var(--textColor);
   }
 
   .form-switcher--real-element:checked ~ .form-switcher--toggle .form-switcher--icon {
     background: #fff;
-    transform: translateX(19px);
+    transform: translateX(22px);
   }
 
   .form-switcher--checkbox {

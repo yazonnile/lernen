@@ -5,7 +5,6 @@
   export let type = 'button';
   export let empty = false;
   export let color = 'default';
-  export let active = false;
 
   import Icon from 'sdk/icon/icon.svelte';
   import clickSplash from 'lib/click-splash/click-splash';
@@ -17,7 +16,6 @@
   class="button button--color-{color}"
   class:button--icon-only="{icon && !text}"
   class:button--empty="{empty}"
-  class:button--active="{active}"
   {type} {disabled}
 >
   <span class="button--inner">
@@ -35,9 +33,9 @@
 
 <style global>
   .button {
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 5px;
+    border: 0;
+    border-radius: 23px;
+    color: inherit;
     cursor: pointer;
     display: inline-block;
     font-size: 13px;
@@ -52,22 +50,15 @@
   }
 
   .button--color-default {
-    background: var(--mainColorLight);
-    color: inherit;
+    background: var(--gameStandardBg);
   }
 
   .button--color-red {
-    background: var(--redColorLight);
-    color: inherit;
-  }
-
-  .button--active {
-    background: var(--mainColor);
-    color: #fff;
+    background: var(--buttonRedBg);
   }
 
   .button:focus {
-    border-color: var(--mainColor);
+    box-shadow: 0 0 5px #000;
   }
 
   .button--inner {

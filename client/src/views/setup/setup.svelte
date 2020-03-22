@@ -43,13 +43,17 @@
 </script>
 
 <div class="setup">
-  <Button text="Сохранить" on:click={onSave} />
-
-  <h1>Настройка голоса</h1>
+  <div class="row">
+    <Button text="Сохранить" on:click={onSave} />
+  </div>
 
   <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить голос</FormSwitcher>
-  <Slide active={setup.voice}>
-    <Button text="проверить голос" on:click={() => onVoiceTest()} />
+
+  {#if setup.voice}
+    <div class="row">
+      <Button text="проверить голос" on:click={() => onVoiceTest()} />
+    </div>
+
     <SetupBox title="скорость голоса" flex>
       <div class="range">
         <Button text="-5%" on:click={decVoiceSpeed} />
@@ -57,62 +61,60 @@
         <Button text="+5%" on:click={incVoiceSpeed} />
       </div>
     </SetupBox>
-  </Slide>
-
-  <h1>Настройка словая</h1>
+  {/if}
 
   <SetupBox title="фразы">
     <FormSwitcher type="toggle" bind:checked={setup.phrases}>учить</FormSwitcher>
-    <Slide active={setup.phrases && setup.voice}>
+    {#if setup.phrases && setup.voice}
       <FormSwitcher type="toggle" bind:checked={setup.soundPhrases}>озвучивать</FormSwitcher>
-    </Slide>
+    {/if}
   </SetupBox>
 
   <SetupBox title="существительные">
     <FormSwitcher type="toggle" bind:checked={setup.nouns}>учить</FormSwitcher>
-    <Slide active={setup.nouns}>
-      <Slide active={setup.voice}>
-        <FormSwitcher type="toggle" bind:checked={setup.soundNouns}>озвучивать</FormSwitcher>
-      </Slide>
-
-      <SetupBox title="артикли">
-        <FormSwitcher type="toggle" bind:checked={setup.articles}>показывать</FormSwitcher>
-        <Slide active={setup.voice}>
-          <FormSwitcher type="toggle" bind:checked={setup.soundArticles}>озвучивать</FormSwitcher>
-        </Slide>
-      </SetupBox>
-
-      <SetupBox title="plural">
-        <FormSwitcher type="toggle" bind:checked={setup.plural}>показывать</FormSwitcher>
-        <Slide active={setup.voice}>
-          <FormSwitcher type="toggle" bind:checked={setup.soundPlural}>озвучивать</FormSwitcher>
-        </Slide>
-      </SetupBox>
-    </Slide>
+    {#if setup.nouns && setup.voice}
+      <FormSwitcher type="toggle" bind:checked={setup.soundNouns}>озвучивать</FormSwitcher>
+    {/if}
   </SetupBox>
+
+  {#if setup.nouns}
+    <SetupBox title="артикли">
+      <FormSwitcher type="toggle" bind:checked={setup.articles}>показывать</FormSwitcher>
+      {#if setup.voice && setup.articles && setup.soundNouns}
+        <FormSwitcher type="toggle" bind:checked={setup.soundArticles}>озвучивать</FormSwitcher>
+      {/if}
+    </SetupBox>
+
+    <SetupBox title="plural">
+      <FormSwitcher type="toggle" bind:checked={setup.plural}>показывать</FormSwitcher>
+      {#if setup.voice && setup.plural && setup.soundNouns}
+        <FormSwitcher type="toggle" bind:checked={setup.soundPlural}>озвучивать</FormSwitcher>
+      {/if}
+    </SetupBox>
+  {/if}
 
   <SetupBox title="глаголы">
     <FormSwitcher type="toggle" bind:checked={setup.verbs}>учить</FormSwitcher>
-    <Slide active={setup.verbs}>
-      <Slide active={setup.voice}>
-        <FormSwitcher type="toggle" bind:checked={setup.soundVerbs}>озвучивать</FormSwitcher>
-      </Slide>
-
-      <SetupBox title="сильные">
-        <FormSwitcher type="toggle" bind:checked={setup.strongVerbs}>показывать</FormSwitcher>
-        <Slide active={setup.voice}>
-          <FormSwitcher type="toggle" bind:checked={setup.soundStrongVerbs}>озвучивать</FormSwitcher>
-        </Slide>
-      </SetupBox>
-
-      <SetupBox title="неправильные">
-        <FormSwitcher type="toggle" bind:checked={setup.irregularVerbs}>показывать</FormSwitcher>
-        <Slide active={setup.voice}>
-          <FormSwitcher type="toggle" bind:checked={setup.soundIrregularVerbs}>озвучивать</FormSwitcher>
-        </Slide>
-      </SetupBox>
-    </Slide>
+    {#if setup.verbs && setup.voice}
+      <FormSwitcher type="toggle" bind:checked={setup.soundVerbs}>озвучивать</FormSwitcher>
+    {/if}
   </SetupBox>
+
+  {#if setup.verbs}
+    <SetupBox title="сильные глаголы">
+      <FormSwitcher type="toggle" bind:checked={setup.strongVerbs}>показывать</FormSwitcher>
+      {#if setup.voice && setup.strongVerbs && setup.soundVerbs}
+        <FormSwitcher type="toggle" bind:checked={setup.soundStrongVerbs}>озвучивать</FormSwitcher>
+      {/if}
+    </SetupBox>
+
+    <SetupBox title="неправильные глаголы">
+      <FormSwitcher type="toggle" bind:checked={setup.irregularVerbs}>показывать</FormSwitcher>
+      {#if setup.voice && setup.irregularVerbs && setup.soundVerbs}
+        <FormSwitcher type="toggle" bind:checked={setup.soundIrregularVerbs}>озвучивать</FormSwitcher>
+      {/if}
+    </SetupBox>
+  {/if}
 
   <SetupBox title="другое">
     <FormSwitcher type="toggle" bind:checked={setup.other}>учить</FormSwitcher>
@@ -126,7 +128,7 @@
     width: 100%;
   }
 
-  .setup :global(.button) {
+  .row {
     margin-bottom: 20px;
   }
 

@@ -5,7 +5,7 @@
 
 <div class="box" class:flex>
   {#if title}
-    <span class="title">{title}</span>
+    <h2 class="title">{title}</h2>
   {/if}
 
   <div class="wrap">
@@ -15,14 +15,13 @@
 
 <style>
   .box {
-    border: 1px dashed var(--mainColor);
+    background: var(--gameStandardBg);
     margin: 25px 0;
-    padding: 30px 20px 0;
-    position: relative;
+    padding: 20px;
   }
 
-  .flex {
-    padding: 20px 10px 10px;
+  .box:last-child {
+    margin-bottom: 0;
   }
 
   .flex .wrap {
@@ -31,13 +30,10 @@
   }
 
   .title {
-    background: #fff;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
-    left: 10px;
-    padding: 2px 5px;
-    position: absolute;
-    top: -14px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
   }
 
   .wrap > :global(*) {
