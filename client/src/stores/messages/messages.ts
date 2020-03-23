@@ -1,5 +1,10 @@
 import createStore from 'lib/create-store/create-store';
 
+const createMessage = (options: MessageOptions): Message => ({
+  ...options,
+  id: (Date.now() + Math.random()).toString()
+});
+
 const storeMethods = {
   clearById(this: Message[], id: string) {
     return this.filter(message => {
@@ -17,11 +22,6 @@ const storeMethods = {
     );
   }
 };
-
-const createMessage = (options: MessageOptions): Message => ({
-  ...options,
-  id: (Date.now() + Math.random()).toString()
-});
 
 const store = createStore<Message[], typeof storeMethods>(
   [], storeMethods

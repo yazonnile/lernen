@@ -11,7 +11,7 @@ type ValidationOption = {
   };
   validationOptions?: {
     [key: string]: any;
-  }
+  };
 };
 
 type Validation = {

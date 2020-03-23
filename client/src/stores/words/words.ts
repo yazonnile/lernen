@@ -4,7 +4,7 @@ import games from 'stores/games/games';
 import userStore from 'stores/user/user';
 
 interface WordsStore {
-  [key: number]: Word
+  [key: number]: Word;
 }
 
 const storeMethods = {

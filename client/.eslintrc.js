@@ -13,7 +13,7 @@ module.exports =  {
     browser: true
   },
   globals: {
-    PRODUCTION: false
+    process: false,
   },
   overrides: [
     {

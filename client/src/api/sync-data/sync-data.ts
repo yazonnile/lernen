@@ -46,18 +46,19 @@ export const syncData = (() => {
     return sync.syncRequired()
       ? request({ api: 'syncData', payload: syncManager.getDataToSync() })
         .then(syncCallback)
-        .catch(() => {})
+        .catch(() => {
+          console.warn('error sync');
+        })
       : Promise.resolve();
   };
 
   let syncTimer;
-  let refreshSyncTimer = () => {
-    clearTimeout(syncTimer);
-    syncTimer = setTimeout(f, 10000);
-  };
 
   // sync data when sync store changes
-  sync.subscribe(refreshSyncTimer);
+  sync.subscribe(() => {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(f, 10000);
+  });
 
   return f;
 })();

@@ -22,9 +22,9 @@ type GamesInterface = {
     categories?: {
       selected: number[];
       nullCategory: boolean;
-    }
-  }
-}
+    };
+  };
+};
 
 const store = createStore<GamesInterface, typeof storeViews>({
   standard: {

@@ -17,11 +17,22 @@ export enum Views {
   spellingGame = 'spellingGame',
 }
 
-type PreGameParams = { gameId: string; }
-type EditWordParams = { wordId: number; };
-interface DefaultView { viewId: string; title: string; }
-interface PreGameView extends DefaultView { params: PreGameParams; }
-interface EditWordView extends DefaultView { params: EditWordParams; }
+type PreGameParams = { gameId: string };
+type EditWordParams = { wordId: number };
+
+interface DefaultView {
+  viewId: string;
+  title: string;
+}
+
+interface PreGameView extends DefaultView {
+  params: PreGameParams;
+}
+
+interface EditWordView extends DefaultView {
+  params: EditWordParams;
+}
+
 interface View extends DefaultView {
   params?: {
     wordId: number;
@@ -30,12 +41,12 @@ interface View extends DefaultView {
 }
 
 const storeMethods = {
-  home: (): View => ({ viewId: Views.home, title: 'lernen' }),
-  categories: (): View => ({ viewId: Views.categories, title: 'категории' }),
-  dict: (): View => ({ viewId: Views.dict, title: 'словарь' }),
-  setup: (): View => ({ viewId: Views.setup, title: 'настройки' }),
-  sync: (): View => ({ viewId: Views.sync, title: 'синхронизация' }),
-  addWord: (): View => ({ viewId: Views.addWord, title: 'добавить слово' }),
+  home: (): View => ({viewId: Views.home, title: 'lernen'}),
+  categories: (): View => ({viewId: Views.categories, title: 'категории'}),
+  dict: (): View => ({viewId: Views.dict, title: 'словарь'}),
+  setup: (): View => ({viewId: Views.setup, title: 'настройки'}),
+  sync: (): View => ({viewId: Views.sync, title: 'синхронизация'}),
+  addWord: (): View => ({viewId: Views.addWord, title: 'добавить слово'}),
   editWord: (params: EditWordParams): EditWordView => ({
     viewId: Views.editWord,
     title: 'редактировать слово',
@@ -46,11 +57,11 @@ const storeMethods = {
     title: 'выберите категории',
     params
   }),
-  standardGame: (): View => ({ viewId: Views.standardGame, title: 'стандартный' }),
-  translationFirstGame: (): View => ({ viewId: Views.translationFirstGame, title: 'сначала перевод' }),
-  articlesGame: (): View => ({ viewId: Views.articlesGame, title: 'артикли' }),
-  pluralGame: (): View => ({ viewId: Views.pluralGame, title: 'plural' }),
-  spellingGame: (): View => ({ viewId: Views.spellingGame, title: 'правописание' }),
+  standardGame: (): View => ({viewId: Views.standardGame, title: 'стандартный'}),
+  translationFirstGame: (): View => ({viewId: Views.translationFirstGame, title: 'сначала перевод'}),
+  articlesGame: (): View => ({viewId: Views.articlesGame, title: 'артикли'}),
+  pluralGame: (): View => ({viewId: Views.pluralGame, title: 'plural'}),
+  spellingGame: (): View => ({viewId: Views.spellingGame, title: 'правописание'}),
 };
 
 const storeViews = {
@@ -86,7 +97,7 @@ const store = createStore<View, typeof storeMethods, typeof storeViews>(
 );
 
 store.subscribe(() => {
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 });
 
 export default store;

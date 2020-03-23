@@ -1,5 +1,5 @@
 const getVerbTextToSpeech = (word: Word, setup: Setup): string[] => {
-  let result = [word.original];
+  const result = [word.original];
 
   if (setup.soundStrongVerbs && word.strong1) {
     result.push(null, `Ich ${word.strong1}`);
@@ -19,7 +19,7 @@ const getVerbTextToSpeech = (word: Word, setup: Setup): string[] => {
 };
 
 const getNounTextToSpeech = (word: Word, setup: Setup): string[] => {
-  let result = setup.soundArticles ? [`${word.article} ${word.original}`] : [word.original];
+  const result = setup.soundArticles ? [`${word.article} ${word.original}`] : [word.original];
 
   if (setup.soundPlural) {
     result.push(null);

@@ -1,4 +1,4 @@
-import { syncCallback, syncData } from 'api/sync-data/sync-data';
+import { syncCallback } from 'api/sync-data/sync-data';
 import syncManager from 'api/sync-manager/sync-manager';
 import request from 'lib/request/request';
 import { words, categories, sync, storage, user, view, games } from 'stores';
@@ -12,7 +12,9 @@ export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => 
   let storageData;
   try {
     storageData = JSON.parse(localStorage.getItem('lernen-storage'));
-  } catch (e) { }
+  } catch (e) {
+    console.warn('Local storage parse error');
+  }
 
   if (storageData) {
     sync.set(storageData.sync);
