@@ -1,5 +1,6 @@
 <script>
   import FormBox from 'sdk/form-box/form-box.svelte';
+  import Page from 'sdk/page/page.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import Button from 'sdk/button/button.svelte';
   import { user, messages } from 'stores';
@@ -42,7 +43,7 @@
   };
 </script>
 
-<div class="setup">
+<Page class="setup">
   <FormBox title="голос">
     <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить</FormSwitcher>
 
@@ -115,7 +116,7 @@
   <div class="row">
     <Button text="Сохранить" on:click={onSave} />
   </div>
-</div>
+</Page>
 
 <style>
   .setup {

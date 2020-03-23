@@ -12,7 +12,7 @@
   let textTop = false;
 
   const homeViewId = view.getHomeViewId();
-  const duration = 250;
+  const duration = 500;
   const animationOptions = { opacity: 0, duration };
   const inAnimation = { ...animationOptions, delay: duration };
   const outAnimation = { ...animationOptions, delay: 0 };
@@ -107,7 +107,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: uppercase;
-    transition: all 250ms ease-in-out;
+    transition: all 500ms ease-in-out;
     white-space: nowrap;
   }
 

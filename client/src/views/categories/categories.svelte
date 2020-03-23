@@ -1,5 +1,6 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
+  import Page from 'sdk/page/page.svelte';
   import FormBox from 'sdk/form-box/form-box.svelte';
   import { categories as categoriesStore, words as wordsStore } from 'stores';
   import { afterUpdate } from 'svelte';
@@ -80,50 +81,52 @@
   afterUpdate(selectText);
 </script>
 
-{#each categoriesList as { categoryName, categoryId, words } (categoryId)}
-  <FormBox title={categoryName}>
-    <div slot="title" class="slot-title">
-      {#if categoryId === categoryToEdit}
-        <h2 bind:this={editableNode} contenteditable>{categoryName}</h2>
-      {:else}
-        <h2>{categoryName}</h2>
-      {/if}
-    </div>
-
-    <div slot="title-control" class="title-control">
-      {#if categoryId === categoryToEdit}
-        <button on:click|stopPropagation={onCancel}><Icon name="turnOff" /></button>
-        <button on:click|stopPropagation={() => onSave(categoryId)}><Icon name="checkbox" /></button>
-      {:else}
-        <button on:click|stopPropagation={() => onEdit(categoryId)}><Icon name="edit" /></button>
-        <button on:click|stopPropagation={() => onDelete(categoryId)}><Icon name="delete" /></button>
-      {/if}
-
-    </div>
-    {#each words as wordId (wordId)}
-      <div class="word">
-        <div class="word--text">
-          {$wordsStore[wordId].original}
-        </div>
-
-        <div class="buttons">
-          {#if clickedWord[0] === categoryId && clickedWord[1] === wordId}
-            <button class="button" on:click={() => onUnChain(categoryId, wordId)}><Icon name="delete" /></button>
-            <button class="button" on:click={() => onUnChain()}>
-              <Icon name="turnOff" />
-            </button>
-          {:else}
-            <button class="button" on:click={() => onUnChain(categoryId, wordId)}>
-              <Icon name="unchain" />
-            </button>
-          {/if}
-        </div>
+<Page>
+  {#each categoriesList as { categoryName, categoryId, words } (categoryId)}
+    <FormBox title={categoryName}>
+      <div slot="title" class="slot-title">
+        {#if categoryId === categoryToEdit}
+          <h2 bind:this={editableNode} contenteditable>{categoryName}</h2>
+        {:else}
+          <h2>{categoryName}</h2>
+        {/if}
       </div>
-    {/each}
-  </FormBox>
-{:else}
-  нет категорий
-{/each}
+
+      <div slot="title-control" class="title-control">
+        {#if categoryId === categoryToEdit}
+          <button on:click|stopPropagation={onCancel}><Icon name="turnOff" /></button>
+          <button on:click|stopPropagation={() => onSave(categoryId)}><Icon name="checkbox" /></button>
+        {:else}
+          <button on:click|stopPropagation={() => onEdit(categoryId)}><Icon name="edit" /></button>
+          <button on:click|stopPropagation={() => onDelete(categoryId)}><Icon name="delete" /></button>
+        {/if}
+
+      </div>
+      {#each words as wordId (wordId)}
+        <div class="word">
+          <div class="word--text">
+            {$wordsStore[wordId].original}
+          </div>
+
+          <div class="buttons">
+            {#if clickedWord[0] === categoryId && clickedWord[1] === wordId}
+              <button class="button" on:click={() => onUnChain(categoryId, wordId)}><Icon name="delete" /></button>
+              <button class="button" on:click={() => onUnChain()}>
+                <Icon name="turnOff" />
+              </button>
+            {:else}
+              <button class="button" on:click={() => onUnChain(categoryId, wordId)}>
+                <Icon name="unchain" />
+              </button>
+            {/if}
+          </div>
+        </div>
+      {/each}
+    </FormBox>
+  {:else}
+    нет категорий
+  {/each}
+</Page>
 
 <style>
   .slot-title {

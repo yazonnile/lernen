@@ -3,6 +3,7 @@
 
   import FormInput from 'sdk/form-input/form-input.svelte';
   import Button from 'sdk/button/button.svelte';
+  import Page from 'sdk/page/page.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import LampRow from 'sdk/lamp-row/lamp-row.svelte';
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
@@ -118,7 +119,7 @@
   categoriesActive = true;
 </script>
 
-<div>
+<Page>
   {#if !wordId}
     <LampRow items={typeLampData} value={$typeValue} on:select={({ detail }) => resetState(detail)} />
   {/if}
@@ -192,7 +193,7 @@
       </div>
     </FormValidation>
   {/if}
-</div>
+</Page>
 
 <style>
   .row {

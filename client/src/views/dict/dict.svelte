@@ -1,5 +1,6 @@
 <script>
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
+  import Page from 'sdk/page/page.svelte';
   import Icon from 'sdk/icon/icon.svelte';
   import DictWord from './dict-word.svelte';
   import DictButtons from './dict-buttons.svelte';
@@ -79,7 +80,7 @@
   };
 </script>
 
-<div class="dict">
+<Page class="dict">
   <Autocomplete label="Начните вводить слово/фразу" bind:result bind:value={autocompleteValue} />
   {#if autocompleteValue.length > 1 && !renderResult.length}
     <p>слов не найдено</p>
@@ -108,7 +109,7 @@
   {/if}
 
   <DictButtons bind:checked />
-</div>
+</Page>
 
 <style>
   .dict {

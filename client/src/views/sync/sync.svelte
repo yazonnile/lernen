@@ -1,5 +1,6 @@
 <script>
-  import Auth from 'views/auth/auth.svelte';
+  import Auth from './auth/auth.svelte';
+  import Page from 'sdk/page/page.svelte';
   import Button from 'sdk/button/button.svelte';
   import { syncData } from 'api/sync-data/sync-data';
   import request from 'lib/request/request';
@@ -24,7 +25,7 @@
   };
 </script>
 
-<div class="sync">
+<Page class="sync">
   {#if !$user.userId}
     <div class="box form">
       <p class="error">Войдите в свой аккаунт, чтобы не потерять свои слова</p>
@@ -74,7 +75,7 @@
   {/if}
 
   <p>{process.env.VERSION}</p>
-</div>
+</Page>
 
 <style>
   .box {

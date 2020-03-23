@@ -1,5 +1,6 @@
 <script>
   import Category from 'sdk/category/category.svelte';
+  import Page from 'sdk/page/page.svelte';
   import FormBox from 'sdk/form-box/form-box.svelte';
   import Button from 'sdk/button/button.svelte';
   import { view, categories, games } from 'stores';
@@ -40,7 +41,7 @@
   }
 </script>
 
-<div class="pre-game">
+<Page class="pre-game">
   {#if categoriesList.length}
     <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
 
@@ -59,7 +60,7 @@
   <div class="row">
     <Button text="играть" on:click={onReady} />
   </div>
-</div>
+</Page>
 
 <style>
   .row {

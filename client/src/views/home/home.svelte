@@ -1,6 +1,6 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
-  import Button from 'sdk/button/button.svelte';
+  import Page from 'sdk/page/page.svelte';
   import { games, view } from 'stores';
 
   const onGameClick = (gameId) => {
@@ -16,7 +16,7 @@
   };
 </script>
 
-<div class="home">
+<Page className="home" homePage>
   {#each Object.keys($games) as gameId (gameId)}
     <div class="section" on:click={() => onGameClick(gameId)}>
       <div class="text">
@@ -30,7 +30,7 @@
       </span>
     </div>
   {/each}
-</div>
+</Page>
 
 <style>
   .home {

@@ -22,7 +22,7 @@ export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => 
     if (storageData.gamesCategories) {
       games.update($games => {
         Object.keys(storageData.gamesCategories).forEach(gameId => {
-          $games[gameId].categories = storageData.gamesCategories[gameId].categories;
+          $games[gameId].categories = storageData.gamesCategories[gameId];
         }, {});
 
         return $games;

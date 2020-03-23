@@ -1,8 +1,10 @@
 <script>
-
+  import Page from 'sdk/page/page.svelte';
 </script>
 
-plural
+<Page>
+  plural
+</Page>
 
 <style>
 

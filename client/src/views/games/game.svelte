@@ -2,6 +2,7 @@
   export let gameName;
 
   import BottomButtons from 'sdk/bottom-buttons/bottom-buttons.svelte';
+  import Page from 'sdk/page/page.svelte';
   import Button from 'sdk/button/button.svelte';
   import speech from 'lib/speech/speech';
   import shuffle from 'lib/shuffle/shuffle';
@@ -30,17 +31,19 @@
   });
 </script>
 
-{#if !wordsIds.length}
-  нет слов
-{:else}
-  <div class="game" on:click={showTranslation}>
-    <slot {activeWord} {visible} />
+<Page>
+  {#if !wordsIds.length}
+    нет слов
+  {:else}
+    <div class="game" on:click={showTranslation}>
+      <slot {activeWord} {visible} />
 
-    <BottomButtons>
-      <Button text="Следующий" on:click={nextWord} />
-    </BottomButtons>
-  </div>
-{/if}
+      <BottomButtons>
+        <Button text="Следующий" on:click={nextWord} />
+      </BottomButtons>
+    </div>
+  {/if}
+</Page>
 
 <style>
   .game {
