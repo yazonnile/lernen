@@ -34,7 +34,7 @@
   }
 
   .form-input :global(input)::placeholder {
-    color: var(--blueContrast);
+    color: var(--gameStandardBgContrast);
   }
 
   .form-input--error :global(input) {

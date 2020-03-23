@@ -1,7 +1,7 @@
 <script>
   import Category from 'sdk/category/category.svelte';
+  import FormBox from 'sdk/form-box/form-box.svelte';
   import Button from 'sdk/button/button.svelte';
-  import Fly from 'sdk/transition/fly.svelte';
   import { view, categories, games } from 'stores';
 
   let { gameId } = $view.params;
@@ -26,43 +26,43 @@
   const onToggleAll = () => {
     if (selectedState) {
       selectedCategories = [];
-      nullCategory = false;
     } else {
       selectedCategories = categories.getIds();
-      nullCategory = true;
     }
 
     selectedState = !selectedState;
   };
+
+  $: {
+    if (!selectedCategories.length) {
+      nullCategory = true;
+    }
+  }
 </script>
 
 <div class="pre-game">
   {#if categoriesList.length}
     <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
 
-    <div class="categories">
+    <FormBox>
       {#each categoriesList as { categoryName, categoryId } (categoryId)}
         <Category {categoryName}>
           <input type="checkbox" bind:group={selectedCategories} value={categoryId} />
         </Category>
       {/each}
 
-      <Fly active={selectedCategories.length}>
-        <Category categoryName="без категории">
-          <input type="checkbox" bind:checked={nullCategory} />
-        </Category>
-      </Fly>
-    </div>
+      <Category categoryName="без категории">
+        <input type="checkbox" bind:checked={nullCategory} />
+      </Category>
+    </FormBox>
   {/if}
-  <Button text="играть" on:click={onReady} />
+  <div class="row">
+    <Button text="играть" on:click={onReady} />
+  </div>
 </div>
 
 <style>
-  .pre-game :global(.button) {
-    margin-bottom: 10px;
-  }
-
-  .categories {
-    margin-bottom: 20px;
+  .row {
+    margin-top: 20px;
   }
 </style>

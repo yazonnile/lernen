@@ -9,7 +9,13 @@ import games from 'stores/games/games';
 const store = derived(
   [words, categories, user, sync, view, games],
   ([words, categories, user, sync, view, games]) => {
-    return { words, categories, user, sync, view, games };
+
+    const gamesCategories = Object.keys(games).reduce((carry, gameId) => {
+      carry[gameId] = games[gameId].categories;
+      return carry;
+    }, {});
+
+    return { words, categories, user, sync, view, gamesCategories };
   }
 );
 

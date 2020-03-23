@@ -57,6 +57,12 @@
     background: var(--buttonRedBg);
   }
 
+  :global(.app--standard) .button { background: var(--gameStandardBg); }
+  :global(.app--translationFirst) .button { background: var(--gameTranslationFirstBg); }
+  :global(.app--articles) .button { background: var(--gameArticlesBg); }
+  :global(.app--plural) .button { background: var(--gamePluralBg); }
+  :global(.app--spelling) .button { background: var(--gameSpellingBg); }
+
   .button:focus {
     box-shadow: 0 0 5px #000;
   }

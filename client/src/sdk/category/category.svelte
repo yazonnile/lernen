@@ -32,13 +32,17 @@
   }
 
   label :global(.icon) {
-    color: var(--blueContrast);
+    color: var(--gameStandardBgContrast);
     flex: 0 0 20px;
     height: 20px;
-    opacity: .5;
+    opacity: .75;
     padding: 4px;
-    transition: padding .15s ease-in-out;
   }
+
+  :global(.app--translationFirst) label :global(.icon) { color: var(--gameTranslationFirstContrast); }
+  :global(.app--articles) label :global(.icon) { color: var(--gameArticlesContrast); }
+  :global(.app--plural) label :global(.icon) { color: var(--gamePluralContrast); }
+  :global(.app--spelling) label :global(.icon) { color: var(--gameSpellingContrast); }
 
   label :global(input:checked) ~ :global(.icon) {
     color: inherit;
@@ -55,3 +59,4 @@
     visibility: hidden;
   }
 </style>
+

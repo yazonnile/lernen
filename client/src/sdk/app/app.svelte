@@ -20,9 +20,12 @@
       dataReady = true
     }
   });
+
+  let gamePageClass;
+  $: gamePageClass = view.isGameView($view);
 </script>
 
-<div class="app">
+<div class={`app ${gamePageClass ? 'app--' + gamePageClass : ''}`}>
   {#if introActive}
     <Intro {dataReady} bind:introActive bind:introToHide />
   {/if}

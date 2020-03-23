@@ -60,6 +60,23 @@ const storeViews = {
   getHomeViewId(): string {
     return Views.home;
   },
+  isGameView(this: View): string {
+    if (this.viewId === Views.preGame) {
+      return this.params.gameId;
+    } else {
+      const games: string[] = [
+        Views.standardGame,
+        Views.translationFirstGame,
+        Views.articlesGame,
+        Views.pluralGame,
+        Views.spellingGame,
+      ];
+
+      if (games.includes(this.viewId)) {
+        return this.viewId.replace('Game', '');
+      }
+    }
+  }
 };
 
 const store = createStore<View, typeof storeMethods, typeof storeViews>(

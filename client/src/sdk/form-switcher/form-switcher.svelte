@@ -46,7 +46,7 @@
 
   .form-switcher--label {
     flex: 1;
-    padding-right: 10px;
+    padding: 6px 10px 7px 0;
   }
 
   .form-switcher--toggle {

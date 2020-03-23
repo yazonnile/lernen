@@ -35,19 +35,32 @@
 
   .wrap {
     background: var(--gameStandardBg);
-    border: solid var(--blueContrast);
+    border: solid var(--gameStandardBgContrast);
     border-width: 1px 0;
     margin: 0 -20px;
     padding: 0 0 0 20px;
   }
 
+  :global(.app--standard) .wrap { background: var(--gameStandardBg); border-color: var(--gameStandardBgContrast); }
+  :global(.app--translationFirst) .wrap { background: var(--gameTranslationFirstBg); border-color: var(--gameTranslationFirstContrast); }
+  :global(.app--articles) .wrap { background: var(--gameArticlesBg); border-color: var(--gameArticlesContrast); }
+  :global(.app--plural) .wrap { background: var(--gamePluralBg); border-color: var(--gamePluralContrast); }
+  :global(.app--spelling) .wrap { background: var(--gameSpellingBg); border-color: var(--gameSpellingContrast); }
+
   .wrap > :global(*) {
-    border-top: 1px solid var(--blueContrast);
+    border-top: 1px solid var(--gameStandardBgContrast);
     padding: 5px 15px 5px 0;
     flex: 1;
   }
+
+  :global(.app--standard) .wrap > :global(*) { border-color: var(--gameStandardBgContrast); }
+  :global(.app--translationFirst) .wrap > :global(*) { border-color: var(--gameTranslationFirstContrast); }
+  :global(.app--articles) .wrap > :global(*) { border-color: var(--gameArticlesContrast); }
+  :global(.app--plural) .wrap > :global(*) { border-color: var(--gamePluralContrast); }
+  :global(.app--spelling) .wrap > :global(*) { border-color: var(--gameSpellingContrast); }
 
   .wrap > :global(*):first-child {
     border: 0;
   }
 </style>
+

@@ -19,8 +19,14 @@ export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => 
     words.set(storageData.words || {});
     categories.set(storageData.categories || {});
 
-    if (storageData.games) {
-      games.set(storageData.games);
+    if (storageData.gamesCategories) {
+      games.update($games => {
+        Object.keys(storageData.gamesCategories).forEach(gameId => {
+          $games[gameId].categories = storageData.gamesCategories[gameId].categories;
+        }, {});
+
+        return $games;
+      });
     }
 
     if (storageData.view) {

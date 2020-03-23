@@ -2,15 +2,24 @@
   --bgColor: #E6F4F1;
   --bgColorContrast: #CFE8E4;
   --textColor: #00355A;
-  --blueContrast: #00acff;
 
   --gameStandardBg: linear-gradient(to left, rgba(123, 212, 255, .5), rgba(0, 172, 255, 0.5));
+  --gameStandardBgContrast: #00acff;
+
   --gameTranslationFirstBg: linear-gradient(to left, rgba(74, 255, 154, 0.5), rgba(0, 202, 62, 0.5));
+  --gameTranslationFirstContrast: #00d057;
+
   --gameArticlesBg: linear-gradient(to left, rgba(255, 203, 107, 0.5), rgba(255, 164, 0, 0.5));
+  --gameArticlesContrast: #d89f2a;
+
   --gamePluralBg: linear-gradient(to left, rgba(255, 252, 144, 0.5), rgba(255, 247, 0, 0.5));
+  --gamePluralContrast: #ccc711;
+
   --gameSpellingBg: linear-gradient(to left, rgba(141, 250, 255, 0.5), rgba(0, 244, 255, 0.5));
+  --gameSpellingContrast: #00bfde;
 
   --buttonRedBg: linear-gradient(to left, rgba(255, 193, 193, 0.5), rgba(255, 63, 69, 0.5));
+  --buttonRedContrast: #ff5300;
 
 
 

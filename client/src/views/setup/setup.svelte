@@ -129,7 +129,7 @@
   .range {
     align-items: center;
     display: flex;
-    height: 28px;
+    height: 42px;
     justify-content: center;
   }
 
@@ -140,7 +140,7 @@
   }
 
   .range .fake {
-    background: var(--blueContrast);
+    background: var(--gameStandardBgContrast);
     height: 5px;
     left: 0;
     position: absolute;
