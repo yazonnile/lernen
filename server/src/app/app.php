@@ -108,8 +108,6 @@
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $this->query->registerUser($login, $passwordHash);
         $this->response->addMessage('registration.success');
-
-        $userId = $this->query->getLastInsertId();
       }
     }
 
@@ -138,6 +136,7 @@
         $this->query->updatePassword($userByLogin['userId'], password_hash($password, PASSWORD_DEFAULT));
       }
 
+      $this->response->addMessage('login.success');
       $userId = $userByLogin['userId'];
       $this->user->setUserCookie($userId);
       $this->user->setupById($userId);

@@ -27,9 +27,6 @@
 </script>
 
 <Page className="sync">
-  {#if !$user.userId}
-    <Auth />
-  {/if}
 
   <FormBox title="статистика">
     <div>
@@ -42,22 +39,22 @@
 
   {#if $sync && sync.syncRequired()}
     {#if $user.userId}
-      <Button
-        on:click={syncData}
-        text="синхронизировать"
-      />
+      <div class="row">
+        <Button
+          on:click={syncData}
+          text="синхронизировать"
+        />
+      </div>
     {/if}
 
     {#if process.env.DEV}
-      <Button
-        on:click={clearLocalData}
-        text="стереть данные для синхронизации"
-      />
+      <div class="row">
+        <Button
+          on:click={clearLocalData}
+          text="стереть данные для синхронизации"
+        />
+      </div>
     {/if}
-  {/if}
-
-  {#if $user.userId}
-    <Button text="выйти" on:click={onLogout} color="red" />
   {/if}
 
   <FormBox title="version">
@@ -67,6 +64,14 @@
       </div>
     </div>
   </FormBox>
+
+  <div class="row">
+    {#if $user.userId}
+      <Button text="выйти" on:click={onLogout} color="red" />
+    {:else}
+      <Auth />
+    {/if}
+  </div>
 
   {#if process.env.DEV}
     <div style="margin: 50px 0">

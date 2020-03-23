@@ -1,4 +1,5 @@
 <script>
+  import { loadInitialData } from 'api/load-initial-data/load-initial-data';
   import LampRow from 'sdk/lamp-row/lamp-row.svelte';
   import FormBox from 'sdk/form-box/form-box.svelte';
   import FormInput from 'sdk/form-input/form-input.svelte';
@@ -6,22 +7,28 @@
   import createValidation from 'lib/validation/validation'
   import request from 'lib/request/request';
   import Button from 'sdk/button/button.svelte';
+  import { view } from 'stores';
 
   let regMode = false;
   const lampItems = [
-    { id: false, text: 'регистрация' },
-    { id: true, text: 'вход' }
+    { id: false, text: 'вход' },
+    { id: true, text: 'регистрация' }
   ];
 
   const callback = (values) => {
     if (regMode) {
       request({ api: 'registerUser', payload: values }).then(response => {
         if (response) {
+          $pValue = '';
           regMode = false;
         }
       });
     } else {
       loadInitialData({
+        callback: () => {
+          view.home();
+        },
+        loginAttempt: true,
         payload: {
           login: values
         }
@@ -64,7 +71,7 @@
       </FormBox>
     </div>
     <div class="row">
-      <Button text={regMode ? 'Войти' : 'Создать пользователя'} type="submit" />
+      <Button text={regMode ? 'Создать пользователя' : 'Войти'} type="submit" />
     </div>
   </FormValidation>
 </div>

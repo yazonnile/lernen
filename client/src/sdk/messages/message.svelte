@@ -1,3 +1,17 @@
+<script context="module">
+  const data = {
+    'registration.success': 'Новый аккаунт создан. Осталось лишь войти в него',
+    'login.success': 'Вы вошли в свой аккаунт',
+    'wordEdit.success': 'Слово обновлено',
+    'wordCreate.success': 'Слово создано',
+    'wordExists.error': 'Такое слово уже есть',
+    'setupSave.success': 'Настройки сохранены',
+    'registration.userAlreadyExist.error': 'Пользователь с таким именем уже существует',
+    'noSuchUser.error': 'Пользователя с таким именем нет',
+    'login.error': 'Неправильный пароль',
+  };
+</script>
+
 <script>
   export let id;
   export let text;
@@ -6,9 +20,9 @@
 
   import Icon from 'sdk/icon/icon.svelte';
   import { onMount, onDestroy } from 'svelte';
-  import { fly } from 'svelte/transition';
-  import { quintOut } from 'svelte/easing';
+  import { slide } from 'svelte/transition';
   import { messages } from 'stores';
+
 
   let timer;
   const clearMessage = () => {
@@ -30,10 +44,10 @@
 <span
   class={`message message--${status}`}
   on:click={clearMessage}
-  transition:fly|local="{{ duration: 300, easing: quintOut, x: 30, opacity: 0 }}"
+  transition:slide|local="{{ duration: 300 }}"
 >
   <span class="text">
-    {text}
+    {data[text] || text}
   </span>
 
   <Icon name="close" />
@@ -41,11 +55,12 @@
 
 <style>
   .message {
-    border-radius: 5px;
-    display: block;
-    margin-top: 10px;
+    align-items: center;
+    background: var(--gameStandardBgContrast);
+    display: flex;
+    flex-wrap: nowrap;
     overflow: hidden;
-    padding: 5px 28px 5px 10px;
+    padding: 25px;
     position: relative;
     word-wrap: break-word;
   }
@@ -55,23 +70,21 @@
   }
 
   .message--success {
-    background: var(--greenColorLight);
+    background: var(--gameTranslationFirstContrast);
   }
 
   .message--error {
-    background: var(--redColorLight);
+    background: var(--buttonRedContrast);
   }
 
   .message span {
-    position: relative;
-    z-index: 2;
+    flex: 1;
   }
 
   .message :global(.icon) {
+    flex: 0 0 10px;
     height: 10px;
-    position: absolute;
-    right: 9px;
-    top: 9px;
+    margin-left: 10px;
     width: 10px;
     z-index: 1;
 

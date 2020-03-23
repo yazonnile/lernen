@@ -44,19 +44,20 @@
 <Page className="pre-game">
   {#if categoriesList.length}
     <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
-
-    <FormBox>
-      {#each categoriesList as { categoryName, categoryId } (categoryId)}
-        <Category {categoryName}>
-          <input type="checkbox" bind:group={selectedCategories} value={categoryId} />
-        </Category>
-      {/each}
-
-      <Category categoryName="без категории">
-        <input type="checkbox" bind:checked={nullCategory} />
-      </Category>
-    </FormBox>
   {/if}
+
+  <FormBox>
+    {#each categoriesList as { categoryName, categoryId } (categoryId)}
+      <Category {categoryName}>
+        <input type="checkbox" bind:group={selectedCategories} value={categoryId} />
+      </Category>
+    {/each}
+
+    <Category categoryName="без категории">
+      <input type="checkbox" bind:checked={nullCategory} />
+    </Category>
+  </FormBox>
+
   <div class="row">
     <Button text="играть" on:click={onReady} />
   </div>

@@ -6,49 +6,54 @@ import { words, categories, sync, storage, user, view, games } from 'stores';
 interface LoadInitialData {
   callback?();
   payload?: object;
+  loginAttempt?: boolean;
 }
 
-export const loadInitialData = ({ callback, payload = {} }: LoadInitialData) => {
-  let storageData;
-  try {
-    storageData = JSON.parse(localStorage.getItem('lernen-storage'));
-  } catch (e) {
-    console.warn('Local storage parse error');
-  }
-
-  if (storageData) {
-    sync.set(storageData.sync);
-    words.set(storageData.words || {});
-    categories.set(storageData.categories || {});
-
-    if (storageData.gamesCategories) {
-      games.update($games => {
-        Object.keys(storageData.gamesCategories).forEach(gameId => {
-          $games[gameId].categories = storageData.gamesCategories[gameId];
-        }, {});
-
-        return $games;
-      });
+export const loadInitialData = ({ callback, payload = {}, loginAttempt }: LoadInitialData) => {
+  if (!loginAttempt) {
+    let storageData;
+    try {
+      storageData = JSON.parse(localStorage.getItem('lernen-storage'));
+    } catch (e) {
+      console.warn('Local storage parse error');
     }
 
-    if (storageData.view) {
-      view.set(storageData.view);
-    } else {
-      view.home();
-    }
+    if (storageData) {
+      sync.set(storageData.sync);
+      words.set(storageData.words || {});
+      categories.set(storageData.categories || {});
 
-    if (storageData.user) {
-      user.set(storageData.user);
-    } else {
-      user.resetSetup();
+      if (storageData.gamesCategories) {
+        games.update($games => {
+          Object.keys(storageData.gamesCategories).forEach(gameId => {
+            $games[gameId].categories = storageData.gamesCategories[gameId];
+          }, {});
+
+          return $games;
+        });
+      }
+
+      if (storageData.view) {
+        view.set(storageData.view);
+      } else {
+        view.home();
+      }
+
+      if (storageData.user) {
+        user.set(storageData.user);
+      } else {
+        user.resetSetup();
+      }
     }
   }
 
   const requestLoadOrDie = () => {
-    // subscribe to storage change to sync storage with browser
-    storage.subscribe($store => {
-      localStorage.setItem('lernen-storage', JSON.stringify($store));
-    });
+    if (!loginAttempt) {
+      // subscribe to storage change to sync storage with browser
+      storage.subscribe($store => {
+        localStorage.setItem('lernen-storage', JSON.stringify($store));
+      });
+    }
 
     callback && callback();
   };

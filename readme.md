@@ -18,7 +18,6 @@
 
 # IN PROGRESS
 * fancy ui
-    * messages
     * games
 
 # TODO
