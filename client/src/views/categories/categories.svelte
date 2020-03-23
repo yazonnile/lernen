@@ -176,9 +176,9 @@
   .button {
     background: none;
     border: 0;
-    flex: 0 0 24px;
-    height: 24px;
-    margin-left: 5px;
-    width: 24px;
+    flex: 0 0 20px;
+    height: 20px;
+    margin-left: 20px;
+    width: 20px;
   }
 </style>
