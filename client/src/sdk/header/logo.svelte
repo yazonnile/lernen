@@ -28,7 +28,7 @@
       setTimeout(() => {
         updateTitle();
         textTop = false;
-      }, duration/2);
+      }, duration);
     } else {
       updateTitle();
     }
