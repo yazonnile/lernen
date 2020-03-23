@@ -8,7 +8,7 @@ export { default as addWord } from 'views/words/add-word.svelte';
 export { default as editWord } from 'views/words/edit-word.svelte';
 
 export { default as standardGame } from 'views/games/standard.svelte';
-export { default as translationFirst } from 'views/games/translation-first.svelte';
+export { default as translationFirstGame } from 'views/games/translation-first.svelte';
 export { default as articlesGame } from 'views/games/articles.svelte';
 export { default as pluralGame } from 'views/games/plural.svelte';
 export { default as spellingGame } from 'views/games/spelling.svelte';
