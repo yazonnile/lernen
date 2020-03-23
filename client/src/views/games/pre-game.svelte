@@ -41,7 +41,7 @@
   }
 </script>
 
-<Page class="pre-game">
+<Page className="pre-game">
   {#if categoriesList.length}
     <Button text={`${selectedState ? 'убрать' : 'выбрать'} все`} on:click={onToggleAll} />
 

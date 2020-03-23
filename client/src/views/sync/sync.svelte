@@ -25,7 +25,7 @@
   };
 </script>
 
-<Page class="sync">
+<Page className="sync">
   {#if !$user.userId}
     <div class="box form">
       <p class="error">Войдите в свой аккаунт, чтобы не потерять свои слова</p>

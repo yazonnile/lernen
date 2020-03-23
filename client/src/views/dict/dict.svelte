@@ -80,7 +80,7 @@
   };
 </script>
 
-<Page class="dict">
+<Page className="dict">
   <Autocomplete label="Начните вводить слово/фразу" bind:result bind:value={autocompleteValue} />
   {#if autocompleteValue.length > 1 && !renderResult.length}
     <p>слов не найдено</p>

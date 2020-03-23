@@ -33,7 +33,7 @@
 </Page>
 
 <style>
-  .home {
+  :global(.home) {
     margin: 0 -10px;
   }
 

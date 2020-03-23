@@ -43,7 +43,7 @@
   };
 </script>
 
-<Page class="setup">
+<Page className="setup">
   <FormBox title="голос">
     <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить</FormSwitcher>
 

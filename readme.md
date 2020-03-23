@@ -18,7 +18,6 @@
 
 # IN PROGRESS
 * fancy ui
-    * categories
     * dict
     * sync + stat
     * messages
