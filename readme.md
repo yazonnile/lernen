@@ -18,8 +18,6 @@
 
 # IN PROGRESS
 * fancy ui
-    * zebra style (odd/even)
-    * sync + stat
     * messages
     * games
 

@@ -1,6 +1,7 @@
 <script>
-  import Auth from './auth/auth.svelte';
+  import Auth from './auth.svelte';
   import Page from 'sdk/page/page.svelte';
+  import FormBox from 'sdk/form-box/form-box.svelte';
   import Button from 'sdk/button/button.svelte';
   import { syncData } from 'api/sync-data/sync-data';
   import request from 'lib/request/request';
@@ -27,32 +28,17 @@
 
 <Page className="sync">
   {#if !$user.userId}
-    <div class="box form">
-      <p class="error">Войдите в свой аккаунт, чтобы не потерять свои слова</p>
-      <Auth />
-    </div>
+    <Auth />
   {/if}
 
-  <div class="box">
-    <h2>Слов: {Object.keys($words).length}</h2>
-    {#if process.env.DEV}
-      <pre>{JSON.stringify($sync.words, null, ' ')}</pre>
-    {/if}
-  </div>
-
-  <div class="box">
-    <h2>Категорий: {Object.keys($categories).length}</h2>
-    {#if process.env.DEV}
-      <pre>{JSON.stringify($sync.categories, null, ' ')}</pre>
-    {/if}
-  </div>
-
-  {#if process.env.DEV}
-    <div class="box">
-      <h1>Настройки</h1>
-      <pre>{JSON.stringify($sync.setup, null, ' ')}</pre>
+  <FormBox title="статистика">
+    <div>
+      <div class="stat-row">Слов: {Object.keys($words).length}</div>
     </div>
-  {/if}
+    <div>
+      <div class="stat-row">Категорий: {Object.keys($categories).length}</div>
+    </div>
+  </FormBox>
 
   {#if $sync && sync.syncRequired()}
     {#if $user.userId}
@@ -74,42 +60,28 @@
     <Button text="выйти" on:click={onLogout} color="red" />
   {/if}
 
-  <p>{process.env.VERSION}</p>
+  <FormBox title="version">
+    <div>
+      <div class="stat-row">
+        {new Date(process.env.VERSION)}
+      </div>
+    </div>
+  </FormBox>
+
+  {#if process.env.DEV}
+    <div style="margin: 50px 0">
+      <pre>{JSON.stringify($sync.words, null, ' ')}</pre>
+      <pre>{JSON.stringify($sync.categories, null, ' ')}</pre>
+      <pre>{JSON.stringify($sync.setup, null, ' ')}</pre>
+    </div>
+  {/if}
 </Page>
 
 <style>
-  .box {
-    background: #fff;
-    box-shadow: 0 0 3px #000;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    padding: 10px;
+  .row {
+    margin-top: 20px;
   }
-
-  .box.form {
-    background: linear-gradient(to bottom, var(--mainColorLight), #fff)
-  }
-
-  .box .error {
-    color: var(--redColor);
-    margin-bottom: 10px;
-  }
-
-  .box,
-  .sync :global(.button) {
-    margin-bottom: 10px;
-  }
-
-  .sync > :global(.button):last-child,
-  .sync :global(form + .button) {
-    margin-bottom: 0;
-  }
-
-  h2 {
-    margin-bottom: 10px;
-  }
-
-  h2:only-child {
-    margin-bottom: 0;
+  .stat-row {
+    padding: 7px 0 6px;
   }
 </style>

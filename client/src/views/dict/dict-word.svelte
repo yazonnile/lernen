@@ -37,10 +37,6 @@
     transition: background-color .3s ease;
   }
 
-  .item:nth-of-type(even) {
-    background: #f1f9ff;
-  }
-
   .disabled {
     background: linear-gradient(to right, #ececec, #fff);
   }
