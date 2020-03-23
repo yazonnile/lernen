@@ -12,7 +12,7 @@
   let textTop = false;
 
   const homeViewId = view.getHomeViewId();
-  const duration = 500;
+  const duration = 250;
   const animationOptions = { opacity: 0, duration };
   const inAnimation = { ...animationOptions, delay: duration };
   const outAnimation = { ...animationOptions, delay: 0 };
@@ -28,7 +28,7 @@
       setTimeout(() => {
         updateTitle();
         textTop = false;
-      }, duration);
+      }, duration/2);
     } else {
       updateTitle();
     }
@@ -67,6 +67,7 @@
       <span
         class="text"
         class:text--top={textTop}
+        style="transition-duration: {duration}ms;"
       >
         {title}
       </span>
@@ -107,7 +108,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: uppercase;
-    transition: all 500ms ease-in-out;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
     white-space: nowrap;
   }
 

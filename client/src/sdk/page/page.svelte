@@ -6,8 +6,7 @@
 </script>
 
 <div
-  in:fly|local="{{ delay: 250, duration: 250, x: 100 * (homePage ? -1 : 1), opacity: 0 }}"
-  out:fly|local="{{ duration: 245, x: 100 * (homePage ? -1 : 1), opacity: 0 }}"
+  in:fly|local="{{ duration: 250, x: 100 * (homePage ? -1 : 1), opacity: 0 }}"
   class={className}
 >
   <slot />

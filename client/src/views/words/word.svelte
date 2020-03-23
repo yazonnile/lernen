@@ -113,9 +113,6 @@
     { id: 'die', text: 'die' },
     { id: 'das', text: 'das' }
   ];
-
-  $typeValue = 'phrase';
-  categoriesActive = true;
 </script>
 
 {#if !wordId}
@@ -195,5 +192,9 @@
 <style>
   .row {
     margin-top: 20px;
+  }
+
+  :global(form):first-child .row:first-child {
+    margin-top: 0;
   }
 </style>

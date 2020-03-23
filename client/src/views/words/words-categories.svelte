@@ -5,7 +5,6 @@
   import Category from 'sdk/category/category.svelte';
   import FormInput from 'sdk/form-input/form-input.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
-  import Button from 'sdk/button/button.svelte';
   import Icon from 'sdk/icon/icon.svelte';
   import FormBox from 'sdk/form-box/form-box.svelte';
   import { categories as categoriesStore } from 'stores';

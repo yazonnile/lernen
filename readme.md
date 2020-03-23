@@ -18,7 +18,6 @@
 
 # IN PROGRESS
 * fancy ui
-    * bug after click home page on edit-word
     * zebra style (odd/even)
     * sync + stat
     * messages
