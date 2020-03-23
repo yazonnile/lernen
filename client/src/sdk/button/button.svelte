@@ -3,7 +3,6 @@
   export let disabled = false;
   export let text = '';
   export let type = 'button';
-  export let empty = false;
   export let color = 'default';
 
   import Icon from 'sdk/icon/icon.svelte';
@@ -15,7 +14,6 @@
   on:click
   class="button button--color-{color}"
   class:button--icon-only="{icon && !text}"
-  class:button--empty="{empty}"
   {type} {disabled}
 >
   <span class="button--inner">

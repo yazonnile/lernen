@@ -59,12 +59,13 @@
     background: linear-gradient(to bottom, var(--bgColorContrast), transparent 200px);
     display: flex;
     flex: 1;
+    flex-wrap: wrap;
     padding: 0 10px 10px;
     order: 1;
   }
 
   .main > :global(*) {
-    flex: 1;
+    flex: 1 0 100%;
     width: 100%;
   }
 

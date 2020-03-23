@@ -1,6 +1,6 @@
 <script>
   import Icon from 'sdk/icon/icon.svelte';
-  import Slide from 'sdk/transition/slide.svelte'
+  import FormBox from 'sdk/form-box/form-box.svelte';
   import { categories as categoriesStore, words as wordsStore } from 'stores';
   import { afterUpdate } from 'svelte';
 
@@ -57,8 +57,10 @@
   const onUnChain = (categoryId, wordId) => {
     if (clickedWord[0] === categoryId && clickedWord[1] === wordId) {
       wordsStore.unChainWordWithCategoryId(wordId, categoryId);
-    } else {
+    } else if (categoryId && wordId) {
       clickedWord = [categoryId, wordId];
+    } else {
+      clickedWord = [];
     }
   };
 
@@ -78,180 +80,105 @@
   afterUpdate(selectText);
 </script>
 
-<div>
-  {#each categoriesList as { categoryName, categoryId, words } (categoryId)}
-    <h2
-      class="category"
-      class:collapsed={collapsed.includes(categoryId)}
-      on:click={() => onClick(categoryId)}
-    >
+{#each categoriesList as { categoryName, categoryId, words } (categoryId)}
+  <FormBox title={categoryName}>
+    <div slot="title" class="slot-title">
       {#if categoryId === categoryToEdit}
-        <span
-          class="category--text"
-          contenteditable
-          bind:this={editableNode}
-          on:click|stopPropagation
-        >{categoryName}</span>
+        <h2 bind:this={editableNode} contenteditable>{categoryName}</h2>
       {:else}
-        <span class="category--text">
-          {categoryName}
-        </span>
+        <h2>{categoryName}</h2>
+      {/if}
+    </div>
+
+    <div slot="title-control" class="title-control">
+      {#if categoryId === categoryToEdit}
+        <button on:click|stopPropagation={onCancel}><Icon name="turnOff" /></button>
+        <button on:click|stopPropagation={() => onSave(categoryId)}><Icon name="checkbox" /></button>
+      {:else}
+        <button on:click|stopPropagation={() => onEdit(categoryId)}><Icon name="edit" /></button>
+        <button on:click|stopPropagation={() => onDelete(categoryId)}><Icon name="delete" /></button>
       {/if}
 
-      <div class="buttons">
-        {#if categoryId === categoryToEdit}
-          <button on:click|stopPropagation={() => onSave(categoryId)}><Icon name="checkbox" /></button>
-          <button on:click|stopPropagation={onCancel}><Icon name="turnOff" /></button>
-        {:else}
-          <button on:click|stopPropagation={() => onEdit(categoryId)}><Icon name="edit" /></button>
-        {/if}
+    </div>
+    {#each words as wordId (wordId)}
+      <div class="word">
+        <div class="word--text">
+          {$wordsStore[wordId].original}
+        </div>
 
-        <button on:click|stopPropagation={() => onDelete(categoryId)}><Icon name="delete" /></button>
-      </div>
-    </h2>
-    <Slide active={!collapsed.includes(categoryId)}>
-      <div class="words-block">
-        {#each words as wordId (wordId)}
+        <div class="buttons">
           {#if clickedWord[0] === categoryId && clickedWord[1] === wordId}
-            <div class="suggestion" on:click={() => (clickedWord = [])}>Чтобы удалить слово из категории нажмите по нему еще раз. Чтобы отменить удаление - нажмите на это сообщение</div>
+            <button class="button" on:click={() => onUnChain(categoryId, wordId)}><Icon name="delete" /></button>
+            <button class="button" on:click={() => onUnChain()}>
+              <Icon name="turnOff" />
+            </button>
+          {:else}
+            <button class="button" on:click={() => onUnChain(categoryId, wordId)}>
+              <Icon name="unchain" />
+            </button>
           {/if}
-
-          <button on:click={() => onUnChain(categoryId, wordId)} class="word">
-            {$wordsStore[wordId].original}
-            <Icon name="unchain" />
-          </button>
-        {/each}
+        </div>
       </div>
-    </Slide>
-  {:else}
-    нет категорий
-  {/each}
-</div>
+    {/each}
+  </FormBox>
+{:else}
+  нет категорий
+{/each}
 
 <style>
-  .category {
-    background: var(--categoryColor);
-    border: 1px solid var(--mainColor);
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    flex-wrap: nowrap;
-    font-size: 12px;
-    font-weight: normal;
-    line-height: 16px;
-    margin-top: 20px;
-    padding: 7px 10px;
-    user-select: none;
-    text-transform: uppercase;
-  }
-
-  .category:first-child {
-    margin-top: 0;
-  }
-
-  .category::before {
-    content: '-';
-    display: inline-block;
-    font-size: 15px;
-    margin-top: -1px;
-    padding-right: 10px;
-    text-align: center;
-    vertical-align: top;
-    width: 22px;
-  }
-
-  .collapsed::before {
-    content: '+';
-  }
-
-  .category--text {
-    white-space: nowrap;
+  .slot-title {
     overflow: hidden;
+  }
+
+  .title-control {
+    display: flex;
     flex: 1;
-    text-overflow: ellipsis;
+    flex-wrap: nowrap;
+    margin: 0 -10px 0 0;
+    padding-bottom: 5px;
   }
 
-  .category .buttons {
-    margin: -4px -7px -4px 5px;
-  }
-
-  .category button {
-    background: var(--categoryActiveColor);
+  .title-control button {
+    background: none;
     border: 0;
-    border-radius: 5px;
-    margin-left: 3px;
-    padding: 2px;
+    margin-left: 10px;
   }
 
-  .category :global(.icon) {
+  .title-control :global(.icon) {
     height: 20px;
     width: 20px;
   }
 
-  .words-block {
-    padding: 0 0 5px 30px;
-    position: relative;
-  }
-
-  .words-block:empty {
-    padding-bottom: 0;
-  }
-
-  .words-block::before {
-    background: var(--mainColor);
-    content: '';
-    height: calc(100% - 12px);
-    left: 15px;
-    position: absolute;
-    top: -6px;
-    width: 1px;
-  }
-
   .word {
+    align-items: center;
     background: none;
-    border: 1px solid var(--mainColor);
-    border-radius: 5px;
-    display: block;
+    display: flex;
+    flex-wrap: nowrap;
     line-height: 20px;
-    margin-top: 5px;
-    padding: 2px 5px;
-    position: relative;
     text-align: left;
     width: 100%;
   }
 
-  .word::before {
-    background: var(--mainColor);
-    content: '';
-    height: 1px;
-    left: -16px;
-    position: absolute;
-    top: 11px;
-    width: 16px;
+  .word--text {
+    flex: 1;
+    overflow: hidden;
+    padding: 5px 0 6px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .word :global(.icon) {
-    float: right;
-    height: 20px;
+  .buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-right: -5px;
+  }
+
+  .button {
+    background: none;
+    border: 0;
+    flex: 0 0 24px;
+    height: 24px;
     margin-left: 5px;
-    width: 20px;
-  }
-
-  .suggestion {
-    color: var(--redColor);
-    padding-top: 20px;
-  }
-
-  .suggestion:first-child {
-    padding-top: 5px;
-  }
-
-  .suggestion + .word {
-    background: var(--redColorLight);
-    margin-bottom: 20px;
-  }
-
-  .suggestion + .word:last-child {
-    margin-bottom: 0;
+    width: 24px;
   }
 </style>

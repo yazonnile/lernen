@@ -63,7 +63,6 @@
 
     {#if process.env.DEV}
       <Button
-        empty
         on:click={clearLocalData}
         text="стереть данные для синхронизации"
       />

@@ -4,12 +4,13 @@
 
 <div class="box">
   {#if title}
-    <h2 class="title">{title}</h2>
+    <div class="title">
+      <slot name="title"><h2>{title}</h2></slot>
+      <slot name="title-control" />
+    </div>
   {/if}
 
-  <div class="wrap">
-    <slot />
-  </div>
+  <div class="wrap"><slot /></div>
 </div>
 
 <style>
@@ -27,10 +28,19 @@
   }
 
   .title {
+    align-items: flex-end;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .title :global(h2) {
     font-size: 12px;
     font-weight: normal;
     line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .wrap {
