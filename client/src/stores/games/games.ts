@@ -45,11 +45,19 @@ const store = createStore<GamesInterface, typeof storeViews>({
   },
   articles: {
     buttonText: 'Артикли',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    categories: {
+      selected: [],
+      nullCategory: false
+    }
   },
   plural: {
     buttonText: 'Plural',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    categories: {
+      selected: [],
+      nullCategory: false
+    }
   },
   spelling: {
     buttonText: 'Правописание',

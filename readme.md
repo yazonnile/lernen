@@ -19,12 +19,9 @@
 # IN PROGRESS
 * fancy ui
     * games
+    * cyrillic font???? wtf?
 
 # TODO
-* deu-rus
-  * только оригинал. Без озвучки.
-  * по клику - перевод
-
 * learn article
   * все активные существительные
   * три кнопки внизу

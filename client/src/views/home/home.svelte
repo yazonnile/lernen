@@ -8,10 +8,6 @@
 
     if (game.categories) {
       view.preGame({ gameId });
-    } else if (gameId === 'articles') {
-      view.articlesGame();
-    } else if (gameId === 'plural') {
-      view.pluralGame();
     }
   };
 </script>

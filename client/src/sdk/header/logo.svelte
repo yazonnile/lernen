@@ -1,7 +1,15 @@
+<script context="module">
+  import { fly } from 'svelte/transition';
+
+  const duration = 250;
+  const animationOptions = { opacity: 0, duration };
+  const inAnimation = { ...animationOptions, delay: duration };
+  const outAnimation = { ...animationOptions, delay: 0 };
+</script>
+
 <script>
   import Icon from 'sdk/icon/icon.svelte';
   import Menu from 'sdk/menu/menu.svelte';
-  import { fly } from 'svelte/transition';
   import { view, user } from 'stores';
 
   let menuActive = false;
@@ -12,10 +20,6 @@
   let textTop = false;
 
   const homeViewId = view.getHomeViewId();
-  const duration = 250;
-  const animationOptions = { opacity: 0, duration };
-  const inAnimation = { ...animationOptions, delay: duration };
-  const outAnimation = { ...animationOptions, delay: 0 };
 
   const updateTitle = () => {
     title = $view.title;

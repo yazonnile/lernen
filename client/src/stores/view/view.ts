@@ -10,11 +10,11 @@ export enum Views {
   sync = 'sync',
   preGame = 'preGame',
 
-  standardGame = 'standardGame',
-  translationFirstGame = 'translationFirstGame',
-  articlesGame = 'articlesGame',
-  pluralGame = 'pluralGame',
-  spellingGame = 'spellingGame',
+  standard = 'standard',
+  translationFirst = 'translationFirst',
+  articles = 'articles',
+  plural = 'plural',
+  spelling = 'spelling',
 }
 
 type PreGameParams = { gameId: string };
@@ -57,11 +57,11 @@ const storeMethods = {
     title: 'выберите категории',
     params
   }),
-  standardGame: (): View => ({viewId: Views.standardGame, title: 'стандартный'}),
-  translationFirstGame: (): View => ({viewId: Views.translationFirstGame, title: 'сначала перевод'}),
-  articlesGame: (): View => ({viewId: Views.articlesGame, title: 'артикли'}),
-  pluralGame: (): View => ({viewId: Views.pluralGame, title: 'plural'}),
-  spellingGame: (): View => ({viewId: Views.spellingGame, title: 'правописание'}),
+  standard: (): View => ({viewId: Views.standard, title: 'стандартный'}),
+  translationFirst: (): View => ({viewId: Views.translationFirst, title: 'сначала перевод'}),
+  articles: (): View => ({viewId: Views.articles, title: 'артикли'}),
+  plural: (): View => ({viewId: Views.plural, title: 'plural'}),
+  spelling: (): View => ({viewId: Views.spelling, title: 'правописание'}),
 };
 
 const storeViews = {
@@ -76,17 +76,25 @@ const storeViews = {
       return this.params.gameId;
     } else {
       const games: string[] = [
-        Views.standardGame,
-        Views.translationFirstGame,
-        Views.articlesGame,
-        Views.pluralGame,
-        Views.spellingGame,
+        Views.standard,
+        Views.translationFirst,
+        Views.articles,
+        Views.plural,
+        Views.spelling,
       ];
 
       if (games.includes(this.viewId)) {
-        return this.viewId.replace('Game', '');
+        return this.viewId;
       }
     }
+  },
+  isNounGameView(this: View): boolean {
+    const games: string[] = [
+      Views.articles,
+      Views.plural,
+    ];
+
+    return games.includes(this.viewId);
   }
 };
 

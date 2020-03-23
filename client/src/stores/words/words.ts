@@ -77,6 +77,7 @@ const storeViews = {
       return word.categories.includes(categoryId);
     }).map(word => word.wordId)
   },
+
   getWordsByCategoriesAndSetup(this: WordsStore, gameName: string): number[] {
     const { categoriesIds, nullCategory } = games.getGamesCategories(gameName);
     const setup = userStore.getSetup();

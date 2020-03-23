@@ -14,13 +14,13 @@
   $: selectedState = nullCategory && selectedCategories.length === categoriesList.length;
 
   const onReady = () => {
-    if (view[gameId + 'Game']) {
+    if (view[gameId]) {
       $games[gameId].categories = {
         selected: selectedCategories,
         nullCategory
       };
 
-      view[gameId + 'Game']();
+      view[gameId]();
     }
   };
 
@@ -29,6 +29,7 @@
       selectedCategories = [];
     } else {
       selectedCategories = categories.getIds();
+      nullCategory = true;
     }
 
     selectedState = !selectedState;
