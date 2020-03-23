@@ -97,10 +97,6 @@
     width: 16px;
   }
 
-  .form-switcher--real-element:checked ~ .form-switcher--checkbox {
-    border-color: var(--mainColorLight);
-  }
-
   .form-switcher--checkbox .form-switcher--icon {
     display: inline-block;
     height: 100%;

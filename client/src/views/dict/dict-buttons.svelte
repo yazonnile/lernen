@@ -35,7 +35,7 @@
 
 <style>
   .buttons {
-    background: #fff;
+    background: var(--bgColor);
     box-shadow: 0 0 5px #000;
     bottom: -100px;
     display: flex;
@@ -64,15 +64,15 @@
   }
 
   .green {
-    background: var(--greenColorLight);
+    background: var(--gameTranslationFirstBg);
   }
 
   .grey {
-    background: var(--categoryColor);
+    background: var(--gameArticlesBg);
   }
 
   .red {
-    background: var(--redColorLight);
+    background: var(--buttonRedBg);
   }
 
   .buttons button + button {

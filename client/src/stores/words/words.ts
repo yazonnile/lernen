@@ -146,6 +146,32 @@ const storeViews = {
     }
 
     return false;
+  },
+
+  getWordsByLetters(this: WordsStore, word: Word): { [key: string]: number[] } {
+    const notSortedMap = Object.values(this).reduce((carry, word: Word) => {
+      const firstLetter = word.original[0].toUpperCase();
+
+      if (!carry[firstLetter]) {
+        carry[firstLetter] = [];
+      }
+
+      carry[firstLetter].push(word.wordId);
+
+      return carry;
+    }, {});
+
+    const sortedMap = {};
+    Object.keys(notSortedMap).forEach(letter => {
+      const wordsIds = notSortedMap[letter];
+      sortedMap[letter] = wordsIds.sort((a, b) => {
+        a = this[a].original.toLowerCase();
+        b = this[b].original.toLowerCase();
+        return a > b ? 1 : (a < b ? -1 : 0);
+      });
+    });
+
+    return sortedMap;
   }
 };
 

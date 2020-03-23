@@ -1,8 +1,14 @@
 <script>
   export let title = '';
+
+  const use = (node) => {
+    if (title) {
+      node.setAttribute('id', title);
+    }
+  }
 </script>
 
-<div class="box">
+<div class="box" use:use>
   {#if title}
     <div class="title">
       <slot name="title"><h2>{title}</h2></slot>

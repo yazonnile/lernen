@@ -31,11 +31,8 @@
 
 <style>
   .item {
-    box-shadow: 0 0 3px #777;
-    border-radius: 3px;
-    font-size: 16px;
-    margin-top: 5px;
-    line-height: 21px;
+    margin: -5px -15px -5px -20px;
+    padding: 5px 10px 5px 20px;
     position: relative;
     transition: background-color .3s ease;
   }
@@ -57,12 +54,8 @@
     width: 21px;
   }
 
-  .item:first-of-type {
-    margin-top: 0;
-  }
-
   .edit {
-    background: #fff;
+    background: none;
     border: 0;
     border-radius: 5px;
     padding: 7px;
@@ -76,20 +69,27 @@
     width: 21px;
   }
 
-  :global(input:checked) + .item {
-    background: var(--mainColorLight);
+  :global(input:checked) + .item:before {
+    background: linear-gradient(to left, var(--gameStandardBgContrast) 60%, transparent);
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: calc(100% - 20px);
   }
 
   .text {
     display: block;
     overflow: hidden;
-    padding: 10px;
+    padding: 6px 0;
+    position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .mark {
-    color: #aaa;
+    color: #777;
     font-size: .9em;
   }
 </style>

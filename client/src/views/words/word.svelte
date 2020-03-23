@@ -3,7 +3,6 @@
 
   import FormInput from 'sdk/form-input/form-input.svelte';
   import Button from 'sdk/button/button.svelte';
-  import Page from 'sdk/page/page.svelte';
   import FormSwitcher from 'sdk/form-switcher/form-switcher.svelte';
   import LampRow from 'sdk/lamp-row/lamp-row.svelte';
   import FormValidation from 'sdk/form-validation/form-validation.svelte';
@@ -119,81 +118,79 @@
   categoriesActive = true;
 </script>
 
-<Page>
-  {#if !wordId}
-    <LampRow items={typeLampData} value={$typeValue} on:select={({ detail }) => resetState(detail)} />
-  {/if}
+{#if !wordId}
+  <LampRow items={typeLampData} value={$typeValue} on:select={({ detail }) => resetState(detail)} />
+{/if}
 
-  {#if $typeValue}
-    <FormValidation {form}>
-      {#if $typeValue === 'noun'}
-        <div class="row">
-          <LampRow error={!$articleValue && $origValue} items={articleLampData} value={$articleValue} on:select={({ detail }) => articleChange(detail)} />
-        </div>
-      {/if}
-
+{#if $typeValue}
+  <FormValidation {form}>
+    {#if $typeValue === 'noun'}
       <div class="row">
-        <FormBox>
-          <FormInput errors={origErrors} label={$typeValue === 'phrase' ? 'Фраза' : 'Слово'}>
-            <input type="text" bind:value={$origValue} use:origInput placeholder={$typeValue === 'phrase' ? 'Wie heißen Sie?' : 'Brot'} />
-          </FormInput>
-          <FormInput errors={trErrors} label="Перевод">
-            <input type="text" bind:value={$trValue} use:trInput placeholder={$typeValue === 'phrase' ? 'Как Вас зовут?' : 'Хлеб'} />
-          </FormInput>
+        <LampRow error={!$articleValue && $origValue} items={articleLampData} value={$articleValue} on:select={({ detail }) => articleChange(detail)} />
+      </div>
+    {/if}
 
-          {#if $typeValue === 'noun'}
-            <FormInput errors={pluralErrors} label="Plural">
-              <input type="text" bind:value={$pluralValue} use:pluralInput placeholder="Brote" />
+    <div class="row">
+      <FormBox>
+        <FormInput errors={origErrors} label={$typeValue === 'phrase' ? 'Фраза' : 'Слово'}>
+          <input type="text" bind:value={$origValue} use:origInput placeholder={$typeValue === 'phrase' ? 'Wie heißen Sie?' : 'Brot'} />
+        </FormInput>
+        <FormInput errors={trErrors} label="Перевод">
+          <input type="text" bind:value={$trValue} use:trInput placeholder={$typeValue === 'phrase' ? 'Как Вас зовут?' : 'Хлеб'} />
+        </FormInput>
+
+        {#if $typeValue === 'noun'}
+          <FormInput errors={pluralErrors} label="Plural">
+            <input type="text" bind:value={$pluralValue} use:pluralInput placeholder="Brote" />
+          </FormInput>
+        {/if}
+
+        {#if $typeValue === 'verb'}
+          <FormSwitcher type="toggle" bind:checked={strongVerb}>Сильный глагол</FormSwitcher>
+
+          {#if strongVerb}
+            <FormInput errors={strong1Errors} label="Ich">
+              <input type="text" bind:value={$strong1Value} use:strong1Input placeholder="bin" />
+            </FormInput>
+            <FormInput errors={strong2Errors} label="du">
+              <input type="text" bind:value={$strong2Value} use:strong2Input placeholder="bist" />
+            </FormInput>
+            <FormInput errors={strong3Errors} label="er, sie, es">
+              <input type="text" bind:value={$strong3Value} use:strong3Input placeholder="ist" />
+            </FormInput>
+            <FormInput errors={strong4Errors} label="wir">
+              <input type="text" bind:value={$strong4Value} use:strong4Input placeholder="sind" />
+            </FormInput>
+            <FormInput errors={strong5Errors} label="ihr">
+              <input type="text" bind:value={$strong5Value} use:strong5Input placeholder="seid" />
+            </FormInput>
+            <FormInput errors={strong6Errors} label="Sie, sie">
+              <input type="text" bind:value={$strong6Value} use:strong6Input placeholder="sind" />
             </FormInput>
           {/if}
 
-          {#if $typeValue === 'verb'}
-            <FormSwitcher type="toggle" bind:checked={strongVerb}>Сильный глагол</FormSwitcher>
+          <FormSwitcher type="toggle" bind:checked={irregularVerb}>Неправильный глагол</FormSwitcher>
 
-            {#if strongVerb}
-              <FormInput errors={strong1Errors} label="Ich">
-                <input type="text" bind:value={$strong1Value} use:strong1Input placeholder="bin" />
-              </FormInput>
-              <FormInput errors={strong2Errors} label="du">
-                <input type="text" bind:value={$strong2Value} use:strong2Input placeholder="bist" />
-              </FormInput>
-              <FormInput errors={strong3Errors} label="er, sie, es">
-                <input type="text" bind:value={$strong3Value} use:strong3Input placeholder="ist" />
-              </FormInput>
-              <FormInput errors={strong4Errors} label="wir">
-                <input type="text" bind:value={$strong4Value} use:strong4Input placeholder="sind" />
-              </FormInput>
-              <FormInput errors={strong5Errors} label="ihr">
-                <input type="text" bind:value={$strong5Value} use:strong5Input placeholder="seid" />
-              </FormInput>
-              <FormInput errors={strong6Errors} label="Sie, sie">
-                <input type="text" bind:value={$strong6Value} use:strong6Input placeholder="sind" />
-              </FormInput>
-            {/if}
-
-            <FormSwitcher type="toggle" bind:checked={irregularVerb}>Неправильный глагол</FormSwitcher>
-
-            {#if irregularVerb}
-              <FormInput errors={irregular1Errors} label="Präteritum">
-                <input type="text" bind:value={$irregular1Value} use:irregular1Input placeholder="ging" />
-              </FormInput>
-              <FormInput errors={irregular2Errors} label="Partizip II">
-                <input type="text" bind:value={$irregular2Value} use:irregular2Input placeholder="gegangen" />
-              </FormInput>
-            {/if}
+          {#if irregularVerb}
+            <FormInput errors={irregular1Errors} label="Präteritum">
+              <input type="text" bind:value={$irregular1Value} use:irregular1Input placeholder="ging" />
+            </FormInput>
+            <FormInput errors={irregular2Errors} label="Partizip II">
+              <input type="text" bind:value={$irregular2Value} use:irregular2Input placeholder="gegangen" />
+            </FormInput>
           {/if}
+        {/if}
 
-        </FormBox>
-      </div>
+      </FormBox>
+    </div>
 
-      <WordCategories bind:linked={linkedCategories} bind:active={categoriesActive} />
+    <WordCategories bind:linked={linkedCategories} bind:active={categoriesActive} />
 
-      <div class="row">
-        <Button type="submit" text={wordId ? 'обновить' : 'создать'} />
-      </div>
-    </FormValidation>
-  {/if}
-</Page>
+    <div class="row">
+      <Button type="submit" text={wordId ? 'обновить' : 'создать'} />
+    </div>
+  </FormValidation>
+{/if}
 
 <style>
   .row {
