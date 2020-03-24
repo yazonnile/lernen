@@ -110,12 +110,12 @@
 
           <div class="buttons">
             {#if clickedWord[0] === categoryId && clickedWord[1] === wordId}
-              <button class="button" on:click={() => onUnChain(categoryId, wordId)}><Icon name="delete" /></button>
-              <button class="button" on:click={() => onUnChain()}>
+              <button class="action" on:click={() => onUnChain(categoryId, wordId)}><Icon name="delete" /></button>
+              <button class="action" on:click={() => onUnChain()}>
                 <Icon name="turnOff" />
               </button>
             {:else}
-              <button class="button" on:click={() => onUnChain(categoryId, wordId)}>
+              <button class="action" on:click={() => onUnChain(categoryId, wordId)}>
                 <Icon name="unchain" />
               </button>
             {/if}
@@ -176,7 +176,7 @@
     margin-right: -5px;
   }
 
-  .button {
+  .action {
     background: none;
     border: 0;
     flex: 0 0 20px;

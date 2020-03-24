@@ -1,23 +1,91 @@
 <script>
-  import Button from 'sdk/button/button.svelte';
+  import diff from 'lib/diff/diff';
   import LampRow from 'sdk/lamp-row/lamp-row.svelte';
-  import FormBox from 'sdk/form-box/form-box.svelte';
-  import FormInput from 'sdk/form-input/form-input.svelte';
   import { bottomAnimation, fly } from 'views/games/games-transitions';
   import Game from 'views/games/game.svelte';
   import { words, user } from 'stores';
 
   let wordId;
   let answerVisible = false;
-  let customPluralValue = '';
 
-  const firstLevelPluralLamp = [
+  const showAnswer = () => {
+    answerVisible = true;
+    return true;
+  };
+
+  let typeValue = null;
+  let typeLampItems = [
     { id: 'plural', text: 'pl.' },
     { id: 'kein', text: 'kein pl.' },
-    { id: 'custom', text: 'написать' },
+    { id: 'umlaut', text: 'umlaut' },
+    { id: 'custom', text: 'другое' },
   ];
 
-  const pluralForLam = [
+  const typeOnSelect = ({ detail }) => {
+    if (answerVisible) {
+      return;
+    }
+
+    if (pluralFormValue) {
+      return;
+    }
+
+    if (!typeValue) {
+      typeValue = detail;
+
+      if (typeValue !== 'umlaut') {
+        answerVisible = true;
+      }
+    }
+  };
+
+  let umlautValue = null;
+  const umlautForLamp = [
+    { id: 'Ä', text: 'Ä' },
+    { id: 'Ö', text: 'Ö' },
+    { id: 'Ü', text: 'Ü' },
+  ];
+  const umlautMap = {
+    'Ä': 'A',
+    'Ö': 'O',
+    'Ü': 'U',
+  };
+
+  const umlautOnSelect = ({ detail }) => {
+    if (answerVisible) {
+      return;
+    }
+
+    if (!umlautValue) {
+      umlautValue = detail;
+    }
+  };
+
+  const matchUmlautLetter = (plural, original, letter) => {
+    const diffResult = diff(
+            original.toUpperCase().split(''),
+            plural.toUpperCase().split('')
+    );
+
+    letter = letter || umlautValue;
+    return diffResult[0] === letter;
+  };
+
+  const matchUmlautPluralForm = (plural, original, letter, form) => {
+    letter = letter || umlautValue;
+    plural = plural.toLowerCase().replace(
+            letter.toLowerCase(),
+            umlautMap[letter]
+    );
+
+    form = form || pluralFormValue;
+    return form === '-' ? plural.toLowerCase() === original.toLowerCase() : (
+            plural.toLowerCase() === original.toLowerCase() + form
+    );
+  };
+
+  let pluralFormValue = null;
+  const pluralFormForLamp = [
     { id: '-', text: '-' },
     { id: 'e', text: '-e' },
     { id: 'er', text: '-er' },
@@ -27,53 +95,66 @@
     { id: 's', text: '-s' },
   ];
 
-  let selectedPlural = null;
-  const onSelect = ({ detail }) => {
-    if (!selectedPlural) {
-      selectedPlural = detail;
-
-      if (selectedPlural !== 'custom') {
-        answerVisible = true;
-      }
-    }
-  };
-
-  const isError = (word) => {
-    if (selectedPlural === 'custom') {
+  const pluralFormOnSelect = ({ detail }) => {
+    if (answerVisible) {
       return;
     }
 
-    if (selectedPlural === 'kein') {
-      return word.plural !== 'kein plural';
-    }
-
-    if (selectedPlural === 'plural') {
-      return word.plural !== '';
-    }
-
-    return word.plural.toLowerCase() !== (word.original.toLowerCase() + (selectedPlural === '-' ? '' : selectedPlural));
-  };
-
-  let customError = null;
-  let checked = false;
-  const check = (word) => {
-    if (checked) {
-      return;
-    }
-
-    checked = true;
-    answerVisible = true;
-
-    if (word.plural.toLowerCase() !== customPluralValue.toLowerCase()) {
-      customError = true;
+    if (!pluralFormValue) {
+      pluralFormValue = detail;
+      answerVisible = true;
     }
   };
 
   $: {
     if (!answerVisible) {
-      selectedPlural = null;
+      typeValue = null;
+      pluralFormValue = null;
+      umlautValue = null;
     }
   }
+
+  const typeError = ({ plural, original }) => {
+    // check kein plural
+    if ((plural === 'kein plural' && typeValue !== 'kein') || (plural !== 'kein plural' && typeValue === 'kein')) {
+      return true;
+    }
+
+    // check plural only
+    if ((plural === '' && typeValue !== 'plural') || (plural !== '' && typeValue === 'plural')) {
+      return true;
+    }
+
+    if (typeValue === 'umlaut') {
+      for (let i = 0; i < umlautForLamp.length; i++) {
+        if (matchUmlautLetter(plural, original, umlautForLamp[i].id)) {
+          for (let j = 0; j < pluralFormForLamp.length; j++) {
+            if (matchUmlautPluralForm(plural, original, umlautForLamp[i].id, pluralFormForLamp[j].id)) {
+              return;
+            }
+          }
+        }
+      }
+
+      return true;
+    }
+  };
+
+  const umlautError = ({ plural, original }) => {
+    return !matchUmlautLetter(plural, original);
+  };
+
+  const formError = ({ plural, original }) => {
+    if (typeValue === 'umlaut') {
+      return !matchUmlautPluralForm(plural, original);
+    }
+
+    if (pluralFormValue === '-') {
+      return plural.toLowerCase() !== original.toLowerCase();
+    }
+
+    return plural.toLowerCase() !== original.toLowerCase() + pluralFormValue;
+  };
 </script>
 
 <Game let:wordId bind:answerVisible>
@@ -89,43 +170,59 @@
       <div class="answer">
         {#if answerVisible}
           <p in:fly|local={bottomAnimation}>
-            {#if $user.articles && $words[wordId].plural !== 'kein plural'}
-              die
+            {#if $words[wordId].plural === 'kein plural'}
+              kein plural
+            {:else if $words[wordId].plural === ''}
+              plural
+            {:else}
+              {#if $user.articles}
+                die
+              {/if}
+              {$words[wordId].plural}
             {/if}
-            {$words[wordId].plural}
           </p>
         {/if}
       </div>
-
     </div>
     <div class="cart">
-      <LampRow
-        error={selectedPlural && isError($words[wordId])}
-        on:select={onSelect}
-        value={selectedPlural}
-        items={pluralForLam}
-      />
-
-      <LampRow
-        error={selectedPlural && isError($words[wordId])}
-        on:select={onSelect}
-        value={selectedPlural}
-        items={firstLevelPluralLamp}
-      />
+      <div class="box">
+        {#if !(pluralFormValue && !typeValue)}
+          <div transition:fly|local={bottomAnimation}>
+            <LampRow
+              error={typeValue && typeError($words[wordId]) && showAnswer()}
+              on:select={typeOnSelect}
+              value={typeValue}
+              items={typeLampItems}
+            />
+          </div>
+        {/if}
+      </div>
 
       <div class="box">
-        {#if selectedPlural === 'custom'}
-          <div in:fly|local={bottomAnimation} class:error={customError}>
-            <FormBox>
-              <FormInput>
-                <input type="text" placeholder="..." bind:value={customPluralValue} />
-              </FormInput>
-            </FormBox>
-            {#if !checked}
-              <div transition:fly|local={bottomAnimation}>
-                <Button text="готово" on:click={() => check($words[wordId])} />
-              </div>
-            {/if}
+        {#if typeValue === 'umlaut' && !typeError($words[wordId])}
+          <div transition:fly|local={bottomAnimation}>
+            <LampRow
+              error={umlautValue && umlautError($words[wordId]) && showAnswer()}
+              on:select={umlautOnSelect}
+              value={umlautValue}
+              items={umlautForLamp}
+            />
+          </div>
+        {/if}
+      </div>
+
+      <div class="box">
+        {#if !(typeValue && typeError($words[wordId]))
+          && !(typeValue === 'umlaut' && umlautError($words[wordId]))
+          && !(typeValue && !typeError($words[wordId]))
+          || umlautValue}
+          <div transition:fly|local={bottomAnimation}>
+            <LampRow
+              error={pluralFormValue && formError($words[wordId]) && showAnswer()}
+              on:select={pluralFormOnSelect}
+              value={pluralFormValue}
+              items={pluralFormForLamp}
+            />
           </div>
         {/if}
       </div>
@@ -167,7 +264,7 @@
   }
 
   .wrap :global(.lamp-row):first-child {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .wrap :global(.lamp-row--fake) {
@@ -179,16 +276,12 @@
   }
 
   .box {
-    height: 99px;
-    margin-top: 10px;
+    height: 60px;
+    margin-left: 20px;
     width: 100%;
   }
 
-  .box :global(.button) {
-    margin-top: 10px;
-  }
-
-  .wrap .error :global(.form-box .wrap) {
-    background: var(--buttonRedBg);
+  .wrap .box :global(.lamp-row) {
+    margin: 0 0 20px;
   }
 </style>
