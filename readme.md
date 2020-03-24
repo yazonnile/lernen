@@ -17,15 +17,12 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* bugs
-    * build to server-src
-    * dev to current public
 * fancy ui
     * standard game
-    * cyrillic font???? wtf?
     * strings into dictionary
+    * cyrillic font???? wtf?
     * games stat?
-    * animimation bugs..
+    * animation bugs..
 
 # TODO
 * stat page

@@ -1,6 +1,6 @@
 .idea
 client/node_modules
-client/public/*.map
+client/public
 server/src/api/config/config.json
 server/src/vendor
 server/node_modules
