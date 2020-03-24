@@ -74,18 +74,18 @@
     padding-left: 10px;
   }
 
-  .words-holder :global(.box) {
+  .words-holder :global(.form-box) {
     margin-right: 0;
   }
 
-  .words-holder :global(.box .title) {
+  .words-holder :global(.form-box .title) {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     z-index: 1;
   }
 
-  .words-holder :global(.box .title h2) {
+  .words-holder :global(.form-box .title h2) {
     background: var(--gameStandardBgContrast);
     padding: 0 20px;
   }
