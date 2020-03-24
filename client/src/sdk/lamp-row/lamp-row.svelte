@@ -18,10 +18,15 @@
   };
 
   $: {
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].id === value && buttons) {
-        left = buttons[i].offsetLeft;
-        width = buttons[i].offsetWidth;
+    if (!value || !buttons) {
+      left = null;
+      width = null;
+    } else {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].id === value) {
+          left = buttons[i].offsetLeft;
+          width = buttons[i].offsetWidth;
+        }
       }
     }
   }
@@ -30,12 +35,12 @@
 <div
   use:mount
   class="lamp-row"
-  class:error
+  class:lamp-row--error={error}
 >
   <div
-    class="fake"
-    class:fake--first={value === items[0].id}
-    class:fake--last={value === items[items.length - 1].id}
+    class="lamp-row--fake"
+    class:lamp-row--fake--first={value === items[0].id}
+    class:lamp-row--fake--last={value === items[items.length - 1].id}
     style={left && width && `left: ${left}px; width: ${width}px;`}
   ></div>
 
@@ -44,7 +49,7 @@
   {/each}
 </div>
 
-<style>
+<style global>
   .lamp-row {
     background: #fff;
     border-radius: 20px;
@@ -54,7 +59,7 @@
     position: relative;
   }
 
-  .lamp-row :global(button) {
+  .lamp-row button {
     background: none;
     border: 0;
     flex: 1;
@@ -68,7 +73,7 @@
     white-space: nowrap;
   }
 
-  .fake {
+  .lamp-row--fake {
     background: var(--gameStandardBg);
     border-radius: 18px;
     position: absolute;
@@ -78,15 +83,15 @@
     width: calc(100% - 4px);
   }
 
-  .fake--first {
+  .lamp-row--fake--first {
     border-radius: 18px 0 0 18px;
   }
 
-  .fake--last {
+  .lamp-row--fake--last {
     border-radius: 0 18px 18px 0;
   }
 
-  .error .fake {
+  .lamp-row--error .lamp-row--fake {
     background: var(--buttonRedBg);
   }
 </style>
