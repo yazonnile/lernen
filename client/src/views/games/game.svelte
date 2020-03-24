@@ -1,16 +1,5 @@
 <script context="module">
-  import { fly } from 'svelte/transition';
-  import { quintOut } from 'svelte/easing';
-
-  const baseAnimation = {
-    duration: 500,
-    opacity: 0,
-    easing: quintOut,
-    delay: 500
-  };
-
-  const topAnimation = { ...baseAnimation, y: -30 };
-  const bottomAnimation = { ...baseAnimation, y: 30 };
+  import { topAnimation, bottomAnimation, fly } from './games-transitions';
 </script>
 
 <script>
@@ -62,7 +51,7 @@
     <div class="game">
       <div class="buttons">
         {#if answerVisible}
-          <div class="buttons-wrap" in:fly|local={topAnimation} out:fly|local={{ ...topAnimation, delay: 0 }}>
+          <div class="buttons-wrap" in:fly|local={{ ...topAnimation, delay: 500 }} out:fly|local={topAnimation}>
             <Button text="Выключить" on:click={onDisable} />
             <Button text="Убрать" on:click={onRemoveFromQueue} />
           </div>
@@ -75,7 +64,7 @@
 
       <div class="buttons">
         {#if answerVisible}
-          <div class="buttons-wrap" in:fly|local={bottomAnimation} out:fly|local={{ ...bottomAnimation, delay: 0 }}>
+          <div class="buttons-wrap" in:fly|local={{ ...bottomAnimation, delay: 500 }} out:fly|local={bottomAnimation}>
             <Button text="Дальше" on:click={onNext} />
           </div>
         {/if}

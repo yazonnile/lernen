@@ -1,4 +1,5 @@
 <script>
+  import { topAnimation, fly } from 'views/games/games-transitions';
   import LampRow from 'sdk/lamp-row/lamp-row.svelte';
   import Game from 'views/games/game.svelte';
   import { words } from 'stores';
@@ -6,7 +7,7 @@
   let wordId;
   let answerVisible = false;
 
-  const articlesForLam = [
+  const articlesForLamp = [
     { id: 'der', text: 'der' },
     { id: 'die', text: 'die' },
     { id: 'das', text: 'das' },
@@ -30,14 +31,22 @@
 <Game let:wordId bind:answerVisible>
   <div class="wrap">
     <div class="cart">
-      {$words[wordId].original.toLowerCase()}
+      <div class="answer">
+        {#if answerVisible}
+          <p in:fly|local={topAnimation}>
+            {$words[wordId].article}
+          </p>
+        {/if}
+      </div>
+
+      <p>{$words[wordId].original}</p>
     </div>
     <div class="cart">
       <LampRow
         on:select={onSelect}
         error={selectedArticle && $words[wordId].article !== selectedArticle}
         value={selectedArticle}
-        items={articlesForLam}
+        items={articlesForLamp}
       />
     </div>
   </div>
@@ -55,6 +64,7 @@
     background: var(--gameArticlesBg);
     display: flex;
     flex: 0 0 calc(50% - 5px);
+    flex-direction: column;
     font-size: 30px;
     justify-content: center;
     line-height: 35px;
@@ -64,6 +74,10 @@
   .cart + .cart {
     background: none;
     margin-top: 10px;
+  }
+
+  .answer {
+    min-height: 35px;
   }
 
   .wrap :global(.lamp-row) {

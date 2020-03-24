@@ -1,7 +1,6 @@
 <script>
   import Game from 'views/games/game.svelte';
-  import { fly } from 'svelte/transition';
-  import { quintOut } from 'svelte/easing';
+  import { topAnimation, bottomAnimation, fly } from 'views/games/games-transitions';
   import { words } from 'stores';
 
   let wordId;
@@ -17,7 +16,7 @@
       {$words[wordId].original.toLowerCase()}
     </div>
     {#if answerVisible}
-      <div class="cart" in:fly|local={{ opacity: 0, y: 50, easing: quintOut, duration: 500 }}>
+      <div class="cart" in:fly|local={bottomAnimation}>
         {$words[wordId].translation}
       </div>
     {/if}
