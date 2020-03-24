@@ -66,13 +66,13 @@
   }
 
   :global(input:checked) + .item:before {
-    background: linear-gradient(to left, var(--gameStandardBgContrast) 60%, transparent);
+    background: linear-gradient(to left, var(--gameStandardBgContrast) 60%, #88d4f8);
     content: '';
     position: absolute;
     right: 0;
     top: 0;
     height: 100%;
-    width: calc(100% - 20px);
+    width: calc(100% - 80px);
   }
 
   .text {

@@ -1,0 +1,126 @@
+<script>
+  export let original;
+  export let answerVisible;
+
+  import diff from 'lib/diff/diff';
+  import shuffle from 'lib/shuffle/shuffle';
+  import alphabet from 'api/a-z/a-z';
+  import { scale, implodeAnimation, explodeAnimation } from 'views/games/games-transitions';
+
+  let extraLetters = 4;
+  let errors;
+  let currentIndex;
+  let placeholder;
+  let letters;
+
+  const onClick = (i) => {
+    const newLetter = letters[i].toLowerCase();
+    if (newLetter !== original[currentIndex]) {
+      errors[i] = 1;
+      return;
+    }
+
+    errors = {};
+    currentIndex++;
+    letters[i] = '_';
+    letters = [...letters];
+
+    if (currentIndex === placeholder.length) {
+      answerVisible = true;
+    }
+  };
+
+  $: {
+    if (!answerVisible) {
+      selectedArticle = null;
+      currentIndex = 0;
+      placeholder = original.split('');
+      letters = shuffle([...placeholder, ...shuffle(diff(placeholder, alphabet)).slice(0, extraLetters - 1)]);
+      errors = {};
+    }
+  }
+</script>
+
+<div class="letters">
+  {#each letters as l, i (l + i)}
+    <div class="letter">
+      {#if l === '_'}
+        <span in:scale|local={implodeAnimation}></span>
+      {:else if errors[i]}
+        <span out:scale|local={explodeAnimation} in:scale|local={implodeAnimation} class="error">{l}</span>
+      {:else}
+        <span out:scale|local={explodeAnimation} in:scale|local={implodeAnimation} class="bg" on:click={() => onClick(i)}>{l}</span>
+      {/if}
+    </div>
+  {/each}
+</div>
+
+<div class="result">
+  {#each placeholder as p, i}
+    <span class="letter">
+      {#if i < currentIndex}
+        <span in:scale|local={implodeAnimation} class="bg">{p}</span>
+      {:else}
+        <span out:scale|local={explodeAnimation} class="empty"></span>
+      {/if}
+    </span>
+  {/each}
+</div>
+
+<style>
+  .letters,
+  .result {
+    align-content: flex-start;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-right: -10px;
+    width: 100%;
+  }
+
+  .result {
+    align-content: flex-end;
+  }
+
+  .letter {
+    display: flex;
+    font-size: 20px;
+    flex: 0 0 30px;
+    height: 30px;
+    line-height: 30px;
+    margin: 10px 10px 0 0;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    width: 30px;
+  }
+
+  .letter span {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  .bg {
+    background: var(--gameSpellingBg);
+  }
+
+  .empty {
+    background: var(--gameSpellingContrast);
+  }
+
+  .error {
+    background: var(--buttonRedContrast);
+  }
+
+  .letters .letter {
+
+  }
+
+  .result .letter {
+
+  }
+</style>

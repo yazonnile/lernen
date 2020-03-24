@@ -48,6 +48,7 @@
 
 <style>
   .app {
+    background: linear-gradient(to bottom, var(--bgColorContrast), var(--bgColor) 200px);
     display: flex;
     flex-direction: column;
     min-height: 100%;
@@ -56,7 +57,6 @@
   }
 
   .main {
-    background: linear-gradient(to bottom, var(--bgColorContrast), transparent 200px);
     display: flex;
     flex: 1;
     flex-wrap: wrap;

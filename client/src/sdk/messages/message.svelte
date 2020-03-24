@@ -1,14 +1,14 @@
 <script context="module">
   const data = {
-    'registration.success': 'Новый аккаунт создан. Осталось лишь войти в него',
-    'login.success': 'Вы вошли в свой аккаунт',
+    'messages.registration.success': 'Новый аккаунт создан. Осталось лишь войти в него',
+    'messages.login.success': 'Вы вошли в свой аккаунт',
     'wordEdit.success': 'Слово обновлено',
     'wordCreate.success': 'Слово создано',
     'wordExists.error': 'Такое слово уже есть',
     'setupSave.success': 'Настройки сохранены',
-    'registration.userAlreadyExist.error': 'Пользователь с таким именем уже существует',
-    'noSuchUser.error': 'Пользователя с таким именем нет',
-    'login.error': 'Неправильный пароль',
+    'messages.registration.userAlreadyExist.error': 'Пользователь с таким именем уже существует',
+    'messages.noSuchUser.error': 'Пользователя с таким именем нет',
+    'messages.login.error': 'Неправильный пароль',
   };
 </script>
 

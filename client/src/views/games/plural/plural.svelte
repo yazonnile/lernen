@@ -1,5 +1,5 @@
 <script>
-  import diff from 'lib/diff/diff';
+  import getFirstMismatch from 'lib/get-first-mismatch/get-first-mismatch';
   import LampRow from 'sdk/lamp-row/lamp-row.svelte';
   import { bottomAnimation, fly } from 'views/games/games-transitions';
   import Game from 'views/games/game.svelte';
@@ -62,13 +62,13 @@
   };
 
   const matchUmlautLetter = (plural, original, letter) => {
-    const diffResult = diff(
-            original.toUpperCase().split(''),
-            plural.toUpperCase().split('')
+    const mismatch = getFirstMismatch(
+      original.toLowerCase().split(''),
+      plural.toLowerCase().split('')
     );
 
-    letter = letter || umlautValue;
-    return diffResult[0] === letter;
+    letter = letter || umlautValue || '';
+    return mismatch[1] === letter.toLowerCase();
   };
 
   const matchUmlautPluralForm = (plural, original, letter, form) => {
@@ -88,11 +88,11 @@
   const pluralFormForLamp = [
     { id: '-', text: '-' },
     { id: 'e', text: '-e' },
+    { id: 's', text: '-s' },
+    { id: 'n', text: '-n' },
     { id: 'er', text: '-er' },
     { id: 'en', text: '-en' },
     { id: 'nen', text: '-nen' },
-    { id: 'n', text: '-n' },
-    { id: 's', text: '-s' },
   ];
 
   const pluralFormOnSelect = ({ detail }) => {
@@ -114,6 +114,18 @@
     }
   }
 
+  const isUmlaut = ({ plural, original }) => {
+    for (let i = 0; i < umlautForLamp.length; i++) {
+      if (matchUmlautLetter(plural, original, umlautForLamp[i].id)) {
+        for (let j = 0; j < pluralFormForLamp.length; j++) {
+          if (matchUmlautPluralForm(plural, original, umlautForLamp[i].id, pluralFormForLamp[j].id)) {
+            return true;
+          }
+        }
+      }
+    }
+  };
+
   const typeError = ({ plural, original }) => {
     // check kein plural
     if ((plural === 'kein plural' && typeValue !== 'kein') || (plural !== 'kein plural' && typeValue === 'kein')) {
@@ -125,17 +137,8 @@
       return true;
     }
 
-    if (typeValue === 'umlaut') {
-      for (let i = 0; i < umlautForLamp.length; i++) {
-        if (matchUmlautLetter(plural, original, umlautForLamp[i].id)) {
-          for (let j = 0; j < pluralFormForLamp.length; j++) {
-            if (matchUmlautPluralForm(plural, original, umlautForLamp[i].id, pluralFormForLamp[j].id)) {
-              return;
-            }
-          }
-        }
-      }
-
+    const pluralIsUmlautPositive = isUmlaut({ plural, original });
+    if ((typeValue === 'umlaut' && !pluralIsUmlautPositive) || (typeValue !== 'umlaut' && pluralIsUmlautPositive)) {
       return true;
     }
   };
@@ -184,7 +187,7 @@
         {/if}
       </div>
     </div>
-    <div class="cart">
+    <div class="content">
       <div class="box">
         {#if !(pluralFormValue && !typeValue)}
           <div transition:fly|local={bottomAnimation}>
@@ -215,7 +218,7 @@
         {#if !(typeValue && typeError($words[wordId]))
           && !(typeValue === 'umlaut' && umlautError($words[wordId]))
           && !(typeValue && !typeError($words[wordId]))
-          || umlautValue}
+          || (umlautValue && !umlautError($words[wordId]))}
           <div transition:fly|local={bottomAnimation}>
             <LampRow
               error={pluralFormValue && formError($words[wordId]) && showAnswer()}
@@ -237,11 +240,10 @@
     justify-content: space-between;
   }
 
-  .cart {
+  .cart,
+  .content {
     align-items: center;
-    background: var(--gamePluralBg);
     display: flex;
-    flex: 0 0 calc(40% - 5px);
     flex-direction: column;
     font-size: 30px;
     justify-content: center;
@@ -249,10 +251,15 @@
     text-align: center;
   }
 
-  .cart + .cart {
-    background: none;
-    flex: 0 0 calc(60% - 5px);
+  .cart {
+    background: var(--gamePluralBg);
+    padding: 10px;
+  }
+
+  .content {
+    flex: 1;
     margin-top: 10px;
+    overflow-x: hidden;
   }
 
   .answer {

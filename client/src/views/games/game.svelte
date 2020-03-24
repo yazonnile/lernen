@@ -48,27 +48,25 @@
 
 <Page className="game">
   {#if wordsIds.length}
-    <div class="game">
-      <div class="buttons">
-        {#if answerVisible}
-          <div class="buttons-wrap" in:fly|local={{ ...topAnimation, delay: 500 }} out:fly|local={topAnimation}>
-            <Button text="Выключить" on:click={onDisable} />
-            <Button text="Убрать" on:click={onRemoveFromQueue} />
-          </div>
-        {/if}
-      </div>
+    <div class="buttons">
+      {#if answerVisible}
+        <div class="buttons-wrap" in:fly|local={{ ...topAnimation, delay: 500 }} out:fly|local={topAnimation}>
+          <Button text="Выключить" on:click={onDisable} />
+          <Button text="Убрать" on:click={onRemoveFromQueue} />
+        </div>
+      {/if}
+    </div>
 
-      <div class="wrapper">
-        <slot wordId={wordsIds[activeIndex]} />
-      </div>
+    <div class="wrapper">
+      <slot wordId={wordsIds[activeIndex]} />
+    </div>
 
-      <div class="buttons">
-        {#if answerVisible}
-          <div class="buttons-wrap" in:fly|local={{ ...bottomAnimation, delay: 500 }} out:fly|local={bottomAnimation}>
-            <Button text="Дальше" on:click={onNext} />
-          </div>
-        {/if}
-      </div>
+    <div class="buttons">
+      {#if answerVisible}
+        <div class="buttons-wrap" in:fly|local={{ ...bottomAnimation, delay: 500 }} out:fly|local={bottomAnimation}>
+          <Button text="Дальше" on:click={onNext} />
+        </div>
+      {/if}
     </div>
   {:else}
     нет слов под данные категории
@@ -77,10 +75,6 @@
 
 <style>
   :global(.game) {
-    display: flex;
-  }
-
-  .game {
     display: flex;
     flex: 1;
     flex-direction: column;

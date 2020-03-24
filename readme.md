@@ -17,20 +17,17 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
+* bugs
+    * build to server-src
+    * dev to current public
 * fancy ui
-    * games
+    * standard game
     * cyrillic font???? wtf?
     * strings into dictionary
     * games stat?
+    * animimation bugs..
 
 # TODO
-* spelling game
-  - 1 - перемешать буквы со слова
-  - 2 - тоже самое + парочка рандомных букв
-  - 3 - полный рандом
-  * вести статистику, какое слово сколько раз угадал
-
-* game page with controlls like - disable word..
 * stat page
 * learn strong?
 * learn irregular?
