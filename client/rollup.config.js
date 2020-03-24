@@ -17,6 +17,7 @@ const folders = {
   lib: path.resolve(root, './src/lib'),
   api: path.resolve(root, './src/api'),
   views: path.resolve(root, './src/views'),
+  buildDist: path.resolve(root, '../', 'server/src/public'),
 };
 
 module.exports = {
@@ -25,11 +26,13 @@ module.exports = {
     'src/sw.ts',
   ],
   output: {
-    dir: folders.dist,
+    dir: production ? folders.buildDist : folders.dist,
     sourcemap: !production,
     format: 'es',
   },
+
   watch: { clearScreen: false },
+
   plugins: [
     require('@rollup/plugin-alias')({
       entries: folders,
@@ -76,13 +79,13 @@ module.exports = {
     }),
 
     production && require('rollup-plugin-cleaner')({
-      targets: [ folders.dist ]
+      targets: [ folders.buildDist ]
     }),
 
     require('rollup-plugin-copy')({
       targets: [
-        { src: ['src/static/*', '!**/*.html'], dest: folders.dist },
-        { src: `src/static/index.${production ? 'build' : 'dev'}.html`, dest: folders.dist, rename: 'index.html' }
+        { src: ['src/static/*', '!**/*.html'], dest: production ? folders.buildDist : folders.dist },
+        { src: `src/static/index.${production ? 'build' : 'dev'}.html`, dest: production ? folders.buildDist : folders.dist, rename: 'index.html' }
       ]
     }),
 
