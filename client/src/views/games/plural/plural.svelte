@@ -72,16 +72,13 @@
   };
 
   const matchUmlautPluralForm = (plural, original, letter, form) => {
-    letter = letter || umlautValue;
-    plural = plural.toLowerCase().replace(
-            letter.toLowerCase(),
-            umlautMap[letter]
-    );
+    letter = letter || umlautValue || '';
+    plural = plural.toLowerCase().replace(letter.toLowerCase(), umlautMap[letter]);
 
     form = form || pluralFormValue;
-    return form === '-' ? plural.toLowerCase() === original.toLowerCase() : (
-            plural.toLowerCase() === original.toLowerCase() + form
-    );
+    return form === '-'
+      ? plural.toLowerCase() === original.toLowerCase()
+      : (plural.toLowerCase() === original.toLowerCase() + form);
   };
 
   let pluralFormValue = null;
@@ -138,9 +135,11 @@
     }
 
     const pluralIsUmlautPositive = isUmlaut({ plural, original });
-    if ((typeValue === 'umlaut' && !pluralIsUmlautPositive) || (typeValue !== 'umlaut' && pluralIsUmlautPositive)) {
+    if (typeValue !== 'umlaut' && pluralIsUmlautPositive) {
       return true;
     }
+
+    return pluralFormValue && formError({ plural, original });
   };
 
   const umlautError = ({ plural, original }) => {

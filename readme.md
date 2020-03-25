@@ -19,7 +19,6 @@
 # IN PROGRESS
 * fancy ui
     * standard game
-    * strings into dictionary
     * cyrillic font???? wtf?
     * games stat?
     * animation bugs..
