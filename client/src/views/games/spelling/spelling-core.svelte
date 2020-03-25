@@ -35,15 +35,22 @@
       selectedArticle = null;
       currentIndex = 0;
       placeholder = original.split('');
-      letters = shuffle([...placeholder, ...shuffle(diff(placeholder, alphabet)).slice(0, extraLetters - 1)]);
       errors = {};
+      letters = shuffle([
+        ...placeholder,
+        ...(shuffle(
+          diff(
+            placeholder,
+            alphabet.map(l => l.toLowerCase())
+          )
+        ).slice(0, extraLetters))
+      ]);
     }
   }
 </script>
-
 <div class="letters">
   {#each letters as l, i (l + i)}
-    <div class="letter">
+    <div class="letter" class:lower={l === 'ß'}>
       {#if l === '_'}
         <span in:scale|local={implodeAnimation}></span>
       {:else if errors[i]}
@@ -57,7 +64,7 @@
 
 <div class="result">
   {#each placeholder as p, i}
-    <span class="letter">
+    <span class="letter" class:lower={p === 'ß'}>
       {#if i < currentIndex}
         <span in:scale|local={implodeAnimation} class="bg">{p}</span>
       {:else}
@@ -94,6 +101,10 @@
     text-align: center;
     text-transform: uppercase;
     width: 30px;
+  }
+
+  .lower {
+    text-transform: lowercase;
   }
 
   .letter span {

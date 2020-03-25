@@ -18,9 +18,18 @@
 
 # IN PROGRESS
 * fancy ui
+    * animation bugs..
     * standard game
     * games stat?
-    * animation bugs..
+    * new games settings??
+        * translation first
+            * показывать артикти
+            * показывать uppercase
+        * articles
+        * plural
+        * spelling
+            * кол-во дополнительных букв
+            *
 
 # TODO
 * stat page
