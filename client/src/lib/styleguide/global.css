@@ -1,7 +1,8 @@
 @font-face {
-  font-family: 'ubuntu';
-  src: url('./fonts/ubuntu-regular-webfont.woff2') format('woff2'),
-  url('./fonts/ubuntu-regular-webfont.woff') format('woff');
+  font-family: 'robotoregular';
+  src: url('./fonts/roboto-regular-webfont.woff2') format('woff2'),
+  url('./fonts/roboto-regular-webfont.woff') format('woff');
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -18,7 +19,7 @@ html, body {
 body {
   background: var(--bgColor);
   color: var(--textColor);
-  font: 14px/18px ubuntu, Arial, sans-serif;
+  font: 14px/18px robotoregular, Arial, sans-serif;
   overflow-x: hidden;
   min-width: 320px;
 
@@ -29,7 +30,7 @@ body {
 input, textarea, select, button {
   color: var(--textColor);
   font-size: 100%;
-  font-family: ubuntu, Arial, sans-serif;
+  font-family: inherit;
   outline: none;
   vertical-align: middle;
 }

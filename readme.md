@@ -19,7 +19,6 @@
 # IN PROGRESS
 * fancy ui
     * standard game
-    * cyrillic font???? wtf?
     * games stat?
     * animation bugs..
 
