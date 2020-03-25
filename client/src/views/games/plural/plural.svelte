@@ -39,17 +39,6 @@
     }
   };
 
-  const umlautForLamp = [
-    { id: 'Ä', text: 'Ä' },
-    { id: 'Ö', text: 'Ö' },
-    { id: 'Ü', text: 'Ü' },
-  ];
-  const umlautMap = {
-    'Ä': 'A',
-    'Ö': 'O',
-    'Ü': 'U',
-  };
-
   const matchUmlautLetter = (plural, original, letter) => {
     const mismatch = getFirstMismatch(
       original.toLowerCase().split(''),
@@ -61,12 +50,18 @@
   };
 
   const matchUmlautPluralForm = (plural, original, umlautLetter = '', form) => {
+    const umlautMap = {
+      'ä': 'a',
+      'ö': 'o',
+      'ü': 'u',
+    };
+
     umlautLetter = umlautLetter.toLowerCase();
     plural = plural.toLowerCase();
     original = original.toLowerCase();
     form = form || pluralFormValue;
 
-    const letter = umlautMap[umlautLetter.toUpperCase()].toLowerCase();
+    const letter = umlautMap[umlautLetter];
     const pluralWithoutUmlaut = plural.replace(umlautLetter, letter);
 
     if (form !== '-') {
@@ -107,10 +102,11 @@
   }
 
   const isUmlaut = ({ plural, original }) => {
-    for (let i = 0; i < umlautForLamp.length; i++) {
-      if (matchUmlautLetter(plural, original, umlautForLamp[i].id)) {
+    const umlautLetters = ['ä', 'ö', 'ü'];
+    for (let i = 0; i < umlautLetters.length; i++) {
+      if (matchUmlautLetter(plural, original, umlautLetters[i])) {
         for (let j = 0; j < pluralFormForLamp.length; j++) {
-          if (matchUmlautPluralForm(plural, original, umlautForLamp[i].id, pluralFormForLamp[j].id)) {
+          if (matchUmlautPluralForm(plural, original, umlautLetters[i], pluralFormForLamp[j].id)) {
             return true;
           }
         }
