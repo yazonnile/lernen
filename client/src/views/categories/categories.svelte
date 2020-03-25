@@ -29,9 +29,9 @@
       categoriesStore.updateCategory({
         categoryId, categoryName: newCategoryName
       });
-    }
 
-    onCancel();
+      onCancel();
+    }
   };
 
   const onCancel = () => {

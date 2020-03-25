@@ -19,6 +19,7 @@
 # IN PROGRESS
 * fancy ui
     * games stat?
+    * check sync, sync update, create, delete.....
 
 # TODO
 * animation bugs..

@@ -29,6 +29,7 @@
     background: none;
     border: 0;
     display: inline-flex;
+    align-items: flex-end;
     flex: 1;
     margin: 0 -21px 0 0;
     text-transform: uppercase;

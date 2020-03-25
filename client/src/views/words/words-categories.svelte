@@ -20,16 +20,13 @@
     }
 
     newCategoryName = newCategoryName.toLowerCase();
-    const existedCatyName = categories.find(c => c.categoryName === newCategoryName);
-
-    if (!existedCatyName && newCategoryName.length <= 100) {
-      const newCat = { categoryName: newCategoryName };
-      categoriesStore.updateCategory(newCat);
-      linked = [...linked, categoriesStore.getCategoryIdByName(newCategoryName)];
-    } else if (linked.indexOf(existedCatyName.categoryId) === -1) {
-      linked = [...linked, existedCatyName.categoryId];
+    if (newCategoryName.length > 100 || categories.find(c => c.categoryName === newCategoryName)) {
+      return;
     }
 
+    const newCat = { categoryName: newCategoryName };
+    categoriesStore.updateCategory(newCat);
+    linked = [...linked, categoriesStore.getCategoryIdByName(newCategoryName)];
     newCategoryName = '';
     formView = false;
   };
@@ -39,27 +36,21 @@
   <FormSwitcher type="toggle" bind:checked={active}>Добавить слово в категорию</FormSwitcher>
 </FormBox>
 {#if active}
-  {#if categories.length}
-    <FormBox title="добавить слово в категории">
-      {#each categories as { categoryName, categoryId } (categoryId)}
-        <Category {categoryName}>
-          <input type="checkbox" bind:group={linked} value={categoryId} />
-        </Category>
-      {/each}
+  <FormBox title="добавить слово в категории">
+    {#each categories as { categoryName, categoryId } (categoryId)}
+      <Category {categoryName}>
+        <input type="checkbox" bind:group={linked} value={categoryId} />
+      </Category>
+    {/each}
 
-      <FormInput>
-        <input type="text" bind:value={newCategoryName} placeholder="Имя категории" />
+    <FormInput>
+      <input type="text" bind:value={newCategoryName} placeholder="Имя категории" />
 
-        <div class="button" on:click={onCategoryAdd}>
-          {#if newCategoryName}
-            <Icon name="checkbox" />
-          {:else}
-            <Icon name="plus" />
-          {/if}
-        </div>
-      </FormInput>
-    </FormBox>
-  {/if}
+      <div class="button" on:click={onCategoryAdd}>
+        <Icon name="plus" />
+      </div>
+    </FormInput>
+  </FormBox>
 {/if}
 
 <style>

@@ -1,6 +1,6 @@
 import request from 'lib/request/request';
 import syncManager from 'api/sync-manager/sync-manager';
-import { words, categories, sync, messages, view } from 'stores';
+import { words, categories, sync, messages, view, user } from 'stores';
 
 export const syncCallback = (response: ResponseData) => {
   if (response && response.syncResult) {
@@ -43,7 +43,7 @@ export const syncCallback = (response: ResponseData) => {
 
 export const syncData = (() => {
   const f = () => {
-    return sync.syncRequired()
+    return (sync.syncRequired() && user.getId())
       ? request({ api: 'syncData', payload: syncManager.getDataToSync() })
         .then(syncCallback)
         .catch(() => {
