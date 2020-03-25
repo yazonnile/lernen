@@ -26,3 +26,4 @@
 * learn strong?
 * learn irregular?
 * release?
+* test --------

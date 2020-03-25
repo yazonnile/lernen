@@ -39,7 +39,6 @@
     }
   };
 
-  let umlautValue = null;
   const umlautForLamp = [
     { id: 'Ä', text: 'Ä' },
     { id: 'Ö', text: 'Ö' },
@@ -51,34 +50,30 @@
     'Ü': 'U',
   };
 
-  const umlautOnSelect = ({ detail }) => {
-    if (answerVisible) {
-      return;
-    }
-
-    if (!umlautValue) {
-      umlautValue = detail;
-    }
-  };
-
   const matchUmlautLetter = (plural, original, letter) => {
     const mismatch = getFirstMismatch(
       original.toLowerCase().split(''),
       plural.toLowerCase().split('')
     );
 
-    letter = letter || umlautValue || '';
+    letter = letter || '';
     return mismatch[1] === letter.toLowerCase();
   };
 
-  const matchUmlautPluralForm = (plural, original, letter, form) => {
-    letter = letter || umlautValue || '';
-    plural = plural.toLowerCase().replace(letter.toLowerCase(), umlautMap[letter]);
-
+  const matchUmlautPluralForm = (plural, original, umlautLetter = '', form) => {
+    umlautLetter = umlautLetter.toLowerCase();
+    plural = plural.toLowerCase();
+    original = original.toLowerCase();
     form = form || pluralFormValue;
-    return form === '-'
-      ? plural.toLowerCase() === original.toLowerCase()
-      : (plural.toLowerCase() === original.toLowerCase() + form);
+
+    const letter = umlautMap[umlautLetter.toUpperCase()].toLowerCase();
+    const pluralWithoutUmlaut = plural.replace(umlautLetter, letter);
+
+    if (form !== '-') {
+      original += form;
+    }
+
+    return original === pluralWithoutUmlaut;
   };
 
   let pluralFormValue = null;
@@ -159,7 +154,11 @@
 
   const formError = ({ plural, original }) => {
     if (typeValue === 'umlaut') {
-      return !matchUmlautPluralForm(plural, original);
+      const mismatch = getFirstMismatch(
+        original.toLowerCase().split(''),
+        plural.toLowerCase().split('')
+      );
+      return !matchUmlautPluralForm(plural, original, mismatch[1], pluralFormValue);
     }
 
     if (pluralFormValue === '-') {
@@ -212,23 +211,11 @@
       </div>
 
       <div class="box">
-        {#if typeValue === 'umlaut' && !typeError($words[wordId])}
-          <div transition:fly|local={bottomAnimation}>
-            <LampRow
-              error={umlautValue && umlautError($words[wordId]) && showAnswer()}
-              on:select={umlautOnSelect}
-              value={umlautValue}
-              items={umlautForLamp}
-            />
-          </div>
-        {/if}
-      </div>
-
-      <div class="box">
-        {#if !(typeValue && typeError($words[wordId]))
-          && !(typeValue === 'umlaut' && umlautError($words[wordId]))
-          && !(typeValue && !typeError($words[wordId]))
-          || (umlautValue && !umlautError($words[wordId]))}
+        {#if
+          !typeValue
+          || (typeValue && !typeError($words[wordId]))
+          || (typeValue === 'umlaut' && !umlautError($words[wordId]))
+        }
           <div transition:fly|local={bottomAnimation}>
             <LampRow
               error={pluralFormValue && formError($words[wordId]) && showAnswer()}
