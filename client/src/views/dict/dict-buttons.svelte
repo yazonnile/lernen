@@ -7,7 +7,11 @@
   const editWords = (selectedWordsAction) => {
     switch (selectedWordsAction) {
       case 'deleteWords':
-        words.deleteWords(checked);
+        if (confirm('Точно удалить?')) {
+          words.deleteWords(checked);
+        } else {
+          return;
+        }
         break;
 
       case 'enableWords':
@@ -45,6 +49,7 @@
     position: fixed;
     transition: all .3s ease;
     width: 100%;
+    z-index: 1;
   }
 
   .buttons--active {

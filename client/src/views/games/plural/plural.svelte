@@ -123,6 +123,15 @@
     }
   };
 
+  const isForm = ({ plural, original }) => {
+    for (let i = 0; i < pluralFormForLamp.length; i++) {
+      const form = pluralFormForLamp[i];
+      if (form === '-' ? plural.toLowerCase() !== original.toLowerCase() : plural.toLowerCase() !== original.toLowerCase() + form) {
+        return true;
+      }
+    }
+  };
+
   const typeError = ({ plural, original }) => {
     // check kein plural
     if ((plural === 'kein plural' && typeValue !== 'kein') || (plural !== 'kein plural' && typeValue === 'kein')) {
@@ -135,11 +144,13 @@
     }
 
     const pluralIsUmlautPositive = isUmlaut({ plural, original });
-    if (typeValue !== 'umlaut' && pluralIsUmlautPositive) {
+    if ((typeValue !== 'umlaut' && pluralIsUmlautPositive) || (typeValue === 'umlaut' && !pluralIsUmlautPositive)) {
       return true;
     }
 
-    return pluralFormValue && formError({ plural, original });
+    if (typeValue === 'custom' && !isForm({ plural, original })) {
+      return true;
+    }
   };
 
   const umlautError = ({ plural, original }) => {
