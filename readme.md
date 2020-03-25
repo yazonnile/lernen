@@ -18,7 +18,6 @@
 
 # IN PROGRESS
 * fancy ui
-    * remove old code
     * games stat?
 
 # TODO
