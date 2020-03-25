@@ -4,7 +4,7 @@
   import { user } from 'stores';
 </script>
 
-<p>
+<p class="bg-row">
   {#if $user.articles}
     {word.article}
   {/if}
@@ -13,7 +13,7 @@
 </p>
 
 {#if $user.plural}
-  <p>
+  <p class="bg-row">
     {#if !word.plural}
       plural
     {:else if word.plural === 'kein plural'}
@@ -28,3 +28,11 @@
     {/if}
   </p>
 {/if}
+
+<style>
+  .bg-row {
+    background: var(--gameStandardBg);
+    margin-top: 10px;
+    padding: 20px;
+  }
+</style>

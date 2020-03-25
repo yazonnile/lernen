@@ -1,56 +1,40 @@
 <script>
-  import BottomButtons from 'sdk/bottom-buttons/bottom-buttons.svelte';
-  import Button from 'sdk/button/button.svelte';
+  import Game from 'views/games/game.svelte';
+  import { fly, bottomAnimation } from 'views/games/games-transitions';
   import Verb from './verb.svelte';
   import Noun from './noun.svelte';
   import speech from 'lib/speech/speech';
-  import shuffle from 'lib/shuffle/shuffle';
-  import { words as wordsStore, user } from 'stores';
-  import { onDestroy } from 'svelte';
+  import { words, user } from 'stores';
 
-  let visible = false;
-  let activeIndex = 0;
-  let wordsIds = shuffle(wordsStore.getWordsByCategoriesAndSetup('standard'));
-  let activeWord;
-  $: activeWord = $wordsStore[wordsIds[activeIndex]];
-
-  const showTranslation = () => {
-    visible = true;
-    speech.sayWord(activeWord, $user);
+  const showTranslation = (word) => {
+    answerVisible = true;
+    speech.sayWord(word, $user);
   };
 
-  const nextWord =  () => {
-    speech.stop();
-    visible = false;
-    activeIndex = activeIndex === wordsIds.length - 1 ? 0 : (activeIndex + 1);
-  };
-
-  onDestroy(() => {
-    speech.stop();
-  });
+  let wordId;
+  let answerVisible = false;
 </script>
 
-{#if !wordsIds.length}
-  нет слов
-{:else}
-  <div class="learn" on:click={showTranslation}>
-    <div class="item">{activeWord.translation}</div>
+<Game let:wordId bind:answerVisible>
+  <div class="learn" on:click={() => showTranslation($words[wordId])}>
+    <div class="item">{$words[wordId].translation}</div>
 
-    <div class="item item-extra" class:visible>
-      {#if activeWord.type === 'noun'}
-        <Noun word={activeWord} />
-      {:else if activeWord.type === 'verb'}
-        <Verb word={activeWord} />
-      {:else}
-        {activeWord.original}
+    <div class="answer">
+      {#if answerVisible}
+        <div in:fly|local={bottomAnimation}>
+          {#if $words[wordId].type === 'noun'}
+            <Noun word={$words[wordId]} />
+          {:else if $words[wordId].type === 'verb'}
+            <Verb word={$words[wordId]} />
+          {:else}
+            <div class="item">{$words[wordId].original}</div>
+          {/if}
+        </div>
       {/if}
     </div>
-
-    <BottomButtons>
-      <Button text="Следующий" on:click={nextWord} />
-    </BottomButtons>
   </div>
-{/if}
+</Game>
+
 
 <style>
   .learn {
@@ -60,14 +44,17 @@
     flex-direction: column;
     text-align: center;
   }
-  .item-extra {
-    background: var(--mainColorLight);
-    margin-top: 10px;
-    opacity: 0;
-    padding: 10px;
+
+  .item {
+    background: var(--gameStandardBg);
+    flex: 0;
+    padding: 20px;
   }
-  .item-extra.visible {
-    opacity: 1;
-    transition: opacity .5s ease;
+
+  .answer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
   }
 </style>

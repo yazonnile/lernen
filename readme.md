@@ -18,20 +18,11 @@
 
 # IN PROGRESS
 * fancy ui
-    * animation bugs..
-    * standard game
+    * remove old code
     * games stat?
-    * new games settings??
-        * translation first
-            * показывать артикти
-            * показывать uppercase
-        * articles
-        * plural
-        * spelling
-            * кол-во дополнительных букв
-            *
 
 # TODO
+* animation bugs..
 * stat page
 * learn strong?
 * learn irregular?

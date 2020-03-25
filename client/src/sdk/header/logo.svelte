@@ -133,10 +133,10 @@
   }
 
   .red {
-    color: #de0000;
+    color: var(--redColor);
   }
 
   .yellow {
-    color: var(--categoryActiveColor);
+    color: var(--yellowColor);
   }
 </style>

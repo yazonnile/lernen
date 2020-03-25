@@ -69,8 +69,8 @@
   }
 
   .l, .e1 { color: #424242; }
-  .r, .n1 { color: #de0000; }
-  .e2, .n2 { color: var(--categoryActiveColor); }
+  .r, .n1 { color: var(--redColor); }
+  .e2, .n2 { color: var(--yellowColor); }
 
   .l { animation-delay: 1s; }
   .e1 { animation-delay: 1.1s; }
