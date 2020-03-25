@@ -1,10 +1,14 @@
 <script>
   import Game from 'views/games/game.svelte';
   import { topAnimation, bottomAnimation, fly } from 'views/games/games-transitions';
-  import { words } from 'stores';
+  import { words, user } from 'stores';
 
   let wordId;
   let answerVisible = false;
+
+  const getWordToShow = (word) => {
+    return `${word.article && $user.articles ? word.article : ''} ${word.original}`;
+  }
 </script>
 
 <Game let:wordId bind:answerVisible>
@@ -13,7 +17,7 @@
     on:click={() => (answerVisible = true)}
   >
     <div class="cart">
-      {$words[wordId].original.toLowerCase()}
+      {getWordToShow($words[wordId])}
     </div>
     {#if answerVisible}
       <div class="cart" in:fly|local={bottomAnimation}>
