@@ -10,7 +10,7 @@ chdir(dirname(__FILE__));
 require_once './vendor/autoload.php';
 
 // turn class auto-loading on
-require_once './setup/setup.php';
+require_once './autoload/autoload.php';
 
 // run application
 new App();
