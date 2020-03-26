@@ -71,6 +71,8 @@ export const loadInitialData = ({ callback, payload = {}, loginAttempt }: LoadIn
       user.set(response.user);
     }
 
-    callback && callback();
+    if (callback && (response || !loginAttempt)) {
+      callback && callback();
+    }
   }).then(requestLoadOrDie).catch(requestLoadOrDie);
 };
