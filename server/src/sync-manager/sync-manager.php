@@ -66,51 +66,53 @@
         $this->query->deleteCategories($categoriesToDelete, $this->userId);
       }
 
-      if (count($categoriesToUpdate)) {
-        $this->saveCategories(array_map(function($category) {
-          return $category['categoryId'];
-        }, $this->query->categoriesExistByIds($categoriesToUpdate, $this->userId)), $categoriesData);
+      foreach ($categoriesToCreate as $newCategoryId) {
+        $categoriesData[$newCategoryId]['new'] = true;
       }
 
-      // create categories
-      if (count($categoriesToCreate)) {
-        $this->updateState(
-          'categoriesMap',
-          $this->saveCategories($categoriesToCreate, $categoriesData, true)
-        );
-      }
-    }
+      $categoriesToUpdate = array_unique(array_merge($categoriesToUpdate, $categoriesToCreate));
 
-    private function saveCategories($categoriesIds, $categoriesData, $returnMap = false) {
+      if (!count($categoriesToUpdate)) {
+        return;
+      }
+
       // validate category names
-      $validCategoriesIds = array_filter($categoriesIds, function($categoryId) use($categoriesData) {
+      $validCategoriesIds = array_filter($categoriesToUpdate, function($categoryId) use($categoriesData) {
         $name = $categoriesData[$categoryId]['categoryName'] ?? null;
         return is_string($name) && mb_strlen($name) > 0 && mb_strlen($name) <= 100;
       });
 
-      $this->updateState($returnMap ? 'notValidNewCategories' : 'notValidUpdatedCategories', array_diff($categoriesIds, $validCategoriesIds));
+      $this->updateState('notValidCategories', array_diff($categoriesToUpdate, $validCategoriesIds));
 
-      if (count($validCategoriesIds)) {
-        $this->query->update('categories', array_map(function($categoryId) use($returnMap, $categoriesData) {
-          return [
-            'categoryId' => $returnMap ? null : $categoryId,
-            'categoryName' => $categoriesData[$categoryId]['categoryName'],
-            'userId' => $this->userId,
-          ];
-        }, $validCategoriesIds));
+      if (!count($categoriesToUpdate)) {
+        return;
+      }
 
-        if ($returnMap) {
-          $lastCategoryId = $this->query->getLastInsertId();
-          $categoriesMap = [];
+      $this->query->update('categories', array_map(function($categoryId) use($categoriesData) {
+        $category = $categoriesData[$categoryId];
+        return [
+          'categoryId' => isset($category['new']) ? null : $categoryId,
+          'categoryName' => $category['categoryName'],
+          'userId' => $this->userId,
+        ];
+      }, $validCategoriesIds));
 
-          // get new assigned categories ids
-          foreach ($validCategoriesIds as $i => $oldCategoryId) {
-            $categoriesMap[$oldCategoryId] = $lastCategoryId + $i;
+      // create map
+      $categoryNames = array_map(function($categoryId) use($categoriesData) {
+        return $categoriesData[$categoryId]['categoryName'];
+      }, $validCategoriesIds);
+
+      $updatedCategories = $this->query->getCategoriesByNames($categoryNames, $this->userId);
+      $categoriesMap = [];
+      foreach ($updatedCategories as $updatedCategory) {
+        foreach ($categoriesData as $oldCategoryId => $oldCategory) {
+          if ($updatedCategory['categoryName'] === $oldCategory['categoryName']) {
+            $categoriesMap[$oldCategoryId] = $updatedCategory['categoryId'];
           }
-
-          return $categoriesMap;
         }
       }
+
+      $this->updateState('categoriesMap', $categoriesMap);
     }
 
     private function syncWords() {
@@ -123,23 +125,12 @@
       if (count($wordsToDelete)) {
         $this->query->deleteWords($wordsToDelete, $this->userId);
       }
-
-      if (count($wordsToUpdate)) {
-        $this->saveWords(array_map(function($word) {
-          return $word['wordId'];
-        }, $this->query->wordsExistByIds($wordsToUpdate, $this->userId)), $wordsData);
+      foreach ($wordsToCreate as $newWordId) {
+        $wordsData[$newWordId]['new'] = true;
       }
 
-      if (count($wordsToCreate)) {
-        $this->updateState(
-          'wordsMap',
-          $this->saveWords($wordsToCreate, $wordsData, true)
-        );
-      }
-    }
-
-    private function saveWords($wordsIds, $wordsData, $returnMap = false) {
-      $validWordsIds = array_filter($wordsIds, function($wordId) use($wordsData) {
+      $wordsToUpdate = array_unique(array_merge($wordsToUpdate, $wordsToCreate));
+      $validWordsIds = array_filter($wordsToUpdate, function($wordId) use($wordsData) {
         $errors = Validation::validateData($wordsData[$wordId], [
           'original',
           'translation',
@@ -158,72 +149,99 @@
         return !count($errors);
       });
 
-      $this->updateState($returnMap ? 'notValidNewWords' : 'notValidUpdatedWords', array_diff($wordsIds, $validWordsIds));
+      $this->updateState('notValidWords', array_diff($validWordsIds, $validWordsIds));
 
-      if (count($validWordsIds)) {
-        $this->query->update('words', array_map(function($wordId) use($wordsData, $returnMap) {
-          return [
-            'userId' => $this->userId,
-            'wordId' => $returnMap ? null : $wordId,
-            'original' => $wordsData[$wordId]['original'],
-            'translation' => $wordsData[$wordId]['translation'],
-            'article' => $wordsData[$wordId]['article'],
-            'plural' => $wordsData[$wordId]['plural'],
-            'strong1' => $wordsData[$wordId]['strong1'],
-            'strong2' => $wordsData[$wordId]['strong2'],
-            'strong3' => $wordsData[$wordId]['strong3'],
-            'strong4' => $wordsData[$wordId]['strong4'],
-            'strong5' => $wordsData[$wordId]['strong5'],
-            'strong6' => $wordsData[$wordId]['strong6'],
-            'irregular1' => $wordsData[$wordId]['irregular1'],
-            'irregular2' => $wordsData[$wordId]['irregular2'],
-            'active' => intval(boolval($wordsData[$wordId]['active'])),
-            'type' => $wordsData[$wordId]['type'],
-          ];
-        }, $validWordsIds));
+      if (!count($validWordsIds)) {
+        return;
+      }
 
-        // create words map and categories array
-        $wordsMap = [];
-        $categoriesToAssign = [];
-        $lastWordId = $this->query->getLastInsertId();
-        $categoriesMap = $this->getState('categoriesMap');
+      // create words map
+      $wordsNames = array_map(function($wordId) use($wordsData) {
+        return $wordsData[$wordId]['original'];
+      }, $validWordsIds);
 
-        foreach ($validWordsIds as $i => $oldWordId) {
-          $wordsMap[$oldWordId] = $returnMap ? $lastWordId + $i : $oldWordId;
-          $categoriesToAssign = array_merge($categoriesToAssign, array_map(function($categoryId) use($categoriesMap) {
-            return $categoriesMap[$categoryId] ?? $categoryId;
-          }, $wordsData[$oldWordId]['categories'] ?? []));
-        }
+      // delete joins for OLD wordsIds
+      $this->query->deleteWordToCategoriesByWordName($wordsNames, $this->userId);
 
-        $this->query->deleteWordToCategories($validWordsIds, $this->userId);
+      // update words
+      $this->query->update('words', array_map(function($wordId) use($wordsData) {
+        $word = $wordsData[$wordId];
+        return [
+          'userId' => $this->userId,
+          'wordId' => isset($word['new']) ? null : $wordId,
+          'original' => $wordsData[$wordId]['original'],
+          'translation' => $wordsData[$wordId]['translation'],
+          'article' => $wordsData[$wordId]['article'],
+          'plural' => $wordsData[$wordId]['plural'],
+          'strong1' => $wordsData[$wordId]['strong1'],
+          'strong2' => $wordsData[$wordId]['strong2'],
+          'strong3' => $wordsData[$wordId]['strong3'],
+          'strong4' => $wordsData[$wordId]['strong4'],
+          'strong5' => $wordsData[$wordId]['strong5'],
+          'strong6' => $wordsData[$wordId]['strong6'],
+          'irregular1' => $wordsData[$wordId]['irregular1'],
+          'irregular2' => $wordsData[$wordId]['irregular2'],
+          'active' => intval(boolval($wordsData[$wordId]['active'])),
+          'type' => $wordsData[$wordId]['type'],
+        ];
+      }, $validWordsIds));
 
-        if (count($categoriesToAssign)) {
-          $categoriesToAssign = array_map(function($category) {
-            return $category['categoryId'];
-          }, $this->query->categoriesExistByIds($categoriesToAssign, $this->userId));
-
-          $this->query->update(
-            'words_to_categories',
-            array_reduce($validWordsIds, function($carry, $oldWordId) use($wordsMap, $wordsData, $categoriesToAssign, $categoriesMap) {
-              $categories = $wordsData[$oldWordId]['categories'] ?? [];
-              foreach ($categories as $categoryId) {
-                $categoryId = $categoriesMap[$categoryId] ?? $categoryId;
-                if (in_array($categoryId, $categoriesToAssign)) {
-                  $carry[] = [
-                    'wordId' => $wordsMap[$oldWordId],
-                    'categoryId' => $categoryId
-                  ];
-                }
-              }
-
-              return $carry;
-            }, [])
-          );
-        }
-
-        if ($returnMap) {
-          return $wordsMap;
+      // create words map
+      $updatedWords = $this->query->getWordsByNames($wordsNames, $this->userId);
+      $wordsMap = [];
+      foreach ($updatedWords as $updatedWord) {
+        foreach ($wordsData as $oldWordId => $oldWord) {
+          if ($updatedWord['original'] === $oldWord['original']) {
+            $wordsMap[$oldWordId] = $updatedWord['wordId'];
+          }
         }
       }
+
+      $oldWordsIds = array_keys($wordsMap);
+      $this->updateState('wordsMap', $wordsMap);
+
+      // update categories assign
+      $categoriesToAssign = [];
+      $categoriesMap = $this->getState('categoriesMap');
+      foreach ($oldWordsIds as $i => $oldWordId) {
+        $categoriesToAssign = array_merge(
+          $categoriesToAssign,
+          array_map(function($categoryId) use($categoriesMap) {
+            return $categoriesMap[$categoryId] ?? $categoryId;
+          }, $wordsData[$oldWordId]['categories'] ?? [])
+        );
+      }
+
+      $categoriesToAssign = array_unique($categoriesToAssign);
+
+      if (!count($categoriesToAssign)) {
+        return;
+      }
+
+      $existingCategoriesToAssign = array_map(function($category) {
+        return $category['categoryId'];
+      }, $this->query->categoriesExistByIds($categoriesToAssign, $this->userId));
+
+      if (!count($categoriesToAssign)) {
+        return;
+      }
+
+      $this->query->update(
+        'words_to_categories',
+        array_reduce($oldWordsIds, function($carry, $oldWordId) use($wordsMap, $wordsData, $existingCategoriesToAssign, $categoriesMap) {
+          $oldCategoryIds = $wordsData[$oldWordId]['categories'] ?? [];
+          foreach ($oldCategoryIds as $oldCategoryId) {
+            $updatedCategoryId = $categoriesMap[$oldCategoryId] ?? $oldCategoryId;
+            if (in_array($updatedCategoryId, $existingCategoriesToAssign)) {
+              $carry[] = [
+                'wordId' => $wordsMap[$oldWordId],
+                'categoryId' => $updatedCategoryId
+              ];
+            }
+          }
+
+          return $carry;
+        }, [])
+      );
     }
   }

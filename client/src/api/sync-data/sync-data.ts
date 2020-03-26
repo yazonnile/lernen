@@ -6,26 +6,17 @@ export const syncCallback = (response: ResponseData) => {
   if (response && response.syncResult) {
     const {
       categoriesMap, wordsMap,
-      notValidNewCategories = [], notValidUpdatedCategories = [],
-      notValidNewWords = [], notValidUpdatedWords = []
+      notValidCategories = [], notValidWords = []
     } = response.syncResult;
 
     // handle not valid data only on sync page
     if (view.isSyncView()) {
-      if (notValidNewCategories.length) {
-        messages.addMessage({ text: 'notValidNewCategories.error' + notValidNewCategories.join(','), status: 'error', persistent: true });
+      if (notValidCategories.length) {
+        messages.addMessage({ text: 'notValidCategories.error' + notValidCategories.join(','), status: 'error', persistent: true });
       }
 
-      if (notValidUpdatedCategories.length) {
-        messages.addMessage({ text: 'notValidUpdatedCategories.error' + notValidUpdatedCategories.join(','), status: 'error', persistent: true });
-      }
-
-      if (notValidNewWords.length) {
-        messages.addMessage({ text: 'notValidNewWords.error' + notValidNewWords.join(','), status: 'error', persistent: true });
-      }
-
-      if (notValidUpdatedWords.length) {
-        messages.addMessage({ text: 'notValidUpdatedWords.error' + notValidUpdatedWords.join(','), status: 'error', persistent: true });
+      if (notValidWords.length) {
+        messages.addMessage({ text: 'notValidWords.error' + notValidWords.join(','), status: 'error', persistent: true });
       }
     }
 

@@ -116,6 +116,16 @@ class Query extends Db {
     )->getAll(array_merge([$userId], $categoriesIds));
   }
 
+  public function getCategoriesByNames($categoriesNames, $userId) {
+    $in = str_repeat('?,', count($categoriesNames) - 1) . '?';
+    return $this->setSql(
+      "SELECT categoryId, categoryName
+        FROM categories
+        WHERE userId = ?
+        AND categoryName IN ($in);"
+    )->getAll(array_merge([$userId], $categoriesNames));
+  }
+
   public function deleteCategories($ids, $userId) {
     $in = str_repeat('?,', count($ids) - 1) . '?';
     return $this->setSql(
@@ -142,25 +152,25 @@ class Query extends Db {
     )->insertData(array_merge([$userId], $ids));
   }
 
-  public function deleteWordToCategories($wordsId, $userId) {
-    $in = str_repeat('?,', count($wordsId) - 1) . '?';
+  public function deleteWordToCategoriesByWordName($wordsNames, $userId) {
+    $in = str_repeat('?,', count($wordsNames) - 1) . '?';
     return $this->setSql(
       "DELETE words_to_categories
         FROM words_to_categories
         LEFT JOIN words USING (wordId)
 
         WHERE userId = ?
-        AND words.wordId IN($in);"
-    )->insertData(array_merge([$userId], $wordsId));
+        AND original IN($in);"
+    )->insertData(array_merge([$userId], $wordsNames));
   }
 
-  public function wordsExistByIds($wordsIds, $userId) {
-    $in = str_repeat('?,', count($wordsIds) - 1) . '?';
+  public function getWordsByNames($wordsNames, $userId) {
+    $in = str_repeat('?,', count($wordsNames) - 1) . '?';
     return $this->setSql(
-      "SELECT wordId
+      "SELECT wordId, original
         FROM words
         WHERE userId = ?
-        AND wordId IN ($in);"
-    )->getAll(array_merge([$userId], $wordsIds));
+        AND original IN ($in);"
+    )->getAll(array_merge([$userId], $wordsNames));
   }
 }

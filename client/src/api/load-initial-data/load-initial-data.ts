@@ -54,8 +54,6 @@ export const loadInitialData = ({ callback, payload = {}, loginAttempt }: LoadIn
         localStorage.setItem('lernen-storage', JSON.stringify($store));
       });
     }
-
-    callback && callback();
   };
 
   request({
@@ -72,5 +70,7 @@ export const loadInitialData = ({ callback, payload = {}, loginAttempt }: LoadIn
       categories.set(response.categories || {});
       user.set(response.user);
     }
+
+    callback && callback();
   }).then(requestLoadOrDie).catch(requestLoadOrDie);
 };

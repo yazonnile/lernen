@@ -90,10 +90,8 @@ type ResponseData = {
     wordsMap: {
       [key: number]: number;
     };
-    notValidNewCategories: number[];
-    notValidUpdatedCategories: number[];
-    notValidNewWords: number[];
-    notValidUpdatedWords: number[];
+    notValidCategories: number[];
+    notValidWords: number[];
   }
 };
 
