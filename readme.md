@@ -17,14 +17,14 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-* fancy ui
-    * games stat?
-    * check sync, sync update, create, delete.....
+    * b2b tests
+    * unit tests
 
 # TODO
-* animation bugs..
-* stat page
+    * animation bugs..
+
+# far-far away
+* testing knowledge
+* games stat?
 * learn strong?
 * learn irregular?
-* release?
-* test --------
