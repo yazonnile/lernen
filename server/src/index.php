@@ -12,7 +12,6 @@ require_once './vendor/autoload.php';
 
 // turn class auto-loading on
 require_once './autoload/autoload.php';
-autoload();
 
 // run application
 new App();
