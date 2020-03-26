@@ -20,6 +20,7 @@ class App extends StateManager {
     $this->request = new Request();
     $this->config = new Config();
     $this->user = new User($this->config);
+    $isDebug = true;
 
     if ($this->request->isGet()) {
       $this->updateState('validationRules', Validation::collectRules());
@@ -27,9 +28,9 @@ class App extends StateManager {
         '/{{% HOST %}}/',
         '/{{% DATA %}}/',
       ], [
-        Utils::isDebug() ? '//localhost:4000/' : '',
+        $isDebug ? '//localhost:4000/' : '',
         base64_encode(json_encode($this->getState(), JSON_NUMERIC_CHECK)),
-      ], Utils::getFile('/view/index.html'));
+      ], file_get_contents(__DIR__ . '/../view/index.html'));
       return;
     }
 

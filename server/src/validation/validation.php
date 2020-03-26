@@ -44,7 +44,7 @@ class Validation {
   }
 
   static public function collectRules() {
-    return Utils::getJSON('/validation/rules.json');
+    return json_decode(file_get_contents(__DIR__ . '/rules.json'), true);
   }
 
   static public function validateData(&$data, $scheme) {

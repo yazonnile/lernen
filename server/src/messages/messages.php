@@ -9,7 +9,7 @@ class Messages {
 
   /**
    * @param string $messageName
-   * @return object
+   * @return array
    */
   static public function getMessage($messageName) {
     $messageArray = explode('.', $messageName);
