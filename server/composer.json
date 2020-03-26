@@ -1,6 +1,6 @@
 {
   "config": {
-    "vendor-dir": "./src/vendor",
+    "vendor-dir": "src/vendor",
     "optimize-autoloader": true
   },
   "require": {
