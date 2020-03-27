@@ -8,9 +8,7 @@
     menuActive = !menuActive;
   };
 
-  $: {
-    document.body.style.overflow = menuActive ? 'hidden' : '';
-  }
+  $: document.body.style.overflow = menuActive ? 'hidden' : '';
 </script>
 
 <header class="header">

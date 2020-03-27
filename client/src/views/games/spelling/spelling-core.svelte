@@ -32,7 +32,6 @@
 
   $: {
     if (!answerVisible) {
-      selectedArticle = null;
       currentIndex = 0;
       placeholder = original.split('');
       errors = {};

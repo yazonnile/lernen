@@ -97,7 +97,6 @@
     if (!answerVisible) {
       typeValue = null;
       pluralFormValue = null;
-      umlautValue = null;
     }
   }
 

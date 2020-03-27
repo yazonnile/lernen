@@ -9,6 +9,7 @@ export { default as menuIcon } from 'sdk/icon/files/menu.svg';
 export { default as plusIcon } from 'sdk/icon/files/plus.svg';
 export { default as profileIcon } from 'sdk/icon/files/profile.svg';
 export { default as setupIcon } from 'sdk/icon/files/setup.svg';
+export { default as soundIcon } from 'sdk/icon/files/sound.svg';
 export { default as syncIcon } from 'sdk/icon/files/sync.svg';
 export { default as turnOffIcon } from 'sdk/icon/files/turnOff.svg';
 export { default as turnOnIcon } from 'sdk/icon/files/turnOn.svg';

@@ -72,6 +72,7 @@
   .words-holder {
     flex: 1;
     padding-left: 10px;
+    width: calc(100% - 20px);
   }
 
   .words-holder :global(.form-box) {

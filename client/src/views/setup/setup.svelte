@@ -17,33 +17,13 @@
     });
   };
 
-  const onVoiceSpeedChange = (s) => {
-    setup.voiceSpeed = s;
-  };
-
   const onVoiceTest = () => {
     speech.stop();
     play(['Wie heißen Sie?'], setup.voiceSpeed);
   };
-
-  const incVoiceSpeed = () => {
-    if (setup.voiceSpeed === 15) {
-      return;
-    }
-
-    setup.voiceSpeed += .5;
-  };
-
-  const decVoiceSpeed = () => {
-    if (setup.voiceSpeed === 5) {
-      return;
-    }
-
-    setup.voiceSpeed -= .5;
-  };
 </script>
 
-<Page className="setup">
+<Page>
   <FormBox title="голос">
     <FormSwitcher type="toggle" bind:checked={setup.voice}>Включить</FormSwitcher>
 
@@ -96,7 +76,7 @@
         <FormSwitcher type="toggle" bind:checked={setup.soundVerbs}>озвучивать</FormSwitcher>
       {/if}
 
-      <FormSwitcher type="toggle" bind:checked={setup.strongVerbs}>показывать ильные</FormSwitcher>
+      <FormSwitcher type="toggle" bind:checked={setup.strongVerbs}>показывать сильные</FormSwitcher>
 
       {#if setup.voice && setup.strongVerbs && setup.soundVerbs}
         <FormSwitcher type="toggle" bind:checked={setup.soundStrongVerbs}>озвучивать сильные</FormSwitcher>
@@ -119,10 +99,6 @@
 </Page>
 
 <style>
-  .setup {
-    width: 100%;
-  }
-
   .row {
     margin-top: 20px;
   }

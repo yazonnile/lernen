@@ -6,7 +6,6 @@
   import { afterUpdate } from 'svelte';
 
   let clickedWord = [];
-  let collapsed = [];
   let categoryToEdit = null;
   let editableNode;
   let categoriesList;
@@ -43,16 +42,6 @@
       wordsStore.deleteCategoryIdFromWords(categoryId);
       categoriesStore.deleteCategory(categoryId);
     }
-  };
-
-  const onClick = (categoryId) => {
-    if (collapsed.includes(categoryId)) {
-      collapsed.splice(collapsed.indexOf(categoryId), 1);
-    } else {
-      collapsed.push(categoryId);
-    }
-
-    collapsed = [...collapsed];
   };
 
   const onUnChain = (categoryId, wordId) => {

@@ -1,6 +1,6 @@
 <script>
   import Game from 'views/games/game.svelte';
-  import { topAnimation, bottomAnimation, fly } from 'views/games/games-transitions';
+  import { bottomAnimation, fly } from 'views/games/games-transitions';
   import { words, user } from 'stores';
 
   let wordId;

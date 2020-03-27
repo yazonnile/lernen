@@ -1,19 +1,6 @@
-<script context="module">
-  import { fly } from 'svelte/transition';
-
-  const duration = 250;
-  const animationOptions = { opacity: 0, duration };
-  const inAnimation = { ...animationOptions, delay: duration };
-  const outAnimation = { ...animationOptions, delay: 0 };
-</script>
-
 <script>
   import Icon from 'sdk/icon/icon.svelte';
-  import Menu from 'sdk/menu/menu.svelte';
-  import { view, user } from 'stores';
-
-  let menuActive = false;
-  const openMenu = () => { menuActive = true; };
+  import { view } from 'stores';
 
   let title;
   let viewId;
@@ -32,13 +19,11 @@
       setTimeout(() => {
         updateTitle();
         textTop = false;
-      }, duration);
+      }, 360);
     } else {
       updateTitle();
     }
   }
-
-  $: document.body.style.overflow = menuActive ? 'hidden' : '';
 </script>
 
 <a

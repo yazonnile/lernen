@@ -11,7 +11,6 @@
 
   let categories;
   $: categories = Object.values($categoriesStore);
-  let formView = false;
   let newCategoryName = '';
 
   const onCategoryAdd = () => {
@@ -28,7 +27,6 @@
     categoriesStore.updateCategory(newCat);
     linked = [...linked, categoriesStore.getCategoryIdByName(newCategoryName)];
     newCategoryName = '';
-    formView = false;
   };
 </script>
 

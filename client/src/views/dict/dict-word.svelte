@@ -3,12 +3,25 @@
   export let checked;
 
   import Icon from 'sdk/icon/icon.svelte';
+  import speech, { play } from 'lib/speech/speech';
   import { user } from 'stores';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
   const onEdit = () => {
     dispatch('edit', word.wordId);
+  };
+
+  const onSound = () => {
+    speech.stop();
+
+    let toPlay = [];
+    if (word.type === 'noun' && $user.articles) {
+      toPlay.push(word.article);
+    }
+
+    toPlay.push(word.original);
+    play([toPlay.join(' ')], $user.voiceSpeed);
   };
 </script>
 
@@ -25,6 +38,7 @@
   {/if}
 
   {#if checked}
+    <button class="sound" on:click={onSound}><Icon name="sound" /></button>
     <button class="edit" on:click={onEdit}><Icon name="edit" /></button>
   {/if}
 </div>
@@ -50,7 +64,8 @@
     width: 21px;
   }
 
-  .edit {
+  .edit,
+  .sound {
     background: none;
     border: 0;
     border-radius: 5px;
@@ -60,7 +75,12 @@
     top: 3px;
   }
 
-  .edit :global(.icon) {
+  .sound {
+    right: 40px;
+  }
+
+  .edit :global(.icon),
+  .sound :global(.icon) {
     height: 21px;
     width: 21px;
   }

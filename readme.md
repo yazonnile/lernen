@@ -17,13 +17,14 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-    * api + db -> chakram
+    * add home button to home and save last 10 views to make backbutton work
 
 # TODO
-    * animation bugs..
 
 # far-far away
-    * testing knowledge
+    * animation bugs..
+    * mixed mode
     * games stat?
+    * final test
     * learn strong?
     * learn irregular?

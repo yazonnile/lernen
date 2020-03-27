@@ -3,7 +3,7 @@
 
   import MenuButton from './menu-button.svelte';
   import { view } from 'stores';
-  import { fly, fade } from 'svelte/transition';
+  import { fade } from 'svelte/transition';
 
   const hideMenu = () => {
     menuActive = false;

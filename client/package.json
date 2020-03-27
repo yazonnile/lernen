@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "eslint": "eslint --ext .ts src/ -c .eslintrc.js"
+    "eslint": "eslint --ext .ts,.svelte src/ -c .eslintrc.js"
   },
   "author": "slava z",
   "license": "ISC",
