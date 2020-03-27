@@ -129,9 +129,6 @@
 
     <div class="row">
       <FormBox>
-        <FormInput errors={trErrors} label="Перевод">
-          <input type="text" bind:value={$trValue} use:trInput placeholder={$typeValue === 'phrase' ? 'Как Вас зовут?' : 'Хлеб'} />
-        </FormInput>
         <FormInput errors={origErrors} label={$typeValue === 'phrase' ? 'Фраза' : 'Слово'}>
           <input type="text" bind:value={$origValue} use:origInput placeholder={$typeValue === 'phrase' ? 'Wie heißen Sie?' : 'Brot'} />
         </FormInput>
@@ -177,6 +174,10 @@
             </FormInput>
           {/if}
         {/if}
+
+        <FormInput errors={trErrors} label="Перевод">
+          <input type="text" bind:value={$trValue} use:trInput placeholder={$typeValue === 'phrase' ? 'Как Вас зовут?' : 'Хлеб'} />
+        </FormInput>
 
       </FormBox>
     </div>
