@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class SyncManager extends StateManager {
   private $payload;
   private $userId;

@@ -1,11 +1,13 @@
 <?php
 
+namespace src;
+
 class Db {
   private $db;
   public $sql;
 
   public function __construct() {
-    $this->db = PDOClass::init();
+    $this->db = \src\db\PDOWrapper::init();
   }
 
   public function setSql(string $sql) : self {
@@ -37,7 +39,7 @@ class Db {
 
   public function update($table, $data) {
     if (!$data) {
-      return;
+      return null;
     }
 
     return $this->insertOnDuplicateKeyUpdate($table, $data);
@@ -98,26 +100,5 @@ class Db {
 
   public function getLastInsertId() : int {
     return $this->db->lastInsertId();
-  }
-}
-
-class PDOClass {
-  private static $db;
-
-  public static function init() {
-    if (!self::$db) {
-      try {
-        $config = new Config();
-        $dsn = 'mysql:host='.$config->getState('db.host').';dbname='.$config->getState('db.id').';charset=utf8';
-        $opt = [
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ];
-        self::$db = new PDO($dsn, $config->getState('db.id'), $config->getState('db.password'), $opt);
-      } catch (PDOException $e) {
-        die('Connection error: ' . $e);
-      }
-    }
-    return self::$db;
   }
 }

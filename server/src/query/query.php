@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class Query extends Db {
   public function registerUser($login, $password) {
     $this->setSql(

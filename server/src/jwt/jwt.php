@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class Jwt {
   /** @var \Lcobucci\JWT\Builder */
   private $token;

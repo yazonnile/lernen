@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class App extends StateManager {
   /** @var Request */
   private $request;

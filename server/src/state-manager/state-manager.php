@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class StateManager {
   private $data = [];
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class Messages {
   const messages = [
     'registration.success' => [

@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class Request extends StateManager {
   private function getMethod() {
     return isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';

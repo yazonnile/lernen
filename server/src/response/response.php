@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class Response extends StateManager {
   public function __construct() {
     $this->updateState('messages', []);

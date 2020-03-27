@@ -1,5 +1,7 @@
 <?php
 
+namespace src;
+
 class User extends StateManager {
   /** @var Query */
   private $query;

@@ -9,8 +9,5 @@ chdir(dirname(__FILE__));
 // execute vendor libraries
 require_once './vendor/autoload.php';
 
-// turn class auto-loading on
-require_once './autoload/autoload.php';
-
 // run application
-new App();
+new \src\App();
