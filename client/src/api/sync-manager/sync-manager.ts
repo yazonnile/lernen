@@ -32,7 +32,7 @@ class SyncManager {
     }
 
     // create a new id instead
-    const newId = +(Math.random() * 100000).toFixed();
+    const newId = +(Math.random() * 10000000).toFixed();
     syncStore.create(newId, type);
     return newId;
   }

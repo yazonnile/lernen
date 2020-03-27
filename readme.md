@@ -17,10 +17,9 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-    * js unit -> jasmine
+    * api + db -> chakram
 
 # TODO
-    * api + db -> chakram
     * animation bugs..
 
 # far-far away
