@@ -28,6 +28,10 @@ class BaseValidation {
     }
   }
 
+  private function type($value) {
+    return true;
+  }
+
   public function equal() {
     return $this->value === $this->rule['equal'];
   }
