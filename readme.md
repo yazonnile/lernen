@@ -18,9 +18,9 @@
 
 # IN PROGRESS
     * prepareserver code for unit testing
+    * php unit -> phpunit
 
 # TODO
-    * php unit -> phpunit
     * js unit -> jasmine
     * e2e -> testcafe
     * api + db -> chakram

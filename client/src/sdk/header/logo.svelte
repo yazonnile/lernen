@@ -47,11 +47,7 @@
   on:click|preventDefault={() => view.home()}
 >
   {#if $view.viewId === homeViewId}
-    <span
-      class="logo--wrap"
-      in:fly|local={{ x: -50, ...inAnimation }}
-      out:fly|local={{ x: -50, ...outAnimation }}
-    >
+    <span class="logo--wrap logo-letters">
       <span class="text text--home">
         <span class="black">le</span>
         <span class="red">rn</span>
@@ -59,20 +55,12 @@
       </span>
     </span>
   {:else}
-    <span
-      class="logo--wrap"
-      in:fly|local={{ x: 50, ...inAnimation }}
-      out:fly|local={{ x: 50, ...outAnimation }}
-    >
+    <span class="logo--wrap">
       <span class="icon">
         <Icon name="down" />
       </span>
 
-      <span
-        class="text"
-        class:text--top={textTop}
-        style="transition-duration: {duration}ms;"
-      >
+      <span class="text" class:text--top={textTop}>
         {title}
       </span>
     </span>
@@ -111,15 +99,9 @@
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: all .35s ease-in-out;
     text-transform: uppercase;
-    transition-property: all;
-    transition-timing-function: ease-in-out;
     white-space: nowrap;
-  }
-
-  .text--top {
-    opacity: 0;
-    transform: translateY(-50px);
   }
 
   .text--home {
@@ -138,5 +120,33 @@
 
   .yellow {
     color: var(--yellowColor);
+  }
+
+  .logo--wrap {
+    animation: subPageAnim .35s ease-in-out forwards 1;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all .25s ease-in-out;
+  }
+
+  .logo-letters  {
+    animation: logoLettersAnim .35s ease-in-out forwards 1;
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  .text--top {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  @keyframes logoLettersAnim {
+    0%   { transform: translateX(-50px); opacity: 0; }
+    100% { transform: translateX(0);     opacity: 1; }
+  }
+
+  @keyframes subPageAnim {
+    0%   { transform: translateX(50px); opacity: 0; }
+    100% { transform: translateX(0);    opacity: 1; }
   }
 </style>
