@@ -65,7 +65,7 @@
         </FormInput>
         {#if authMode === 2}
           <FormInput errors={mErrors} label="Сложите eins и четыре">
-            <input type="number" bind:value={$mValue} use:mInput />
+            <input type="text" bind:value={$mValue} use:mInput />
           </FormInput>
         {/if}
       </FormBox>

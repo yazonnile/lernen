@@ -5,10 +5,10 @@ namespace src;
 class Validation {
   private $valid;
   private $value;
-  private $rules = [];
+  private $rules;
 
   public function __construct($name, $value) {
-    $this->rules = Validation::collectRules();
+    $this->rules = self::collectRules();
     $rule = $this->rules[$name] ?? null;
 
     if (!$rule) {
@@ -46,7 +46,24 @@ class Validation {
   }
 
   static public function collectRules() {
-    return json_decode(file_get_contents(__DIR__ . '/rules.json'), true);
+    return [
+      'login' => ['type' => 'string', 'between' => [2, 25]],
+      'password' => ['type' => 'string', 'max' => 25, 'trim' => false],
+      'mcnulty' => ['type' => 'string', 'equal' => '5'],
+      'type' => ['type' => 'string', 'match' => '^(noun|verb|other|phrase)$'],
+      'original' => ['type' => 'string', 'max' => 100],
+      'translation' => ['type' => 'string', 'max' => 100],
+      'plural' => ['type' => 'string', 'max' => 100, 'optional' => true],
+      'article' => ['type' => 'string', 'match' => '^(der|die|das)$', 'optional' => true],
+      'strong1' => ['type' => 'string', 'max' => 100, 'optional' => true],
+      'strong2' => ['type' => 'string', 'max' => 100, 'optional' => true],
+      'strong3' => ['type' => 'string', 'max' => 100, 'optional' => true],
+      'strong4' => ['type' => 'string', 'max' => 100, 'optional' => true],
+      'strong5' => ['type' => 'string', 'max' => 100, 'optional' => true],
+      'strong6' => ['type' => 'string', 'max' => 100, 'optional' => true],
+      'irregular1' => ['type' => 'string', 'max' => 100, 'optional' => true],
+      'irregular2' => ['type' => 'string', 'max' => 100, 'optional' => true],
+    ];
   }
 
   static public function validateData(&$data, $scheme) {

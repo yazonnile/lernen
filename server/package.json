@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "tests": "./src/vendor/bin/phpunit src --test-suffix -test.php",
+    "autoload": "composer dump-autoload"
+  },
   "author": "slava z",
   "license": "ISC",
   "devDependencies": {

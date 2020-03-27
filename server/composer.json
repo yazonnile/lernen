@@ -9,5 +9,13 @@
     "ext-pdo": "*",
     "ext-gd": "*",
     "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  },
+  "autoload": {
+    "psr-4": {
+      "src\\": "src/"
+    }
   }
 }

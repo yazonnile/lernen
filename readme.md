@@ -17,14 +17,17 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-    * b2b tests
-    * unit tests
+    * prepareserver code for unit testing
 
 # TODO
+    * php unit -> phpunit
+    * js unit -> jasmine
+    * e2e -> testcafe
+    * api + db -> chakram
     * animation bugs..
 
 # far-far away
-* testing knowledge
-* games stat?
-* learn strong?
-* learn irregular?
+    * testing knowledge
+    * games stat?
+    * learn strong?
+    * learn irregular?
