@@ -5,7 +5,6 @@
   import diff from 'lib/diff/diff';
   import shuffle from 'lib/shuffle/shuffle';
   import alphabet from 'api/a-z/a-z';
-  import { scale, implodeAnimation, explodeAnimation } from 'views/games/games-transitions';
 
   let extraLetters = 6;
   let errors;
@@ -51,11 +50,11 @@
   {#each letters as l, i (l + i)}
     <div class="letter" class:lower={l === 'ß'}>
       {#if l === '_'}
-        <span in:scale|local={implodeAnimation}></span>
+        <span></span>
       {:else if errors[i]}
-        <span out:scale|local={explodeAnimation} in:scale|local={implodeAnimation} class="error">{l}</span>
+        <span class="error scale-in">{l}</span>
       {:else}
-        <span out:scale|local={explodeAnimation} in:scale|local={implodeAnimation} class="bg" on:click={() => onClick(i)}>{l}</span>
+        <span class="bg scale-in" on:click={() => onClick(i)}>{l}</span>
       {/if}
     </div>
   {/each}
@@ -65,9 +64,9 @@
   {#each placeholder as p, i}
     <span class="letter" class:lower={p === 'ß'}>
       {#if i < currentIndex}
-        <span in:scale|local={implodeAnimation} class="bg">{p}</span>
+        <span class="bg scale-in">{p}</span>
       {:else}
-        <span out:scale|local={explodeAnimation} class="empty"></span>
+        <span class="empty"></span>
       {/if}
     </span>
   {/each}

@@ -1,0 +1,46 @@
+@keyframes flyInFromTop {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.fly-in-from-top { opacity: 0; transform: translateY(-30px); animation: flyInFromTop .25s ease-in-out forwards 1; }
+
+@keyframes flyInFromBottom {
+  0% { opacity: 0; transform: translateY(100px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.fly-in-from-bottom { opacity: 0; transform: translateY(100px); animation: flyInFromBottom .25s ease-in-out forwards 1; }
+
+@keyframes flyInFromRight {
+  0% { opacity: 0; transform: translateX(50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.fly-in-from-right { opacity: 0; transform: translateX(50px); animation: flyInFromRight .25s ease-in-out forwards 1; }
+
+@keyframes flyInFromLeft {
+  0% { opacity: 0; transform: translateX(-50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.fly-in-from-left { opacity: 0; transform: translateX(-50px); animation: flyInFromLeft .25s ease-in-out forwards 1; }
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.fade-in { opacity: 0; animation: fadeIn .25s ease-in-out forwards 1; }
+
+@keyframes scaleIn {
+  0% { opacity: 0; transform: scale(.75); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.scale-in { opacity: 0; transform: scale(.75); animation: scaleIn .25s ease-in-out forwards 1; }
+
+.scalable {
+  opacity: 0;
+  transform: scale(.75);
+  transition: all .25s ease-in-out;
+}
+
+.scalable--visible {
+  opacity: 1;
+  transform: scale(1);
+}

@@ -1,7 +1,3 @@
-<script context="module">
-  import { topAnimation, bottomAnimation, fly } from './games-transitions';
-</script>
-
 <script>
   export let answerVisible;
 
@@ -49,12 +45,10 @@
 <Page className="game">
   {#if wordsIds.length}
     <div class="buttons">
-      {#if answerVisible}
-        <div class="buttons-wrap" in:fly|local={{ ...topAnimation, delay: 500 }} out:fly|local={topAnimation}>
-          <Button text="Выключить" on:click={onDisable} />
-          <Button text="Убрать" on:click={onRemoveFromQueue} />
-        </div>
-      {/if}
+      <div class="buttons-wrap scalable" class:scalable--visible={answerVisible}>
+        <Button text="Выключить" on:click={onDisable} />
+        <Button text="Убрать" on:click={onRemoveFromQueue} />
+      </div>
     </div>
 
     <div class="wrapper">
@@ -62,11 +56,9 @@
     </div>
 
     <div class="buttons">
-      {#if answerVisible}
-        <div class="buttons-wrap" in:fly|local={{ ...bottomAnimation, delay: 500 }} out:fly|local={bottomAnimation}>
-          <Button text="Дальше" on:click={onNext} />
-        </div>
-      {/if}
+      <div class="buttons-wrap scalable" class:scalable--visible={answerVisible}>
+        <Button text="Дальше" on:click={onNext} />
+      </div>
     </div>
   {:else}
     нет слов под данные категории
@@ -100,6 +92,10 @@
   .buttons-wrap {
     display: flex;
     flex: 1;
+  }
+
+  .scalable--visible {
+    transition-delay: .25s;
   }
 
   .buttons :global(.button) {

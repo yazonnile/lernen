@@ -1,5 +1,4 @@
 <script>
-  import { topAnimation, fly } from 'views/games/games-transitions';
   import LampRow from 'sdk/lamp-row/lamp-row.svelte';
   import Game from 'views/games/game.svelte';
   import { words } from 'stores';
@@ -33,7 +32,7 @@
     <div class="cart">
       <div class="answer">
         {#if answerVisible}
-          <p in:fly|local={topAnimation}>
+          <p class="scale-in">
             {$words[wordId].article}
           </p>
         {/if}

@@ -3,12 +3,11 @@
   export let icon;
 
   import Icon from 'sdk/icon/icon.svelte';
-  import { fly } from 'svelte/transition';
 </script>
 
 <div
-  class="item"
-  in:fly="{{ y: 100, opacity: 0, duration: 250, delay }}"
+  class="item fly-in-from-bottom"
+  style={`animation-delay: ${delay}ms`}
 >
   <button on:click>
     <span class="text"><slot /></span>

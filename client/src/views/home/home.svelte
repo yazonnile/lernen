@@ -12,7 +12,7 @@
   };
 </script>
 
-<Page className="home" homePage>
+<Page className="home">
   {#each Object.keys($games) as gameId (gameId)}
     <div class="section" on:click={() => onGameClick(gameId)}>
       <div class="text">

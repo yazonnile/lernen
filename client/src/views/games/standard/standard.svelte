@@ -1,6 +1,5 @@
 <script>
   import Game from 'views/games/game.svelte';
-  import { fly, bottomAnimation } from 'views/games/games-transitions';
   import Verb from './verb.svelte';
   import Noun from './noun.svelte';
   import speech from 'lib/speech/speech';
@@ -21,7 +20,7 @@
 
     <div class="answer">
       {#if answerVisible}
-        <div in:fly|local={bottomAnimation}>
+        <div class="scale-in">
           {#if $words[wordId].type === 'noun'}
             <Noun word={$words[wordId]} />
           {:else if $words[wordId].type === 'verb'}

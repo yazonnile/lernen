@@ -20,7 +20,7 @@
     * add home button to home and save last 10 views to make backbutton work
 
 # TODO
-    * animation bugs.. - SCALE + OPACITY for all
+    * do not animate initial page and logo
 
 # far-far away
     * mixed mode

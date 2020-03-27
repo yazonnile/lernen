@@ -1,6 +1,5 @@
 <script>
   import Game from 'views/games/game.svelte';
-  import { bottomAnimation, fly } from 'views/games/games-transitions';
   import { words, user } from 'stores';
 
   let wordId;
@@ -20,7 +19,7 @@
       {getWordToShow($words[wordId])}
     </div>
     {#if answerVisible}
-      <div class="cart" in:fly|local={bottomAnimation}>
+      <div class="cart scale-in">
         {$words[wordId].translation}
       </div>
     {/if}

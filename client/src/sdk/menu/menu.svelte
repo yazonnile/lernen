@@ -3,7 +3,6 @@
 
   import MenuButton from './menu-button.svelte';
   import { view } from 'stores';
-  import { fade } from 'svelte/transition';
 
   const hideMenu = () => {
     menuActive = false;
@@ -23,8 +22,6 @@
     { text: 'синхронизация', viewId: 'sync', icon: 'sync' },
     { text: 'настройки', viewId: 'setup', icon: 'setup' },
   ];
-
-  const duration = 300;
 </script>
 
 <div class="menu">
@@ -35,7 +32,7 @@
       delay={300 / menuData.length * index}
     >{text}</MenuButton>
   {/each}
-  <i class="menu--overlay" on:click={hideMenu} in:fade={{ duration }}></i>
+  <i class="menu--overlay fade-in" on:click={hideMenu}></i>
 </div>
 
 <style>

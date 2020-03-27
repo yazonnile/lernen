@@ -1,7 +1,6 @@
 <script>
   import getFirstMismatch from 'lib/get-first-mismatch/get-first-mismatch';
   import LampRow from 'sdk/lamp-row/lamp-row.svelte';
-  import { bottomAnimation, fly } from 'views/games/games-transitions';
   import Game from 'views/games/game.svelte';
   import { words, user } from 'stores';
 
@@ -176,7 +175,7 @@
 
       <div class="answer">
         {#if answerVisible}
-          <p in:fly|local={bottomAnimation}>
+          <p class="scale-in">
             {#if $words[wordId].plural === 'kein plural'}
               kein plural
             {:else if $words[wordId].plural === ''}
@@ -193,33 +192,25 @@
     </div>
     <div class="content">
       <div class="box">
-        {#if !(pluralFormValue && !typeValue)}
-          <div transition:fly|local={bottomAnimation}>
-            <LampRow
-              error={typeValue && typeError($words[wordId]) && showAnswer()}
-              on:select={typeOnSelect}
-              value={typeValue}
-              items={typeLampItems}
-            />
-          </div>
-        {/if}
+        <div class="scalable" class:scalable--visible={!(pluralFormValue && !typeValue)}>
+          <LampRow
+            error={typeValue && typeError($words[wordId]) && showAnswer()}
+            on:select={typeOnSelect}
+            value={typeValue}
+            items={typeLampItems}
+          />
+        </div>
       </div>
 
       <div class="box">
-        {#if
-          !typeValue
-          || (typeValue && !typeError($words[wordId]))
-          || (typeValue === 'umlaut' && !umlautError($words[wordId]))
-        }
-          <div transition:fly|local={bottomAnimation}>
-            <LampRow
-              error={pluralFormValue && formError($words[wordId]) && showAnswer()}
-              on:select={pluralFormOnSelect}
-              value={pluralFormValue}
-              items={pluralFormForLamp}
-            />
-          </div>
-        {/if}
+        <div class="scalable" class:scalable--visible={!typeValue || (typeValue && !typeError($words[wordId])) || (typeValue === 'umlaut' && !umlautError($words[wordId]))}>
+          <LampRow
+            error={pluralFormValue && formError($words[wordId]) && showAnswer()}
+            on:select={pluralFormOnSelect}
+            value={pluralFormValue}
+            items={pluralFormForLamp}
+          />
+        </div>
       </div>
     </div>
   </div>
