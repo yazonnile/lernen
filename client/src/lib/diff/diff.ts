@@ -1,7 +1,9 @@
-type Diff = {(
-  arr1: string[],
-  arr2: string[]
-): string[]};
+type Diff = {
+  (
+    arr1: string[],
+    arr2: string[]
+  ): string[];
+};
 
 const diff: Diff = (arr1, arr2) => {
   return arr1

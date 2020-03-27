@@ -149,7 +149,7 @@ const storeViews = {
     return false;
   },
 
-  getWordsByLetters(this: WordsStore, word: Word): { [key: string]: number[] } {
+  getWordsByLetters(this: WordsStore): { [key: string]: number[] } {
     const notSortedMap = Object.values(this).reduce((carry, word: Word) => {
       const firstLetter = word.original[0].toUpperCase();
 
