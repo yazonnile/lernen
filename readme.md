@@ -17,10 +17,12 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-    * add home button to home and save last 10 views to make backbutton work
+    * minor history with back buttons
+    * page animation
+    * do not animate initial page and logo
 
 # TODO
-    * do not animate initial page and logo
+    * swipes in games
 
 # far-far away
     * mixed mode
