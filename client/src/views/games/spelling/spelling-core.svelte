@@ -7,7 +7,7 @@
   import alphabet from 'api/a-z/a-z';
   import { scale, implodeAnimation, explodeAnimation } from 'views/games/games-transitions';
 
-  let extraLetters = 4;
+  let extraLetters = 6;
   let errors;
   let currentIndex;
   let placeholder;
@@ -42,7 +42,7 @@
             placeholder,
             alphabet.map(l => l.toLowerCase())
           )
-        ).slice(0, extraLetters))
+        ).slice(0, Math.round(extraLetters * Math.random())))
       ]);
     }
   }

@@ -20,9 +20,9 @@
     * add home button to home and save last 10 views to make backbutton work
 
 # TODO
+    * animation bugs.. - SCALE + OPACITY for all
 
 # far-far away
-    * animation bugs..
     * mixed mode
     * games stat?
     * final test
