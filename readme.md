@@ -17,12 +17,9 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-    * prepareserver code for unit testing
-    * php unit -> phpunit
+    * js unit -> jasmine
 
 # TODO
-    * js unit -> jasmine
-    * e2e -> testcafe
     * api + db -> chakram
     * animation bugs..
 

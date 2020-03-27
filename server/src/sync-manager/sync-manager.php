@@ -18,10 +18,6 @@ class SyncManager extends StateManager {
       'categoriesMap' => [],
       'wordsMap' => [],
     ]);
-
-    $this->syncSetup();
-    $this->syncCategories();
-    $this->syncWords();
   }
 
   private function getPayloadValue($key) {
@@ -32,7 +28,7 @@ class SyncManager extends StateManager {
     return intval(boolval($this->getPayloadValue($key)));
   }
 
-  private function syncSetup() {
+  public function syncSetup() {
     if ($this->payload['setup'] ?? null) {
       $this->query->update('users', [
         'userId' => $this->userId,
@@ -57,7 +53,7 @@ class SyncManager extends StateManager {
     }
   }
 
-  private function syncCategories() {
+  public function syncCategories() {
     $categoriesIds = $this->payload['categories'] ?? [];
     $categoriesToDelete = $categoriesIds['toDelete'] ?? [];
     $categoriesToUpdate = $categoriesIds['toUpdate'] ?? [];
@@ -117,7 +113,7 @@ class SyncManager extends StateManager {
     $this->updateState('categoriesMap', $categoriesMap);
   }
 
-  private function syncWords() {
+  public function syncWords() {
     $wordsIds = $this->payload['words'] ?? [];
     $wordsToDelete = $wordsIds['toDelete'] ?? [];
     $wordsToUpdate = $wordsIds['toUpdate'] ?? [];
@@ -127,6 +123,7 @@ class SyncManager extends StateManager {
     if (count($wordsToDelete)) {
       $this->query->deleteWords($wordsToDelete, $this->userId);
     }
+
     foreach ($wordsToCreate as $newWordId) {
       $wordsData[$newWordId]['new'] = true;
     }

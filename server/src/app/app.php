@@ -205,6 +205,9 @@ class App extends StateManager {
     }
 
     $syncManager = new SyncManager($this->request->getState('payload'), $this->query, $this->user->getId());
+    $syncManager->syncSetup();
+    $syncManager->syncCategories();
+    $syncManager->syncWords();
     $this->updateState('syncResult', $syncManager->getState());
   }
 }
