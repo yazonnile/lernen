@@ -1,14 +1,8 @@
-@keyframes flyInFromTop {
-  0% { opacity: 0; transform: translateY(-30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.fly-in-from-top { opacity: 0; transform: translateY(-30px); animation: flyInFromTop .25s ease-in-out forwards 1; }
-
 @keyframes flyInFromBottom {
   0% { opacity: 0; transform: translateY(100px); }
   100% { opacity: 1; transform: translateY(0); }
 }
-.fly-in-from-bottom { opacity: 0; transform: translateY(100px); animation: flyInFromBottom .25s ease-in-out forwards 1; }
+.fly-in-from-bottom { opacity: 0; transform: translateY(100px); animation: flyInFromBottom .25s cubic-bezier(0.33, 1, 0.68, 1) forwards 1; }
 
 @keyframes flyInFromRight {
   0% { opacity: .5; transform: translateX(50px); }
@@ -37,7 +31,7 @@
 .scalable {
   opacity: 0;
   transform: scale(.75);
-  transition: all .25s ease-in-out;
+  transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .scalable--visible {

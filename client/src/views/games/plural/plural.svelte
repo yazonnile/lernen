@@ -137,7 +137,7 @@
       return true;
     }
 
-    if (typeValue === 'custom' && !isForm({ plural, original })) {
+    if (typeValue === 'custom' && isForm({ plural, original })) {
       return true;
     }
   };
