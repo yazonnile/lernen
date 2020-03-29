@@ -34,7 +34,7 @@ export const loadInitialData = ({ callback, payload = {}, loginAttempt }: LoadIn
       }
 
       if (storageData.view) {
-        view.set(storageData.view);
+        view.set({ ...storageData.view, initialState: true });
       } else {
         view.home();
       }

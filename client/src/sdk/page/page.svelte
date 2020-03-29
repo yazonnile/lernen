@@ -1,12 +1,13 @@
 <script>
   export let className = '';
 
-  import { fly } from 'svelte/transition';
+  import { view } from 'stores';
 </script>
 
 <div
-  in:fly|local="{{ duration: 250, x: 100, opacity: 0 }}"
   class={className}
+  class:fly-in-from-left={$view.backwardDirection && !$view.initialState}
+  class:fly-in-from-right={!$view.backwardDirection && !$view.initialState}
 >
   <slot />
 </div>

@@ -29,9 +29,11 @@
 
 <style>
   .header {
+    align-items: center;
     background: var(--bgColorContrast);
     display: flex;
     flex-wrap: nowrap;
+    justify-content: space-between;
     padding: 0 5px;
     position: relative;
     user-select: none;
@@ -43,7 +45,6 @@
     color: inherit;
     height: 40px;
     flex: 0 0 40px;
-    margin-top: 5px;
     padding: 10px;
     width: 40px;
   }
@@ -54,7 +55,7 @@
     position: absolute;
     right: 5px;
     text-align: right;
-    top: 0;
+    top: 5px;
     z-index: 3;
   }
 </style>

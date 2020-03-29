@@ -31,14 +31,13 @@
 
   const onRemoveFromQueue = () => {
     speech.stop();
-    wordsIds.splice(activeIndex, 1);
-    wordsIds = [...wordsIds];
-
+    answerVisible = false;
     if (activeIndex === wordsIds.length - 1) {
       activeIndex = 0;
     }
 
-    answerVisible = false;
+    wordsIds.splice(activeIndex, 1);
+    wordsIds = [...wordsIds];
   };
 </script>
 
@@ -57,7 +56,7 @@
 
     <div class="buttons">
       <div class="buttons-wrap">
-        <Button text="Дальше" on:click={onNext} />
+        <Button text={`Дальше (${activeIndex + 1}/${wordsIds.length})`} on:click={onNext} />
       </div>
     </div>
   {:else}

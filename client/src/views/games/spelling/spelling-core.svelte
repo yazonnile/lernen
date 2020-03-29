@@ -60,7 +60,10 @@
   {/each}
 </div>
 
-<div class="result">
+<div
+  class="result"
+  class:result--success={answerVisible}
+>
   {#each placeholder as p, i}
     <span class="letter" class:lower={p === 'ß'}>
       {#if i < currentIndex}
@@ -117,19 +120,15 @@
     background: var(--gameSpellingBg);
   }
 
+  .result--success .bg {
+    background: var(--gameTranslationFirstContrast);
+  }
+
   .empty {
     background: var(--gameSpellingContrast);
   }
 
   .error {
     background: var(--buttonRedContrast);
-  }
-
-  .letters .letter {
-
-  }
-
-  .result .letter {
-
   }
 </style>

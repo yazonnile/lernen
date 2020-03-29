@@ -17,12 +17,9 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-    * minor history with back buttons
-    * page animation
-    * do not animate initial page and logo
+    * swipes in games
 
 # TODO
-    * swipes in games
 
 # far-far away
     * mixed mode
