@@ -11,7 +11,7 @@
   <div class="wrap">
     <div class="cart">{$words[wordId].translation}</div>
     <div class="content">
-      <Core original={$words[wordId].original.toLowerCase()} bind:answerVisible />
+      <Core original={$words[wordId].original.toLowerCase()} word={$words[wordId]} bind:answerVisible />
     </div>
   </div>
 </Game>

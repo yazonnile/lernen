@@ -1,10 +1,13 @@
 <script>
+  export let word;
   export let original;
   export let answerVisible;
 
   import diff from 'lib/diff/diff';
   import shuffle from 'lib/shuffle/shuffle';
   import alphabet from 'api/a-z/a-z';
+  import speech, { play } from 'lib/speech/speech';
+  import { user } from 'stores';
 
   let extraLetters = 6;
   let errors;
@@ -26,6 +29,18 @@
 
     if (currentIndex === placeholder.length) {
       answerVisible = true;
+
+      if ($user.voice) {
+        speech.stop();
+
+        let toPlay = [];
+        if (word.type === 'noun' && $user.articles) {
+          toPlay.push(word.article);
+        }
+
+        toPlay.push(word.original);
+        play([toPlay.join(' ')], $user.voiceSpeed);
+      }
     }
   };
 
