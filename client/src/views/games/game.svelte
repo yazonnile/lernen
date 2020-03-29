@@ -45,7 +45,7 @@
 <Page className="game">
   {#if wordsIds.length}
     <div class="buttons">
-      <div class="buttons-wrap scalable" class:scalable--visible={answerVisible}>
+      <div class="buttons-wrap">
         <Button text="Выключить" on:click={onDisable} />
         <Button text="Убрать" on:click={onRemoveFromQueue} />
       </div>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="buttons">
-      <div class="buttons-wrap scalable" class:scalable--visible={answerVisible}>
+      <div class="buttons-wrap">
         <Button text="Дальше" on:click={onNext} />
       </div>
     </div>
@@ -92,10 +92,6 @@
   .buttons-wrap {
     display: flex;
     flex: 1;
-  }
-
-  .scalable--visible {
-    transition-delay: .25s;
   }
 
   .buttons :global(.button) {
