@@ -1,5 +1,5 @@
 # install
-* 1 create `/server/src/api/config/config.json` file from template `_config.json`
+* 1 create `/server/src/config/config.json` file from template `_config.json`
 * 2 create database/user with DB_ID name and DB_PASSWORD from config.json
 * 3 recover DB with `/install/db.sql`
 
@@ -11,16 +11,12 @@
 `node ./server/build`
 
 # client dev
-`node ./client/build`
+`npm run dev`
 
 # client build
-`node ./client/build --mode=production`
+`node run build`
 
-# IN PROGRESS
-
-# TODO
-
-# far-far away
+# far-far away TODO
     * mixed mode
     * games stat?
     * final test
