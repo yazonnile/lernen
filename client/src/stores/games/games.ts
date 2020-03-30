@@ -29,11 +29,11 @@ type GamesInterface = {
 const store = createStore<GamesInterface, typeof storeViews>({
   standard: {
     buttonText: 'Стандартный',
-    description: 'Учим, произносим. Слова, артикли, plural, неправильные глаголы и пр. Я же говорю - всё',
     categories: {
       selected: [],
       nullCategory: false
-    }
+    },
+    description: 'Учим, произносим. Слова, артикли, plural, неправильные глаголы и пр. Самый главный режим'
   },
   translationFirst: {
     buttonText: 'Сначала перевод',
