@@ -45,7 +45,7 @@ const store = createStore<GamesInterface, typeof storeViews>({
   },
   articles: {
     buttonText: 'Артикли',
-    description: 'Выбрать один из трёх, что может быть проще? А отделить мужчину от женщины?',
+    description: 'Выбрать один из трёх, что может быть проще? А определить где м, а где ж?',
     categories: {
       selected: [],
       nullCategory: false
