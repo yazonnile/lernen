@@ -3,6 +3,7 @@
 
   import shuffle from 'lib/shuffle/shuffle';
   import speech from 'lib/speech/speech';
+  import swipe from 'lib/swipe/swipe';
   import Page from 'sdk/page/page.svelte';
   import Button from 'sdk/button/button.svelte';
   import { words as wordsStore, view } from 'stores';
@@ -24,6 +25,12 @@
     answerVisible = false;
   };
 
+  const onPrev = () => {
+    speech.stop();
+    activeIndex = activeIndex === 0 ? wordsIds.length - 1 : (activeIndex - 1);
+    answerVisible = false;
+  };
+
   const onDisable = () => {
     wordsStore.disableWords([ wordsIds[activeIndex] ]);
     onRemoveFromQueue();
@@ -39,6 +46,14 @@
     wordsIds.splice(activeIndex, 1);
     wordsIds = [...wordsIds];
   };
+
+  const onSwipe = (direction) => {
+    if (direction === -1) {
+      onPrev();
+    } else {
+      onNext();
+    }
+  }
 </script>
 
 <Page className="game">
@@ -50,7 +65,7 @@
       </div>
     </div>
 
-    <div class="wrapper">
+    <div class="wrapper" use:swipe={{ onSwipe }}>
       <slot wordId={wordsIds[activeIndex]} />
     </div>
 

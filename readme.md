@@ -17,7 +17,6 @@
 `node ./client/build --mode=production`
 
 # IN PROGRESS
-    * swipes in games
 
 # TODO
 
