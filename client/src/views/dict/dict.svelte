@@ -1,11 +1,12 @@
 <script>
-  import alphabet from 'api/a-z/a-z';
   import Autocomplete from 'sdk/autocomplete/autocomplete.svelte';
+  import BodyPortal from 'sdk/body-portal/body-portal.svelte';
   import Page from 'sdk/page/page.svelte';
   import DictLetterBox from './dict-letter-box.svelte';
   import DictWord from './dict-word.svelte';
   import DictAZ from './dict-az.svelte';
   import DictButtons from './dict-buttons.svelte';
+  import alphabet from 'api/a-z/a-z';
   import { words, view } from 'stores';
 
   let autocompleteValue = '';
@@ -47,7 +48,9 @@
     </div>
   </div>
 
-  <DictButtons bind:checked />
+  <BodyPortal>
+    <DictButtons bind:checked />
+  </BodyPortal>
 </Page>
 
 <style>
