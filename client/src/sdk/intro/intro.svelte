@@ -40,7 +40,7 @@
     background: #fff;
     align-items: center;
     display: flex;
-    height: 100%;
+    height: 100vh;
     left: 0;
     justify-content: center;
     position: absolute;
