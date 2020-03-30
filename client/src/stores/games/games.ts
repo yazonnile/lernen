@@ -29,7 +29,7 @@ type GamesInterface = {
 const store = createStore<GamesInterface, typeof storeViews>({
   standard: {
     buttonText: 'Стандартный',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    description: 'Учим, произносим. Слова, артикли, plural, неправильные глаголы и пр. Я же говорю - всё',
     categories: {
       selected: [],
       nullCategory: false
@@ -37,7 +37,7 @@ const store = createStore<GamesInterface, typeof storeViews>({
   },
   translationFirst: {
     buttonText: 'Сначала перевод',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    description: 'А если сначала немецкий? На русский сможете?',
     categories: {
       selected: [],
       nullCategory: false
@@ -45,7 +45,7 @@ const store = createStore<GamesInterface, typeof storeViews>({
   },
   articles: {
     buttonText: 'Артикли',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    description: 'Выбрать один из трёх, что может быть проще? А отделить мужчину от женщины?',
     categories: {
       selected: [],
       nullCategory: false
@@ -53,15 +53,15 @@ const store = createStore<GamesInterface, typeof storeViews>({
   },
   plural: {
     buttonText: 'Plural',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    description: 'Сложно, конечно. Но потом окажется, что plural форм не так и много',
     categories: {
       selected: [],
       nullCategory: false
     }
   },
   spelling: {
-    buttonText: 'Правописание',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    buttonText: 'Buchstabieren',
+    description: 'Können Sie das wiederholen, bitte? А по буквам, bitte?',
     categories: {
       selected: [],
       nullCategory: false
