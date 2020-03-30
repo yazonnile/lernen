@@ -82,6 +82,8 @@ module.exports = {
       targets: [ folders.buildDist ]
     }),
 
+    production && require('rollup-plugin-terser').terser(),
+
     require('rollup-plugin-copy')({
       targets: [
         { src: ['src/static/*', '!**/*.html'], dest: production ? folders.buildDist : folders.dist },
